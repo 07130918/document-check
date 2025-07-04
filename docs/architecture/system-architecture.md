@@ -300,22 +300,28 @@ graph LR
 
 ## 技術スタック一覧
 
-| レイヤー | 技術/サービス | 用途 | 備考 |
-|---------|--------------|------|------|
-| フロントエンド | Next.js 14, React 18, TypeScript | UIフレームワーク | 確定 |
-| スタイリング | Tailwind CSS | CSSフレームワーク | 確定 |
-| 状態管理 | Zustand | クライアント状態管理 | 確定 |
-| バックエンド | FastAPI, Python 3.11 | APIサーバー | 確定 |
-| PDF処理 | PyMuPDF, PDF.js | PDF解析・表示 | テキストPDFのみ対応※1 |
-| 日本語処理 | MeCab | 形態素解析 | 確定 |
-| コンテナ | Docker, Azure Container Instances | アプリケーション実行環境 | 確定 |
-| CDN/WAF | Azure Front Door | コンテンツ配信・セキュリティ | 確定 |
-| ストレージ | Azure Blob Storage | ファイル保存 | 一時保存のみ※2 |
-| データベース | Azure Database for PostgreSQL | ユーザー管理 | スペック要調整※3 |
-| 認証 | JWT | ユーザー認証 | 確定 |
-| 監視 | Application Insights, Log Analytics | パフォーマンス監視 | ログ保持期間未定※4 |
-| CI/CD | GitHub Actions | 自動デプロイ | 確定 |
-| IaC | Terraform | インフラ管理 | 確定 |
+| レイヤー | 技術/サービス | 用途 | バージョン | 備考 |
+|---------|--------------|------|------------|------|
+| **フロントエンド（杉山さん担当）** |
+| フロントエンド | Next.js 15, React 19, TypeScript 5.5+ | UIフレームワーク | 2025年7月最新安定版 | 新規選定 |
+| スタイリング | Tailwind CSS 3.4+ | CSSフレームワーク | 最新安定版 | 新規選定 |
+| 状態管理 | Zustand 4.5+ | クライアント状態管理 | 最新安定版 | 新規選定 |
+| JavaScript実行環境 | Node.js 22 LTS | 実行環境 | LTS | 新規選定 |
+| PDF表示 | PDF.js 4.0+ | ブラウザPDF表示 | 最新安定版 | 新規選定 |
+| **バックエンド（横山さん担当）** |
+| バックエンド | FastAPI, Python 3.11 | APIサーバー | pyproject.toml準拠 | 既存選定済み |
+| PDF処理 | PyMuPDF ^1.23.8 | PDF解析 | pyproject.toml準拠 | 既存選定済み |
+| 日本語処理 | mecab-python3 ^1.0.6 | 形態素解析 | pyproject.toml準拠 | 既存選定済み |
+| 数値計算 | numpy ^1.24.0 | 数値処理 | pyproject.toml準拠 | 既存選定済み |
+| **インフラ（杉山さん担当）** |
+| コンテナ | Docker 26.0+, Azure Container Instances | アプリケーション実行環境 | 最新安定版 | 新規選定 |
+| CDN/WAF | Azure Front Door | コンテンツ配信・セキュリティ | - | 新規選定 |
+| ストレージ | Azure Blob Storage | ファイル保存 | - | 一時保存のみ※2 |
+| データベース | Azure Database for PostgreSQL 16+ | ユーザー管理 | PostgreSQL 16推奨 | 新規選定 |
+| 認証 | JWT (RFC 7519) | ユーザー認証 | 標準仕様 | 新規選定 |
+| 監視 | Application Insights, Log Analytics | パフォーマンス監視 | - | ログ保持期間未定※4 |
+| CI/CD | GitHub Actions | 自動デプロイ | - | 新規選定 |
+| IaC | Terraform 1.8+ | インフラ管理 | 最新安定版 | 新規選定 |
 
 ### 未確定要素による影響
 ※1: 画像・表・グラフの差分検出は未定（質問No.2）
