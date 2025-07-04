@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  pdf-diff-system:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pdf-diff-baseline
+    volumes:
+      # ソースコードマウント（開発用）
+      - .:/app
+      # 結果保存用
+      - ./results:/app/results
+      - ./data:/app/data
+    environment:
+      # MeCab設定
+      - MECAB_CHARSET=utf8
+      - MECAB_DICDIR=/var/lib/mecab/dic/ipadic
+      # Python設定
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    working_dir: /app
+    command: python run_baseline_test.py
+    
+  # 開発用サービス（対話的実行）
+  pdf-diff-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pdf-diff-dev
+    volumes:
+      - .:/app
+      - ./results:/app/results
+      - ./data:/app/data
+    environment:
+      - MECAB_CHARSET=utf8
+      - MECAB_DICDIR=/var/lib/mecab/dic/ipadic
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    
+  # テスト実行サービス
+  pdf-diff-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pdf-diff-test
+    volumes:
+      - .:/app
+      - ./test-results:/app/test-results
+    environment:
+      - MECAB_CHARSET=utf8
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    working_dir: /app
+    command: poetry run pytest --cov-report=html:test-results/coverage
+    
+volumes:
+  poetry_cache:
+    driver: local
