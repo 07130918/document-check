@@ -2,6 +2,11 @@
 
 ## システム全体構成図
 
+### アーキテクチャ設計の考慮点
+- **Next.js フルスタック構成**: Next.jsのAPI Routesを活用し、フロントエンドとユーザー認証API機能を1つのコンテナに統合
+- **責任分離**: PDF処理は専用のFastAPIサービスで処理し、認証・ユーザー管理はNext.js API Routesで処理
+- **セキュリティ**: フロントエンドUIは直接データベースにアクセスせず、Next.js API Routesを経由
+
 ```mermaid
 graph TB
     subgraph "Users"
@@ -14,10 +19,13 @@ graph TB
 
     subgraph "Azure Container Instances"
         subgraph "Web Container"
-            WEB[Next.js App<br/>Port: 3000]
+            subgraph "Next.js App (Port: 3000)"
+                WEBUI[Frontend UI<br/>React Components]
+                WEBAPI[API Routes<br/>認証・ユーザー管理]
+            end
         end
         subgraph "API Container"
-            API[FastAPI Service<br/>Port: 8000]
+            API[FastAPI Service<br/>Port: 8000<br/>PDF処理]
         end
     end
 
@@ -33,18 +41,24 @@ graph TB
         KV[Key Vault<br/>シークレット管理]
     end
 
+    subgraph "External APIs"
+        OPENAI[OpenAI API<br/>読み順序推定]
+    end
+
     subgraph "Azure Monitoring"
         AI[Application Insights]
         LA[Log Analytics]
     end
 
     U -->|HTTPS| FD
-    FD -->|Port 3000| WEB
-    WEB -->|REST API| API
+    FD -->|Port 3000| WEBUI
+    WEBUI -->|Internal| WEBAPI
+    WEBUI -->|REST API| API
     API -->|Upload/Download| BLOB
-    WEB -->|User Auth| DB
+    WEBAPI -->|User Auth| DB
+    API -->|Reading Order| OPENAI
     API -->|Secrets| KV
-    WEB -->|Telemetry| AI
+    WEBUI -->|Telemetry| AI
     API -->|Logs| LA
 ```
 
@@ -53,42 +67,50 @@ graph TB
 ```mermaid
 sequenceDiagram
     participant U as ユーザー
-    participant W as Webアプリ
-    participant A as API Service
+    participant WUI as Frontend UI
+    participant WAPI as Next.js API Routes
+    participant A as FastAPI Service
     participant S as Storage
     participant P as PDF処理エンジン
+    participant LLM as OpenAI API
+    participant DB as Database
 
-    U->>W: ログイン
-    W->>W: JWT生成
-    W-->>U: 認証トークン
+    U->>WUI: ログイン
+    WUI->>WAPI: 認証リクエスト
+    WAPI->>DB: ユーザー認証
+    DB-->>WAPI: 認証結果
+    WAPI->>WAPI: JWT生成
+    WAPI-->>WUI: 認証トークン
+    WUI-->>U: 認証完了
 
-    U->>W: PDFアップロード画面
-    U->>W: 2つのPDFファイル選択
-    W->>A: POST /api/diff/upload
+    U->>WUI: PDFアップロード画面
+    U->>WUI: 2つのPDFファイル選択
+    WUI->>A: POST /api/diff/upload
     A->>S: PDFファイル保存
-    A-->>W: タスクID返却
-    W-->>U: アップロード完了
+    A-->>WUI: タスクID返却
+    WUI-->>U: アップロード完了
 
     A->>P: 差分検出処理開始
     P->>P: テキスト抽出
-    P->>P: 読み順序推定（LLM）
+    P->>LLM: 読み順序推定リクエスト
+    LLM-->>P: 読み順序結果
     P->>P: 差分検出（MeCab）
     P->>S: 結果保存
 
-    W->>A: GET /api/diff/status/{id}
-    A-->>W: 処理状況
-    W-->>U: 進捗表示
+    WUI->>A: GET /api/diff/status/{id}
+    A-->>WUI: 処理状況
+    WUI-->>U: 進捗表示
 
-    W->>A: GET /api/diff/result/{id}
+    WUI->>A: GET /api/diff/result/{id}
     A->>S: 結果取得
-    A-->>W: 差分データ
-    W-->>U: 差分表示
+    A-->>WUI: 差分データ
+    WUI-->>U: 差分表示
 
-    U->>W: ダウンロード要求
-    W->>A: GET /api/diff/download/{id}
+    U->>WUI: ダウンロード要求
+    WUI->>A: GET /api/diff/download/{id}
     A->>S: 注釈付きPDF取得
-    A-->>W: PDFファイル
-    W-->>U: ダウンロード
+    A-->>WUI: PDFファイル
+    WUI-->>U: ダウンロード
 
     A->>S: ファイル削除（処理完了後）
 ```
@@ -283,6 +305,7 @@ graph LR
         STOR[ストレージ<br/>Blob/Database]
         NET[ネットワーク<br/>帯域/CDN]
         MON2[監視<br/>ログ保存]
+        LLM_COST[LLM API<br/>読み順序推定]
     end
 
     subgraph "最適化施策"
@@ -290,12 +313,14 @@ graph LR
         LIFE[ライフサイクル<br/>・古いデータ削除<br/>・アーカイブ]
         CACHE[キャッシング<br/>・CDN活用<br/>・Redis]
         RET[保存期間<br/>・ログ30日<br/>・メトリクス90日]
+        LLM_OPT[LLM最適化<br/>・結果キャッシュ<br/>・使用量制限]
     end
 
     COMP --> AUTO
     STOR --> LIFE
     NET --> CACHE
     MON2 --> RET
+    LLM_COST --> LLM_OPT
 ```
 
 ## 技術スタック一覧
@@ -303,7 +328,7 @@ graph LR
 | レイヤー | 技術/サービス | 用途 | バージョン | 備考 |
 |---------|--------------|------|------------|------|
 | **フロントエンド（杉山さん担当）** |
-| フロントエンド | Next.js 15, React 19, TypeScript 5.5+ | UIフレームワーク | 2025年7月最新安定版 | 新規選定 |
+| フロントエンド | Next.js 15, React 19, TypeScript 5.5+ | フルスタックフレームワーク | 2025年7月最新安定版 | 新規選定（API Routes含む） |
 | スタイリング | Tailwind CSS 3.4+ | CSSフレームワーク | 最新安定版 | 新規選定 |
 | 状態管理 | Zustand 4.5+ | クライアント状態管理 | 最新安定版 | 新規選定 |
 | JavaScript実行環境 | Node.js 22 LTS | 実行環境 | LTS | 新規選定 |
@@ -313,6 +338,7 @@ graph LR
 | PDF処理 | PyMuPDF ^1.23.8 | PDF解析 | pyproject.toml準拠 | 既存選定済み |
 | 日本語処理 | mecab-python3 ^1.0.6 | 形態素解析 | pyproject.toml準拠 | 既存選定済み |
 | 数値計算 | numpy ^1.24.0 | 数値処理 | pyproject.toml準拠 | 既存選定済み |
+| LLM API | OpenAI API | 読み順序推定 | GPT-4 Turbo | 暫定選定※5 |
 | **インフラ（杉山さん担当）** |
 | コンテナ | Docker 26.0+, Azure Container Instances | アプリケーション実行環境 | 最新安定版 | 新規選定 |
 | CDN/WAF | Azure Front Door | コンテンツ配信・セキュリティ | - | 新規選定 |
@@ -328,3 +354,4 @@ graph LR
 ※2: ファイル保存要件は不要と確定（質問No.6）
 ※3: 予算（質問No.9）とシステム稼働率（質問No.12）による
 ※4: ログ管理要件（質問No.13）による
+※5: LLM APIは暫定でOpenAI GPT-4 Turboを想定、Azure OpenAI Serviceの検討も必要

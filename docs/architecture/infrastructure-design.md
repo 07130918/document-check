@@ -136,7 +136,7 @@ Storage Account: stpdfdiff{env} (※命名規則は要調整)
 ```
 Azure Database for PostgreSQL
 ├─ サーバー名: psql-pdf-diff-{env} (※命名規則は要調整)
-├─ バージョン: 14
+├─ バージョン: 16+
 ├─ SKU: B_Gen5_2 (2 vCore, 10GB) ※利用状況により調整
 ├─ バックアップ: 未定（※質問No.15で確認中）
 └─ 高可用性: 未定（※稼働率要件No.12による）
@@ -147,9 +147,32 @@ Azure Database for PostgreSQL
 - 高可用性要件（質問No.12のシステム稼働率による）
 - ユーザー数によってはSKUの見直しが必要
 
-## 5. セキュリティ設計
+## 5. 外部API連携設計
 
-### 5.1 認証・認可
+### 5.1 OpenAI API 連携
+
+#### 接続設定
+```yaml
+API エンドポイント: https://api.openai.com/v1/
+認証方式: Bearer Token (API Key)
+使用モデル: gpt-4-turbo (暫定)
+用途: PDF読み順序推定
+```
+
+#### セキュリティ考慮事項
+- API Keyは Azure Key Vault で管理
+- 送信データは最小限に限定（テキスト抽出結果のみ）
+- レート制限対応（429エラーハンドリング）
+- タイムアウト設定: 30秒
+
+#### コスト管理
+- 月間使用量上限設定
+- 使用量監視とアラート
+- キャッシュ機能による API 呼び出し削減
+
+## 6. セキュリティ設計
+
+### 6.1 認証・認可
 
 ```
 [ユーザー] → [JWT認証] → [Webアプリ]
@@ -159,7 +182,7 @@ Azure Database for PostgreSQL
          [リソースアクセス制御]
 ```
 
-### 5.2 Key Vault 構成
+### 6.2 Key Vault 構成
 
 ```
 Key Vault: kv-pdf-diff-{env}
@@ -167,13 +190,14 @@ Key Vault: kv-pdf-diff-{env}
 │   ├─ jwt-secret
 │   ├─ db-connection-string
 │   ├─ storage-account-key
-│   └─ api-keys
+│   ├─ openai-api-key
+│   └─ other-api-keys
 └─ Access Policies:
     ├─ Container Instances (Get, List)
     └─ DevOps Service Principal (All)
 ```
 
-### 5.3 ネットワークセキュリティ
+### 6.3 ネットワークセキュリティ
 
 - **WAFルール**:
   - OWASP Top 10 保護
