@@ -58,7 +58,7 @@
 | 8/1-7 | Streamlit開発、API統合 | 40h |
 | 8/12-15 | Azureデプロイ、CI/CD構築 | 32h |
 | 8/18-19 | セキュリティ設定、最終調整 | 16h |
-| 8/20 | 本番デプロイ | 時間外 |
+| 8/20 | 本番デプロイ | 4h |
 
 ## API仕様（7月末確定）
 
@@ -108,9 +108,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Deploy to App Service
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
 ```
 
 ## 成功基準
@@ -138,7 +141,7 @@ jobs:
 
 1. **8月20日時点で本番環境にデプロイ済み**
 2. **基本的な差分検出機能が動作**
-3. **最低限の運用手順を口頭で引き継ぎ**
+3. **簡易運用マニュアル（README）を作成して引き継ぎ**
 
 ---
 

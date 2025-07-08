@@ -119,7 +119,9 @@ Content-Type: multipart/form-data
 
 ### 通信セキュリティ
 - **HTTPS**: App Service標準SSL証明書使用
-- **API間通信**: Container InstancesのプライベートIP使用
+- **API間通信**: パブリックエンドポイント経由（HTTPSで保護）
+  - Container InstancesのネットワークアクセスをApp ServiceのIPアドレスのみに制限
+  - APIキー認証による追加のセキュリティ層
 
 ### 機密情報管理
 - **APIキー**: App Service環境変数に格納
@@ -153,8 +155,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: azure/webapps-deploy@v2
+      - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: azure/webapps-deploy@v3
         with:
           app-name: pdf-diff-poc-web
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
