@@ -22,6 +22,8 @@ class PDFTextExtractor:
     def __init__(self):
         if not HAS_PYMUPDF:
             logger.warning("PyMuPDF not available. PDF extraction will be limited.")
+        self.raw_extracted_texts = {}  # 抽出直後のテキスト
+        self.reordered_texts = {}      # 並び替え後のテキスト
     
     def extract_pages_text(self, pdf_path: Path, max_pages: Optional[int] = None) -> Dict[int, str]:
         """
@@ -60,6 +62,11 @@ class PDFTextExtractor:
                     # Extract text with layout preservation
                     text = page.get_text("text")
                     
+                    # 生の抽出テキストを保存（デバッグ用）
+                    if pdf_path not in self.raw_extracted_texts:
+                        self.raw_extracted_texts[pdf_path] = {}
+                    self.raw_extracted_texts[pdf_path][page_num + 1] = text
+                    
                     # Clean and normalize text
                     cleaned_text = self._clean_extracted_text(text)
                     
@@ -77,6 +84,11 @@ class PDFTextExtractor:
         except Exception as e:
             logger.error(f"Error opening PDF file {pdf_path}: {e}")
             return {}
+        
+        # 並び替え後のテキストとして保存（現在は並び替えなし）
+        if pdf_path not in self.reordered_texts:
+            self.reordered_texts[pdf_path] = {}
+        self.reordered_texts[pdf_path] = pages_text.copy()
         
         logger.info(f"Successfully extracted text from {len(pages_text)} pages")
         return pages_text
@@ -322,3 +334,26 @@ class PDFTextExtractor:
         cleaned_segments = [seg.strip() for seg in segments if seg.strip()]
         
         return cleaned_segments
+    
+    def get_extraction_results(self, pdf_path: Path) -> Dict:
+        """
+        Get extraction results including raw and reordered texts
+        
+        Args:
+            pdf_path: Path to PDF file
+            
+        Returns:
+            Dictionary containing:
+            - raw_texts: Raw extracted texts before cleaning
+            - cleaned_texts: Cleaned and normalized texts
+            - reordered_texts: Texts after reordering (if any)
+        """
+        return {
+            'raw_texts': self.raw_extracted_texts.get(pdf_path, {}),
+            'reordered_texts': self.reordered_texts.get(pdf_path, {})
+        }
+    
+    def clear_cache(self):
+        """Clear cached extraction results"""
+        self.raw_extracted_texts.clear()
+        self.reordered_texts.clear()
