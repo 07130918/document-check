@@ -102,6 +102,23 @@ class BaselineEvaluator:
         pages_2023 = self.pdf_extractor.extract_pages_text(pdf_2023_path)
         pages_2024 = self.pdf_extractor.extract_pages_text(pdf_2024_path)
         
+        # 抽出されたテキストを保存（デバッグ用）
+        extraction_details_2023 = self.pdf_extractor.get_extraction_results(pdf_2023_path)
+        extraction_details_2024 = self.pdf_extractor.get_extraction_results(pdf_2024_path)
+        
+        extracted_texts = {
+            '2023': {
+                'cleaned': pages_2023,
+                'raw': extraction_details_2023['raw_texts'],
+                'reordered': extraction_details_2023['reordered_texts']
+            },
+            '2024': {
+                'cleaned': pages_2024,
+                'raw': extraction_details_2024['raw_texts'],
+                'reordered': extraction_details_2024['reordered_texts']
+            }
+        }
+        
         # テストケース生成
         test_cases = self.annotation_loader.convert_to_test_cases(annotations, pages_2023, pages_2024)
         
@@ -170,7 +187,9 @@ class BaselineEvaluator:
                 'f1_score': f1_score,
                 'accuracy': accuracy
             },
-            'detailed_results': detailed_results
+            'detailed_results': detailed_results,
+            'extracted_texts': extracted_texts,  # 抽出されたテキストを追加
+            'extraction_summary': self._create_extraction_summary(extracted_texts)  # 要約版
         }
     
     def _evaluate_detections(self, detected_diffs: List[DiffResult], 
@@ -478,6 +497,30 @@ class BaselineEvaluator:
             f.write('\n'.join(report))
         
         logger.info(f"詳細分析レポートを保存: {output_path}")
+    
+    def _create_extraction_summary(self, extracted_texts: Dict) -> Dict:
+        """抽出テキストの要約情報を作成"""
+        summary = {}
+        
+        for year, texts in extracted_texts.items():
+            year_summary = {
+                'page_count': len(texts.get('cleaned', {})),
+                'total_chars_cleaned': sum(len(t) for t in texts.get('cleaned', {}).values()),
+                'total_chars_raw': sum(len(t) for t in texts.get('raw', {}).values()),
+                'pages': {}
+            }
+            
+            # 各ページの文字数情報
+            for page_num, text in texts.get('cleaned', {}).items():
+                year_summary['pages'][page_num] = {
+                    'cleaned_chars': len(text),
+                    'raw_chars': len(texts.get('raw', {}).get(page_num, '')),
+                    'first_100_chars': text[:100] + '...' if len(text) > 100 else text
+                }
+            
+            summary[year] = year_summary
+        
+        return summary
 
 
 def main():
