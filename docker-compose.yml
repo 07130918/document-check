@@ -16,6 +16,7 @@ services:
       # MeCab設定
       - MECAB_CHARSET=utf8
       - MECAB_DICDIR=/var/lib/mecab/dic/ipadic
+      - MECABRC=/etc/mecabrc
       # Python設定
       - PYTHONPATH=/app
       - PYTHONUNBUFFERED=1

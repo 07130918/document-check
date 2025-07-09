@@ -9,6 +9,7 @@ description = "PDF差分検出システム - ベースライン実装とA/Bテ�
 authors = ["AICE Team"]
 readme = "README.md"
 packages = [{include = "apps"}]
+package-mode = true
 
 [tool.poetry.dependencies]
 python = "^3.11"
