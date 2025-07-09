@@ -1,195 +1,206 @@
-# ベースライン構築とA/Bテスト計画
+# ベースライン構築と評価計画
 
 ## 1. ベースライン構築戦略
 
-### 1.1 prj-meiji-document-checkベースライン実装
+### 1.1 現状ベースラインの活用
 
-#### 参考にすべき核心アルゴリズム
-1. **テキスト正規化エンジン** (`utils.py`)
-   - 128種類の文字変換ルール
-   - 全角英数字→半角変換
-   - 特殊記号統一処理
+#### 現在実装済みの機能
+1. **読み順序ベースライン** (`baseline_evaluation.py`)
+   - 複数ページPDFでの順序推定
+   - アノテーションCSVを使用した評価
+   - 17種類のテストケース
 
-2. **並列テキストマッチング** (`PdfDiffLogicDomainService`)
-   - ThreadPoolExecutorによる高速処理
-   - 事前フィルタリング + 動的閾値設定
-   - フォールバック機能付きの堅牢設計
+2. **BBoxベース処理** (`test_sequential_baseline.py`)
+   - PyMuPDFを使用したbbox抽出
+   - 座標ベースのテキスト結合
+   - ページ単位での処理
 
-3. **SequenceMatcher差分検出**
-   - 文字ベース類似度計算
-   - レーベンシュタイン距離による部分一致判定
-   - 階層的マッチング（完全一致→部分一致）
+3. **評価メトリクス**
+   - TP (True Positive)
+   - FP (False Positive)
+   - FN (False Negative)
+   - Precision/Recall計算
 
-#### 移植対象コンポーネント
+#### 新システムでの活用方法
 ```python
-# ベースライン実装クラス
-class SequenceMatcherDiffDetector:
-    """prj-meiji-document-checkベースの差分検出器"""
-    
-    def __init__(self, text_normalizer: TextNormalizer):
-        self.text_normalizer = text_normalizer
-        self.threshold_calculator = DynamicThresholdCalculator()
-    
-    def detect_differences(self, doc1: str, doc2: str) -> List[DiffResult]:
-        # 1. テキスト正規化
-        normalized_doc1 = self.text_normalizer.normalize(doc1)
-        normalized_doc2 = self.text_normalizer.normalize(doc2)
-        
-        # 2. SequenceMatcher類似度計算
-        similarity = SequenceMatcher(None, normalized_doc1, normalized_doc2).ratio()
-        
-        # 3. 動的閾値による判定
-        threshold = self.threshold_calculator.calculate(len(doc1), len(doc2))
-        
-        return self._classify_changes(similarity, threshold)
-```
-
-### 1.2 ベースライン性能測定
-
-#### 測定項目
-- **精度指標**: 真陽性率、偽陽性率、偽陰性率
-- **性能指標**: 処理時間、メモリ使用量
-- **安定性**: 複数回実行での結果一貫性
-
-#### ベンチマークデータセット
-1. **簡単レベル**: 明確な文字変更（10ケース）
-2. **中程度レベル**: 数値・日付変更（10ケース）  
-3. **困難レベル**: 微細な変更・レイアウト変更（10ケース）
-
-## 2. A/Bテスト設計
-
-### 2.1 比較対象アルゴリズム
-
-#### A群: ベースライン（prj-meiji-document-checkベース）
-- SequenceMatcher + レーベンシュタイン距離
-- 文字ベース類似度計算
-- 動的閾値設定
-
-#### B群: 改良アルゴリズム（新規開発）
-- LLM中心型読み順序推定
-- 単語ベース差分検出
-- アンサンブル統合システム
-
-### 2.2 評価フレームワーク
-
-#### ComparisonEvaluatorクラス設計
-```python
-class ComparisonEvaluator:
-    """A/Bテスト用評価フレームワーク"""
+# BBoxベース差分検出ベースライン
+class BBoxBaselineDiffDetector:
+    """bbox_text_dataを使用したベースライン差分検出器"""
     
     def __init__(self):
-        self.metrics_collector = MetricsCollector()
-        self.statistical_analyzer = StatisticalAnalyzer()
+        self.reading_order_estimator = ReadingOrderEstimator()
     
-    def run_ab_test(self, test_cases: List[TestCase]) -> ABTestResult:
-        """A/Bテストの実行"""
-        baseline_results = []
-        improved_results = []
+    def detect_differences(self, 
+                         doc1_bbox_list: List[BBoxTextData], 
+                         doc2_bbox_list: List[BBoxTextData]) -> List[DiffResult]:
+        # 1. 読み順序推定
+        doc1_ordered = self.reading_order_estimator.estimate_reading_order(doc1_bbox_list)
+        doc2_ordered = self.reading_order_estimator.estimate_reading_order(doc2_bbox_list)
         
-        for test_case in test_cases:
-            # A群（ベースライン）
-            baseline_result = self.baseline_detector.detect(test_case.pdf1, test_case.pdf2)
-            baseline_results.append(self._evaluate_result(baseline_result, test_case.ground_truth))
-            
-            # B群（改良版）
-            improved_result = self.improved_detector.detect(test_case.pdf1, test_case.pdf2)
-            improved_results.append(self._evaluate_result(improved_result, test_case.ground_truth))
+        # 2. テキスト結合
+        text1 = " ".join([bbox['text'] for bbox in doc1_ordered])
+        text2 = " ".join([bbox['text'] for bbox in doc2_ordered])
         
-        return self._compare_results(baseline_results, improved_results)
+        # 3. 差分検出（単語単位）
+        return self._detect_word_differences(doc1_ordered, doc2_ordered)
 ```
 
-### 2.3 統計的有意性検定
+### 1.2 人力評価による性能測定
 
-#### 検定手法
-- **t検定**: 精度指標の平均値比較
-- **Wilcoxon順位和検定**: ノンパラメトリック比較
-- **McNemar検定**: 分類結果の有意差検定
+#### 評価方法
+- **出力ファイル**: ハイライト付きPDF/DOCX/PPTX
+- **評価項目**:
+  1. 読み順序の正確性（番号付き青ハイライト）
+  2. 差分検出の正確性（色分けハイライト）
+  3. 誤検出・見逃しの確認
 
-#### 有意水準
-- α = 0.05（5%有意水準）
-- 効果量（Cohen's d）≥ 0.5で実用的改善と判定
+#### 評価用テストケース
+1. **簡単レベル**: 明確な文字変更（5ケース）
+2. **中程度レベル**: 数値・日付変更（5ケース）  
+3. **困難レベル**: 複雑レイアウト・表内変更（5ケース）
+
+## 2. 評価計画
+
+### 2.1 評価対象システム
+
+#### ベースラインシステム
+- 座標ベース読み順序推定
+- 単語単位差分検出
+- ハイライト付きファイル出力
+
+#### 改善後システム（将来的な拡張）
+- AIを活用した読み順序推定
+- コンテキスト考慮差分検出
+- マルチフォーマット対応強化
+
+### 2.2 人力評価フレームワーク
+
+#### ManualEvaluationFramework設計
+```python
+class ManualEvaluationFramework:
+    """人力評価用フレームワーク"""
+    
+    def __init__(self):
+        self.evaluation_sheet_generator = EvaluationSheetGenerator()
+        self.result_aggregator = ResultAggregator()
+    
+    def prepare_evaluation(self, test_cases: List[TestCase]) -> EvaluationPackage:
+        """評価用パッケージの準備"""
+        evaluation_package = []
+        
+        for test_case in test_cases:
+            # ハイライト付きファイル生成
+            highlighted_files = self.system.process(test_case.file1, test_case.file2)
+            
+            # 評価シート生成
+            evaluation_sheet = self.evaluation_sheet_generator.create(
+                test_case, highlighted_files
+            )
+            
+            evaluation_package.append(evaluation_sheet)
+        
+        return evaluation_package
+```
+
+### 2.3 評価基準
+
+#### 評価項目
+1. **読み順序の正確性**
+   - 正しい順序: 5点
+   - 部分的に正しい: 3点
+   - 不正確: 1点
+
+2. **差分検出の正確性**
+   - 完全検出: 5点
+   - 部分検出: 3点
+   - 見逃しあり: 1点
+
+3. **誤検出率**
+   - 誤検出なし: 5点
+   - 少数誤検出: 3点
+   - 多数誤検出: 1点
 
 ## 3. 実装タスク詳細
 
 ### Phase 0: ベースライン構築（1週間）
 
-#### Task 0.1: prj-meiji-document-checkベースライン実装
-- [ ] `PdfDiffLogicDomainService`のコアロジック移植
-- [ ] テキスト正規化エンジンの移植
-- [ ] 並列テキストマッチングの移植
-- [ ] `SequenceMatcherDiffDetector`クラス作成
-- [ ] 文字ベース類似度計算
-- [ ] 動的閾値設定機能
+#### Task 0.1: BBoxベースベースライン実装
+- [ ] `DocumentAnalysisEngine`の実装
+- [ ] PDF/Word/Pptx対応のbbox抽出機能
+- [ ] `ReadingOrderEstimator`の実装
+- [ ] `BBoxBasedDiffDetector`の実装
+- [ ] `OutputGenerator`の実装
+- [ ] ハイライト付きファイル出力機能
 
-#### Task 0.2: ベースライン性能測定
-- [ ] 正解データセットでの精度評価
-- [ ] 処理時間・メモリ使用量測定
-- [ ] ベースラインスコアの記録
+#### Task 0.2: 評価準備
+- [ ] 評価用テストケースの作成
+- [ ] 評価シートテンプレートの作成
+- [ ] 評価プロセスの文書化
 
-#### Task 0.3: A/Bテスト基盤構築
-- [ ] `ComparisonEvaluator`クラス作成
-- [ ] 混同行列ベース評価
-- [ ] 結果ログ・レポート機能
+#### Task 0.3: 人力評価基盤構築
+- [ ] `ManualEvaluationFramework`の実装
+- [ ] `EvaluationSheetGenerator`の実装
+- [ ] `ResultAggregator`の実装
 - [ ] テストデータセット準備
-- [ ] 正解データセットの整備
-- [ ] 複数困難度レベルのPDF準備
-- [ ] アノテーションデータの作成
+- [ ] 簡単・中程度・困難なテストケース作成
+- [ ] PDF/Word/Pptx各形式のテストデータ
+- [ ] 評価マニュアルの作成
 
 #### Task 0.4: 性能モニタリング
 - [ ] リアルタイム性能計測
 - [ ] メトリクス収集システム
 - [ ] 結果比較ダッシュボード
 
-### Phase 1-4: 改良アルゴリズム開発（3週間）
+### Phase 1-4: システム開発（3週間）
 
-各フェーズでベースラインとの比較を実行
+各フェーズで人力評価を実行
 
-#### A/Bテスト実行ポイント
-- **Phase 1終了時**: 基盤構築後の初期比較
-- **Phase 2終了時**: LLM・単語ベース実装後の比較
-- **Phase 3終了時**: 最適化後の比較
-- **Phase 4終了時**: 最終統合システムの比較
+#### 評価実行ポイント
+- **Phase 1終了時**: 基本機能実装後の評価
+- **Phase 2終了時**: 高度化機能実装後の評価
+- **Phase 3終了時**: 最適化後の評価
+- **Phase 4終了時**: 最終統合システムの評価
 
 ## 4. 成功基準とKPI
 
-### 4.1 必須改善指標
-- **真陽性率**: ベースライン比+10%以上
-- **処理時間**: ベースライン比-30%以上短縮
-- **偽陽性率**: ベースライン比-20%以上削減
+### 4.1 必須達成指標
+- **検出率**: 99-100%（見逃しゼロ）
+- **処理時間**: 5分以内（ファイルサイズに関わらず）
+- **誤検出率**: 10%以下
 
-### 4.2 統計的有意性
-- **p値**: < 0.05で有意差ありと判定
-- **効果量**: Cohen's d ≥ 0.5で実用的改善
-- **信頼区間**: 95%信頼区間での改善確認
+### 4.2 評価基準
+- **読み順序正確性**: 平均評点 4.0以上/5.0
+- **差分検出正確性**: 平均評点 4.5以上/5.0
+- **誤検出率**: 平均評点 4.0以上/5.0
 
-### 4.3 A/Bテスト完了基準
-- [ ] 30ケース以上でのテスト完了
-- [ ] 3つの困難度レベルすべてでの改善確認
-- [ ] 統計的有意性の確認
-- [ ] 実用的効果量の達成
+### 4.3 評価完了基準
+- [ ] 15ケース以上での評価完了
+- [ ] 3つの困難度レベルすべてでの評価
+- [ ] 全ファイル形式（PDF/Word/Pptx）での検証
+- [ ] 評価結果の集計・分析
 
 ## 5. リスク管理
 
 ### 5.1 技術的リスク
-- **ベースライン性能**: 既存実装が想定より高性能な場合
-- **LLM API制約**: 外部API依存による不安定性
-- **統計的検出力**: サンプルサイズ不足による検出力低下
+- **ファイル形式差異**: Word/Pptxでのbbox情報取得の困難さ
+- **複雑レイアウト**: 表やカラム構造での読み順序推定難度
+- **評価者依存**: 人力評価のバラツキ
 
 ### 5.2 対応策
-- **フォールバック戦略**: LLM不使用モードの準備
-- **サンプルサイズ計算**: 事前の検出力分析
-- **段階的改善**: 小さな改善の積み重ね
+- **フォールバック処理**: ファイル形式別の代替処理
+- **評価ガイドライン**: 明確な評価基準の提供
+- **複数評価者**: 重要なケースでのクロスチェック
 
 ## 6. 期待される成果
 
 ### 6.1 定量的成果
-- **検出率**: 90% → 100%（10%改善）
-- **処理時間**: 3.6分 → 2.0分（44%短縮）
-- **誤検出率**: 3.2% → 2.0%（38%削減）
+- **検出率**: 99-100%の達成
+- **処理時間**: 5分以内の実現
+- **誤検出率**: 10%以下の維持
 
 ### 6.2 定性的成果
-- **技術的革新**: LLM活用による読み順序推定の実現
-- **実用性向上**: 業務適用可能な精度・速度の達成
-- **汎用性確保**: 他文書タイプへの適用可能性
+- **可視化出力**: ハイライトによる直感的な差分確認
+- **マルチフォーマット**: PDF/Word/Pptxの統一的処理
+- **人力評価基盤**: 継続的改善のための評価体制
 
-このベースライン構築とA/Bテスト計画により、既存技術を基盤とした確実な改善を実現し、新規アルゴリズムの有効性を科学的に検証できます。
+このベースライン構築と評価計画により、bbox_text_dataを中心とした文書差分検出システムの有効性を人力評価で検証し、実用的なシステムを実現します。

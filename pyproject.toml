@@ -25,6 +25,9 @@ psutil = {version = "^5.9.0", optional = true}
 mecab-python3 = "^1.0.6"
 # 基本ライブラリ
 numpy = "^1.24.0"
+# Office文書処理
+python-docx = "^0.8.11"
+python-pptx = "^0.6.21"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"

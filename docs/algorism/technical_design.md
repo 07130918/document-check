@@ -1,4 +1,4 @@
-# PDF差分検出システム 技術設計書
+# 文書差分検出システム 技術設計書
 
 ## 1. システムアーキテクチャ
 
@@ -23,26 +23,42 @@
 
 ## 2. 核心コンポーネント設計
 
-### 2.1 PDF解析エンジン (`PDFAnalysisEngine`)
+### 2.1 文書解析エンジン (`DocumentAnalysisEngine`)
 
 #### 2.1.1 責務
-- テキストベースPDF専用の高速解析
+- PDF・Word・Pptxファイルの統合解析
+- bbox_text_data形式でのデータ抽出
 - 文書構造・座標情報の抽出
-- レイアウト解析・テキストブロック識別
+- レイアウト解析・単語単位のテキスト識別
 
 #### 2.1.2 技術仕様
 ```python
-class PDFAnalysisEngine:
-    def __init__(self, pymupdf_service: PyMuPDFService):
-        self.pymupdf_service = pymupdf_service
+class DocumentAnalysisEngine:
+    def __init__(self, pdf_service: PyMuPDFService, 
+                 docx_service: DocxService,
+                 pptx_service: PptxService):
+        self.pdf_service = pdf_service
+        self.docx_service = docx_service
+        self.pptx_service = pptx_service
     
-    def extract_text_blocks(self, pdf_bytes: bytes) -> List[TextBlock]:
-        """Extract text blocks with coordinate information"""
-        pass
+    def extract_bbox_text_data(self, file_bytes: bytes, file_type: str) -> List[BBoxTextData]:
+        """Extract bbox_text_data list from document"""
+        if file_type == 'pdf':
+            return self.pdf_service.extract_bbox_data(file_bytes)
+        elif file_type == 'docx':
+            return self.docx_service.extract_bbox_data(file_bytes)
+        elif file_type == 'pptx':
+            return self.pptx_service.extract_bbox_data(file_bytes)
     
-    def extract_document_structure(self, pdf_bytes: bytes) -> DocumentStructure:
-        """Extract hierarchical document structure"""
-        pass
+    def process_pages(self, bbox_data_list: List[BBoxTextData]) -> Dict[int, List[BBoxTextData]]:
+        """Process bbox_text_data by pages"""
+        pages = {}
+        for bbox_data in bbox_data_list:
+            page = bbox_data['page']
+            if page not in pages:
+                pages[page] = []
+            pages[page].append(bbox_data)
+        return pages
 ```
 
 #### 2.1.3 パフォーマンス最適化
@@ -52,185 +68,240 @@ class PDFAnalysisEngine:
 
 ### 2.2 読み順序推定システム (`ReadingOrderEstimator`)
 
-#### 2.2.1 LLMベース推定戦略
+#### 2.2.1 座標ベース推定戦略
 ```python
 class ReadingOrderEstimator:
-    def __init__(self, llm_client: LLMClient, fallback_strategy: PositionBasedStrategy):
-        self.llm_client = llm_client
-        self.fallback_strategy = fallback_strategy
+    def __init__(self):
+        pass
     
-    def estimate_reading_order(self, text_blocks: List[TextBlock]) -> List[TextBlock]:
-        """Estimate natural reading order using LLM with fallback"""
-        try:
-            return self._llm_based_estimation(text_blocks)
-        except LLMAPIException:
-            return self.fallback_strategy.sort_by_position(text_blocks)
+    def estimate_reading_order(self, bbox_data_list: List[BBoxTextData]) -> List[BBoxTextData]:
+        """Estimate reading order based on bbox coordinates"""
+        # ページごとに処理
+        pages = {}
+        for bbox_data in bbox_data_list:
+            page = bbox_data['page']
+            if page not in pages:
+                pages[page] = []
+            pages[page].append(bbox_data)
+        
+        # 各ページで座標ベースソート
+        ordered_data = []
+        for page in sorted(pages.keys()):
+            page_data = pages[page]
+            # 左上から右下への自然な読み順序でソート
+            # y座標（上から下）を優先、同じ行はx座標（左から右）でソート
+            sorted_page = sorted(page_data, 
+                               key=lambda d: (d['bbox'][1], d['bbox'][0]))
+            ordered_data.extend(sorted_page)
+        
+        return ordered_data
 ```
 
-#### 2.2.2 フォールバック戦略
-- **位置ベースソート**: LLM API障害時の代替手法
-- **ハイブリッド**: LLM + 位置情報の組み合わせ
-- **信頼度評価**: 推定結果の品質評価
+#### 2.2.2 読み順序推定の詳細
+- **座標ベースソート**: y座標を主軸、x座標を副軸とした並び替え
+- **行検出**: 近接するy座標を同一行として扱う
+- **カラム対応**: 複数カラムレイアウトの検出と処理
 
-### 2.3 単語ベース差分検出器 (`WordBasedDiffDetector`)
+### 2.3 BBoxベース差分検出器 (`BBoxBasedDiffDetector`)
 
 #### 2.3.1 アルゴリズム設計
 ```python
-class WordBasedDiffDetector:
-    def __init__(self, mecab_tokenizer: MeCabTokenizer):
-        self.mecab_tokenizer = mecab_tokenizer
+class BBoxBasedDiffDetector:
+    def __init__(self):
+        pass
     
-    def detect_differences(self, doc1: ProcessedDocument, doc2: ProcessedDocument) -> List[DiffResult]:
-        """Detect word-level differences using MeCab tokenization
+    def detect_differences(self, doc1_bbox_list: List[BBoxTextData], 
+                         doc2_bbox_list: List[BBoxTextData]) -> List[DiffResult]:
+        """Detect differences between documents using bbox_text_data
         
-        前提: 差分アノテーションは文章単位で入力される想定
+        bbox_text_dataは既に単語単位で分割されている前提
         """
-        # 文章単位での分割（アノテーション単位に対応）
-        sentences1 = self.mecab_tokenizer.split_sentences(doc1.text)
-        sentences2 = self.mecab_tokenizer.split_sentences(doc2.text)
+        differences = []
         
-        # MeCabによる単語分割
-        tokens1 = [self.mecab_tokenizer.tokenize(sent) for sent in sentences1]
-        tokens2 = [self.mecab_tokenizer.tokenize(sent) for sent in sentences2]
+        # ページごとに処理
+        doc1_pages = self._group_by_page(doc1_bbox_list)
+        doc2_pages = self._group_by_page(doc2_bbox_list)
         
-        alignment = self._align_documents(tokens1, tokens2)
-        differences = self._calculate_differences(alignment)
+        all_pages = set(doc1_pages.keys()) | set(doc2_pages.keys())
         
-        return self._classify_changes(differences)
+        for page in sorted(all_pages):
+            page1_data = doc1_pages.get(page, [])
+            page2_data = doc2_pages.get(page, [])
+            
+            # 単語レベルでの差分検出
+            page_diffs = self._detect_page_differences(page1_data, page2_data)
+            differences.extend(page_diffs)
+        
+        return differences
+    
+    def _group_by_page(self, bbox_list: List[BBoxTextData]) -> Dict[int, List[BBoxTextData]]:
+        """Group bbox_text_data by page number"""
+        pages = {}
+        for bbox_data in bbox_list:
+            page = bbox_data['page']
+            if page not in pages:
+                pages[page] = []
+            pages[page].append(bbox_data)
+        return pages
+    
+    def _detect_page_differences(self, page1_data: List[BBoxTextData], 
+                               page2_data: List[BBoxTextData]) -> List[DiffResult]:
+        """Detect differences within a page"""
+        # 位置と内容を考慮した差分検出
+        pass
 ```
 
 
-### 2.4 アンサンブル統合システム (`EnsembleIntegrator`)
+### 2.4 出力生成システム (`OutputGenerator`)
 
-#### 2.4.1 アンサンブル戦略の明確化
+#### 2.4.1 ハイライト生成戦略
 
-**アンサンブル対象**:
-1. **文字ベース差分検出** (SequenceMatcher) - 従来手法
-2. **単語ベース差分検出** (形態素解析ベース) - 新手法
+**ハイライト対象**:
+1. **読み順序**: 番号付き青色ハイライト
+2. **差分箇所**: 色分けハイライト
+   - 追加: 緑色
+   - 削除: 赤色
+   - 修正: 黄色
 
-**統合方式**:
-- 両手法の結果を統合し、より高精度な差分検出を実現
-- 文字レベル: 細かい変更を検出
-- 単語レベル: 意味的な変更を検出
+**出力形式**:
+- PDF: 元ファイルにハイライトを追加
+- Word(DOCX): 元ファイルにハイライトを追加
+- PowerPoint(PPTX): 元ファイルにハイライトを追加
 
 ```python
-class EnsembleIntegrator:
+class OutputGenerator:
     def __init__(self, 
-                 pdf_engine: PDFAnalysisEngine,
-                 reading_order: ReadingOrderEstimator,
-                 char_diff_detector: CharacterBasedDiffDetector,
-                 word_diff_detector: WordBasedDiffDetector,
-                 confidence_evaluator: ConfidenceEvaluator):
-        self.pdf_engine = pdf_engine
-        self.reading_order = reading_order
-        self.char_diff_detector = char_diff_detector
-        self.word_diff_detector = word_diff_detector
-        self.confidence_evaluator = confidence_evaluator
+                 pdf_handler: PDFHighlightHandler,
+                 docx_handler: DocxHighlightHandler,
+                 pptx_handler: PptxHighlightHandler):
+        self.pdf_handler = pdf_handler
+        self.docx_handler = docx_handler
+        self.pptx_handler = pptx_handler
     
-    def process_pdf_comparison(self, pdf1: bytes, pdf2: bytes) -> ComparisonResult:
-        """Execute full PDF comparison pipeline"""
-        # 1. PDF解析
-        doc1_blocks = self.pdf_engine.extract_text_blocks(pdf1)
-        doc2_blocks = self.pdf_engine.extract_text_blocks(pdf2)
+    def generate_highlighted_document(self, 
+                                    original_file: bytes,
+                                    file_type: str,
+                                    reading_order: List[BBoxTextData],
+                                    differences: List[DiffResult]) -> bytes:
+        """Generate document with highlights"""
+        if file_type == 'pdf':
+            return self.pdf_handler.add_highlights(original_file, reading_order, differences)
+        elif file_type == 'docx':
+            return self.docx_handler.add_highlights(original_file, reading_order, differences)
+        elif file_type == 'pptx':
+            return self.pptx_handler.add_highlights(original_file, reading_order, differences)
+
+class DocumentComparisonPipeline:
+    def __init__(self,
+                 doc_engine: DocumentAnalysisEngine,
+                 reading_order: ReadingOrderEstimator,
+                 diff_detector: BBoxBasedDiffDetector,
+                 output_generator: OutputGenerator):
+        self.doc_engine = doc_engine
+        self.reading_order = reading_order
+        self.diff_detector = diff_detector
+        self.output_generator = output_generator
+    
+    def process_document_comparison(self, file1: bytes, file2: bytes, 
+                                  file_type: str) -> Tuple[bytes, bytes]:
+        """Execute full document comparison pipeline"""
+        # 1. bbox_text_data抽出
+        doc1_bbox_list = self.doc_engine.extract_bbox_text_data(file1, file_type)
+        doc2_bbox_list = self.doc_engine.extract_bbox_text_data(file2, file_type)
         
         # 2. 読み順序推定
-        doc1_ordered = self.reading_order.estimate_reading_order(doc1_blocks)
-        doc2_ordered = self.reading_order.estimate_reading_order(doc2_blocks)
+        doc1_ordered = self.reading_order.estimate_reading_order(doc1_bbox_list)
+        doc2_ordered = self.reading_order.estimate_reading_order(doc2_bbox_list)
         
-        # 3. 文字ベース差分検出
-        char_differences = self.char_diff_detector.detect_differences(doc1_ordered, doc2_ordered)
+        # 3. 差分検出
+        differences = self.diff_detector.detect_differences(doc1_ordered, doc2_ordered)
         
-        # 4. 単語ベース差分検出
-        word_differences = self.word_diff_detector.detect_differences(doc1_ordered, doc2_ordered)
+        # 4. ハイライト付きファイル生成
+        highlighted_file1 = self.output_generator.generate_highlighted_document(
+            file1, file_type, doc1_ordered, differences)
+        highlighted_file2 = self.output_generator.generate_highlighted_document(
+            file2, file_type, doc2_ordered, differences)
         
-        # 5. 結果統合
-        differences = self._merge_detection_results(char_differences, word_differences)
-        
-        # 6. 信頼度評価
-        confidence_scores = self.confidence_evaluator.evaluate(differences)
-        
-        return ComparisonResult(differences, confidence_scores)
+        return highlighted_file1, highlighted_file2
 ```
 
 ## 3. データモデル設計
 
 ### 3.1 文書関連モデル
 ```python
-@dataclass
-class TextBlock:
-    text: str
-    bbox: BoundingBox
-    page_number: int
-    confidence: float
-    block_type: BlockType  # PARAGRAPH, HEADER, FOOTER, TABLE
+from typing import TypedDict, List
 
-@dataclass
-class ProcessedDocument:
-    text_blocks: List[TextBlock]
-    reading_order: List[int]  # インデックス順序
-    metadata: DocumentMetadata
+class BBoxTextData(TypedDict):
+    bbox: List[float]  # [x, y, width, height]
+    text: str          # 単語単位のテキスト
+    page: int          # ページ番号
 
-@dataclass 
-class Token:
-    surface: str          # 表層形
-    part_of_speech: str   # 品詞
-    base_form: str        # 基本形
-    position: int         # 文章内位置
-```
-
-### 3.1.1 MeCabトークナイザー実装
-```python
-class MeCabTokenizer:
-    def __init__(self, mecab_dicdir: Optional[str] = None):
-        import MeCab
-        self.tagger = MeCab.Tagger(f"-d {mecab_dicdir}" if mecab_dicdir else "")
-    
-    def tokenize(self, text: str) -> List[Token]:
-        """MeCab形態素解析による日本語テキストのトークン化"""
-        result = []
-        node = self.tagger.parseToNode(text)
-        position = 0
-        
-        while node:
-            if node.surface:
-                features = node.feature.split(',')
-                token = Token(
-                    surface=node.surface,
-                    part_of_speech=features[0],
-                    base_form=features[6] if len(features) > 6 else node.surface,
-                    position=position
-                )
-                result.append(token)
-                position += len(node.surface)
-            node = node.next
-        
-        return result
-    
-    def split_sentences(self, text: str) -> List[str]:
-        """文章単位分割（アノテーション単位に対応）"""
-        import re
-        # 句点・感嘆符・疑問符・改行等で文章を分割
-        sentences = re.split(r'[。！？\n]+', text)
-        return [s.strip() for s in sentences if s.strip()]
-```
-
-### 3.2 差分検出結果モデル
-```python
 @dataclass
 class DiffResult:
     change_type: ChangeType  # ADDITION, DELETION, MODIFICATION
-    confidence_score: float
-    original_text: Optional[str]
-    modified_text: Optional[str]
-    location: DocumentLocation
-    detection_method: str  # "character_based" or "word_based"
+    original_bbox: Optional[BBoxTextData]
+    modified_bbox: Optional[BBoxTextData]
+    page: int
+    confidence: float
+
+class ChangeType(Enum):
+    ADDITION = "addition"
+    DELETION = "deletion"
+    MODIFICATION = "modification"
+```
+
+### 3.1.1 文書タイプ別BBox抽出実装
+```python
+class PyMuPDFService:
+    def extract_bbox_data(self, pdf_bytes: bytes) -> List[BBoxTextData]:
+        """Extract bbox_text_data from PDF using PyMuPDF"""
+        import fitz
+        doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+        bbox_data_list = []
+        
+        for page_num, page in enumerate(doc):
+            words = page.get_text("words")  # [(x0, y0, x1, y1, "word", block_no, line_no, word_no)]
+            for word in words:
+                bbox_data = BBoxTextData(
+                    bbox=[word[0], word[1], word[2]-word[0], word[3]-word[1]],
+                    text=word[4],
+                    page=page_num
+                )
+                bbox_data_list.append(bbox_data)
+        
+        return bbox_data_list
+
+class DocxService:
+    def extract_bbox_data(self, docx_bytes: bytes) -> List[BBoxTextData]:
+        """Extract bbox_text_data from Word document"""
+        # python-docxを使用した実装
+        # 注: Wordファイルからは直接bbox情報を取得できないため、
+        # レイアウト情報を推定する必要がある
+        pass
+
+class PptxService:
+    def extract_bbox_data(self, pptx_bytes: bytes) -> List[BBoxTextData]:
+        """Extract bbox_text_data from PowerPoint presentation"""
+        # python-pptxを使用した実装
+        # スライド内のシェイプから位置情報を取得
+        pass
+```
+
+### 3.2 ハイライト情報モデル
+```python
+@dataclass
+class Highlight:
+    bbox: List[float]  # [x, y, width, height]
+    page: int
+    color: str  # "red", "green", "yellow", "blue"
+    label: Optional[str]  # 読み順序の番号など
     
 @dataclass
-class ComparisonResult:
-    differences: List[DiffResult]
-    summary: ComparisonSummary
-    processing_time: float
-    performance_metrics: PerformanceMetrics
+class HighlightedDocument:
+    original_file: bytes
+    highlights: List[Highlight]
+    file_type: str
+    metadata: Dict[str, Any]
 ```
 
 ## 4. API設計
@@ -238,28 +309,33 @@ class ComparisonResult:
 ### 4.1 RESTful API
 ```python
 # メイン差分検出API
-@router.post("/api/v1/pdf/compare")
-async def compare_pdfs(
+@router.post("/api/v1/document/compare")
+async def compare_documents(
     file1: UploadFile,
     file2: UploadFile,
+    file_type: str = Form(...),  # "pdf", "docx", "pptx"
     options: ComparisonOptions = Body(default_factory=ComparisonOptions)
-) -> ComparisonResult:
-    """Compare two PDF files and return differences"""
+) -> Dict[str, str]:
+    """Compare two documents and return highlighted files"""
+    # ハイライト付きファイルのダウンロードURLを返す
+    return {
+        "file1_url": "/download/{file1_id}",
+        "file2_url": "/download/{file2_id}"
+    }
+
+# ハイライト付きファイルダウンロードAPI
+@router.get("/api/v1/download/{file_id}")
+async def download_highlighted_file(file_id: str) -> FileResponse:
+    """Download highlighted file"""
     pass
 
-# 結果取得API
-@router.get("/api/v1/comparison/{comparison_id}")
-async def get_comparison_result(comparison_id: str) -> ComparisonResult:
-    """Get comparison result by ID"""
-    pass
-
-# エクスポートAPI
-@router.get("/api/v1/comparison/{comparison_id}/export")
-async def export_comparison(
-    comparison_id: str,
-    format: ExportFormat = Query(ExportFormat.PDF)
-) -> FileResponse:
-    """Export comparison result in specified format"""
+# プレビューAPI
+@router.post("/api/v1/document/preview")
+async def preview_highlights(
+    file: UploadFile,
+    highlights: List[Highlight]
+) -> Dict[str, Any]:
+    """Preview highlights on document"""
     pass
 ```
 
@@ -281,13 +357,13 @@ class MemoryOptimizedProcessor:
         self.max_memory_mb = max_memory_mb
         self.memory_monitor = MemoryMonitor()
     
-    def process_large_pdf(self, pdf_bytes: bytes) -> ProcessingResult:
-        """Process large PDF with memory constraints"""
+    def process_large_document(self, file_bytes: bytes, file_type: str) -> ProcessingResult:
+        """Process large document with memory constraints"""
         if self.memory_monitor.get_usage() > self.max_memory_mb * 0.8:
             self._trigger_garbage_collection()
         
         # ページ単位での分割処理
-        return self._process_in_chunks(pdf_bytes)
+        return self._process_in_chunks(file_bytes, file_type)
 ```
 
 ### 5.2 並列処理最適化
@@ -306,27 +382,27 @@ class ParallelProcessingOrchestrator:
 
 ### 6.1 階層的エラー処理
 ```python
-class PDFComparisonError(Exception):
-    """Base exception for PDF comparison errors"""
+class DocumentComparisonError(Exception):
+    """Base exception for document comparison errors"""
     pass
 
-class PDFFormatError(PDFComparisonError):
-    """Invalid PDF format error"""
+class DocumentFormatError(DocumentComparisonError):
+    """Invalid document format error"""
     pass
 
-class LLMAPIError(PDFComparisonError):
-    """LLM API related error"""
+class BBoxExtractionError(DocumentComparisonError):
+    """BBox extraction failed error"""
     pass
 
-class MemoryLimitError(PDFComparisonError):
+class MemoryLimitError(DocumentComparisonError):
     """Memory limit exceeded error"""
     pass
 ```
 
 ### 6.2 障害復旧戦略
-- **自動リトライ**: LLM API障害時の指数バックオフ
-- **フォールバック**: LLM不使用の代替処理モード
+- **フォールバック**: ファイルタイプ別の代替処理
 - **グレースフルデグラデーション**: 部分的機能での継続動作
+- **エラー通知**: 管理者へのエラー通知
 
 ## 7. セキュリティ考慮事項
 
@@ -345,14 +421,19 @@ class MemoryLimitError(PDFComparisonError):
 ### 8.1 メトリクス収集
 ```python
 class PerformanceMonitor:
-    def track_comparison_metrics(self, result: ComparisonResult):
+    def track_comparison_metrics(self, 
+                               file_type: str,
+                               processing_time: float,
+                               file_size: int,
+                               differences: List[DiffResult]):
         """Track performance metrics"""
         metrics = {
-            'processing_time': result.processing_time,
-            'document_size': result.document_size,
-            'differences_found': len(result.differences),
+            'file_type': file_type,
+            'processing_time': processing_time,
+            'file_size': file_size,
+            'differences_found': len(differences),
             'memory_usage': self.get_memory_usage(),
-            'api_calls': result.api_calls_count
+            'pages_processed': self.get_pages_processed()
         }
         self.metrics_collector.record(metrics)
 ```
@@ -375,9 +456,12 @@ logger.info("PDF comparison started", extra={
 - **性能テスト**: 負荷・メモリ使用量テスト
 - **精度テスト**: 既知データセットでの検出率評価
 
-### 9.2 継続的品質改善
-- **A/Bテスト**: アルゴリズム改善効果の定量評価
-- **フィードバック収集**: ユーザーからの品質評価
-- **定期的再評価**: 月次での性能・精度レビュー
+### 9.2 人力評価プロセス
+- **評価対象**: ハイライト付き出力ファイル
+- **評価項目**:
+  - 読み順序の正確性
+  - 差分検出の正確性
+  - 誤検出・見逃しの確認
+- **評価シート**: 結果記録用テンプレート提供
 
-この技術設計は、修正された要件定義に基づき、テキストベースPDF専用の効率的な差分検出システムの実現を目指しています。
+この技術設計は、bbox_text_dataを中心としたPDF・Word・Pptx文書の差分検出システムの実現を目指しています。出力はハイライト付きファイルとし、人力での評価を前提としています。
