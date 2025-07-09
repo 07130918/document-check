@@ -33,11 +33,11 @@ ENV POETRY_NO_INTERACTION=1
 WORKDIR /app
 
 # プロジェクトファイルコピー
-COPY pyproject.toml poetry.lock* ./
+COPY pyproject.toml poetry.lock* README.md ./
 
-# 依存関係インストール
+# 依存関係インストール（まず依存関係のみ）
 RUN poetry config virtualenvs.create false \
-    && poetry install --with dev,test --extras "full" \
+    && poetry install --no-root --with dev,test --extras "full" \
     && rm -rf $POETRY_CACHE_DIR
 
 # MeCab辞書設定
@@ -45,6 +45,9 @@ ENV MECAB_CHARSET=utf8
 
 # アプリケーションコード追加
 COPY . .
+
+# プロジェクト自体をインストール（開発モード）
+RUN poetry install --only-root
 
 # ポート公開（将来のWebAPI用）
 EXPOSE 8000
