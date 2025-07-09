@@ -78,13 +78,4 @@ phase4:
 
 # 全テストケース実行
 full-test:
-	docker-compose run --rm pdf-diff-system python -c "
-from evaluation import TestDataGenerator, ComparisonEvaluator
-from baseline import SequenceMatcherDiffDetector
-generator = TestDataGenerator()
-cases = generator.generate_test_cases()
-detector = SequenceMatcherDiffDetector()
-evaluator = ComparisonEvaluator(detector)
-result = evaluator.run_ab_test(cases)
-print(f'全30ケーステスト完了: 真陽性率={result.baseline_metrics.recall:.3f}')
-"
+	docker-compose run --rm pdf-diff-system python -c "from evaluation import TestDataGenerator, ComparisonEvaluator; from baseline import SequenceMatcherDiffDetector; generator = TestDataGenerator(); cases = generator.generate_test_cases(); detector = SequenceMatcherDiffDetector(); evaluator = ComparisonEvaluator(detector); result = evaluator.run_ab_test(cases); print(f'全30ケーステスト完了: 真陽性率={result.baseline_metrics.recall:.3f}')"
