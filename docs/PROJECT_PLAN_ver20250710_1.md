@@ -93,7 +93,7 @@ POST /api/detect
 - **Storage Account**: 結果PDF一時保存用
 
 ### 推定コスト
-約5,000円/月（PoC環境）
+約5,500円/月（PoC環境）
 ※Container Instances削除により¥2,000/月削減
 
 ## デプロイメント
