@@ -2,7 +2,7 @@
 
 ## システム概要
 
-### アーキテクチャ構成
+### アーキテクチャ構成（モノリシック構成）
 ```mermaid
 graph TB
     subgraph "利用者"
@@ -10,11 +10,10 @@ graph TB
     end
 
     subgraph "Azure App Service"
-        WEB[Streamlit Web App<br/>Python 3.11]
-    end
-
-    subgraph "Azure Container Instances"
-        API[Web API Backend<br/>PDF差分検出ロジック<br/>（仮：FastAPI）]
+        subgraph "単一Dockerコンテナ"
+            WEB[Streamlit Web App<br/>Python 3.11<br/>Port: 8501]
+            API[PDF差分検出API<br/>内部通信<br/>Port: 8000]
+        end
     end
 
     subgraph "Azure OpenAI Service"
@@ -27,25 +26,24 @@ graph TB
     end
 
     U -->|HTTPS| WEB
-    WEB -->|HTTP POST /api/detect| API
+    WEB -->|localhost:8000| API
     API -->|API Call| LLM
     REPO -->|Push| GA
-    GA -->|Deploy| WEB
+    GA -->|Deploy| Azure App Service
 ```
 
-**注意**: API実装方法（FastAPI等）は仮決定。7月末に横山さんが最終決定。
+**注意**: モジュラーモノリシック構成を採用。横山さんのDockerイメージをベースに統合。
 
 ## 技術スタック
 
 | レイヤー | 技術 | 担当 | 備考 |
 |---------|------|------|------|
 | **フロントエンド** | Streamlit 1.35+ | 杉山 | Python製Webフレームワーク |
-| **バックエンド** | Web API（仮：FastAPI） | 横山さん | 7月末完成・実装方法確定 |
+| **バックエンド** | Web API（FastAPI） | 横山さん | 内部API（localhost:8000） |
 | **PDF処理** | PyMuPDF | 横山さん | 実装済み |
 | **日本語処理** | MeCab | 横山さん | 実装済み |
 | **LLM** | Azure OpenAI Service | 横山さん | GPT-4使用 |
-| **ホスティング** | Azure App Service | 杉山 | B1インスタンス |
-| **API実行環境** | Azure Container Instances | 杉山 | 2vCPU/4GB |
+| **ホスティング** | Azure App Service | 杉山 | B1インスタンス（単一コンテナ） |
 | **CI/CD** | GitHub Actions | 杉山 | 自動デプロイ |
 
 ## データフロー
@@ -129,17 +127,19 @@ Content-Type: multipart/form-data
 
 ## インフラ構成
 
-### リソース一覧
+### リソース一覧（モノリシック構成）
 | リソース | SKU/サイズ | 用途 | 月額コスト |
 |---------|-----------|------|------------|
-| App Service Plan | B1 | Streamlitホスティング | ¥5,000 |
-| App Service | - | Webアプリケーション | - |
-| Container Instances | 2vCPU/4GB | API実行 | ¥2,000 |
+| App Service Plan | B1 | モノリシックアプリホスティング | ¥5,000 |
+| App Service | - | Streamlit + API統合アプリ | - |
 | Storage Account | Standard LRS | 一時ファイル保存 | ¥500 |
+
+**削減効果**: Container Instances不要により月額¥2,000削減
 
 ### ネットワーク構成
 - パブリックアクセス（IP制限付き）
-- VNet統合なし（PoC簡略化のため）
+- 内部通信のみ（CORS設定不要）
+- シンプルな構成
 
 ## デプロイメント設計
 
@@ -170,7 +170,8 @@ jobs:
 # App Service設定
 AZURE_OPENAI_ENDPOINT=https://xxx.openai.azure.com/
 AZURE_OPENAI_API_KEY=***
-API_ENDPOINT=http://container-internal-ip:8000  # 仮
+API_URL=http://localhost:8000  # 内部通信
+USE_MOCK_API=false  # 本番環境
 ```
 
 ## 制約事項
@@ -186,15 +187,17 @@ API_ENDPOINT=http://container-internal-ip:8000  # 仮
 - 応答時間: 30ページPDFで60秒以内
 - 同時ユーザー数: 最大10名
 
-## コスト試算
+## コスト試算（モノリシック構成）
 
 | 項目 | 月額費用 |
 |------|----------|
 | App Service (B1) | ¥5,000 |
-| Container Instances | ¥2,000 |
+| ~~Container Instances~~ | ~~¥2,000~~ → ¥0 |
 | Storage | ¥500 |
 | Azure OpenAI | 従量課金 |
-| **合計** | **¥7,500〜** |
+| **合計** | **¥5,500〜** |
+
+**コスト削減**: 月額¥2,000削減（Container Instances不要）
 
 ## 今後の拡張性
 
@@ -205,17 +208,29 @@ API_ENDPOINT=http://container-internal-ip:8000  # 仮
 4. **データ保持**: Blob Storageでの結果保存
 5. **非同期処理**: Azure Functionsでのバックグラウンド処理
 
-## API実装に関する柔軟性
+## モノリシックアーキテクチャの利点
 
-7月末にAPI実装方法が確定するまで、以下の点で柔軟に対応：
+1. **シンプルな構成**: 単一コンテナで全機能を提供
+2. **CORS不要**: 同一オリジンでの通信
+3. **コスト削減**: Container Instances不要で月額¥2,000削減
+4. **運用容易性**: 監視ポイントの削減
+5. **パフォーマンス**: ネットワークレイテンシなし
 
-1. **API抽象化層**: フロントエンドはAPIクライアントを抽象化
-2. **モックAPI**: 7月はモックAPIで開発を進行
-3. **最小限の結合**: API仕様のみに依存し、実装詳細に依存しない設計
+## 開発・デプロイ戦略
+
+### 開発時（7月）
+- foundation/web: モックAPIで独立開発
+- apps/: 横山さんが独立開発
+- 相互に影響なし
+
+### 統合時（8月）
+- 横山さんのDockerイメージをベースに統合
+- 単一のDockerfileで両機能を包含
+- Azure App Serviceにデプロイ
 
 このアーキテクチャにより、8月20日までにPoC版の本番稼働を実現します。
 
 ---
 
-*更新日: 2025年7月8日*
-*API実装方法は7月末に横山さんが決定予定*
+*更新日: 2025年7月10日*
+*モジュラーモノリシック構成に変更*
