@@ -14,26 +14,26 @@
 
 ## アーキテクチャ（案）
 
-### システム構成
+### システム構成（モノリシック）
 ```
 [ユーザー] 
     ↓
-[Streamlit Web App] (Azure App Service)
-    ↓
-[Web API] (仮FastAPI - Azure Container Instances)
+[Azure App Service - 単一コンテナ]
+  ├─ Streamlit Web App (Port 8501)
+  └─ PDF差分検出API (Port 8000/内部通信)
     ↓
 [Azure OpenAI Service]
 ```
 
-**注意**: API実装方法（FastAPI等）は仮決定。7月末に横山さんが最終決定。
+**注意**: モジュラーモノリシック構成を採用。横山さんのDockerイメージをベースに8月統合。
 
 ### 技術スタック
 - **フロントエンド**: Streamlit (Python)
-- **バックエンド**: Web API（仮FastAPI）
+- **バックエンド**: Web API（FastAPI/内部通信）
 - **PDF処理**: PyMuPDF
 - **日本語処理**: MeCab
 - **LLM**: Azure OpenAI Service
-- **インフラ**: Azure App Service
+- **インフラ**: Azure App Service（単一コンテナ）
 - **CI/CD**: GitHub Actions
 
 ### セキュリティ
@@ -85,15 +85,16 @@ POST /api/detect
 }
 ```
 
-## インフラ構成
+## インフラ構成（モノリシック）
 
 ### リソース
-- **App Service**: B1プラン（Streamlit用）
-- **Container Instances**: 2 vCPU, 4GB RAM（API用）
+- **App Service**: B1プラン（モノリシックアプリ用）
+- ~~**Container Instances**: 2 vCPU, 4GB RAM（削除）~~
 - **Storage Account**: 結果PDF一時保存用
 
 ### 推定コスト
-約7,000円/月（PoC環境）
+約5,000円/月（PoC環境）
+※Container Instances削除により¥2,000/月削減
 
 ## デプロイメント
 
@@ -134,8 +135,9 @@ jobs:
 |--------|------|
 | API実装方法の変更 | 抽象化層で柔軟に対応 |
 | API仕様の遅延 | モックAPIで事前開発 |
-| 統合の問題 | 7月末に仕様確認、8月初週で早期統合 |
+| 統合の問題 | モノリシック構成で単純化、8月初週で統合 |
 | 性能問題 | 同期処理で妥協（60秒タイムアウト） |
+| CORS設定 | モノリシックで回避（同一オリジン） |
 
 ## プロジェクト完了条件
 
@@ -145,5 +147,5 @@ jobs:
 
 ---
 
-*このドキュメントは草案です。内容は変更される可能性があります。*
-*API実装方法は7月末に決定される予定です。*
+*更新日: 2025年7月10日*
+*モジュラーモノリシック構成に変更（Container Instances削除）*
