@@ -1,12 +1,12 @@
 {
   "execution_info": {
-    "timestamp": "2025-07-09T15:20:55.635986",
-    "total_execution_time": "7.03 seconds",
+    "timestamp": "2025-07-11T13:20:01.603312",
+    "total_execution_time": "5.36 seconds",
     "phase_times": {
-      "bbox_extraction": "0.15 seconds",
+      "bbox_extraction": "0.14 seconds",
       "reading_order_estimation": "0.00 seconds",
-      "diff_detection": "0.33 seconds",
-      "output_generation": "6.55 seconds"
+      "diff_detection": "0.26 seconds",
+      "output_generation": "4.96 seconds"
     }
   },
   "document_info": {
@@ -34,40 +34,40 @@
     }
   },
   "diff_summary": {
-    "total_differences": 3009,
+    "total_differences": 2397,
     "by_type": {
-      "additions": 1222,
-      "deletions": 1767,
-      "modifications": 20
+      "additions": 902,
+      "deletions": 1463,
+      "modifications": 32
     },
     "by_page": {
       "0": {
-        "additions": 89,
-        "deletions": 31,
+        "additions": 101,
+        "deletions": 43,
         "modifications": 11
       },
       "1": {
-        "additions": 68,
-        "deletions": 56,
-        "modifications": 2
+        "additions": 64,
+        "deletions": 53,
+        "modifications": 3
       },
       "2": {
-        "additions": 488,
-        "deletions": 951,
-        "modifications": 4
+        "additions": 465,
+        "deletions": 917,
+        "modifications": 6
       },
       "3": {
-        "additions": 112,
-        "deletions": 250,
+        "additions": 136,
+        "deletions": 276,
         "modifications": 0
       },
       "4": {
-        "additions": 465,
-        "deletions": 479,
-        "modifications": 3
+        "additions": 136,
+        "deletions": 174,
+        "modifications": 12
       }
     },
-    "success_rate": 99.75
+    "success_rate": 99.61
   },
   "detailed_differences": [
     {
@@ -75,10 +75,10 @@
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "令和",
+      "original_text": "子供",
       "original_position": {
-        "x": 166.65869140625,
-        "y": 418.382080078125
+        "x": 197.71829223632812,
+        "y": 309.25482177734375
       }
     },
     {
@@ -86,10 +86,10 @@
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "5",
+      "original_text": "結婚",
       "original_position": {
-        "x": 196.25487811748798,
-        "y": 418.382080078125
+        "x": 382.3486022949219,
+        "y": 314.881591796875
       }
     },
     {
@@ -97,10 +97,10 @@
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "年",
+      "original_text": "独立",
       "original_position": {
-        "x": 211.05297147310696,
-        "y": 418.382080078125
+        "x": 197.71829223632812,
+        "y": 319.82720947265625
       }
     },
     {
@@ -108,10 +108,10 @@
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "10",
+      "original_text": "あなた",
       "original_position": {
-        "x": 225.85106482872595,
-        "y": 418.382080078125
+        "x": 260.0346984863281,
+        "y": 347.26129150390625
       }
     },
     {
@@ -119,10 +119,10 @@
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "月",
+      "original_text": "の",
       "original_position": {
-        "x": 255.44725153996393,
-        "y": 418.382080078125
+        "x": 293.4337506975446,
+        "y": 347.26129150390625
       }
     },
     {
@@ -130,10 +130,10 @@
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "25",
+      "original_text": "人生",
       "original_position": {
-        "x": 270.24534489558295,
-        "y": 418.382080078125
+        "x": 304.56676810128346,
+        "y": 347.26129150390625
       }
     },
     {
@@ -141,10 +141,10 @@
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "日",
+      "original_text": "に",
       "original_position": {
-        "x": 299.8415316068209,
-        "y": 418.382080078125
+        "x": 326.83280290876115,
+        "y": 347.26129150390625
       }
     },
     {
@@ -152,10 +152,10 @@
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "（",
+      "original_text": "寄り",
       "original_position": {
-        "x": 314.63962496243994,
-        "y": 418.382080078125
+        "x": 267.143798828125,
+        "y": 360.4815368652344
       }
     },
     {
@@ -163,10 +163,10 @@
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "水",
+      "original_text": "そう",
       "original_position": {
-        "x": 329.4377183180589,
-        "y": 418.382080078125
+        "x": 288.27301025390625,
+        "y": 360.4815368652344
       }
     },
     {
@@ -174,14 +174,36 @@
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "）",
+      "original_text": "保険",
       "original_position": {
-        "x": 344.23581167367786,
-        "y": 418.382080078125
+        "x": 309.4022216796875,
+        "y": 360.4815368652344
       }
     },
     {
       "index": 11,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "簡単",
+      "original_position": {
+        "x": 466.3905944824219,
+        "y": 358.8869934082031
+      }
+    },
+    {
+      "index": 12,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "！",
+      "original_position": {
+        "x": 489.04542032877606,
+        "y": 358.8869934082031
+      }
+    },
+    {
+      "index": 13,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -192,7 +214,7 @@
       }
     },
     {
-      "index": 12,
+      "index": 14,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -203,7 +225,18 @@
       }
     },
     {
-      "index": 13,
+      "index": 15,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "住宅",
+      "original_position": {
+        "x": 243.87600708007812,
+        "y": 389.4060974121094
+      }
+    },
+    {
+      "index": 16,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -214,7 +247,7 @@
       }
     },
     {
-      "index": 14,
+      "index": 17,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -225,7 +258,7 @@
       }
     },
     {
-      "index": 15,
+      "index": 18,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -236,7 +269,7 @@
       }
     },
     {
-      "index": 16,
+      "index": 19,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -247,7 +280,7 @@
       }
     },
     {
-      "index": 17,
+      "index": 20,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -258,7 +291,7 @@
       }
     },
     {
-      "index": 18,
+      "index": 21,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -269,7 +302,7 @@
       }
     },
     {
-      "index": 19,
+      "index": 22,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -280,7 +313,7 @@
       }
     },
     {
-      "index": 20,
+      "index": 23,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -291,7 +324,7 @@
       }
     },
     {
-      "index": 21,
+      "index": 24,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -302,7 +335,117 @@
       }
     },
     {
-      "index": 22,
+      "index": 25,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "令和",
+      "original_position": {
+        "x": 166.65869140625,
+        "y": 418.382080078125
+      }
+    },
+    {
+      "index": 26,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "5",
+      "original_position": {
+        "x": 196.25487811748798,
+        "y": 418.382080078125
+      }
+    },
+    {
+      "index": 27,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "年",
+      "original_position": {
+        "x": 211.05297147310696,
+        "y": 418.382080078125
+      }
+    },
+    {
+      "index": 28,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "10",
+      "original_position": {
+        "x": 225.85106482872595,
+        "y": 418.382080078125
+      }
+    },
+    {
+      "index": 29,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "月",
+      "original_position": {
+        "x": 255.44725153996393,
+        "y": 418.382080078125
+      }
+    },
+    {
+      "index": 30,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "25",
+      "original_position": {
+        "x": 270.24534489558295,
+        "y": 418.382080078125
+      }
+    },
+    {
+      "index": 31,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "日",
+      "original_position": {
+        "x": 299.8415316068209,
+        "y": 418.382080078125
+      }
+    },
+    {
+      "index": 32,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "（",
+      "original_position": {
+        "x": 314.63962496243994,
+        "y": 418.382080078125
+      }
+    },
+    {
+      "index": 33,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "水",
+      "original_position": {
+        "x": 329.4377183180589,
+        "y": 418.382080078125
+      }
+    },
+    {
+      "index": 34,
+      "type": "deletion",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "）",
+      "original_position": {
+        "x": 344.23581167367786,
+        "y": 418.382080078125
+      }
+    },
+    {
+      "index": 35,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -313,7 +456,7 @@
       }
     },
     {
-      "index": 23,
+      "index": 36,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -324,7 +467,7 @@
       }
     },
     {
-      "index": 24,
+      "index": 37,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -335,7 +478,7 @@
       }
     },
     {
-      "index": 25,
+      "index": 38,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -346,7 +489,7 @@
       }
     },
     {
-      "index": 26,
+      "index": 39,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -357,7 +500,7 @@
       }
     },
     {
-      "index": 27,
+      "index": 40,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -368,7 +511,7 @@
       }
     },
     {
-      "index": 28,
+      "index": 41,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -379,7 +522,7 @@
       }
     },
     {
-      "index": 29,
+      "index": 42,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -390,7 +533,7 @@
       }
     },
     {
-      "index": 30,
+      "index": 43,
       "type": "deletion",
       "page": 1,
       "confidence": 1.0,
@@ -401,73 +544,7 @@
       }
     },
     {
-      "index": 31,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": "加入",
-      "original_position": {
-        "x": 61.675540924072266,
-        "y": 541.6802368164062
-      }
-    },
-    {
-      "index": 32,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 0.9,
-      "original_text": "い",
-      "original_position": {
-        "x": 94.50163396199544,
-        "y": 541.6802368164062
-      }
-    },
-    {
-      "index": 33,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 0.9,
-      "original_text": "た",
-      "original_position": {
-        "x": 94.50163396199544,
-        "y": 541.6802368164062
-      }
-    },
-    {
-      "index": 34,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 0.9,
-      "original_text": "だけ",
-      "original_position": {
-        "x": 94.50163396199544,
-        "y": 541.6802368164062
-      }
-    },
-    {
-      "index": 35,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": "ます",
-      "original_position": {
-        "x": 160.1538200378418,
-        "y": 541.6802368164062
-      }
-    },
-    {
-      "index": 36,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": "！",
-      "original_position": {
-        "x": 192.97991307576496,
-        "y": 541.6802368164062
-      }
-    },
-    {
-      "index": 37,
+      "index": 44,
       "type": "deletion",
       "page": 2,
       "confidence": 1.0,
@@ -478,7 +555,7 @@
       }
     },
     {
-      "index": 38,
+      "index": 45,
       "type": "deletion",
       "page": 2,
       "confidence": 1.0,
@@ -489,7 +566,18 @@
       }
     },
     {
-      "index": 39,
+      "index": 46,
+      "type": "deletion",
+      "page": 2,
+      "confidence": 1.0,
+      "original_text": "！",
+      "original_position": {
+        "x": 367.6966552734375,
+        "y": 468.2360534667969
+      }
+    },
+    {
+      "index": 47,
       "type": "deletion",
       "page": 2,
       "confidence": 1.0,
@@ -500,7 +588,7 @@
       }
     },
     {
-      "index": 40,
+      "index": 48,
       "type": "deletion",
       "page": 2,
       "confidence": 1.0,
@@ -511,102 +599,14 @@
       }
     },
     {
-      "index": 41,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": "心",
-      "original_position": {
-        "x": 354.4049072265625,
-        "y": 483.1343688964844
-      }
-    },
-    {
-      "index": 42,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": "安心",
-      "original_position": {
-        "x": 122.25889587402344,
-        "y": 484.1178894042969
-      }
-    },
-    {
-      "index": 43,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": "約",
-      "original_position": {
-        "x": 378.1664123535156,
-        "y": 561.0773315429688
-      }
-    },
-    {
-      "index": 44,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": "5",
-      "original_position": {
-        "x": 394.96201477050784,
-        "y": 561.0773315429688
-      }
-    },
-    {
-      "index": 45,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": "億",
-      "original_position": {
-        "x": 411.7576171875,
-        "y": 561.0773315429688
-      }
-    },
-    {
-      "index": 46,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": "3",
-      "original_position": {
-        "x": 428.5532196044922,
-        "y": 561.0773315429688
-      }
-    },
-    {
-      "index": 47,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": ",",
-      "original_position": {
-        "x": 445.34882202148435,
-        "y": 561.0773315429688
-      }
-    },
-    {
-      "index": 48,
-      "type": "deletion",
-      "page": 2,
-      "confidence": 1.0,
-      "original_text": "600",
-      "original_position": {
-        "x": 462.14442443847656,
-        "y": 561.0773315429688
-      }
-    },
-    {
       "index": 49,
       "type": "deletion",
       "page": 2,
       "confidence": 1.0,
-      "original_text": "万",
+      "original_text": "役立つ",
       "original_position": {
-        "x": 512.5312316894531,
-        "y": 561.0773315429688
+        "x": 445.71038818359375,
+        "y": 471.9911804199219
       }
     },
     {
@@ -614,16 +614,16 @@
       "type": "deletion",
       "page": 2,
       "confidence": 1.0,
-      "original_text": "円",
+      "original_text": "従",
       "original_position": {
-        "x": 529.3268341064453,
-        "y": 561.0773315429688
+        "x": 206.56448364257812,
+        "y": 472.10736083984375
       }
     }
   ],
   "layout_changes": [],
   "quality_metrics": {
-    "avg_confidence": 0.9975240943835162,
+    "avg_confidence": 0.9960575719649563,
     "high_confidence_ratio": 1.0,
     "layout_change_detected": 0,
     "potential_false_positives": 0
@@ -634,31 +634,31 @@
         "type": "deletion",
         "confidence": 1.0,
         "page": 1,
-        "text1": "令和"
+        "text1": "子供"
       },
       {
         "type": "deletion",
         "confidence": 1.0,
         "page": 1,
-        "text1": "5"
+        "text1": "結婚"
       },
       {
         "type": "deletion",
         "confidence": 1.0,
         "page": 1,
-        "text1": "年"
+        "text1": "独立"
       },
       {
         "type": "deletion",
         "confidence": 1.0,
         "page": 1,
-        "text1": "10"
+        "text1": "あなた"
       },
       {
         "type": "deletion",
         "confidence": 1.0,
         "page": 1,
-        "text1": "月"
+        "text1": "の"
       }
     ],
     "failure": []

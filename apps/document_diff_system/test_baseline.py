@@ -61,28 +61,34 @@ def test_baseline():
         print("✅ ベースライン実装の実行が完了しました")
         print("=" * 50)
         
-        # 期待される出力ファイルの確認
+        # 期待される出力ファイルの確認（新しいディレクトリ構造）
         expected_files = [
-            "2023_compared.pdf",
-            "2024_compared.pdf", 
-            "2023_reading_order.pdf",
-            "2024_reading_order.pdf",
-            "sentence_info.json",
-            "reading_order.json",
-            "execution_report.json",
-            "execution_report.md"
+            ("PDFs", "2023_compared.pdf"),
+            ("PDFs", "2024_compared.pdf"), 
+            ("PDFs", "2023_original_order.pdf"),
+            ("PDFs", "2024_original_order.pdf"),
+            ("PDFs", "2023_reading_order.pdf"),
+            ("PDFs", "2024_reading_order.pdf"),
+            ("reports", "sentence_info.json"),
+            ("reports", "reading_order.json"),
+            ("reports", "execution_report.json"),
+            ("reports", "execution_report.md"),
+            ("debug", "2023_reading_order_original.csv"),
+            ("debug", "2023_reading_order_estimated.csv"),
+            ("debug", "2024_reading_order_original.csv"),
+            ("debug", "2024_reading_order_estimated.csv")
         ]
         
         print("\n生成されたファイル:")
         missing_files = []
-        for filename in expected_files:
-            file_path = output_dir / filename
+        for subdir, filename in expected_files:
+            file_path = output_dir / subdir / filename
             if file_path.exists():
                 size = file_path.stat().st_size
-                print(f"  ✓ {filename} ({size:,} bytes)")
+                print(f"  ✓ {subdir}/{filename} ({size:,} bytes)")
             else:
-                print(f"  ✗ {filename} (見つかりません)")
-                missing_files.append(filename)
+                print(f"  ✗ {subdir}/{filename} (見つかりません)")
+                missing_files.append(f"{subdir}/{filename}")
         
         # サマリー情報の表示
         print(f"\n文書情報:")
