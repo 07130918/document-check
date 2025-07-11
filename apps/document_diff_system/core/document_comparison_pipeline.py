@@ -4,6 +4,7 @@ Document Comparison Pipeline - 統合パイプライン
 from typing import Tuple, Dict, Any
 from pathlib import Path
 import json
+import csv
 from ..services import (
     DocumentAnalysisEngine,
     ReadingOrderEstimator,
@@ -180,43 +181,50 @@ class DocumentComparisonPipeline:
         else:
             output_dir = file1_path.parent
         
-        # 出力ファイル名の生成
+        # サブディレクトリを作成
+        pdfs_dir = output_dir / "PDFs"
+        debug_dir = output_dir / "debug"
+        reports_dir = output_dir / "reports"
+        
+        pdfs_dir.mkdir(exist_ok=True)
+        debug_dir.mkdir(exist_ok=True)
+        reports_dir.mkdir(exist_ok=True)
+        
+        # PDFファイルを保存
         output1_name = f"{file1_path.stem}_compared.{file_type}"
         output2_name = f"{file2_path.stem}_compared.{file_type}"
         
-        output1_path = output_dir / output1_name
-        output2_path = output_dir / output2_name
+        output1_path = pdfs_dir / output1_name
+        output2_path = pdfs_dir / output2_name
         
-        # ファイルを保存
         with open(output1_path, 'wb') as f:
             f.write(highlighted1)
         with open(output2_path, 'wb') as f:
             f.write(highlighted2)
         
         print(f"\nOutput files saved:")
-        print(f"  - {output1_path.name}")
-        print(f"  - {output2_path.name}")
+        print(f"  [PDFs]")
+        print(f"    - {output1_path.name}")
+        print(f"    - {output2_path.name}")
         
         # 文章情報を別ファイルに保存
         if 'sentence_info' in summary:
-            sentence_info_path = output_dir / 'sentence_info.json'
+            sentence_info_path = reports_dir / 'sentence_info.json'
             with open(sentence_info_path, 'w', encoding='utf-8') as f:
                 json.dump(summary['sentence_info'], f, ensure_ascii=False, indent=2)
-            print(f"  - {sentence_info_path} (Sentence information)")
             
             # ページごとの読み順序を保存
-            reading_order_path = output_dir / 'reading_order.json'
+            reading_order_path = reports_dir / 'reading_order.json'
             reading_order_data = self._extract_reading_order_by_page(summary['sentence_info'])
             with open(reading_order_path, 'w', encoding='utf-8') as f:
                 json.dump(reading_order_data, f, ensure_ascii=False, indent=2)
-            print(f"  - {reading_order_path} (Reading order by page)")
+            
+            print(f"  [Reports]")
+            print(f"    - sentence_info.json")
+            print(f"    - reading_order.json")
         
         # 読み順序番号付きPDFを生成
         if file_type == 'pdf':
-            # 読み順序情報を取得
-            reading_order_info1 = self.reading_order.get_sentence_reading_order(summary['_doc1_info']['bbox_list'])
-            reading_order_info2 = self.reading_order.get_sentence_reading_order(summary['_doc2_info']['bbox_list'])
-            
             # PDFハンドラーを使用
             from ..handlers.pdf_handler import PyMuPDFService
             pdf_handler = PyMuPDFService()
@@ -227,21 +235,57 @@ class DocumentComparisonPipeline:
             with open(file2_path, 'rb') as f:
                 pdf2_bytes = f.read()
             
-            # 読み順序番号を追加
+            # 1. 順序変換前（元の順序）のPDF
+            original_order_info1 = self.reading_order.get_original_order_info(summary['_doc1_info']['bbox_list'])
+            original_order_info2 = self.reading_order.get_original_order_info(summary['_doc2_info']['bbox_list'])
+            
+            pdf1_original_order = pdf_handler.add_reading_order_numbers(pdf1_bytes, original_order_info1)
+            pdf2_original_order = pdf_handler.add_reading_order_numbers(pdf2_bytes, original_order_info2)
+            
+            original1_path = pdfs_dir / f"{file1_path.stem}_original_order.pdf"
+            original2_path = pdfs_dir / f"{file2_path.stem}_original_order.pdf"
+            
+            with open(original1_path, 'wb') as f:
+                f.write(pdf1_original_order)
+            with open(original2_path, 'wb') as f:
+                f.write(pdf2_original_order)
+            
+            print(f"    - {original1_path.name}")
+            print(f"    - {original2_path.name}")
+            
+            # 2. 順序変換後（推定された読み順序）のPDF
+            reading_order_info1 = self.reading_order.get_sentence_reading_order(summary['_doc1_info']['bbox_list'])
+            reading_order_info2 = self.reading_order.get_sentence_reading_order(summary['_doc2_info']['bbox_list'])
+            
             pdf1_with_order = pdf_handler.add_reading_order_numbers(pdf1_bytes, reading_order_info1)
             pdf2_with_order = pdf_handler.add_reading_order_numbers(pdf2_bytes, reading_order_info2)
             
-            # 保存
-            order1_path = output_dir / f"{file1_path.stem}_reading_order.pdf"
-            order2_path = output_dir / f"{file2_path.stem}_reading_order.pdf"
+            order1_path = pdfs_dir / f"{file1_path.stem}_reading_order.pdf"
+            order2_path = pdfs_dir / f"{file2_path.stem}_reading_order.pdf"
             
             with open(order1_path, 'wb') as f:
                 f.write(pdf1_with_order)
             with open(order2_path, 'wb') as f:
                 f.write(pdf2_with_order)
             
-            print(f"  - {order1_path.name} (PDF with reading order numbers)")
-            print(f"  - {order2_path.name} (PDF with reading order numbers)")
+            print(f"    - {order1_path.name}")
+            print(f"    - {order2_path.name}")
+            
+            # デバッグ用CSVファイルを出力
+            self._save_reading_order_debug_csv(
+                original_order_info1, reading_order_info1, 
+                debug_dir / f"{file1_path.stem}_reading_order"
+            )
+            self._save_reading_order_debug_csv(
+                original_order_info2, reading_order_info2,
+                debug_dir / f"{file2_path.stem}_reading_order"
+            )
+            
+            print(f"  [Debug]")
+            print(f"    - {file1_path.stem}_reading_order_original.csv")
+            print(f"    - {file1_path.stem}_reading_order_estimated.csv")
+            print(f"    - {file2_path.stem}_reading_order_original.csv")
+            print(f"    - {file2_path.stem}_reading_order_estimated.csv")
         
         # 詳細レポートを生成
         if '_doc1_info' in summary and '_doc2_info' in summary:
@@ -250,10 +294,34 @@ class DocumentComparisonPipeline:
                 summary['_doc2_info'],
                 summary['_differences'],
                 summary.get('_layout_changes'),
-                output_dir
+                reports_dir
             )
-            print(f"  - {output_dir / 'execution_report.json'} (Detailed execution report)")
-            print(f"  - {output_dir / 'execution_report.md'} (Human-readable report)")
+            
+            # 差分検出のデバッグ用CSVファイルを出力
+            self._save_diff_debug_csv(
+                summary['_differences'], 
+                debug_dir, 
+                file1_path.stem, 
+                file2_path.stem,
+                summary['_doc1_info']['bbox_list'],
+                summary['_doc2_info']['bbox_list']
+            )
+            
+            print(f"    - execution_report.json")
+            print(f"    - execution_report.md")
+            
+            # 生成された差分CSVファイルを表示
+            diff_files = []
+            file1_diff = debug_dir / f"{file1_path.stem}_diff.csv"
+            file2_diff = debug_dir / f"{file2_path.stem}_diff.csv"
+            
+            if file1_diff.exists():
+                diff_files.append(f"{file1_path.stem}_diff.csv")
+            if file2_diff.exists():
+                diff_files.append(f"{file2_path.stem}_diff.csv")
+            
+            for diff_file in diff_files:
+                print(f"    - {diff_file}")
             
             # 内部情報をサマリーから削除
             for key in ['_doc1_info', '_doc2_info', '_differences', '_layout_changes']:
@@ -313,6 +381,142 @@ class DocumentComparisonPipeline:
             page_sentences[current_page] = sentence_list
         
         return page_sentences
+    
+    def _save_reading_order_debug_csv(self, original_order, reading_order, base_path):
+        """
+        読み順序のデバッグ情報を別々のCSVファイルに保存
+        
+        Args:
+            original_order: 元の順序情報
+            reading_order: 推定された読み順序情報
+            base_path: 出力ファイルのベースパス（拡張子なし）
+        """
+        # 元の順序を保存
+        original_path = base_path.parent / f"{base_path.stem}_original.csv"
+        with open(original_path, 'w', encoding='utf-8', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(['order_id', 'page', 'sentence'])
+            for item in original_order:
+                writer.writerow([item['order'], item['page'], item['text']])
+        
+        # 推定された読み順序を保存
+        estimated_path = base_path.parent / f"{base_path.stem}_estimated.csv"
+        with open(estimated_path, 'w', encoding='utf-8', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(['order_id', 'page', 'sentence'])
+            for item in reading_order:
+                writer.writerow([item['order'], item['page'], item['text']])
+    
+    def _save_diff_debug_csv(self, differences, debug_dir, file1_name, file2_name, doc1_bbox_list, doc2_bbox_list):
+        """
+        差分検出のデバッグ情報をファイルごとのCSVファイルに保存
+        
+        Args:
+            differences: 差分リスト（DiffResultのリスト）
+            debug_dir: デバッグディレクトリのパス
+            file1_name: ファイル1の名前（拡張子なし）
+            file2_name: ファイル2の名前（拡張子なし）
+            doc1_bbox_list: 文書1のbboxリスト（読み順序情報のため）
+            doc2_bbox_list: 文書2のbboxリスト（読み順序情報のため）
+        """
+        from ..models.bbox_models import ChangeType
+        
+        # 読み順序を推定
+        doc1_ordered = self.reading_order.estimate_reading_order(doc1_bbox_list)
+        doc2_ordered = self.reading_order.estimate_reading_order(doc2_bbox_list)
+        
+        # bboxから読み順序へのマッピングを作成
+        doc1_order_map = {}
+        doc2_order_map = {}
+        
+        for i, bbox in enumerate(doc1_ordered):
+            key = (bbox['page'], bbox['bbox'][0], bbox['bbox'][1], bbox['text'])
+            doc1_order_map[key] = i
+            
+        for i, bbox in enumerate(doc2_ordered):
+            key = (bbox['page'], bbox['bbox'][0], bbox['bbox'][1], bbox['text'])
+            doc2_order_map[key] = i
+        
+        # ファイル1の差分（削除と変更）
+        file1_diffs = []
+        # ファイル2の差分（追加と変更）
+        file2_diffs = []
+        
+        for diff in differences:
+            if diff.change_type == ChangeType.DELETION:
+                # ファイル1での削除
+                bbox = diff.original_bbox
+                key = (bbox['page'], bbox['bbox'][0], bbox['bbox'][1], bbox['text'])
+                order = doc1_order_map.get(key, 999999)
+                
+                file1_diffs.append({
+                    'order': order,
+                    'id': len([d for d in file1_diffs if d['type'] == '削除']) + 1,
+                    'type': '削除',
+                    'word': bbox['text'],
+                    'page': diff.page
+                })
+                
+            elif diff.change_type == ChangeType.ADDITION:
+                # ファイル2での追加
+                bbox = diff.modified_bbox
+                key = (bbox['page'], bbox['bbox'][0], bbox['bbox'][1], bbox['text'])
+                order = doc2_order_map.get(key, 999999)
+                
+                file2_diffs.append({
+                    'order': order,
+                    'id': len([d for d in file2_diffs if d['type'] == '追加']) + 1,
+                    'type': '追加',
+                    'word': bbox['text'],
+                    'page': diff.page
+                })
+                
+            elif diff.change_type == ChangeType.MODIFICATION:
+                # ファイル1での変更（元のテキスト）
+                bbox1 = diff.original_bbox
+                key1 = (bbox1['page'], bbox1['bbox'][0], bbox1['bbox'][1], bbox1['text'])
+                order1 = doc1_order_map.get(key1, 999999)
+                
+                file1_diffs.append({
+                    'order': order1,
+                    'id': len([d for d in file1_diffs if d['type'] == '変更']) + 1,
+                    'type': '変更',
+                    'word': f"{bbox1['text']} → {diff.modified_bbox['text']}",
+                    'page': diff.page
+                })
+                
+                # ファイル2での変更（新しいテキスト）
+                bbox2 = diff.modified_bbox
+                key2 = (bbox2['page'], bbox2['bbox'][0], bbox2['bbox'][1], bbox2['text'])
+                order2 = doc2_order_map.get(key2, 999999)
+                
+                file2_diffs.append({
+                    'order': order2,
+                    'id': len([d for d in file2_diffs if d['type'] == '変更']) + 1,
+                    'type': '変更',
+                    'word': f"{diff.original_bbox['text']} → {bbox2['text']}",
+                    'page': diff.page
+                })
+        
+        # 読み順序でソート
+        file1_diffs.sort(key=lambda x: x['order'])
+        file2_diffs.sort(key=lambda x: x['order'])
+        
+        # ファイル1の差分を保存
+        if file1_diffs:
+            with open(debug_dir / f'{file1_name}_diff.csv', 'w', encoding='utf-8', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(['diff_id', 'type', 'word', 'page'])
+                for item in file1_diffs:
+                    writer.writerow([item['id'], item['type'], item['word'], item['page']])
+        
+        # ファイル2の差分を保存
+        if file2_diffs:
+            with open(debug_dir / f'{file2_name}_diff.csv', 'w', encoding='utf-8', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(['diff_id', 'type', 'word', 'page'])
+                for item in file2_diffs:
+                    writer.writerow([item['id'], item['type'], item['word'], item['page']])
     
     def _extract_reading_order_by_page(self, sentence_info):
         """
