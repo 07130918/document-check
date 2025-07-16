@@ -94,21 +94,6 @@ $RECYCLE.BIN/
 .Trash-*
 .nfs*
 
-# Project specific
-/data/
-/results/
-/logs/
-*.log
-*.pdf
-*.docx
-*.pptx
-*.xlsx
-*.csv
-!docs/**/*.pdf
-!docs/**/*.png
-!docs/**/*.jpg
-!apps/pdf_diff_system/data/**/*.csv
-
 # Temporary files
 *.tmp
 *.temp
@@ -162,3 +147,6 @@ mecabrc
 *.key
 secrets/
 credentials/
+
+# previous project
+prj-meiji-document-check
