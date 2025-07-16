@@ -1,0 +1,374 @@
+{
+  "phrase_based": {
+    "total_tp": 10,
+    "total_fp": 15,
+    "total_fn": 1,
+    "precision": 0.4,
+    "recall": 0.9090909090909091,
+    "f1_score": 0.5555555555555556,
+    "total_time": 0.010465383529663086,
+    "avg_time": 0.0011628203921847874,
+    "case_results": [
+      {
+        "case_id": "simple_001",
+        "name": "年度変更",
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "processing_time": 0.002376079559326172,
+        "detected_count": 3
+      },
+      {
+        "case_id": "simple_002",
+        "name": "日付変更",
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "processing_time": 0.0014543533325195312,
+        "detected_count": 3
+      },
+      {
+        "case_id": "simple_003",
+        "name": "数値変更",
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "processing_time": 0.0022988319396972656,
+        "detected_count": 3
+      },
+      {
+        "case_id": "complex_001",
+        "name": "複数箇所変更",
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "processing_time": 0.00151824951171875,
+        "detected_count": 3
+      },
+      {
+        "case_id": "complex_002",
+        "name": "追加と削除",
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.0004551410675048828,
+        "detected_count": 3
+      },
+      {
+        "case_id": "order_001",
+        "name": "単純な順序変更",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.00042438507080078125,
+        "detected_count": 0
+      },
+      {
+        "case_id": "order_002",
+        "name": "順序変更と内容変更",
+        "tp": 1,
+        "fp": 4,
+        "fn": 1,
+        "processing_time": 0.0007035732269287109,
+        "detected_count": 5
+      },
+      {
+        "case_id": "real_001",
+        "name": "URL変更",
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "processing_time": 0.0008082389831542969,
+        "detected_count": 3
+      },
+      {
+        "case_id": "real_002",
+        "name": "長文追加",
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "processing_time": 0.0004265308380126953,
+        "detected_count": 2
+      }
+    ]
+  },
+  "sequential_w1": {
+    "total_tp": 6,
+    "total_fp": 7,
+    "total_fn": 5,
+    "precision": 0.46153846153846156,
+    "recall": 0.5454545454545454,
+    "f1_score": 0.4999999999999999,
+    "total_time": 0.017705440521240234,
+    "avg_time": 0.001967271169026693,
+    "case_results": [
+      {
+        "case_id": "simple_001",
+        "name": "年度変更",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.012706279754638672,
+        "detected_count": 1
+      },
+      {
+        "case_id": "simple_002",
+        "name": "日付変更",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.00026607513427734375,
+        "detected_count": 1
+      },
+      {
+        "case_id": "simple_003",
+        "name": "数値変更",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.0002219676971435547,
+        "detected_count": 1
+      },
+      {
+        "case_id": "complex_001",
+        "name": "複数箇所変更",
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "processing_time": 0.0013880729675292969,
+        "detected_count": 0
+      },
+      {
+        "case_id": "complex_002",
+        "name": "追加と削除",
+        "tp": 1,
+        "fp": 1,
+        "fn": 2,
+        "processing_time": 0.00033354759216308594,
+        "detected_count": 2
+      },
+      {
+        "case_id": "order_001",
+        "name": "単純な順序変更",
+        "tp": 0,
+        "fp": 2,
+        "fn": 0,
+        "processing_time": 0.0008809566497802734,
+        "detected_count": 2
+      },
+      {
+        "case_id": "order_002",
+        "name": "順序変更と内容変更",
+        "tp": 1,
+        "fp": 2,
+        "fn": 1,
+        "processing_time": 0.0010571479797363281,
+        "detected_count": 3
+      },
+      {
+        "case_id": "real_001",
+        "name": "URL変更",
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "processing_time": 0.0003294944763183594,
+        "detected_count": 0
+      },
+      {
+        "case_id": "real_002",
+        "name": "長文追加",
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "processing_time": 0.0005218982696533203,
+        "detected_count": 3
+      }
+    ]
+  },
+  "sequential_w3": {
+    "total_tp": 5,
+    "total_fp": 8,
+    "total_fn": 6,
+    "precision": 0.38461538461538464,
+    "recall": 0.45454545454545453,
+    "f1_score": 0.41666666666666663,
+    "total_time": 0.0067293643951416016,
+    "avg_time": 0.0007477071550157336,
+    "case_results": [
+      {
+        "case_id": "simple_001",
+        "name": "年度変更",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.0004932880401611328,
+        "detected_count": 1
+      },
+      {
+        "case_id": "simple_002",
+        "name": "日付変更",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.00024819374084472656,
+        "detected_count": 1
+      },
+      {
+        "case_id": "simple_003",
+        "name": "数値変更",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.0002942085266113281,
+        "detected_count": 1
+      },
+      {
+        "case_id": "complex_001",
+        "name": "複数箇所変更",
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "processing_time": 0.0005743503570556641,
+        "detected_count": 0
+      },
+      {
+        "case_id": "complex_002",
+        "name": "追加と削除",
+        "tp": 1,
+        "fp": 1,
+        "fn": 2,
+        "processing_time": 0.0002911090850830078,
+        "detected_count": 2
+      },
+      {
+        "case_id": "order_001",
+        "name": "単純な順序変更",
+        "tp": 0,
+        "fp": 2,
+        "fn": 0,
+        "processing_time": 0.0017731189727783203,
+        "detected_count": 2
+      },
+      {
+        "case_id": "order_002",
+        "name": "順序変更と内容変更",
+        "tp": 1,
+        "fp": 2,
+        "fn": 1,
+        "processing_time": 0.0018699169158935547,
+        "detected_count": 3
+      },
+      {
+        "case_id": "real_001",
+        "name": "URL変更",
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "processing_time": 0.00031280517578125,
+        "detected_count": 0
+      },
+      {
+        "case_id": "real_002",
+        "name": "長文追加",
+        "tp": 0,
+        "fp": 3,
+        "fn": 1,
+        "processing_time": 0.0008723735809326172,
+        "detected_count": 3
+      }
+    ]
+  },
+  "sequential_w5": {
+    "total_tp": 5,
+    "total_fp": 8,
+    "total_fn": 6,
+    "precision": 0.38461538461538464,
+    "recall": 0.45454545454545453,
+    "f1_score": 0.41666666666666663,
+    "total_time": 0.012254953384399414,
+    "avg_time": 0.0013616614871554905,
+    "case_results": [
+      {
+        "case_id": "simple_001",
+        "name": "年度変更",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.00048041343688964844,
+        "detected_count": 1
+      },
+      {
+        "case_id": "simple_002",
+        "name": "日付変更",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.0002295970916748047,
+        "detected_count": 1
+      },
+      {
+        "case_id": "simple_003",
+        "name": "数値変更",
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "processing_time": 0.0001971721649169922,
+        "detected_count": 1
+      },
+      {
+        "case_id": "complex_001",
+        "name": "複数箇所変更",
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "processing_time": 0.0005106925964355469,
+        "detected_count": 0
+      },
+      {
+        "case_id": "complex_002",
+        "name": "追加と削除",
+        "tp": 1,
+        "fp": 1,
+        "fn": 2,
+        "processing_time": 0.0002777576446533203,
+        "detected_count": 2
+      },
+      {
+        "case_id": "order_001",
+        "name": "単純な順序変更",
+        "tp": 0,
+        "fp": 2,
+        "fn": 0,
+        "processing_time": 0.00686335563659668,
+        "detected_count": 2
+      },
+      {
+        "case_id": "order_002",
+        "name": "順序変更と内容変更",
+        "tp": 1,
+        "fp": 2,
+        "fn": 1,
+        "processing_time": 0.002289295196533203,
+        "detected_count": 3
+      },
+      {
+        "case_id": "real_001",
+        "name": "URL変更",
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "processing_time": 0.0003800392150878906,
+        "detected_count": 0
+      },
+      {
+        "case_id": "real_002",
+        "name": "長文追加",
+        "tp": 0,
+        "fp": 3,
+        "fn": 1,
+        "processing_time": 0.0010266304016113281,
+        "detected_count": 3
+      }
+    ]
+  }
+}
