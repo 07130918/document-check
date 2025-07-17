@@ -20,4 +20,4 @@ mypy>=1.4.0
 
 # Optional dependencies for enhanced features
 # mecab-python3>=1.0.6  # For Japanese text processing
-# pandas>=2.0.0  # For data analysis
+pandas>=2.0.0  # For data analysis
