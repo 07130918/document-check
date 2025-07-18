@@ -1,0 +1,27 @@
+{
+  "version": "v1",
+  "description": "基本的な差分検出システム",
+  "features": [
+    "Azure Document Intelligenceによる高精度OCR",
+    "基本的な差分検出（追加・削除・変更）",
+    "LLMによる文書解析",
+    "ハイライト付きPDF出力"
+  ],
+  "limitations": [
+    "前処理なし（ノイズが多い）",
+    "読み取り順序の最適化なし",
+    "変更検出の精度が低い",
+    "詳細な変更分析機能なし"
+  ],
+  "statistics": {
+    "total_differences": 235,
+    "deletions": 122,
+    "additions": 113,
+    "modifications": 0
+  },
+  "output_structure": {
+    "PDFs": "差分がハイライトされたPDF",
+    "reports": "基本的な統計情報",
+    "debug": "デバッグ用の中間ファイル"
+  }
+}

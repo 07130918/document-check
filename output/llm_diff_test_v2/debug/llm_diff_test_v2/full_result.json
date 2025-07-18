@@ -1,0 +1,5158 @@
+{
+  "diff_results": [
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "令和 5 年度保存版",
+        "bbox": [
+          447.6744,
+          33.0192,
+          92.88,
+          12.808799999999996
+        ],
+        "x": 447.6744,
+        "y": 33.0192,
+        "width": 92.88,
+        "height": 12.808799999999996,
+        "page": 0,
+        "is_line": true,
+        "original_text": "令和5年度 保存版"
+      },
+      "modified_bbox": {
+        "text": "令和 6 年度保存版",
+        "bbox": [
+          447.6888,
+          33.1128,
+          92.9088,
+          12.722400000000006
+        ],
+        "x": 447.6888,
+        "y": 33.1128,
+        "width": 92.9088,
+        "height": 12.722400000000006,
+        "page": 0,
+        "is_line": true,
+        "original_text": "令和6年度 保存版"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.9,
+      "context": "MS&AD 三井住友海上 MS&AD インシュアランスグループ 団体保険制度 役員·従業員(スタッフ社員含む)の皆さまへ MS&AD",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "も継続",
+        "bbox": [
+          252.0144,
+          215.028,
+          19.706399999999988,
+          7.5887999999999955
+        ],
+        "x": 252.0144,
+        "y": 215.028,
+        "width": 19.706399999999988,
+        "height": 7.5887999999999955,
+        "page": 0,
+        "is_line": true,
+        "original_text": "も継続"
+      },
+      "modified_bbox": null,
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "【団体総合生活補償保険(MS&AD 型)、GLTD、所得補償保険】 団体総合生活補償保険 退職後 最大 退職 入社",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "も継続",
+        "bbox": [
+          252.2088,
+          205.8624,
+          19.699200000000005,
+          7.668000000000003
+        ],
+        "x": 252.2088,
+        "y": 205.8624,
+        "width": 19.699200000000005,
+        "height": 7.668000000000003,
+        "page": 0,
+        "is_line": true,
+        "original_text": "も継続"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "退職後 最大 退職 入社 40.15% 割引 !!",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "Babyy",
+        "bbox": [
+          384.0624,
+          369.1728,
+          20.1672,
+          8.891999999999996
+        ],
+        "x": 384.0624,
+        "y": 369.1728,
+        "width": 20.1672,
+        "height": 8.891999999999996,
+        "page": 0,
+        "is_line": true,
+        "original_text": "Babyy"
+      },
+      "modified_bbox": {
+        "text": "Babyor",
+        "bbox": [
+          384.3936,
+          360.7056,
+          19.871999999999986,
+          8.049599999999977
+        ],
+        "x": 384.3936,
+        "y": 360.7056,
+        "width": 19.871999999999986,
+        "height": 8.049599999999977,
+        "page": 0,
+        "is_line": true,
+        "original_text": "Babyor"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.7272727272727273,
+      "context": "あなたの人生に 寄りそう保険 簡単!便利! WEB で 住宅 出産",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "出産",
+        "bbox": [
+          335.61359999999996,
+          396.5256,
+          18.36720000000004,
+          10.06560000000001
+        ],
+        "x": 335.61359999999996,
+        "y": 396.5256,
+        "width": 18.36720000000004,
+        "height": 10.06560000000001,
+        "page": 0,
+        "is_line": true,
+        "original_text": "出産"
+      },
+      "modified_bbox": null,
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "Babyy WEB で 住宅 保険金請求が 購入 できます!",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "出産",
+        "bbox": [
+          335.48400000000004,
+          387.8136,
+          18.4392,
+          9.899999999999949
+        ],
+        "x": 335.48400000000004,
+        "y": 387.8136,
+        "width": 18.4392,
+        "height": 9.899999999999949,
+        "page": 0,
+        "is_line": true,
+        "original_text": "出産"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "住宅 保険金請求が 購入 できます! 令和 6 年 10 月 23 日(水) P35 または最終ページを",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "令和 6 年 10 月 23 日(水)",
+        "bbox": [
+          166.284,
+          417.8376,
+          182.92320000000004,
+          22.97519999999998
+        ],
+        "x": 166.284,
+        "y": 417.8376,
+        "width": 182.92320000000004,
+        "height": 22.97519999999998,
+        "page": 0,
+        "is_line": true,
+        "original_text": "令和6年10月23日(水)"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "購入 出産 できます! P35 または最終ページを ご覧ください。 申込締切日",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "P35 または最終ページを",
+        "bbox": [
+          457.85519999999997,
+          409.8888,
+          80.51039999999999,
+          9.50400000000004
+        ],
+        "x": 457.85519999999997,
+        "y": 409.8888,
+        "width": 80.51039999999999,
+        "height": 9.50400000000004,
+        "page": 0,
+        "is_line": true,
+        "original_text": "P35または最終ページを"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "出産 できます! 令和 6 年 10 月 23 日(水) ご覧ください。 申込締切日 かんたん!便利!",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "ご覧ください。",
+        "bbox": [
+          474.9696,
+          419.3784,
+          45.8784,
+          9.295200000000015
+        ],
+        "x": 474.9696,
+        "y": 419.3784,
+        "width": 45.8784,
+        "height": 9.295200000000015,
+        "page": 0,
+        "is_line": true,
+        "original_text": "ご覧ください。"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "できます! 令和 6 年 10 月 23 日(水) P35 または最終ページを 申込締切日 かんたん!便利! 保険期間",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "令和 5 年 10 月 25 日(水)",
+        "bbox": [
+          166.3488,
+          426.4056,
+          182.91600000000003,
+          23.400000000000013
+        ],
+        "x": 166.3488,
+        "y": 426.4056,
+        "width": 182.91600000000003,
+        "height": 23.400000000000013,
+        "page": 0,
+        "is_line": true,
+        "original_text": "令和5年10月25日(水)"
+      },
+      "modified_bbox": null,
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "購入 できます! 申込締切日 P34 または裏表紙を ご覧ください。 かんたん!便利!",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "P34 または裏表紙を",
+        "bbox": [
+          463.6512,
+          423.144,
+          68.88959999999996,
+          9.424800000000033
+        ],
+        "x": 463.6512,
+        "y": 423.144,
+        "width": 68.88959999999996,
+        "height": 9.424800000000033,
+        "page": 0,
+        "is_line": true,
+        "original_text": "P34または裏表紙を"
+      },
+      "modified_bbox": null,
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "できます! 申込締切日 令和 5 年 10 月 25 日(水) ご覧ください。 かんたん!便利! 保険期間",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "ご覧ください。",
+        "bbox": [
+          474.1992,
+          432.45360000000005,
+          47.86559999999997,
+          9.331199999999995
+        ],
+        "x": 474.1992,
+        "y": 432.45360000000005,
+        "width": 47.86559999999997,
+        "height": 9.331199999999995,
+        "page": 0,
+        "is_line": true,
+        "original_text": "ご覧ください。"
+      },
+      "modified_bbox": null,
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "申込締切日 令和 5 年 10 月 25 日(水) P34 または裏表紙を かんたん!便利! 保険期間 令和 5 年 12 月 10 日午後 4 時~令和 6 年 12 月 10 日午後 4 時",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "令和 5 年 12 月 10 日午後 4 時~令和 6 年 12 月 10 日午後 4 時",
+        "bbox": [
+          166.2552,
+          453.64320000000004,
+          303.57360000000006,
+          13.960800000000013
+        ],
+        "x": 166.2552,
+        "y": 453.64320000000004,
+        "width": 303.57360000000006,
+        "height": 13.960800000000013,
+        "page": 0,
+        "is_line": true,
+        "original_text": "令和5年12月10日午後4時~令和6年12月10日午後4時"
+      },
+      "modified_bbox": {
+        "text": "令和 6 年 12 月 10 日午後 4 時~令和 7 年 12 月 10 日午後 4 時",
+        "bbox": [
+          165.744,
+          444.53520000000003,
+          304.06320000000005,
+          14.205600000000018
+        ],
+        "x": 165.744,
+        "y": 444.53520000000003,
+        "width": 304.06320000000005,
+        "height": 14.205600000000018,
+        "page": 0,
+        "is_line": true,
+        "original_text": "令和6年12月10日午後4時~令和7年12月10日午後4時"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.9555555555555556,
+      "context": "ご覧ください。 かんたん!便利! 保険期間 払込方法 令和 6 年 2 月分給与より控除開始(12 回払) お手続方法",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "令和 6 年 2 月分給与より控除開始(12 回払)",
+        "bbox": [
+          165.9744,
+          471.83040000000005,
+          221.93999999999997,
+          14.083199999999984
+        ],
+        "x": 165.9744,
+        "y": 471.83040000000005,
+        "width": 221.93999999999997,
+        "height": 14.083199999999984,
+        "page": 0,
+        "is_line": true,
+        "original_text": "令和6年2月分給与より控除開始(12回払)"
+      },
+      "modified_bbox": {
+        "text": "令和 7 年 2 月分給与より控除開始(12 回払)",
+        "bbox": [
+          165.4992,
+          462.852,
+          222.2712,
+          14.112000000000045
+        ],
+        "x": 165.4992,
+        "y": 462.852,
+        "width": 222.2712,
+        "height": 14.112000000000045,
+        "page": 0,
+        "is_line": true,
+        "original_text": "令和7年2月分給与より控除開始(12回払)"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.9615384615384616,
+      "context": "保険期間 令和 5 年 12 月 10 日午後 4 時~令和 6 年 12 月 10 日午後 4 時 払込方法 お手続方法 MS1 のほか、ご自宅の PC、スマートフォンでもお手続き可能です。 お手続き可能期間:【10 月 3 日(火)~10 月 25 日(水)】",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "お手続き可能期間:【10 月 3 日(火)~10 月 25 日(水)】",
+        "bbox": [
+          168.76080000000002,
+          540.3168000000001,
+          256.2408,
+          13.463999999999956
+        ],
+        "x": 168.76080000000002,
+        "y": 540.3168000000001,
+        "width": 256.2408,
+        "height": 13.463999999999956,
+        "page": 0,
+        "is_line": true,
+        "original_text": "お手続き可能期間:【10月3日(火)~10月25日(水)】"
+      },
+      "modified_bbox": {
+        "text": "お手続き可能期間:【10 月 1 日(火)~10 月 23 日(水)】",
+        "bbox": [
+          168.7104,
+          527.1912,
+          256.1976,
+          13.51440000000003
+        ],
+        "x": 168.7104,
+        "y": 527.1912,
+        "width": 256.1976,
+        "height": 13.51440000000003,
+        "page": 0,
+        "is_line": true,
+        "original_text": "お手続き可能期間:【10月1日(火)~10月23日(水)】"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.9428571428571428,
+      "context": "令和 6 年 2 月分給与より控除開始(12 回払) お手続方法 MS1 のほか、ご自宅の PC、スマートフォンでもお手続き可能です。 MS1 を閲覧できる方/ご自宅の PC またはスマートフォンでお手続き可能な方 <MS1 でのお手続き> 「MSK 保険センター」のホームページまたは 10 月 2 日(月)の人事部発信の業務連絡からお手続きください。",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "「MSK 保険センター」のホームページまたは 10 月 2 日(月)の人事部発信の業務連絡からお手続きください。",
+        "bbox": [
+          160.9848,
+          583.9344000000001,
+          366.5808,
+          10.92959999999998
+        ],
+        "x": 160.9848,
+        "y": 583.9344000000001,
+        "width": 366.5808,
+        "height": 10.92959999999998,
+        "page": 0,
+        "is_line": true,
+        "original_text": "「MSK保険センター」のホームページまたは10月2日(月)の人事部発信の業務連絡からお手続きください。"
+      },
+      "modified_bbox": {
+        "text": "「MSK 保険センター」のホームページまたは 10 月 1 日(火)の人事部発信の業務連絡からお手続きください。",
+        "bbox": [
+          160.95600000000002,
+          569.9736,
+          366.34319999999997,
+          10.605599999999967
+        ],
+        "x": 160.95600000000002,
+        "y": 569.9736,
+        "width": 366.34319999999997,
+        "height": 10.605599999999967,
+        "page": 0,
+        "is_line": true,
+        "original_text": "「MSK保険センター」のホームページまたは10月1日(火)の人事部発信の業務連絡からお手続きください。"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.9642857142857143,
+      "context": "お手続き可能期間:【10 月 3 日(火)~10 月 25 日(水)】 MS1 を閲覧できる方/ご自宅の PC またはスマートフォンでお手続き可能な方 <MS1 でのお手続き> ※ネット手続き時間は、平日(月曜~金曜)の 7:00~19:00 です。 くご自宅等の PC またはスマートフォンでのお手続き> 利用時間 7:00~26:30 ■ご自宅の PC でのお手続き",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": ": ■スマートフォンでのお手続き",
+        "bbox": [
+          272.1744,
+          623.1672,
+          115.47360000000003,
+          9.547200000000004
+        ],
+        "x": 272.1744,
+        "y": 623.1672,
+        "width": 115.47360000000003,
+        "height": 9.547200000000004,
+        "page": 0,
+        "is_line": true,
+        "original_text": ": ■スマートフォンでのお手続き"
+      },
+      "modified_bbox": {
+        "text": "■スマートフォンでのお手続き",
+        "bbox": [
+          272.0232,
+          608.9832,
+          106.84079999999999,
+          10.267199999999988
+        ],
+        "x": 272.0232,
+        "y": 608.9832,
+        "width": 106.84079999999999,
+        "height": 10.267199999999988,
+        "page": 0,
+        "is_line": true,
+        "original_text": "■スマートフォンでのお手続き"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.9333333333333333,
+      "context": "※ネット手続き時間は、平日(月曜~金曜)の 7:00~19:00 です。 くご自宅等の PC またはスマートフォンでのお手続き> 利用時間 7:00~26:30 ■ご自宅の PC でのお手続き 以下の URL からお手続きください。 右記の QR コード(※)を読み取り、お手続きください。 https://dantai.ms-ins.com/index.php?ID=eyhe84",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "https://dantai.ms-ins.com/index.php?ID=eyhe84",
+        "bbox": [
+          78.696,
+          646.3512000000001,
+          189.93599999999998,
+          10.504799999999946
+        ],
+        "x": 78.696,
+        "y": 646.3512000000001,
+        "width": 189.93599999999998,
+        "height": 10.504799999999946,
+        "page": 0,
+        "is_line": true,
+        "original_text": "https://dantai.ms-ins.com/index.php?ID=eyhe84"
+      },
+      "modified_bbox": null,
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": ": ■スマートフォンでのお手続き 以下の URL からお手続きください。 右記の QR コード(※)を読み取り、お手続きください。 【推奨環境】 OS:iOS 11/12/13/14/15/16、 【推奨環境】 OS: Windows 10/11、Mac 10.15 Android 5.1/6.0/7.0/8.0/9.0/11.0/12.0/13.0",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "【推奨環境】 OS:iOS 11/12/13/14/15/16、",
+        "bbox": [
+          289.10159999999996,
+          647.1863999999999,
+          163.8936,
+          9.842400000000083
+        ],
+        "x": 289.10159999999996,
+        "y": 647.1863999999999,
+        "width": 163.8936,
+        "height": 9.842400000000083,
+        "page": 0,
+        "is_line": true,
+        "original_text": "【推奨環境】 OS:iOS 11/12/13/14/15/16、"
+      },
+      "modified_bbox": null,
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "以下の URL からお手続きください。 右記の QR コード(※)を読み取り、お手続きください。 https://dantai.ms-ins.com/index.php?ID=eyhe84 【推奨環境】 OS: Windows 10/11、Mac 10.15 Android 5.1/6.0/7.0/8.0/9.0/11.0/12.0/13.0 ブラウザ: Microsoft Edge、",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "https://dantai.ms-ins.com/index.php?ID=6au5j8",
+        "bbox": [
+          78.7536,
+          632.0736,
+          178.7112,
+          10.994399999999956
+        ],
+        "x": 78.7536,
+        "y": 632.0736,
+        "width": 178.7112,
+        "height": 10.994399999999956,
+        "page": 0,
+        "is_line": true,
+        "original_text": "https://dantai.ms-ins.com/index.php?ID=6au5j8"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "■スマートフォンでのお手続き 以下の URL からお手続きください。 右記の QR コード(※)を読み取り、お手続きください。 【推奨環境】 OS:iOS 11/12/13/14/15/16/17 【推奨環境】 OS: Windows 10/11、Mac 10.15 Android 5.1/6.0/7.0/8.0/9.0/10.0/11.0/12.0/13.0",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "【推奨環境】 OS:iOS 11/12/13/14/15/16/17",
+        "bbox": [
+          280.0728,
+          632.8008,
+          176.22720000000004,
+          10.267199999999988
+        ],
+        "x": 280.0728,
+        "y": 632.8008,
+        "width": 176.22720000000004,
+        "height": 10.267199999999988,
+        "page": 0,
+        "is_line": true,
+        "original_text": "【推奨環境】 OS:iOS 11/12/13/14/15/16/17"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "以下の URL からお手続きください。 右記の QR コード(※)を読み取り、お手続きください。 https://dantai.ms-ins.com/index.php?ID=6au5j8 【推奨環境】 OS: Windows 10/11、Mac 10.15 Android 5.1/6.0/7.0/8.0/9.0/10.0/11.0/12.0/13.0 ブラウザ: Microsoft Edge、",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "Android 5.1/6.0/7.0/8.0/9.0/11.0/12.0/13.0",
+        "bbox": [
+          349.99920000000003,
+          656.1432,
+          178.39439999999996,
+          9.792000000000073
+        ],
+        "x": 349.99920000000003,
+        "y": 656.1432,
+        "width": 178.39439999999996,
+        "height": 9.792000000000073,
+        "page": 0,
+        "is_line": true,
+        "original_text": "Android 5.1/6.0/7.0/8.0/9.0/11.0/12.0/13.0"
+      },
+      "modified_bbox": {
+        "text": "Android 5.1/6.0/7.0/8.0/9.0/10.0/11.0/12.0/13.0",
+        "bbox": [
+          341.24399999999997,
+          642.3408000000001,
+          188.1648,
+          9.590400000000031
+        ],
+        "x": 341.24399999999997,
+        "y": 642.3408000000001,
+        "width": 188.1648,
+        "height": 9.590400000000031,
+        "page": 0,
+        "is_line": true,
+        "original_text": "Android 5.1/6.0/7.0/8.0/9.0/10.0/11.0/12.0/13.0"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.9438202247191011,
+      "context": "https://dantai.ms-ins.com/index.php?ID=eyhe84 【推奨環境】 OS:iOS 11/12/13/14/15/16、 【推奨環境】 OS: Windows 10/11、Mac 10.15 ブラウザ: Microsoft Edge、 ブラウザ: Safari、Google Chrome Google Chrome, Safari",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "MS1 を閲覧できる方、ご自宅の PC またはスマートフォンでお手続きをされる方につきましては、パンフレットの「加入申込票」を「WEB 手続画面」に、",
+        "bbox": [
+          55.3752,
+          751.068,
+          479.9304,
+          9.85680000000005
+        ],
+        "x": 55.3752,
+        "y": 751.068,
+        "width": 479.9304,
+        "height": 9.85680000000005,
+        "page": 0,
+        "is_line": true,
+        "original_text": "MS1を閲覧できる方、ご自宅のPCまたはスマートフォンでお手続きをされる方につきましては、パンフレットの「加入申込票」を「WEB手続画面」に、"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "加入申込票を MSK 保険センターHP から印刷、もしくは裏表紙の保険センターの拠点へご請求のうえ、締切日までにご提出ください。 4 年令により保険料が変更になっておりますので、今年度の補償内容·保険料を必ずご確認ください。 本契約は自動継続のため、前年から加入されている方につきましては、お申し出がない場合、前年ご加入内容に応じたセット·口数でのご継続となります。 「記入」を「入力」に読み替えてください。 代理店·扱者 MSK 保険センター株式会社 MS&AD インシュアランスグループホールディングス株式会社",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "「記入」を「入力」に読み替えてください。",
+        "bbox": [
+          56.1168,
+          760.9248,
+          129.70080000000002,
+          9.907199999999932
+        ],
+        "x": 56.1168,
+        "y": 760.9248,
+        "width": 129.70080000000002,
+        "height": 9.907199999999932,
+        "page": 0,
+        "is_line": true,
+        "original_text": "「記入」を「入力」に読み替えてください。"
+      },
+      "page": 0,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "4 年令により保険料が変更になっておりますので、今年度の補償内容·保険料を必ずご確認ください。 本契約は自動継続のため、前年から加入されている方につきましては、お申し出がない場合、前年ご加入内容に応じたセット·口数でのご継続となります。 MS1 を閲覧できる方、ご自宅の PC またはスマートフォンでお手続きをされる方につきましては、パンフレットの「加入申込票」を「WEB 手続画面」に、 代理店·扱者 MSK 保険センター株式会社 MS&AD インシュアランスグループホールディングス株式会社 団体保険制度 は、MS&AD インシュアランスグループ",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "団体保険制度",
+        "bbox": [
+          43.358399999999996,
+          86.2344,
+          178.6536,
+          30.052799999999998
+        ],
+        "x": 43.358399999999996,
+        "y": 86.2344,
+        "width": 178.6536,
+        "height": 30.052799999999998,
+        "page": 1,
+        "is_line": true,
+        "original_text": "団体保険制度"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "本契約は自動継続のため、前年から加入されている方につきましては、お申し出がない場合、前年ご加入内容に応じたセット·口数でのご継続となります。 代理店·扱者 MSK 保険センター株式会社 MS&AD インシュアランスグループホールディングス株式会社 は、MS&AD インシュアランスグループ MS&AD インシュアランスグループ団体保険制度は、スケールメリットを活かした福利厚生制度です。 ご加入や保険料のお支払いなどの手続きも、簡単·便利です。",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "は、MS&AD インシュアランスグループ",
+        "bbox": [
+          228.13920000000002,
+          93.25439999999999,
+          359.0352000000001,
+          23.3712
+        ],
+        "x": 228.13920000000002,
+        "y": 93.25439999999999,
+        "width": 359.0352000000001,
+        "height": 23.3712,
+        "page": 1,
+        "is_line": true,
+        "original_text": "は、MS&ADインシュアランスグループ"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "代理店·扱者 MSK 保険センター株式会社 MS&AD インシュアランスグループホールディングス株式会社 団体保険制度 MS&AD インシュアランスグループ団体保険制度は、スケールメリットを活かした福利厚生制度です。 ご加入や保険料のお支払いなどの手続きも、簡単·便利です。 団体保険ならではのメリットを知っていただき、従業員の皆さまとご家族の生活設計にお役立てください。",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "MS&AD インシュアランスグループ団体保険制度は、スケールメリットを活かした福利厚生制度です。",
+        "bbox": [
+          41.94,
+          128.0376,
+          471.24,
+          13.003200000000007
+        ],
+        "x": 41.94,
+        "y": 128.0376,
+        "width": 471.24,
+        "height": 13.003200000000007,
+        "page": 1,
+        "is_line": true,
+        "original_text": "MS&ADインシュアランスグループ団体保険制度は、スケールメリットを活かした福利厚生制度です。"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "MS&AD インシュアランスグループホールディングス株式会社 団体保険制度 は、MS&AD インシュアランスグループ ご加入や保険料のお支払いなどの手続きも、簡単·便利です。 団体保険ならではのメリットを知っていただき、従業員の皆さまとご家族の生活設計にお役立てください。 団体",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "ご加入や保険料のお支払いなどの手続きも、簡単·便利です。",
+        "bbox": [
+          42.8688,
+          143.6976,
+          288.90000000000003,
+          13.103999999999996
+        ],
+        "x": 42.8688,
+        "y": 143.6976,
+        "width": 288.90000000000003,
+        "height": 13.103999999999996,
+        "page": 1,
+        "is_line": true,
+        "original_text": "ご加入や保険料のお支払いなどの手続きも、簡単·便利です。"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "団体保険制度 は、MS&AD インシュアランスグループ MS&AD インシュアランスグループ団体保険制度は、スケールメリットを活かした福利厚生制度です。 団体保険ならではのメリットを知っていただき、従業員の皆さまとご家族の生活設計にお役立てください。 団体 安心の",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "団体保険ならではのメリットを知っていただき、従業員の皆さまとご家族の生活設計にお役立てください。",
+        "bbox": [
+          42.4512,
+          159.73919999999998,
+          491.976,
+          13.140000000000008
+        ],
+        "x": 42.4512,
+        "y": 159.73919999999998,
+        "width": 491.976,
+        "height": 13.140000000000008,
+        "page": 1,
+        "is_line": true,
+        "original_text": "団体保険ならではのメリットを知っていただき、従業員の皆さまとご家族の生活設計にお役立てください。"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "は、MS&AD インシュアランスグループ MS&AD インシュアランスグループ団体保険制度は、スケールメリットを活かした福利厚生制度です。 ご加入や保険料のお支払いなどの手続きも、簡単·便利です。 団体 安心の 割引等",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "団体保険制度 は、MS&AD インシュアランスグループ",
+        "bbox": [
+          43.2144,
+          86.6448,
+          545.2127999999999,
+          30.801599999999997
+        ],
+        "x": 43.2144,
+        "y": 86.6448,
+        "width": 545.2127999999999,
+        "height": 30.801599999999997,
+        "page": 1,
+        "is_line": true,
+        "original_text": "団体保険制度 は、MS&ADインシュアランスグループ"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "「記入」を「入力」に読み替えてください。 代理店·扱者 MSK 保険センター株式会社 MS&AD インシュアランスグループホールディングス株式会社 MS&AD インシュアランスグループ団体保険制度は、グループのスケールメリットを活かした福利厚生制度の 1 つです。ご加入や保険料のお支払いなどの手続きも、簡単·便利です。 団体保険ならではのメリットを知っていただき、役員·従業員の皆さまとご家族の生活設計にお役立てください。",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "MS&AD インシュアランスグループ団体保険制度は、グループのスケールメリットを活かした福利厚生制度の",
+        "bbox": [
+          41.781600000000005,
+          127.94399999999999,
+          511.3512,
+          13.12560000000001
+        ],
+        "x": 41.781600000000005,
+        "y": 127.94399999999999,
+        "width": 511.3512,
+        "height": 13.12560000000001,
+        "page": 1,
+        "is_line": true,
+        "original_text": "MS&ADインシュアランスグループ団体保険制度は、グループのスケールメリットを活かした福利厚生制度の"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "代理店·扱者 MSK 保険センター株式会社 MS&AD インシュアランスグループホールディングス株式会社 団体保険制度 は、MS&AD インシュアランスグループ 1 つです。ご加入や保険料のお支払いなどの手続きも、簡単·便利です。 団体保険ならではのメリットを知っていただき、役員·従業員の皆さまとご家族の生活設計にお役立てください。 団体",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "1 つです。ご加入や保険料のお支払いなどの手続きも、簡単·便利です。",
+        "bbox": [
+          42.9696,
+          143.5824,
+          333.0504,
+          13.284000000000008
+        ],
+        "x": 42.9696,
+        "y": 143.5824,
+        "width": 333.0504,
+        "height": 13.284000000000008,
+        "page": 1,
+        "is_line": true,
+        "original_text": "1つです。ご加入や保険料のお支払いなどの手続きも、簡単·便利です。"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "MS&AD インシュアランスグループホールディングス株式会社 団体保険制度 は、MS&AD インシュアランスグループ MS&AD インシュアランスグループ団体保険制度は、グループのスケールメリットを活かした福利厚生制度の 団体保険ならではのメリットを知っていただき、役員·従業員の皆さまとご家族の生活設計にお役立てください。 団体 安心の",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "団体保険ならではのメリットを知っていただき、役員·従業員の皆さまとご家族の生活設計にお役立てください。",
+        "bbox": [
+          42.3792,
+          159.73919999999998,
+          516.7656000000001,
+          13.140000000000008
+        ],
+        "x": 42.3792,
+        "y": 159.73919999999998,
+        "width": 516.7656000000001,
+        "height": 13.140000000000008,
+        "page": 1,
+        "is_line": true,
+        "original_text": "団体保険ならではのメリットを知っていただき、役員·従業員の皆さまとご家族の生活設計にお役立てください。"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "団体保険制度 は、MS&AD インシュアランスグループ MS&AD インシュアランスグループ団体保険制度は、グループのスケールメリットを活かした福利厚生制度の 1 つです。ご加入や保険料のお支払いなどの手続きも、簡単·便利です。 団体 安心の 割引等",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "社員約 1.8 万人が",
+        "bbox": [
+          377.33040000000005,
+          273.9024,
+          169.22879999999998,
+          32.43599999999999
+        ],
+        "x": 377.33040000000005,
+        "y": 273.9024,
+        "width": 169.22879999999998,
+        "height": 32.43599999999999,
+        "page": 1,
+        "is_line": true,
+        "original_text": "社員 約 1.8万人が"
+      },
+      "modified_bbox": {
+        "text": "社員約 1.6 万人が",
+        "bbox": [
+          381.90959999999995,
+          273.9024,
+          159.84720000000004,
+          32.69520000000003
+        ],
+        "x": 381.90959999999995,
+        "y": 273.9024,
+        "width": 159.84720000000004,
+        "height": 32.69520000000003,
+        "page": 1,
+        "is_line": true,
+        "original_text": "社員約1.6万人が"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.9090909090909091,
+      "context": "団体総合生活補償保険(MS&AD 型) MS&AD インシュアランスグループ 最大 40.15%の 割引率を適用! 加入! (病気補償部分·特約は 33.5%)",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "退職者の皆さまを含めると約 2.5 万人も加入",
+        "bbox": [
+          376.416,
+          331.848,
+          170.208,
+          11.915999999999983
+        ],
+        "x": 376.416,
+        "y": 331.848,
+        "width": 170.208,
+        "height": 11.915999999999983,
+        "page": 1,
+        "is_line": true,
+        "original_text": "退職者の皆さまを含めると約2.5万人も加入"
+      },
+      "modified_bbox": {
+        "text": "退職者の皆さまを含めると約 2.4 万人も加入",
+        "bbox": [
+          376.452,
+          331.9272,
+          170.2368,
+          11.9088
+        ],
+        "x": 376.452,
+        "y": 331.9272,
+        "width": 170.2368,
+        "height": 11.9088,
+        "page": 1,
+        "is_line": true,
+        "original_text": "退職者の皆さまを含めると約2.4万人も加入"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.9565217391304348,
+      "context": "割引率を適用! 加入! (病気補償部分·特約は 33.5%) ※ケガ補償には年令別保険料型を導入しています。 年令別保険料は毎年見直しが行われますので、団体 割引等に関わらず保険料が変わることがあります。",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "従業員の皆さまとご家族の安心に!",
+        "bbox": [
+          209.5632,
+          473.6808,
+          175.0536,
+          53.5896
+        ],
+        "x": 209.5632,
+        "y": 473.6808,
+        "width": 175.0536,
+        "height": 53.5896,
+        "page": 1,
+        "is_line": true,
+        "original_text": "従業員の皆さまとご家族の安心に!"
+      },
+      "modified_bbox": {
+        "text": "仪員·従業員の皆さまとご家族の安心に!",
+        "bbox": [
+          200.7432,
+          460.3464,
+          190.03680000000003,
+          66.5136
+        ],
+        "x": 200.7432,
+        "y": 460.3464,
+        "width": 190.03680000000003,
+        "height": 66.5136,
+        "page": 1,
+        "is_line": true,
+        "original_text": "仪員·従業員の皆さまとご家族の安心に!"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.9142857142857143,
+      "context": "割引等に関わらず保険料が変わることがあります。 家族も 安心 役立つ 保険 ご家族も",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "加入いただけます!",
+        "bbox": [
+          60.732,
+          542.9016,
+          142.4304,
+          18.655200000000008
+        ],
+        "x": 60.732,
+        "y": 542.9016,
+        "width": 142.4304,
+        "height": 18.655200000000008,
+        "page": 1,
+        "is_line": true,
+        "original_text": "加入いただけます!"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "仪員·従業員の皆さまとご家族の安心に! 役立つ 保険 ご家族も 約 6,000 件 保険金支払実績",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "約 8,600 件",
+        "bbox": [
+          393.35760000000005,
+          536.7672,
+          136.44719999999995,
+          34.668000000000035
+        ],
+        "x": 393.35760000000005,
+        "y": 536.7672,
+        "width": 136.44719999999995,
+        "height": 34.668000000000035,
+        "page": 1,
+        "is_line": true,
+        "original_text": "約8,600件"
+      },
+      "modified_bbox": {
+        "text": "約 6,000 件",
+        "bbox": [
+          393.10560000000004,
+          536.8896,
+          136.87919999999997,
+          34.31519999999996
+        ],
+        "x": 393.10560000000004,
+        "y": 536.8896,
+        "width": 136.87919999999997,
+        "height": 34.31519999999996,
+        "page": 1,
+        "is_line": true,
+        "original_text": "約6,000件"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.7777777777777778,
+      "context": "役立つ 保険 ご家族も 保険金支払実績 加入いただけます! 約 5 億 3,600 万円",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "加入いただけます!",
+        "bbox": [
+          60.6672,
+          545.7456,
+          142.68959999999998,
+          18.89280000000003
+        ],
+        "x": 60.6672,
+        "y": 545.7456,
+        "width": 142.68959999999998,
+        "height": 18.89280000000003,
+        "page": 1,
+        "is_line": true,
+        "original_text": "加入いただけます!"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "ご家族も 約 8,600 件 保険金支払実績 約 5 億 3,600 万円 (令和 4 年度実績) 簡単な手続き",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "約 5 億 3,600 万円",
+        "bbox": [
+          376.5384,
+          572.1192,
+          169.25039999999998,
+          35.632800000000024
+        ],
+        "x": 376.5384,
+        "y": 572.1192,
+        "width": 169.25039999999998,
+        "height": 35.632800000000024,
+        "page": 1,
+        "is_line": true,
+        "original_text": "約5億3,600万円"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "約 8,600 件 保険金支払実績 加入いただけます! (令和 4 年度実績) 簡単な手続き 退職後も継続できます!",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "(令和 4 年度実績)",
+        "bbox": [
+          427.5792,
+          608.9112,
+          68.1048,
+          10.641600000000011
+        ],
+        "x": 427.5792,
+        "y": 608.9112,
+        "width": 68.1048,
+        "height": 10.641600000000011,
+        "page": 1,
+        "is_line": true,
+        "original_text": "(令和4年度実績)"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "保険金支払実績 加入いただけます! 約 5 億 3,600 万円 簡単な手続き 退職後も継続できます! 保険料は",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "詳細は P4 をご参照ください。",
+        "bbox": [
+          60.9408,
+          563.9472000000001,
+          126.56879999999998,
+          12.009599999999956
+        ],
+        "x": 60.9408,
+        "y": 563.9472000000001,
+        "width": 126.56879999999998,
+        "height": 12.009599999999956,
+        "page": 1,
+        "is_line": true,
+        "original_text": "詳細はP4をご参照ください。"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "ご家族も 約 6,000 件 保険金支払実績 約 4 億 8,900 万円 (令和 5 年度実績) 簡単な手続き",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "約 4 億 8,900 万円",
+        "bbox": [
+          379.0152,
+          572.0255999999999,
+          163.87919999999997,
+          35.72640000000006
+        ],
+        "x": 379.0152,
+        "y": 572.0255999999999,
+        "width": 163.87919999999997,
+        "height": 35.72640000000006,
+        "page": 1,
+        "is_line": true,
+        "original_text": "約4億8,900万円"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "約 6,000 件 保険金支払実績 詳細は P4 をご参照ください。 (令和 5 年度実績) 簡単な手続き 退職後も継続できます!",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "addition",
+      "original_bbox": null,
+      "modified_bbox": {
+        "text": "(令和 5 年度実績)",
+        "bbox": [
+          427.6656,
+          608.8391999999999,
+          67.96799999999999,
+          10.800000000000026
+        ],
+        "x": 427.6656,
+        "y": 608.8391999999999,
+        "width": 67.96799999999999,
+        "height": 10.800000000000026,
+        "page": 1,
+        "is_line": true,
+        "original_text": "(令和5年度実績)"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "保険金支払実績 詳細は P4 をご参照ください。 約 4 億 8,900 万円 簡単な手続き 退職後も継続できます! 保険料は",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "modification",
+      "original_bbox": {
+        "text": "継続できます",
+        "bbox": [
+          259.0704,
+          691.6608000000001,
+          52.40159999999999,
+          10.324799999999982
+        ],
+        "x": 259.0704,
+        "y": 691.6608000000001,
+        "width": 52.40159999999999,
+        "height": 10.324799999999982,
+        "page": 1,
+        "is_line": true,
+        "original_text": "継続できます"
+      },
+      "modified_bbox": {
+        "text": "♡ 継続できます",
+        "bbox": [
+          246.13920000000002,
+          690.9408,
+          65.4552,
+          11.4696
+        ],
+        "x": 246.13920000000002,
+        "y": 690.9408,
+        "width": 65.4552,
+        "height": 11.4696,
+        "page": 1,
+        "is_line": true,
+        "original_text": "♡ 継続できます"
+      },
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.8571428571428571,
+      "context": "ご退職後も団体割引等が引き続き適用となり、継続してご加入いただけます! 25 給与からの引き去り 医師の診査は不要で、 個人補償プラン 親介護補償プラン",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "夫婦補償",
+        "bbox": [
+          435.1032,
+          751.4208000000001,
+          32.724000000000025,
+          9.028799999999933
+        ],
+        "x": 435.1032,
+        "y": 751.4208000000001,
+        "width": 32.724000000000025,
+        "height": 9.028799999999933,
+        "page": 1,
+        "is_line": true,
+        "original_text": "夫婦補償"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "継続できません 保険金の 所得 家族補償 請求手続きも簡単 GLTD",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "家族補償",
+        "bbox": [
+          494.748,
+          751.5288,
+          33.04079999999999,
+          8.884799999999885
+        ],
+        "x": 494.748,
+        "y": 751.5288,
+        "width": 33.04079999999999,
+        "height": 8.884799999999885,
+        "page": 1,
+        "is_line": true,
+        "original_text": "家族補償"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "保険金の 所得 夫婦補償 請求手続きも簡単 GLTD M14~M19",
+      "llm_explanation": null
+    },
+    {
+      "change_type": "deletion",
+      "original_bbox": {
+        "text": "プラン",
+        "bbox": [
+          499.644,
+          761.8248,
+          23.29200000000001,
+          8.07119999999999
+        ],
+        "x": 499.644,
+        "y": 761.8248,
+        "width": 23.29200000000001,
+        "height": 8.07119999999999,
+        "page": 1,
+        "is_line": true,
+        "original_text": "プラン"
+      },
+      "modified_bbox": null,
+      "page": 1,
+      "confidence": 1.0,
+      "semantic_similarity": 0.0,
+      "context": "GLTD M14~M19 補償保険 前年度ご加入いただいた被保険者の人数をもとにした団体割引と損害率による割引等を適用しています。",
+      "llm_explanation": null
+    }
+  ],
+  "reading_order_doc1": [
+    {
+      "text": "MS&AD",
+      "bbox": [
+        45.1656,
+        33.444,
+        36.907199999999996,
+        9.129600000000002
+      ],
+      "x": 45.1656,
+      "y": 33.444,
+      "width": 36.907199999999996,
+      "height": 9.129600000000002,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS&AD"
+    },
+    {
+      "text": "三井住友海上",
+      "bbox": [
+        90.34559999999999,
+        31.9824,
+        67.44960000000002,
+        12.103199999999998
+      ],
+      "x": 90.34559999999999,
+      "y": 31.9824,
+      "width": 67.44960000000002,
+      "height": 12.103199999999998,
+      "page": 0,
+      "is_line": true,
+      "original_text": "三井住友海上"
+    },
+    {
+      "text": "令和 5 年度保存版",
+      "bbox": [
+        447.6744,
+        33.0192,
+        92.88,
+        12.808799999999996
+      ],
+      "x": 447.6744,
+      "y": 33.0192,
+      "width": 92.88,
+      "height": 12.808799999999996,
+      "page": 0,
+      "is_line": true,
+      "original_text": "令和5年度 保存版"
+    },
+    {
+      "text": "MS&AD インシュアランスグループ",
+      "bbox": [
+        186.1416,
+        53.6184,
+        222.79680000000002,
+        14.608799999999999
+      ],
+      "x": 186.1416,
+      "y": 53.6184,
+      "width": 222.79680000000002,
+      "height": 14.608799999999999,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS&ADインシュアランスグループ"
+    },
+    {
+      "text": "団体保険制度",
+      "bbox": [
+        105.60239999999999,
+        96.0912,
+        388.00079999999997,
+        68.5008
+      ],
+      "x": 105.60239999999999,
+      "y": 96.0912,
+      "width": 388.00079999999997,
+      "height": 68.5008,
+      "page": 0,
+      "is_line": true,
+      "original_text": "団体保険制度"
+    },
+    {
+      "text": "役員·従業員(スタッフ社員含む)の皆さまへ",
+      "bbox": [
+        158.1192,
+        70.452,
+        277.4952,
+        15.429600000000004
+      ],
+      "x": 158.1192,
+      "y": 70.452,
+      "width": 277.4952,
+      "height": 15.429600000000004,
+      "page": 0,
+      "is_line": true,
+      "original_text": "役員·従業員(スタッフ社員含む)の皆さまへ"
+    },
+    {
+      "text": "【団体総合生活補償保険(MS&AD 型)、GLTD、所得補償保険】",
+      "bbox": [
+        164.93040000000002,
+        173.3256,
+        264.98879999999997,
+        12.333599999999969
+      ],
+      "x": 164.93040000000002,
+      "y": 173.3256,
+      "width": 264.98879999999997,
+      "height": 12.333599999999969,
+      "page": 0,
+      "is_line": true,
+      "original_text": "【団体総合生活補償保険(MS&AD型)、GLTD、所得補償保険】"
+    },
+    {
+      "text": "団体総合生活補償保険",
+      "bbox": [
+        441.3888,
+        175.2192,
+        112.73760000000001,
+        38.15999999999998
+      ],
+      "x": 441.3888,
+      "y": 175.2192,
+      "width": 112.73760000000001,
+      "height": 38.15999999999998,
+      "page": 0,
+      "is_line": true,
+      "original_text": "団体総合生活補償保険"
+    },
+    {
+      "text": "退職後",
+      "bbox": [
+        251.4816,
+        207.0072,
+        20.25359999999999,
+        7.775999999999975
+      ],
+      "x": 251.4816,
+      "y": 207.0072,
+      "width": 20.25359999999999,
+      "height": 7.775999999999975,
+      "page": 0,
+      "is_line": true,
+      "original_text": "退職後"
+    },
+    {
+      "text": "も継続",
+      "bbox": [
+        252.0144,
+        215.028,
+        19.706399999999988,
+        7.5887999999999955
+      ],
+      "x": 252.0144,
+      "y": 215.028,
+      "width": 19.706399999999988,
+      "height": 7.5887999999999955,
+      "page": 0,
+      "is_line": true,
+      "original_text": "も継続"
+    },
+    {
+      "text": "最大",
+      "bbox": [
+        481.2552,
+        205.38,
+        33.84720000000003,
+        17.683200000000003
+      ],
+      "x": 481.2552,
+      "y": 205.38,
+      "width": 33.84720000000003,
+      "height": 17.683200000000003,
+      "page": 0,
+      "is_line": true,
+      "original_text": "最大"
+    },
+    {
+      "text": "退職",
+      "bbox": [
+        242.7696,
+        234.6696,
+        18.95039999999999,
+        10.360799999999994
+      ],
+      "x": 242.7696,
+      "y": 234.6696,
+      "width": 18.95039999999999,
+      "height": 10.360799999999994,
+      "page": 0,
+      "is_line": true,
+      "original_text": "退職"
+    },
+    {
+      "text": "入社",
+      "bbox": [
+        335.3544,
+        234.6336,
+        18.669599999999974,
+        10.447200000000016
+      ],
+      "x": 335.3544,
+      "y": 234.6336,
+      "width": 18.669599999999974,
+      "height": 10.447200000000016,
+      "page": 0,
+      "is_line": true,
+      "original_text": "入社"
+    },
+    {
+      "text": "40.15%",
+      "bbox": [
+        456.12,
+        228.0816,
+        84.2904,
+        27.22319999999999
+      ],
+      "x": 456.12,
+      "y": 228.0816,
+      "width": 84.2904,
+      "height": 27.22319999999999,
+      "page": 0,
+      "is_line": true,
+      "original_text": "40.15%"
+    },
+    {
+      "text": "割引 !!",
+      "bbox": [
+        473.2776,
+        258.2208,
+        49.51440000000003,
+        19.98000000000002
+      ],
+      "x": 473.2776,
+      "y": 258.2208,
+      "width": 49.51440000000003,
+      "height": 19.98000000000002,
+      "page": 0,
+      "is_line": true,
+      "original_text": "割引 !!"
+    },
+    {
+      "text": "子供",
+      "bbox": [
+        197.25119999999998,
+        310.7304,
+        18.18720000000001,
+        10.252800000000022
+      ],
+      "x": 197.25119999999998,
+      "y": 310.7304,
+      "width": 18.18720000000001,
+      "height": 10.252800000000022,
+      "page": 0,
+      "is_line": true,
+      "original_text": "子供"
+    },
+    {
+      "text": "結婚",
+      "bbox": [
+        381.35519999999997,
+        316.49039999999997,
+        18.597600000000014,
+        10.173600000000015
+      ],
+      "x": 381.35519999999997,
+      "y": 316.49039999999997,
+      "width": 18.597600000000014,
+      "height": 10.173600000000015,
+      "page": 0,
+      "is_line": true,
+      "original_text": "結婚"
+    },
+    {
+      "text": "独立",
+      "bbox": [
+        197.0496,
+        321.62399999999997,
+        18.37439999999999,
+        10.202400000000011
+      ],
+      "x": 197.0496,
+      "y": 321.62399999999997,
+      "width": 18.37439999999999,
+      "height": 10.202400000000011,
+      "page": 0,
+      "is_line": true,
+      "original_text": "独立"
+    },
+    {
+      "text": "あなたの人生に",
+      "bbox": [
+        259.6968,
+        349.22159999999997,
+        77.7168,
+        12.427200000000006
+      ],
+      "x": 259.6968,
+      "y": 349.22159999999997,
+      "width": 77.7168,
+      "height": 12.427200000000006,
+      "page": 0,
+      "is_line": true,
+      "original_text": "あなたの人生に"
+    },
+    {
+      "text": "寄りそう保険",
+      "bbox": [
+        266.1624,
+        362.4624,
+        64.6992,
+        12.643200000000014
+      ],
+      "x": 266.1624,
+      "y": 362.4624,
+      "width": 64.6992,
+      "height": 12.643200000000014,
+      "page": 0,
+      "is_line": true,
+      "original_text": "寄りそう保険"
+    },
+    {
+      "text": "簡単!便利!",
+      "bbox": [
+        465.57360000000006,
+        361.49039999999997,
+        64.53359999999995,
+        14.313600000000022
+      ],
+      "x": 465.57360000000006,
+      "y": 361.49039999999997,
+      "width": 64.53359999999995,
+      "height": 14.313600000000022,
+      "page": 0,
+      "is_line": true,
+      "original_text": "簡単!便利!"
+    },
+    {
+      "text": "Babyy",
+      "bbox": [
+        384.0624,
+        369.1728,
+        20.1672,
+        8.891999999999996
+      ],
+      "x": 384.0624,
+      "y": 369.1728,
+      "width": 20.1672,
+      "height": 8.891999999999996,
+      "page": 0,
+      "is_line": true,
+      "original_text": "Babyy"
+    },
+    {
+      "text": "WEB で",
+      "bbox": [
+        476.24399999999997,
+        377.20799999999997,
+        42.81120000000005,
+        12.895200000000003
+      ],
+      "x": 476.24399999999997,
+      "y": 377.20799999999997,
+      "width": 42.81120000000005,
+      "height": 12.895200000000003,
+      "page": 0,
+      "is_line": true,
+      "original_text": "WEBで"
+    },
+    {
+      "text": "住宅",
+      "bbox": [
+        243.0936,
+        390.9816,
+        18.4248,
+        9.856799999999986
+      ],
+      "x": 243.0936,
+      "y": 390.9816,
+      "width": 18.4248,
+      "height": 9.856799999999986,
+      "page": 0,
+      "is_line": true,
+      "original_text": "住宅"
+    },
+    {
+      "text": "出産",
+      "bbox": [
+        335.61359999999996,
+        396.5256,
+        18.36720000000004,
+        10.06560000000001
+      ],
+      "x": 335.61359999999996,
+      "y": 396.5256,
+      "width": 18.36720000000004,
+      "height": 10.06560000000001,
+      "page": 0,
+      "is_line": true,
+      "original_text": "出産"
+    },
+    {
+      "text": "保険金請求が",
+      "bbox": [
+        458.9856,
+        391.4352,
+        77.66640000000004,
+        14.968799999999966
+      ],
+      "x": 458.9856,
+      "y": 391.4352,
+      "width": 77.66640000000004,
+      "height": 14.968799999999966,
+      "page": 0,
+      "is_line": true,
+      "original_text": "保険金請求が"
+    },
+    {
+      "text": "購入",
+      "bbox": [
+        243.1944,
+        401.8752,
+        17.956800000000005,
+        10.036800000000014
+      ],
+      "x": 243.1944,
+      "y": 401.8752,
+      "width": 17.956800000000005,
+      "height": 10.036800000000014,
+      "page": 0,
+      "is_line": true,
+      "original_text": "購入"
+    },
+    {
+      "text": "できます!",
+      "bbox": [
+        471.64320000000004,
+        407.6928,
+        53.402399999999986,
+        13.0608
+      ],
+      "x": 471.64320000000004,
+      "y": 407.6928,
+      "width": 53.402399999999986,
+      "height": 13.0608,
+      "page": 0,
+      "is_line": true,
+      "original_text": "できます!"
+    },
+    {
+      "text": "申込締切日",
+      "bbox": [
+        123.3,
+        436.7736,
+        36.1224,
+        9.597600000000014
+      ],
+      "x": 123.3,
+      "y": 436.7736,
+      "width": 36.1224,
+      "height": 9.597600000000014,
+      "page": 0,
+      "is_line": true,
+      "original_text": "申込締切日"
+    },
+    {
+      "text": "令和 5 年 10 月 25 日(水)",
+      "bbox": [
+        166.3488,
+        426.4056,
+        182.91600000000003,
+        23.400000000000013
+      ],
+      "x": 166.3488,
+      "y": 426.4056,
+      "width": 182.91600000000003,
+      "height": 23.400000000000013,
+      "page": 0,
+      "is_line": true,
+      "original_text": "令和5年10月25日(水)"
+    },
+    {
+      "text": "P34 または裏表紙を",
+      "bbox": [
+        463.6512,
+        423.144,
+        68.88959999999996,
+        9.424800000000033
+      ],
+      "x": 463.6512,
+      "y": 423.144,
+      "width": 68.88959999999996,
+      "height": 9.424800000000033,
+      "page": 0,
+      "is_line": true,
+      "original_text": "P34または裏表紙を"
+    },
+    {
+      "text": "ご覧ください。",
+      "bbox": [
+        474.1992,
+        432.45360000000005,
+        47.86559999999997,
+        9.331199999999995
+      ],
+      "x": 474.1992,
+      "y": 432.45360000000005,
+      "width": 47.86559999999997,
+      "height": 9.331199999999995,
+      "page": 0,
+      "is_line": true,
+      "original_text": "ご覧ください。"
+    },
+    {
+      "text": "かんたん!便利!",
+      "bbox": [
+        52.4304,
+        458.6904,
+        53.366400000000006,
+        18.74879999999998
+      ],
+      "x": 52.4304,
+      "y": 458.6904,
+      "width": 53.366400000000006,
+      "height": 18.74879999999998,
+      "page": 0,
+      "is_line": true,
+      "original_text": "かんたん!便利!"
+    },
+    {
+      "text": "保険期間",
+      "bbox": [
+        125.18639999999999,
+        456.552,
+        32.45040000000001,
+        9.47519999999998
+      ],
+      "x": 125.18639999999999,
+      "y": 456.552,
+      "width": 32.45040000000001,
+      "height": 9.47519999999998,
+      "page": 0,
+      "is_line": true,
+      "original_text": "保険期間"
+    },
+    {
+      "text": "令和 5 年 12 月 10 日午後 4 時~令和 6 年 12 月 10 日午後 4 時",
+      "bbox": [
+        166.2552,
+        453.64320000000004,
+        303.57360000000006,
+        13.960800000000013
+      ],
+      "x": 166.2552,
+      "y": 453.64320000000004,
+      "width": 303.57360000000006,
+      "height": 13.960800000000013,
+      "page": 0,
+      "is_line": true,
+      "original_text": "令和5年12月10日午後4時~令和6年12月10日午後4時"
+    },
+    {
+      "text": "払込方法",
+      "bbox": [
+        124.812,
+        474.7536,
+        33.0984,
+        9.806400000000039
+      ],
+      "x": 124.812,
+      "y": 474.7536,
+      "width": 33.0984,
+      "height": 9.806400000000039,
+      "page": 0,
+      "is_line": true,
+      "original_text": "払込方法"
+    },
+    {
+      "text": "令和 6 年 2 月分給与より控除開始(12 回払)",
+      "bbox": [
+        165.9744,
+        471.83040000000005,
+        221.93999999999997,
+        14.083199999999984
+      ],
+      "x": 165.9744,
+      "y": 471.83040000000005,
+      "width": 221.93999999999997,
+      "height": 14.083199999999984,
+      "page": 0,
+      "is_line": true,
+      "original_text": "令和6年2月分給与より控除開始(12回払)"
+    },
+    {
+      "text": "お手続方法",
+      "bbox": [
+        267.5304,
+        498.3912,
+        60.24239999999997,
+        13.723199999999991
+      ],
+      "x": 267.5304,
+      "y": 498.3912,
+      "width": 60.24239999999997,
+      "height": 13.723199999999991,
+      "page": 0,
+      "is_line": true,
+      "original_text": "お手続方法"
+    },
+    {
+      "text": "MS1 のほか、ご自宅の PC、スマートフォンでもお手続き可能です。",
+      "bbox": [
+        126.1008,
+        524.2823999999999,
+        340.91999999999996,
+        14.169600000000038
+      ],
+      "x": 126.1008,
+      "y": 524.2823999999999,
+      "width": 340.91999999999996,
+      "height": 14.169600000000038,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS1のほか、ご自宅のPC、スマートフォンでもお手続き可能です。"
+    },
+    {
+      "text": "お手続き可能期間:【10 月 3 日(火)~10 月 25 日(水)】",
+      "bbox": [
+        168.76080000000002,
+        540.3168000000001,
+        256.2408,
+        13.463999999999956
+      ],
+      "x": 168.76080000000002,
+      "y": 540.3168000000001,
+      "width": 256.2408,
+      "height": 13.463999999999956,
+      "page": 0,
+      "is_line": true,
+      "original_text": "お手続き可能期間:【10月3日(火)~10月25日(水)】"
+    },
+    {
+      "text": "MS1 を閲覧できる方/ご自宅の PC またはスマートフォンでお手続き可能な方",
+      "bbox": [
+        127.41120000000001,
+        562.9032,
+        338.4936,
+        12.268799999999992
+      ],
+      "x": 127.41120000000001,
+      "y": 562.9032,
+      "width": 338.4936,
+      "height": 12.268799999999992,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS1を閲覧できる方/ご自宅のPCまたはスマートフォンでお手続き可能な方"
+    },
+    {
+      "text": "<MS1 でのお手続き>",
+      "bbox": [
+        64.3104,
+        583.7976,
+        87.7896,
+        10.159199999999984
+      ],
+      "x": 64.3104,
+      "y": 583.7976,
+      "width": 87.7896,
+      "height": 10.159199999999984,
+      "page": 0,
+      "is_line": true,
+      "original_text": "<MS1でのお手続き>"
+    },
+    {
+      "text": "「MSK 保険センター」のホームページまたは 10 月 2 日(月)の人事部発信の業務連絡からお手続きください。",
+      "bbox": [
+        160.9848,
+        583.9344000000001,
+        366.5808,
+        10.92959999999998
+      ],
+      "x": 160.9848,
+      "y": 583.9344000000001,
+      "width": 366.5808,
+      "height": 10.92959999999998,
+      "page": 0,
+      "is_line": true,
+      "original_text": "「MSK保険センター」のホームページまたは10月2日(月)の人事部発信の業務連絡からお手続きください。"
+    },
+    {
+      "text": "※ネット手続き時間は、平日(月曜~金曜)の 7:00~19:00 です。",
+      "bbox": [
+        160.6464,
+        594.2016000000001,
+        221.2776,
+        10.058399999999963
+      ],
+      "x": 160.6464,
+      "y": 594.2016000000001,
+      "width": 221.2776,
+      "height": 10.058399999999963,
+      "page": 0,
+      "is_line": true,
+      "original_text": "※ネット手続き時間は、平日(月曜~金曜)の7:00~19:00です。"
+    },
+    {
+      "text": "くご自宅等の PC またはスマートフォンでのお手続き> 利用時間 7:00~26:30",
+      "bbox": [
+        64.13040000000001,
+        607.1184,
+        314.25120000000004,
+        11.109599999999944
+      ],
+      "x": 64.13040000000001,
+      "y": 607.1184,
+      "width": 314.25120000000004,
+      "height": 11.109599999999944,
+      "page": 0,
+      "is_line": true,
+      "original_text": "くご自宅等のPCまたはスマートフォンでのお手続き> 利用時間 7:00~26:30"
+    },
+    {
+      "text": "■ご自宅の PC でのお手続き",
+      "bbox": [
+        71.53200000000001,
+        623.0015999999999,
+        97.93439999999998,
+        9.727200000000096
+      ],
+      "x": 71.53200000000001,
+      "y": 623.0015999999999,
+      "width": 97.93439999999998,
+      "height": 9.727200000000096,
+      "page": 0,
+      "is_line": true,
+      "original_text": "■ご自宅のPCでのお手続き"
+    },
+    {
+      "text": ": ■スマートフォンでのお手続き",
+      "bbox": [
+        272.1744,
+        623.1672,
+        115.47360000000003,
+        9.547200000000004
+      ],
+      "x": 272.1744,
+      "y": 623.1672,
+      "width": 115.47360000000003,
+      "height": 9.547200000000004,
+      "page": 0,
+      "is_line": true,
+      "original_text": ": ■スマートフォンでのお手続き"
+    },
+    {
+      "text": "以下の URL からお手続きください。",
+      "bbox": [
+        78.60239999999999,
+        634.0319999999999,
+        119.68560000000001,
+        9.92880000000001
+      ],
+      "x": 78.60239999999999,
+      "y": 634.0319999999999,
+      "width": 119.68560000000001,
+      "height": 9.92880000000001,
+      "page": 0,
+      "is_line": true,
+      "original_text": "以下のURLからお手続きください。"
+    },
+    {
+      "text": "右記の QR コード(※)を読み取り、お手続きください。",
+      "bbox": [
+        280.0584,
+        634.4424,
+        164.68559999999997,
+        9.842399999999955
+      ],
+      "x": 280.0584,
+      "y": 634.4424,
+      "width": 164.68559999999997,
+      "height": 9.842399999999955,
+      "page": 0,
+      "is_line": true,
+      "original_text": "右記のQRコード(※)を読み取り、お手続きください。"
+    },
+    {
+      "text": "https://dantai.ms-ins.com/index.php?ID=eyhe84",
+      "bbox": [
+        78.696,
+        646.3512000000001,
+        189.93599999999998,
+        10.504799999999946
+      ],
+      "x": 78.696,
+      "y": 646.3512000000001,
+      "width": 189.93599999999998,
+      "height": 10.504799999999946,
+      "page": 0,
+      "is_line": true,
+      "original_text": "https://dantai.ms-ins.com/index.php?ID=eyhe84"
+    },
+    {
+      "text": "【推奨環境】 OS:iOS 11/12/13/14/15/16、",
+      "bbox": [
+        289.10159999999996,
+        647.1863999999999,
+        163.8936,
+        9.842400000000083
+      ],
+      "x": 289.10159999999996,
+      "y": 647.1863999999999,
+      "width": 163.8936,
+      "height": 9.842400000000083,
+      "page": 0,
+      "is_line": true,
+      "original_text": "【推奨環境】 OS:iOS 11/12/13/14/15/16、"
+    },
+    {
+      "text": "【推奨環境】 OS: Windows 10/11、Mac 10.15",
+      "bbox": [
+        78.4944,
+        658.9368,
+        178.27919999999997,
+        10.065600000000074
+      ],
+      "x": 78.4944,
+      "y": 658.9368,
+      "width": 178.27919999999997,
+      "height": 10.065600000000074,
+      "page": 0,
+      "is_line": true,
+      "original_text": "【推奨環境】 OS: Windows 10/11、Mac 10.15"
+    },
+    {
+      "text": "Android 5.1/6.0/7.0/8.0/9.0/11.0/12.0/13.0",
+      "bbox": [
+        349.99920000000003,
+        656.1432,
+        178.39439999999996,
+        9.792000000000073
+      ],
+      "x": 349.99920000000003,
+      "y": 656.1432,
+      "width": 178.39439999999996,
+      "height": 9.792000000000073,
+      "page": 0,
+      "is_line": true,
+      "original_text": "Android 5.1/6.0/7.0/8.0/9.0/11.0/12.0/13.0"
+    },
+    {
+      "text": "ブラウザ: Microsoft Edge、",
+      "bbox": [
+        121.52879999999999,
+        668.2392,
+        100.332,
+        10.058399999999963
+      ],
+      "x": 121.52879999999999,
+      "y": 668.2392,
+      "width": 100.332,
+      "height": 10.058399999999963,
+      "page": 0,
+      "is_line": true,
+      "original_text": "ブラウザ: Microsoft Edge、"
+    },
+    {
+      "text": "ブラウザ: Safari、Google Chrome",
+      "bbox": [
+        332.0712,
+        666.2736,
+        131.0256,
+        10.425600000000003
+      ],
+      "x": 332.0712,
+      "y": 666.2736,
+      "width": 131.0256,
+      "height": 10.425600000000003,
+      "page": 0,
+      "is_line": true,
+      "original_text": "ブラウザ: Safari、Google Chrome"
+    },
+    {
+      "text": "Google Chrome, Safari",
+      "bbox": [
+        158.652,
+        677.3616,
+        94.392,
+        10.209599999999995
+      ],
+      "x": 158.652,
+      "y": 677.3616,
+      "width": 94.392,
+      "height": 10.209599999999995,
+      "page": 0,
+      "is_line": true,
+      "original_text": "Google Chrome, Safari"
+    },
+    {
+      "text": "(※)「QR コード」は株式会社デンソーウェーブの登録商標です。",
+      "bbox": [
+        289.5768,
+        677.0519999999999,
+        204.1704,
+        9.972000000000037
+      ],
+      "x": 289.5768,
+      "y": 677.0519999999999,
+      "width": 204.1704,
+      "height": 9.972000000000037,
+      "page": 0,
+      "is_line": true,
+      "original_text": "(※)「QRコード」は株式会社デンソーウェーブの登録商標です。"
+    },
+    {
+      "text": "MS1 を閲覧できない、かつご自宅にインターネット環境がない方",
+      "bbox": [
+        156.55679999999998,
+        699.1200000000001,
+        280.476,
+        11.678399999999897
+      ],
+      "x": 156.55679999999998,
+      "y": 699.1200000000001,
+      "width": 280.476,
+      "height": 11.678399999999897,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS1を閲覧できない、かつご自宅にインターネット環境がない方"
+    },
+    {
+      "text": "加入申込票を MSK 保険センターHP から印刷、もしくは裏表紙の保険センターの拠点へご請求のうえ、締切日までにご提出ください。",
+      "bbox": [
+        69.8976,
+        716.6448,
+        452.7144,
+        10.41840000000002
+      ],
+      "x": 69.8976,
+      "y": 716.6448,
+      "width": 452.7144,
+      "height": 10.41840000000002,
+      "page": 0,
+      "is_line": true,
+      "original_text": "加入申込票をMSK保険センターHPから印刷、もしくは裏表紙の保険センターの拠点へご請求のうえ、締切日までにご提出ください。"
+    },
+    {
+      "text": "4 年令により保険料が変更になっておりますので、今年度の補償内容·保険料を必ずご確認ください。",
+      "bbox": [
+        110.9664,
+        739.6200000000001,
+        375.01919999999996,
+        10.699199999999877
+      ],
+      "x": 110.9664,
+      "y": 739.6200000000001,
+      "width": 375.01919999999996,
+      "height": 10.699199999999877,
+      "page": 0,
+      "is_line": true,
+      "original_text": "4 年令により保険料が変更になっておりますので、今年度の補償内容·保険料を必ずご確認ください。"
+    },
+    {
+      "text": "本契約は自動継続のため、前年から加入されている方につきましては、お申し出がない場合、前年ご加入内容に応じたセット·口数でのご継続となります。",
+      "bbox": [
+        57.4848,
+        755.3808,
+        478.6992,
+        10.144800000000018
+      ],
+      "x": 57.4848,
+      "y": 755.3808,
+      "width": 478.6992,
+      "height": 10.144800000000018,
+      "page": 0,
+      "is_line": true,
+      "original_text": "本契約は自動継続のため、前年から加入されている方につきましては、お申し出がない場合、前年ご加入内容に応じたセット·口数でのご継続となります。"
+    },
+    {
+      "text": "代理店·扱者 MSK 保険センター株式会社",
+      "bbox": [
+        178.596,
+        779.7024,
+        236.98079999999996,
+        14.594400000000007
+      ],
+      "x": 178.596,
+      "y": 779.7024,
+      "width": 236.98079999999996,
+      "height": 14.594400000000007,
+      "page": 0,
+      "is_line": true,
+      "original_text": "代理店·扱者 MSK保険センター株式会社"
+    },
+    {
+      "text": "MS&AD インシュアランスグループホールディングス株式会社",
+      "bbox": [
+        149.76,
+        799.0848,
+        329.8536,
+        13.975200000000044
+      ],
+      "x": 149.76,
+      "y": 799.0848,
+      "width": 329.8536,
+      "height": 13.975200000000044,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS&ADインシュアランスグループ ホールディングス株式会社"
+    },
+    {
+      "text": "団体保険制度",
+      "bbox": [
+        43.358399999999996,
+        86.2344,
+        178.6536,
+        30.052799999999998
+      ],
+      "x": 43.358399999999996,
+      "y": 86.2344,
+      "width": 178.6536,
+      "height": 30.052799999999998,
+      "page": 1,
+      "is_line": true,
+      "original_text": "団体保険制度"
+    },
+    {
+      "text": "は、MS&AD インシュアランスグループ",
+      "bbox": [
+        228.13920000000002,
+        93.25439999999999,
+        359.0352000000001,
+        23.3712
+      ],
+      "x": 228.13920000000002,
+      "y": 93.25439999999999,
+      "width": 359.0352000000001,
+      "height": 23.3712,
+      "page": 1,
+      "is_line": true,
+      "original_text": "は、MS&ADインシュアランスグループ"
+    },
+    {
+      "text": "MS&AD インシュアランスグループ団体保険制度は、スケールメリットを活かした福利厚生制度です。",
+      "bbox": [
+        41.94,
+        128.0376,
+        471.24,
+        13.003200000000007
+      ],
+      "x": 41.94,
+      "y": 128.0376,
+      "width": 471.24,
+      "height": 13.003200000000007,
+      "page": 1,
+      "is_line": true,
+      "original_text": "MS&ADインシュアランスグループ団体保険制度は、スケールメリットを活かした福利厚生制度です。"
+    },
+    {
+      "text": "ご加入や保険料のお支払いなどの手続きも、簡単·便利です。",
+      "bbox": [
+        42.8688,
+        143.6976,
+        288.90000000000003,
+        13.103999999999996
+      ],
+      "x": 42.8688,
+      "y": 143.6976,
+      "width": 288.90000000000003,
+      "height": 13.103999999999996,
+      "page": 1,
+      "is_line": true,
+      "original_text": "ご加入や保険料のお支払いなどの手続きも、簡単·便利です。"
+    },
+    {
+      "text": "団体保険ならではのメリットを知っていただき、従業員の皆さまとご家族の生活設計にお役立てください。",
+      "bbox": [
+        42.4512,
+        159.73919999999998,
+        491.976,
+        13.140000000000008
+      ],
+      "x": 42.4512,
+      "y": 159.73919999999998,
+      "width": 491.976,
+      "height": 13.140000000000008,
+      "page": 1,
+      "is_line": true,
+      "original_text": "団体保険ならではのメリットを知っていただき、従業員の皆さまとご家族の生活設計にお役立てください。"
+    },
+    {
+      "text": "団体",
+      "bbox": [
+        122.3712,
+        202.24800000000002,
+        22.060799999999986,
+        11.635199999999998
+      ],
+      "x": 122.3712,
+      "y": 202.24800000000002,
+      "width": 22.060799999999986,
+      "height": 11.635199999999998,
+      "page": 1,
+      "is_line": true,
+      "original_text": "団体"
+    },
+    {
+      "text": "安心の",
+      "bbox": [
+        446.93999999999994,
+        201.132,
+        28.612800000000014,
+        11.736000000000018
+      ],
+      "x": 446.93999999999994,
+      "y": 201.132,
+      "width": 28.612800000000014,
+      "height": 11.736000000000018,
+      "page": 1,
+      "is_line": true,
+      "original_text": "安心の"
+    },
+    {
+      "text": "割引等",
+      "bbox": [
+        116.22240000000001,
+        214.8912,
+        33.515999999999984,
+        12.29760000000002
+      ],
+      "x": 116.22240000000001,
+      "y": 214.8912,
+      "width": 33.515999999999984,
+      "height": 12.29760000000002,
+      "page": 1,
+      "is_line": true,
+      "original_text": "割引等"
+    },
+    {
+      "text": "加入状況",
+      "bbox": [
+        442.5048,
+        214.0632,
+        38.6352,
+        12.491999999999983
+      ],
+      "x": 442.5048,
+      "y": 214.0632,
+      "width": 38.6352,
+      "height": 12.491999999999983,
+      "page": 1,
+      "is_line": true,
+      "original_text": "加入状況"
+    },
+    {
+      "text": "団体総合生活補償保険(MS&AD 型)",
+      "bbox": [
+        52.797599999999996,
+        258.17040000000003,
+        161.62560000000002,
+        11.894400000000001
+      ],
+      "x": 52.797599999999996,
+      "y": 258.17040000000003,
+      "width": 161.62560000000002,
+      "height": 11.894400000000001,
+      "page": 1,
+      "is_line": true,
+      "original_text": "団体総合生活補償保険(MS&AD型)"
+    },
+    {
+      "text": "MS&AD インシュアランスグループ",
+      "bbox": [
+        382.9104,
+        254.38320000000002,
+        157.26960000000003,
+        11.649599999999996
+      ],
+      "x": 382.9104,
+      "y": 254.38320000000002,
+      "width": 157.26960000000003,
+      "height": 11.649599999999996,
+      "page": 1,
+      "is_line": true,
+      "original_text": "MS&ADインシュアランスグループ"
+    },
+    {
+      "text": "最大 40.15%の",
+      "bbox": [
+        51.084,
+        274.3128,
+        163.00079999999997,
+        32.652
+      ],
+      "x": 51.084,
+      "y": 274.3128,
+      "width": 163.00079999999997,
+      "height": 32.652,
+      "page": 1,
+      "is_line": true,
+      "original_text": "最大40.15%の"
+    },
+    {
+      "text": "社員約 1.8 万人が",
+      "bbox": [
+        377.33040000000005,
+        273.9024,
+        169.22879999999998,
+        32.43599999999999
+      ],
+      "x": 377.33040000000005,
+      "y": 273.9024,
+      "width": 169.22879999999998,
+      "height": 32.43599999999999,
+      "page": 1,
+      "is_line": true,
+      "original_text": "社員 約 1.8万人が"
+    },
+    {
+      "text": "割引率を適用!",
+      "bbox": [
+        75.4704,
+        307.2024,
+        113.4432,
+        19.7568
+      ],
+      "x": 75.4704,
+      "y": 307.2024,
+      "width": 113.4432,
+      "height": 19.7568,
+      "page": 1,
+      "is_line": true,
+      "original_text": "割引率を適用!"
+    },
+    {
+      "text": "加入!",
+      "bbox": [
+        440.1648,
+        309.3408,
+        42.65279999999997,
+        18.719999999999985
+      ],
+      "x": 440.1648,
+      "y": 309.3408,
+      "width": 42.65279999999997,
+      "height": 18.719999999999985,
+      "page": 1,
+      "is_line": true,
+      "original_text": "加入!"
+    },
+    {
+      "text": "(病気補償部分·特約は 33.5%)",
+      "bbox": [
+        70.5744,
+        328.284,
+        123.87599999999999,
+        11.059199999999997
+      ],
+      "x": 70.5744,
+      "y": 328.284,
+      "width": 123.87599999999999,
+      "height": 11.059199999999997,
+      "page": 1,
+      "is_line": true,
+      "original_text": "(病気補償部分·特約は33.5%)"
+    },
+    {
+      "text": "退職者の皆さまを含めると約 2.5 万人も加入",
+      "bbox": [
+        376.416,
+        331.848,
+        170.208,
+        11.915999999999983
+      ],
+      "x": 376.416,
+      "y": 331.848,
+      "width": 170.208,
+      "height": 11.915999999999983,
+      "page": 1,
+      "is_line": true,
+      "original_text": "退職者の皆さまを含めると約2.5万人も加入"
+    },
+    {
+      "text": "※ケガ補償には年令別保険料型を導入しています。",
+      "bbox": [
+        41.7528,
+        359.1216,
+        176.44320000000002,
+        10.713599999999971
+      ],
+      "x": 41.7528,
+      "y": 359.1216,
+      "width": 176.44320000000002,
+      "height": 10.713599999999971,
+      "page": 1,
+      "is_line": true,
+      "original_text": "※ケガ補償には年令別保険料型を導入しています。"
+    },
+    {
+      "text": "年令別保険料は毎年見直しが行われますので、団体",
+      "bbox": [
+        49.0248,
+        369.54,
+        173.4408,
+        9.719999999999985
+      ],
+      "x": 49.0248,
+      "y": 369.54,
+      "width": 173.4408,
+      "height": 9.719999999999985,
+      "page": 1,
+      "is_line": true,
+      "original_text": "年令別保険料は毎年見直しが行われますので、団体"
+    },
+    {
+      "text": "割引等に関わらず保険料が変わることがあります。",
+      "bbox": [
+        49.1472,
+        379.65599999999995,
+        168.8976,
+        10.094400000000007
+      ],
+      "x": 49.1472,
+      "y": 379.65599999999995,
+      "width": 168.8976,
+      "height": 10.094400000000007,
+      "page": 1,
+      "is_line": true,
+      "original_text": "割引等に関わらず保険料が変わることがあります。"
+    },
+    {
+      "text": "家族も",
+      "bbox": [
+        116.21520000000001,
+        472.968,
+        32.5008,
+        11.988000000000007
+      ],
+      "x": 116.21520000000001,
+      "y": 472.968,
+      "width": 32.5008,
+      "height": 11.988000000000007,
+      "page": 1,
+      "is_line": true,
+      "original_text": "家族も"
+    },
+    {
+      "text": "安心",
+      "bbox": [
+        121.2696,
+        486.4464,
+        22.910400000000003,
+        12.36240000000003
+      ],
+      "x": 121.2696,
+      "y": 486.4464,
+      "width": 22.910400000000003,
+      "height": 12.36240000000003,
+      "page": 1,
+      "is_line": true,
+      "original_text": "安心"
+    },
+    {
+      "text": "従業員の皆さまとご家族の安心に!",
+      "bbox": [
+        209.5632,
+        473.6808,
+        175.0536,
+        53.5896
+      ],
+      "x": 209.5632,
+      "y": 473.6808,
+      "width": 175.0536,
+      "height": 53.5896,
+      "page": 1,
+      "is_line": true,
+      "original_text": "従業員の皆さまとご家族の安心に!"
+    },
+    {
+      "text": "役立つ",
+      "bbox": [
+        444.7656,
+        474.17040000000003,
+        32.99760000000003,
+        12.067200000000014
+      ],
+      "x": 444.7656,
+      "y": 474.17040000000003,
+      "width": 32.99760000000003,
+      "height": 12.067200000000014,
+      "page": 1,
+      "is_line": true,
+      "original_text": "役立つ"
+    },
+    {
+      "text": "保険",
+      "bbox": [
+        450.12960000000004,
+        487.2384,
+        23.176799999999957,
+        12.297599999999989
+      ],
+      "x": 450.12960000000004,
+      "y": 487.2384,
+      "width": 23.176799999999957,
+      "height": 12.297599999999989,
+      "page": 1,
+      "is_line": true,
+      "original_text": "保険"
+    },
+    {
+      "text": "ご家族も",
+      "bbox": [
+        61.92,
+        525.1104,
+        66.2832,
+        18.093600000000038
+      ],
+      "x": 61.92,
+      "y": 525.1104,
+      "width": 66.2832,
+      "height": 18.093600000000038,
+      "page": 1,
+      "is_line": true,
+      "original_text": "ご家族も"
+    },
+    {
+      "text": "約 8,600 件",
+      "bbox": [
+        393.35760000000005,
+        536.7672,
+        136.44719999999995,
+        34.668000000000035
+      ],
+      "x": 393.35760000000005,
+      "y": 536.7672,
+      "width": 136.44719999999995,
+      "height": 34.668000000000035,
+      "page": 1,
+      "is_line": true,
+      "original_text": "約8,600件"
+    },
+    {
+      "text": "保険金支払実績",
+      "bbox": [
+        426.0168,
+        521.0352,
+        71.18639999999998,
+        11.736000000000018
+      ],
+      "x": 426.0168,
+      "y": 521.0352,
+      "width": 71.18639999999998,
+      "height": 11.736000000000018,
+      "page": 1,
+      "is_line": true,
+      "original_text": "保険金支払実績"
+    },
+    {
+      "text": "加入いただけます!",
+      "bbox": [
+        60.6672,
+        545.7456,
+        142.68959999999998,
+        18.89280000000003
+      ],
+      "x": 60.6672,
+      "y": 545.7456,
+      "width": 142.68959999999998,
+      "height": 18.89280000000003,
+      "page": 1,
+      "is_line": true,
+      "original_text": "加入いただけます!"
+    },
+    {
+      "text": "約 5 億 3,600 万円",
+      "bbox": [
+        376.5384,
+        572.1192,
+        169.25039999999998,
+        35.632800000000024
+      ],
+      "x": 376.5384,
+      "y": 572.1192,
+      "width": 169.25039999999998,
+      "height": 35.632800000000024,
+      "page": 1,
+      "is_line": true,
+      "original_text": "約5億3,600万円"
+    },
+    {
+      "text": "(令和 4 年度実績)",
+      "bbox": [
+        427.5792,
+        608.9112,
+        68.1048,
+        10.641600000000011
+      ],
+      "x": 427.5792,
+      "y": 608.9112,
+      "width": 68.1048,
+      "height": 10.641600000000011,
+      "page": 1,
+      "is_line": true,
+      "original_text": "(令和4年度実績)"
+    },
+    {
+      "text": "簡単な手続き",
+      "bbox": [
+        84.3552,
+        654.0047999999999,
+        89.5248,
+        16.16400000000006
+      ],
+      "x": 84.3552,
+      "y": 654.0047999999999,
+      "width": 89.5248,
+      "height": 16.16400000000006,
+      "page": 1,
+      "is_line": true,
+      "original_text": "簡単な手続き"
+    },
+    {
+      "text": "退職後も継続できます!",
+      "bbox": [
+        315.2088,
+        653.7456000000001,
+        153.12959999999995,
+        16.538399999999953
+      ],
+      "x": 315.2088,
+      "y": 653.7456000000001,
+      "width": 153.12959999999995,
+      "height": 16.538399999999953,
+      "page": 1,
+      "is_line": true,
+      "original_text": "退職後も継続できます!"
+    },
+    {
+      "text": "保険料は",
+      "bbox": [
+        94.9536,
+        678.1536,
+        44.618399999999994,
+        11.91600000000011
+      ],
+      "x": 94.9536,
+      "y": 678.1536,
+      "width": 44.618399999999994,
+      "height": 11.91600000000011,
+      "page": 1,
+      "is_line": true,
+      "original_text": "保険料は"
+    },
+    {
+      "text": "ご退職後も団体割引等が引き続き適用となり、継続してご加入いただけます!",
+      "bbox": [
+        244.8504,
+        674.3232,
+        294.5376,
+        10.972800000000007
+      ],
+      "x": 244.8504,
+      "y": 674.3232,
+      "width": 294.5376,
+      "height": 10.972800000000007,
+      "page": 1,
+      "is_line": true,
+      "original_text": "ご退職後も団体割引等が引き続き適用となり、継続してご加入いただけます!"
+    },
+    {
+      "text": "25",
+      "bbox": [
+        69.1056,
+        688.7592000000001,
+        12.168000000000003,
+        9.648000000000025
+      ],
+      "x": 69.1056,
+      "y": 688.7592000000001,
+      "width": 12.168000000000003,
+      "height": 9.648000000000025,
+      "page": 1,
+      "is_line": true,
+      "original_text": "25"
+    },
+    {
+      "text": "給与からの引き去り",
+      "bbox": [
+        94.9896,
+        691.1712,
+        94.25520000000002,
+        12.124800000000008
+      ],
+      "x": 94.9896,
+      "y": 691.1712,
+      "width": 94.25520000000002,
+      "height": 12.124800000000008,
+      "page": 1,
+      "is_line": true,
+      "original_text": "給与からの引き去り"
+    },
+    {
+      "text": "継続できます",
+      "bbox": [
+        259.0704,
+        691.6608000000001,
+        52.40159999999999,
+        10.324799999999982
+      ],
+      "x": 259.0704,
+      "y": 691.6608000000001,
+      "width": 52.40159999999999,
+      "height": 10.324799999999982,
+      "page": 1,
+      "is_line": true,
+      "original_text": "継続できます"
+    },
+    {
+      "text": "医師の診査は不要で、",
+      "bbox": [
+        95.5152,
+        711.7632,
+        103.19039999999998,
+        12.290400000000005
+      ],
+      "x": 95.5152,
+      "y": 711.7632,
+      "width": 103.19039999999998,
+      "height": 12.290400000000005,
+      "page": 1,
+      "is_line": true,
+      "original_text": "医師の診査は不要で、"
+    },
+    {
+      "text": "個人補償プラン",
+      "bbox": [
+        247.01760000000002,
+        712.6632,
+        55.699199999999976,
+        9.554399999999987
+      ],
+      "x": 247.01760000000002,
+      "y": 712.6632,
+      "width": 55.699199999999976,
+      "height": 9.554399999999987,
+      "page": 1,
+      "is_line": true,
+      "original_text": "個人補償プラン"
+    },
+    {
+      "text": "親介護補償プラン",
+      "bbox": [
+        312.15599999999995,
+        707.8608,
+        55.96560000000002,
+        9.208800000000025
+      ],
+      "x": 312.15599999999995,
+      "y": 707.8608,
+      "width": 55.96560000000002,
+      "height": 9.208800000000025,
+      "page": 1,
+      "is_line": true,
+      "original_text": "親介護補償プラン"
+    },
+    {
+      "text": "M11~M13",
+      "bbox": [
+        320.2128,
+        717.804,
+        39.578399999999974,
+        8.215200000000038
+      ],
+      "x": 320.2128,
+      "y": 717.804,
+      "width": 39.578399999999974,
+      "height": 8.215200000000038,
+      "page": 1,
+      "is_line": true,
+      "original_text": "M11~M13"
+    },
+    {
+      "text": "加入手続きは簡単",
+      "bbox": [
+        95.0904,
+        724.9608,
+        87.2784,
+        12.247200000000106
+      ],
+      "x": 95.0904,
+      "y": 724.9608,
+      "width": 87.2784,
+      "height": 12.247200000000106,
+      "page": 1,
+      "is_line": true,
+      "original_text": "加入手続きは簡単"
+    },
+    {
+      "text": "継続できません",
+      "bbox": [
+        259.3512,
+        736.344,
+        61.20720000000002,
+        9.712800000000001
+      ],
+      "x": 259.3512,
+      "y": 736.344,
+      "width": 61.20720000000002,
+      "height": 9.712800000000001,
+      "page": 1,
+      "is_line": true,
+      "original_text": "継続できません"
+    },
+    {
+      "text": "保険金の",
+      "bbox": [
+        95.11919999999999,
+        745.128,
+        44.135999999999996,
+        12.074399999999997
+      ],
+      "x": 95.11919999999999,
+      "y": 745.128,
+      "width": 44.135999999999996,
+      "height": 12.074399999999997,
+      "page": 1,
+      "is_line": true,
+      "original_text": "保険金の"
+    },
+    {
+      "text": "所得",
+      "bbox": [
+        383.5584,
+        751.5504,
+        16.76879999999999,
+        8.690399999999954
+      ],
+      "x": 383.5584,
+      "y": 751.5504,
+      "width": 16.76879999999999,
+      "height": 8.690399999999954,
+      "page": 1,
+      "is_line": true,
+      "original_text": "所得"
+    },
+    {
+      "text": "夫婦補償",
+      "bbox": [
+        435.1032,
+        751.4208000000001,
+        32.724000000000025,
+        9.028799999999933
+      ],
+      "x": 435.1032,
+      "y": 751.4208000000001,
+      "width": 32.724000000000025,
+      "height": 9.028799999999933,
+      "page": 1,
+      "is_line": true,
+      "original_text": "夫婦補償"
+    },
+    {
+      "text": "家族補償",
+      "bbox": [
+        494.748,
+        751.5288,
+        33.04079999999999,
+        8.884799999999885
+      ],
+      "x": 494.748,
+      "y": 751.5288,
+      "width": 33.04079999999999,
+      "height": 8.884799999999885,
+      "page": 1,
+      "is_line": true,
+      "original_text": "家族補償"
+    },
+    {
+      "text": "請求手続きも簡単",
+      "bbox": [
+        95.0472,
+        758.088,
+        86.184,
+        12.412799999999976
+      ],
+      "x": 95.0472,
+      "y": 758.088,
+      "width": 86.184,
+      "height": 12.412799999999976,
+      "page": 1,
+      "is_line": true,
+      "original_text": "請求手続きも簡単"
+    },
+    {
+      "text": "GLTD",
+      "bbox": [
+        261.0792,
+        756.3456,
+        22.859999999999992,
+        8.179199999999994
+      ],
+      "x": 261.0792,
+      "y": 756.3456,
+      "width": 22.859999999999992,
+      "height": 8.179199999999994,
+      "page": 1,
+      "is_line": true,
+      "original_text": "GLTD"
+    },
+    {
+      "text": "M14~M19",
+      "bbox": [
+        309.41279999999995,
+        761.2560000000001,
+        45.381600000000006,
+        8.280000000000015
+      ],
+      "x": 309.41279999999995,
+      "y": 761.2560000000001,
+      "width": 45.381600000000006,
+      "height": 8.280000000000015,
+      "page": 1,
+      "is_line": true,
+      "original_text": "M14~M19"
+    },
+    {
+      "text": "補償保険",
+      "bbox": [
+        375.5016,
+        761.22,
+        32.831999999999965,
+        9.05040000000001
+      ],
+      "x": 375.5016,
+      "y": 761.22,
+      "width": 32.831999999999965,
+      "height": 9.05040000000001,
+      "page": 1,
+      "is_line": true,
+      "original_text": "補償保険"
+    },
+    {
+      "text": "プラン",
+      "bbox": [
+        499.644,
+        761.8248,
+        23.29200000000001,
+        8.07119999999999
+      ],
+      "x": 499.644,
+      "y": 761.8248,
+      "width": 23.29200000000001,
+      "height": 8.07119999999999,
+      "page": 1,
+      "is_line": true,
+      "original_text": "プラン"
+    },
+    {
+      "text": "前年度ご加入いただいた被保険者の人数をもとにした団体割引と損害率による割引等を適用しています。",
+      "bbox": [
+        42.782399999999996,
+        788.1336000000001,
+        360.3816,
+        10.367999999999881
+      ],
+      "x": 42.782399999999996,
+      "y": 788.1336000000001,
+      "width": 360.3816,
+      "height": 10.367999999999881,
+      "page": 1,
+      "is_line": true,
+      "original_text": "前年度ご加入いただいた被保険者の人数をもとにした団体割引と損害率による割引等を適用しています。"
+    }
+  ],
+  "reading_order_doc2": [
+    {
+      "text": "MS&AD",
+      "bbox": [
+        45.144,
+        33.4656,
+        36.9216,
+        9.122400000000003
+      ],
+      "x": 45.144,
+      "y": 33.4656,
+      "width": 36.9216,
+      "height": 9.122400000000003,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS&AD"
+    },
+    {
+      "text": "三井住友海上",
+      "bbox": [
+        90.35999999999999,
+        32.0472,
+        67.42800000000001,
+        12.0168
+      ],
+      "x": 90.35999999999999,
+      "y": 32.0472,
+      "width": 67.42800000000001,
+      "height": 12.0168,
+      "page": 0,
+      "is_line": true,
+      "original_text": "三井住友海上"
+    },
+    {
+      "text": "令和 6 年度保存版",
+      "bbox": [
+        447.6888,
+        33.1128,
+        92.9088,
+        12.722400000000006
+      ],
+      "x": 447.6888,
+      "y": 33.1128,
+      "width": 92.9088,
+      "height": 12.722400000000006,
+      "page": 0,
+      "is_line": true,
+      "original_text": "令和6年度 保存版"
+    },
+    {
+      "text": "MS&AD インシュアランスグループ",
+      "bbox": [
+        186.0264,
+        49.5072,
+        222.83280000000002,
+        14.551200000000005
+      ],
+      "x": 186.0264,
+      "y": 49.5072,
+      "width": 222.83280000000002,
+      "height": 14.551200000000005,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS&ADインシュアランスグループ"
+    },
+    {
+      "text": "団体保険制度",
+      "bbox": [
+        107.2512,
+        89.1072,
+        385.6536,
+        68.58000000000001
+      ],
+      "x": 107.2512,
+      "y": 89.1072,
+      "width": 385.6536,
+      "height": 68.58000000000001,
+      "page": 0,
+      "is_line": true,
+      "original_text": "団体保険制度"
+    },
+    {
+      "text": "役員·従業員(スタッフ社員含む)の皆さまへ",
+      "bbox": [
+        158.256,
+        66.528,
+        277.3944,
+        15.789599999999997
+      ],
+      "x": 158.256,
+      "y": 66.528,
+      "width": 277.3944,
+      "height": 15.789599999999997,
+      "page": 0,
+      "is_line": true,
+      "original_text": "役員·従業員(スタッフ社員含む)の皆さまへ"
+    },
+    {
+      "text": "【団体総合生活補償保険(MS&AD 型)、GLTD、所得補償保険】",
+      "bbox": [
+        165.00959999999998,
+        164.3328,
+        264.6576,
+        12.261600000000008
+      ],
+      "x": 165.00959999999998,
+      "y": 164.3328,
+      "width": 264.6576,
+      "height": 12.261600000000008,
+      "page": 0,
+      "is_line": true,
+      "original_text": "【団体総合生活補償保険(MS&AD型)、GLTD、所得補償保険】"
+    },
+    {
+      "text": "団体総合生活補償保険",
+      "bbox": [
+        442.0584,
+        166.2264,
+        112.49279999999996,
+        38.1528
+      ],
+      "x": 442.0584,
+      "y": 166.2264,
+      "width": 112.49279999999996,
+      "height": 38.1528,
+      "page": 0,
+      "is_line": true,
+      "original_text": "団体総合生活補償保険"
+    },
+    {
+      "text": "退職後",
+      "bbox": [
+        251.4744,
+        197.70479999999998,
+        20.311199999999985,
+        7.9848
+      ],
+      "x": 251.4744,
+      "y": 197.70479999999998,
+      "width": 20.311199999999985,
+      "height": 7.9848,
+      "page": 0,
+      "is_line": true,
+      "original_text": "退職後"
+    },
+    {
+      "text": "最大",
+      "bbox": [
+        480.96720000000005,
+        196.38,
+        34.185599999999944,
+        17.61120000000001
+      ],
+      "x": 480.96720000000005,
+      "y": 196.38,
+      "width": 34.185599999999944,
+      "height": 17.61120000000001,
+      "page": 0,
+      "is_line": true,
+      "original_text": "最大"
+    },
+    {
+      "text": "退職",
+      "bbox": [
+        242.8632,
+        225.8928,
+        18.7272,
+        10.000800000000002
+      ],
+      "x": 242.8632,
+      "y": 225.8928,
+      "width": 18.7272,
+      "height": 10.000800000000002,
+      "page": 0,
+      "is_line": true,
+      "original_text": "退職"
+    },
+    {
+      "text": "も継続",
+      "bbox": [
+        252.2088,
+        205.8624,
+        19.699200000000005,
+        7.668000000000003
+      ],
+      "x": 252.2088,
+      "y": 205.8624,
+      "width": 19.699200000000005,
+      "height": 7.668000000000003,
+      "page": 0,
+      "is_line": true,
+      "original_text": "も継続"
+    },
+    {
+      "text": "入社",
+      "bbox": [
+        335.15279999999996,
+        225.5184,
+        18.79200000000001,
+        10.648799999999994
+      ],
+      "x": 335.15279999999996,
+      "y": 225.5184,
+      "width": 18.79200000000001,
+      "height": 10.648799999999994,
+      "page": 0,
+      "is_line": true,
+      "original_text": "入社"
+    },
+    {
+      "text": "40.15%",
+      "bbox": [
+        455.7024,
+        218.90879999999999,
+        84.9744,
+        27.885600000000014
+      ],
+      "x": 455.7024,
+      "y": 218.90879999999999,
+      "width": 84.9744,
+      "height": 27.885600000000014,
+      "page": 0,
+      "is_line": true,
+      "original_text": "40.15%"
+    },
+    {
+      "text": "割引 !!",
+      "bbox": [
+        472.86,
+        249.0336,
+        49.96080000000001,
+        20.224799999999995
+      ],
+      "x": 472.86,
+      "y": 249.0336,
+      "width": 49.96080000000001,
+      "height": 20.224799999999995,
+      "page": 0,
+      "is_line": true,
+      "original_text": "割引 !!"
+    },
+    {
+      "text": "子供",
+      "bbox": [
+        197.17919999999998,
+        301.824,
+        18.48960000000001,
+        10.08719999999996
+      ],
+      "x": 197.17919999999998,
+      "y": 301.824,
+      "width": 18.48960000000001,
+      "height": 10.08719999999996,
+      "page": 0,
+      "is_line": true,
+      "original_text": "子供"
+    },
+    {
+      "text": "結婚",
+      "bbox": [
+        381.3264,
+        307.38960000000003,
+        18.597600000000014,
+        10.288800000000002
+      ],
+      "x": 381.3264,
+      "y": 307.38960000000003,
+      "width": 18.597600000000014,
+      "height": 10.288800000000002,
+      "page": 0,
+      "is_line": true,
+      "original_text": "結婚"
+    },
+    {
+      "text": "独立",
+      "bbox": [
+        197.0928,
+        312.6672,
+        18.403199999999988,
+        9.92880000000001
+      ],
+      "x": 197.0928,
+      "y": 312.6672,
+      "width": 18.403199999999988,
+      "height": 9.92880000000001,
+      "page": 0,
+      "is_line": true,
+      "original_text": "独立"
+    },
+    {
+      "text": "あなたの人生に",
+      "bbox": [
+        259.6032,
+        340.0992,
+        77.904,
+        12.55679999999996
+      ],
+      "x": 259.6032,
+      "y": 340.0992,
+      "width": 77.904,
+      "height": 12.55679999999996,
+      "page": 0,
+      "is_line": true,
+      "original_text": "あなたの人生に"
+    },
+    {
+      "text": "寄りそう保険",
+      "bbox": [
+        266.1192,
+        353.62080000000003,
+        64.78560000000003,
+        12.94559999999995
+      ],
+      "x": 266.1192,
+      "y": 353.62080000000003,
+      "width": 64.78560000000003,
+      "height": 12.94559999999995,
+      "page": 0,
+      "is_line": true,
+      "original_text": "寄りそう保険"
+    },
+    {
+      "text": "簡単!便利!",
+      "bbox": [
+        465.66,
+        348.34319999999997,
+        64.5624,
+        14.34240000000002
+      ],
+      "x": 465.66,
+      "y": 348.34319999999997,
+      "width": 64.5624,
+      "height": 14.34240000000002,
+      "page": 0,
+      "is_line": true,
+      "original_text": "簡単!便利!"
+    },
+    {
+      "text": "Babyor",
+      "bbox": [
+        384.3936,
+        360.7056,
+        19.871999999999986,
+        8.049599999999977
+      ],
+      "x": 384.3936,
+      "y": 360.7056,
+      "width": 19.871999999999986,
+      "height": 8.049599999999977,
+      "page": 0,
+      "is_line": true,
+      "original_text": "Babyor"
+    },
+    {
+      "text": "WEB で",
+      "bbox": [
+        476.33040000000005,
+        364.15439999999995,
+        42.811199999999985,
+        12.780000000000015
+      ],
+      "x": 476.33040000000005,
+      "y": 364.15439999999995,
+      "width": 42.811199999999985,
+      "height": 12.780000000000015,
+      "page": 0,
+      "is_line": true,
+      "original_text": "WEBで"
+    },
+    {
+      "text": "住宅",
+      "bbox": [
+        243.15840000000003,
+        381.9024,
+        18.280799999999985,
+        10.036800000000014
+      ],
+      "x": 243.15840000000003,
+      "y": 381.9024,
+      "width": 18.280799999999985,
+      "height": 10.036800000000014,
+      "page": 0,
+      "is_line": true,
+      "original_text": "住宅"
+    },
+    {
+      "text": "保険金請求が",
+      "bbox": [
+        458.9928,
+        378.25919999999996,
+        77.79599999999999,
+        15.076800000000034
+      ],
+      "x": 458.9928,
+      "y": 378.25919999999996,
+      "width": 77.79599999999999,
+      "height": 15.076800000000034,
+      "page": 0,
+      "is_line": true,
+      "original_text": "保険金請求が"
+    },
+    {
+      "text": "購入",
+      "bbox": [
+        243.2592,
+        392.8104,
+        18.194399999999995,
+        10.036800000000014
+      ],
+      "x": 243.2592,
+      "y": 392.8104,
+      "width": 18.194399999999995,
+      "height": 10.036800000000014,
+      "page": 0,
+      "is_line": true,
+      "original_text": "購入"
+    },
+    {
+      "text": "出産",
+      "bbox": [
+        335.48400000000004,
+        387.8136,
+        18.4392,
+        9.899999999999949
+      ],
+      "x": 335.48400000000004,
+      "y": 387.8136,
+      "width": 18.4392,
+      "height": 9.899999999999949,
+      "page": 0,
+      "is_line": true,
+      "original_text": "出産"
+    },
+    {
+      "text": "できます!",
+      "bbox": [
+        471.7296,
+        394.9704,
+        53.654399999999974,
+        13.118400000000058
+      ],
+      "x": 471.7296,
+      "y": 394.9704,
+      "width": 53.654399999999974,
+      "height": 13.118400000000058,
+      "page": 0,
+      "is_line": true,
+      "original_text": "できます!"
+    },
+    {
+      "text": "令和 6 年 10 月 23 日(水)",
+      "bbox": [
+        166.284,
+        417.8376,
+        182.92320000000004,
+        22.97519999999998
+      ],
+      "x": 166.284,
+      "y": 417.8376,
+      "width": 182.92320000000004,
+      "height": 22.97519999999998,
+      "page": 0,
+      "is_line": true,
+      "original_text": "令和6年10月23日(水)"
+    },
+    {
+      "text": "P35 または最終ページを",
+      "bbox": [
+        457.85519999999997,
+        409.8888,
+        80.51039999999999,
+        9.50400000000004
+      ],
+      "x": 457.85519999999997,
+      "y": 409.8888,
+      "width": 80.51039999999999,
+      "height": 9.50400000000004,
+      "page": 0,
+      "is_line": true,
+      "original_text": "P35または最終ページを"
+    },
+    {
+      "text": "ご覧ください。",
+      "bbox": [
+        474.9696,
+        419.3784,
+        45.8784,
+        9.295200000000015
+      ],
+      "x": 474.9696,
+      "y": 419.3784,
+      "width": 45.8784,
+      "height": 9.295200000000015,
+      "page": 0,
+      "is_line": true,
+      "original_text": "ご覧ください。"
+    },
+    {
+      "text": "申込締切日",
+      "bbox": [
+        123.516,
+        427.8888,
+        35.8632,
+        9.36720000000004
+      ],
+      "x": 123.516,
+      "y": 427.8888,
+      "width": 35.8632,
+      "height": 9.36720000000004,
+      "page": 0,
+      "is_line": true,
+      "original_text": "申込締切日"
+    },
+    {
+      "text": "かんたん!便利!",
+      "bbox": [
+        52.596000000000004,
+        444.7296,
+        53.40239999999999,
+        18.871200000000016
+      ],
+      "x": 52.596000000000004,
+      "y": 444.7296,
+      "width": 53.40239999999999,
+      "height": 18.871200000000016,
+      "page": 0,
+      "is_line": true,
+      "original_text": "かんたん!便利!"
+    },
+    {
+      "text": "保険期間",
+      "bbox": [
+        125.2584,
+        447.66,
+        32.56560000000001,
+        9.863999999999969
+      ],
+      "x": 125.2584,
+      "y": 447.66,
+      "width": 32.56560000000001,
+      "height": 9.863999999999969,
+      "page": 0,
+      "is_line": true,
+      "original_text": "保険期間"
+    },
+    {
+      "text": "令和 6 年 12 月 10 日午後 4 時~令和 7 年 12 月 10 日午後 4 時",
+      "bbox": [
+        165.744,
+        444.53520000000003,
+        304.06320000000005,
+        14.205600000000018
+      ],
+      "x": 165.744,
+      "y": 444.53520000000003,
+      "width": 304.06320000000005,
+      "height": 14.205600000000018,
+      "page": 0,
+      "is_line": true,
+      "original_text": "令和6年12月10日午後4時~令和7年12月10日午後4時"
+    },
+    {
+      "text": "払込方法",
+      "bbox": [
+        124.78320000000001,
+        465.6888,
+        33.45120000000001,
+        9.856799999999986
+      ],
+      "x": 124.78320000000001,
+      "y": 465.6888,
+      "width": 33.45120000000001,
+      "height": 9.856799999999986,
+      "page": 0,
+      "is_line": true,
+      "original_text": "払込方法"
+    },
+    {
+      "text": "令和 7 年 2 月分給与より控除開始(12 回払)",
+      "bbox": [
+        165.4992,
+        462.852,
+        222.2712,
+        14.112000000000045
+      ],
+      "x": 165.4992,
+      "y": 462.852,
+      "width": 222.2712,
+      "height": 14.112000000000045,
+      "page": 0,
+      "is_line": true,
+      "original_text": "令和7年2月分給与より控除開始(12回払)"
+    },
+    {
+      "text": "お手続方法",
+      "bbox": [
+        267.5016,
+        487.84319999999997,
+        60.37919999999997,
+        13.615199999999987
+      ],
+      "x": 267.5016,
+      "y": 487.84319999999997,
+      "width": 60.37919999999997,
+      "height": 13.615199999999987,
+      "page": 0,
+      "is_line": true,
+      "original_text": "お手続方法"
+    },
+    {
+      "text": "MS1 のほか、ご自宅の PC、スマートフォンでもお手続き可能です。",
+      "bbox": [
+        126.02879999999999,
+        511.0632,
+        341.0496,
+        14.364000000000033
+      ],
+      "x": 126.02879999999999,
+      "y": 511.0632,
+      "width": 341.0496,
+      "height": 14.364000000000033,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS1のほか、ご自宅のPC、スマートフォンでもお手続き可能です。"
+    },
+    {
+      "text": "お手続き可能期間:【10 月 1 日(火)~10 月 23 日(水)】",
+      "bbox": [
+        168.7104,
+        527.1912,
+        256.1976,
+        13.51440000000003
+      ],
+      "x": 168.7104,
+      "y": 527.1912,
+      "width": 256.1976,
+      "height": 13.51440000000003,
+      "page": 0,
+      "is_line": true,
+      "original_text": "お手続き可能期間:【10月1日(火)~10月23日(水)】"
+    },
+    {
+      "text": "MS1 を閲覧できる方/ご自宅の PC またはスマートフォンでお手続き可能な方",
+      "bbox": [
+        127.41120000000001,
+        549.0144,
+        338.34959999999995,
+        12.225599999999964
+      ],
+      "x": 127.41120000000001,
+      "y": 549.0144,
+      "width": 338.34959999999995,
+      "height": 12.225599999999964,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS1を閲覧できる方/ご自宅のPCまたはスマートフォンでお手続き可能な方"
+    },
+    {
+      "text": "<MS1 でのお手続き>",
+      "bbox": [
+        64.2816,
+        569.8584,
+        88.05600000000001,
+        10.281599999999955
+      ],
+      "x": 64.2816,
+      "y": 569.8584,
+      "width": 88.05600000000001,
+      "height": 10.281599999999955,
+      "page": 0,
+      "is_line": true,
+      "original_text": "<MS1でのお手続き>"
+    },
+    {
+      "text": "「MSK 保険センター」のホームページまたは 10 月 1 日(火)の人事部発信の業務連絡からお手続きください。",
+      "bbox": [
+        160.95600000000002,
+        569.9736,
+        366.34319999999997,
+        10.605599999999967
+      ],
+      "x": 160.95600000000002,
+      "y": 569.9736,
+      "width": 366.34319999999997,
+      "height": 10.605599999999967,
+      "page": 0,
+      "is_line": true,
+      "original_text": "「MSK保険センター」のホームページまたは10月1日(火)の人事部発信の業務連絡からお手続きください。"
+    },
+    {
+      "text": "※ネット手続き時間は、平日(月曜~金曜)の 7:00~19:00 です。",
+      "bbox": [
+        160.7688,
+        580.3848,
+        221.04000000000002,
+        9.864000000000033
+      ],
+      "x": 160.7688,
+      "y": 580.3848,
+      "width": 221.04000000000002,
+      "height": 9.864000000000033,
+      "page": 0,
+      "is_line": true,
+      "original_text": "※ネット手続き時間は、平日(月曜~金曜)の7:00~19:00です。"
+    },
+    {
+      "text": "くご自宅等の PC またはスマートフォンでのお手続き> 利用時間 7:00~26:30",
+      "bbox": [
+        64.9512,
+        593.1792,
+        313.36560000000003,
+        11.095199999999977
+      ],
+      "x": 64.9512,
+      "y": 593.1792,
+      "width": 313.36560000000003,
+      "height": 11.095199999999977,
+      "page": 0,
+      "is_line": true,
+      "original_text": "くご自宅等のPCまたはスマートフォンでのお手続き> 利用時間 7:00~26:30"
+    },
+    {
+      "text": "■ご自宅の PC でのお手続き",
+      "bbox": [
+        71.3448,
+        608.9832,
+        98.15039999999999,
+        9.85680000000005
+      ],
+      "x": 71.3448,
+      "y": 608.9832,
+      "width": 98.15039999999999,
+      "height": 9.85680000000005,
+      "page": 0,
+      "is_line": true,
+      "original_text": "■ご自宅のPCでのお手続き"
+    },
+    {
+      "text": "■スマートフォンでのお手続き",
+      "bbox": [
+        272.0232,
+        608.9832,
+        106.84079999999999,
+        10.267199999999988
+      ],
+      "x": 272.0232,
+      "y": 608.9832,
+      "width": 106.84079999999999,
+      "height": 10.267199999999988,
+      "page": 0,
+      "is_line": true,
+      "original_text": "■スマートフォンでのお手続き"
+    },
+    {
+      "text": "以下の URL からお手続きください。",
+      "bbox": [
+        78.6312,
+        620.0927999999999,
+        119.5848,
+        9.93600000000012
+      ],
+      "x": 78.6312,
+      "y": 620.0927999999999,
+      "width": 119.5848,
+      "height": 9.93600000000012,
+      "page": 0,
+      "is_line": true,
+      "original_text": "以下のURLからお手続きください。"
+    },
+    {
+      "text": "右記の QR コード(※)を読み取り、お手続きください。",
+      "bbox": [
+        279.0072,
+        620.4816000000001,
+        157.22639999999996,
+        9.835199999999972
+      ],
+      "x": 279.0072,
+      "y": 620.4816000000001,
+      "width": 157.22639999999996,
+      "height": 9.835199999999972,
+      "page": 0,
+      "is_line": true,
+      "original_text": "右記のQRコード(※)を読み取り、お手続きください。"
+    },
+    {
+      "text": "https://dantai.ms-ins.com/index.php?ID=6au5j8",
+      "bbox": [
+        78.7536,
+        632.0736,
+        178.7112,
+        10.994399999999956
+      ],
+      "x": 78.7536,
+      "y": 632.0736,
+      "width": 178.7112,
+      "height": 10.994399999999956,
+      "page": 0,
+      "is_line": true,
+      "original_text": "https://dantai.ms-ins.com/index.php?ID=6au5j8"
+    },
+    {
+      "text": "【推奨環境】 OS:iOS 11/12/13/14/15/16/17",
+      "bbox": [
+        280.0728,
+        632.8008,
+        176.22720000000004,
+        10.267199999999988
+      ],
+      "x": 280.0728,
+      "y": 632.8008,
+      "width": 176.22720000000004,
+      "height": 10.267199999999988,
+      "page": 0,
+      "is_line": true,
+      "original_text": "【推奨環境】 OS:iOS 11/12/13/14/15/16/17"
+    },
+    {
+      "text": "【推奨環境】 OS: Windows 10/11、Mac 10.15",
+      "bbox": [
+        78.4008,
+        644.904,
+        178.53840000000002,
+        10.295999999999921
+      ],
+      "x": 78.4008,
+      "y": 644.904,
+      "width": 178.53840000000002,
+      "height": 10.295999999999921,
+      "page": 0,
+      "is_line": true,
+      "original_text": "【推奨環境】 OS: Windows 10/11、Mac 10.15"
+    },
+    {
+      "text": "Android 5.1/6.0/7.0/8.0/9.0/10.0/11.0/12.0/13.0",
+      "bbox": [
+        341.24399999999997,
+        642.3408000000001,
+        188.1648,
+        9.590400000000031
+      ],
+      "x": 341.24399999999997,
+      "y": 642.3408000000001,
+      "width": 188.1648,
+      "height": 9.590400000000031,
+      "page": 0,
+      "is_line": true,
+      "original_text": "Android 5.1/6.0/7.0/8.0/9.0/10.0/11.0/12.0/13.0"
+    },
+    {
+      "text": "ブラウザ: Microsoft Edge、",
+      "bbox": [
+        121.5432,
+        654.3359999999999,
+        100.26,
+        9.676800000000085
+      ],
+      "x": 121.5432,
+      "y": 654.3359999999999,
+      "width": 100.26,
+      "height": 9.676800000000085,
+      "page": 0,
+      "is_line": true,
+      "original_text": "ブラウザ: Microsoft Edge、"
+    },
+    {
+      "text": "ブラウザ: Safari、Google Chrome",
+      "bbox": [
+        323.33040000000005,
+        652.3704,
+        131.06159999999997,
+        10.231199999999944
+      ],
+      "x": 323.33040000000005,
+      "y": 652.3704,
+      "width": 131.06159999999997,
+      "height": 10.231199999999944,
+      "page": 0,
+      "is_line": true,
+      "original_text": "ブラウザ: Safari、Google Chrome"
+    },
+    {
+      "text": "Google Chrome, Safari",
+      "bbox": [
+        158.5728,
+        663.444,
+        94.5432,
+        10.00800000000008
+      ],
+      "x": 158.5728,
+      "y": 663.444,
+      "width": 94.5432,
+      "height": 10.00800000000008,
+      "page": 0,
+      "is_line": true,
+      "original_text": "Google Chrome, Safari"
+    },
+    {
+      "text": "(※)「QR コード」は株式会社デンソーウェーブの登録商標です。",
+      "bbox": [
+        280.5768,
+        663.0120000000001,
+        204.39359999999996,
+        10.130399999999923
+      ],
+      "x": 280.5768,
+      "y": 663.0120000000001,
+      "width": 204.39359999999996,
+      "height": 10.130399999999923,
+      "page": 0,
+      "is_line": true,
+      "original_text": "(※)「QRコード」は株式会社デンソーウェーブの登録商標です。"
+    },
+    {
+      "text": "MS1 を閲覧できない、かつご自宅にインターネット環境がない方",
+      "bbox": [
+        156.5928,
+        685.0008,
+        280.4832,
+        11.923200000000094
+      ],
+      "x": 156.5928,
+      "y": 685.0008,
+      "width": 280.4832,
+      "height": 11.923200000000094,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS1を閲覧できない、かつご自宅にインターネット環境がない方"
+    },
+    {
+      "text": "加入申込票を MSK 保険センターHP から印刷、もしくは裏表紙の保険センターの拠点へご請求のうえ、締切日までにご提出ください。",
+      "bbox": [
+        69.9336,
+        702.7128,
+        452.916,
+        10.382399999999976
+      ],
+      "x": 69.9336,
+      "y": 702.7128,
+      "width": 452.916,
+      "height": 10.382399999999976,
+      "page": 0,
+      "is_line": true,
+      "original_text": "加入申込票をMSK保険センターHPから印刷、もしくは裏表紙の保険センターの拠点へご請求のうえ、締切日までにご提出ください。"
+    },
+    {
+      "text": "4 年令により保険料が変更になっておりますので、今年度の補償内容·保険料を必ずご確認ください。",
+      "bbox": [
+        111.1968,
+        725.8104000000001,
+        374.8752,
+        10.584000000000017
+      ],
+      "x": 111.1968,
+      "y": 725.8104000000001,
+      "width": 374.8752,
+      "height": 10.584000000000017,
+      "page": 0,
+      "is_line": true,
+      "original_text": "4 年令により保険料が変更になっておりますので、今年度の補償内容·保険料を必ずご確認ください。"
+    },
+    {
+      "text": "本契約は自動継続のため、前年から加入されている方につきましては、お申し出がない場合、前年ご加入内容に応じたセット·口数でのご継続となります。",
+      "bbox": [
+        55.245599999999996,
+        741.3552,
+        478.7856,
+        9.986400000000003
+      ],
+      "x": 55.245599999999996,
+      "y": 741.3552,
+      "width": 478.7856,
+      "height": 9.986400000000003,
+      "page": 0,
+      "is_line": true,
+      "original_text": "本契約は自動継続のため、前年から加入されている方につきましては、お申し出がない場合、前年ご加入内容に応じたセット·口数でのご継続となります。"
+    },
+    {
+      "text": "MS1 を閲覧できる方、ご自宅の PC またはスマートフォンでお手続きをされる方につきましては、パンフレットの「加入申込票」を「WEB 手続画面」に、",
+      "bbox": [
+        55.3752,
+        751.068,
+        479.9304,
+        9.85680000000005
+      ],
+      "x": 55.3752,
+      "y": 751.068,
+      "width": 479.9304,
+      "height": 9.85680000000005,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS1を閲覧できる方、ご自宅のPCまたはスマートフォンでお手続きをされる方につきましては、パンフレットの「加入申込票」を「WEB手続画面」に、"
+    },
+    {
+      "text": "「記入」を「入力」に読み替えてください。",
+      "bbox": [
+        56.1168,
+        760.9248,
+        129.70080000000002,
+        9.907199999999932
+      ],
+      "x": 56.1168,
+      "y": 760.9248,
+      "width": 129.70080000000002,
+      "height": 9.907199999999932,
+      "page": 0,
+      "is_line": true,
+      "original_text": "「記入」を「入力」に読み替えてください。"
+    },
+    {
+      "text": "代理店·扱者 MSK 保険センター株式会社",
+      "bbox": [
+        178.5744,
+        779.6808000000001,
+        236.9592,
+        14.74559999999991
+      ],
+      "x": 178.5744,
+      "y": 779.6808000000001,
+      "width": 236.9592,
+      "height": 14.74559999999991,
+      "page": 0,
+      "is_line": true,
+      "original_text": "代理店·扱者 MSK保険センター株式会社"
+    },
+    {
+      "text": "MS&AD インシュアランスグループホールディングス株式会社",
+      "bbox": [
+        149.7744,
+        799.1136,
+        329.80320000000006,
+        13.98960000000001
+      ],
+      "x": 149.7744,
+      "y": 799.1136,
+      "width": 329.80320000000006,
+      "height": 13.98960000000001,
+      "page": 0,
+      "is_line": true,
+      "original_text": "MS&ADインシュアランスグループ ホールディングス株式会社"
+    },
+    {
+      "text": "団体保険制度 は、MS&AD インシュアランスグループ",
+      "bbox": [
+        43.2144,
+        86.6448,
+        545.2127999999999,
+        30.801599999999997
+      ],
+      "x": 43.2144,
+      "y": 86.6448,
+      "width": 545.2127999999999,
+      "height": 30.801599999999997,
+      "page": 1,
+      "is_line": true,
+      "original_text": "団体保険制度 は、MS&ADインシュアランスグループ"
+    },
+    {
+      "text": "MS&AD インシュアランスグループ団体保険制度は、グループのスケールメリットを活かした福利厚生制度の",
+      "bbox": [
+        41.781600000000005,
+        127.94399999999999,
+        511.3512,
+        13.12560000000001
+      ],
+      "x": 41.781600000000005,
+      "y": 127.94399999999999,
+      "width": 511.3512,
+      "height": 13.12560000000001,
+      "page": 1,
+      "is_line": true,
+      "original_text": "MS&ADインシュアランスグループ団体保険制度は、グループのスケールメリットを活かした福利厚生制度の"
+    },
+    {
+      "text": "1 つです。ご加入や保険料のお支払いなどの手続きも、簡単·便利です。",
+      "bbox": [
+        42.9696,
+        143.5824,
+        333.0504,
+        13.284000000000008
+      ],
+      "x": 42.9696,
+      "y": 143.5824,
+      "width": 333.0504,
+      "height": 13.284000000000008,
+      "page": 1,
+      "is_line": true,
+      "original_text": "1つです。ご加入や保険料のお支払いなどの手続きも、簡単·便利です。"
+    },
+    {
+      "text": "団体保険ならではのメリットを知っていただき、役員·従業員の皆さまとご家族の生活設計にお役立てください。",
+      "bbox": [
+        42.3792,
+        159.73919999999998,
+        516.7656000000001,
+        13.140000000000008
+      ],
+      "x": 42.3792,
+      "y": 159.73919999999998,
+      "width": 516.7656000000001,
+      "height": 13.140000000000008,
+      "page": 1,
+      "is_line": true,
+      "original_text": "団体保険ならではのメリットを知っていただき、役員·従業員の皆さまとご家族の生活設計にお役立てください。"
+    },
+    {
+      "text": "団体",
+      "bbox": [
+        122.1768,
+        202.1616,
+        22.327200000000005,
+        11.649599999999996
+      ],
+      "x": 122.1768,
+      "y": 202.1616,
+      "width": 22.327200000000005,
+      "height": 11.649599999999996,
+      "page": 1,
+      "is_line": true,
+      "original_text": "団体"
+    },
+    {
+      "text": "安心の",
+      "bbox": [
+        446.9328,
+        201.36960000000002,
+        28.627200000000045,
+        11.519999999999978
+      ],
+      "x": 446.9328,
+      "y": 201.36960000000002,
+      "width": 28.627200000000045,
+      "height": 11.519999999999978,
+      "page": 1,
+      "is_line": true,
+      "original_text": "安心の"
+    },
+    {
+      "text": "割引等",
+      "bbox": [
+        116.244,
+        215.0064,
+        33.516000000000005,
+        12.218399999999981
+      ],
+      "x": 116.244,
+      "y": 215.0064,
+      "width": 33.516000000000005,
+      "height": 12.218399999999981,
+      "page": 1,
+      "is_line": true,
+      "original_text": "割引等"
+    },
+    {
+      "text": "加入状況",
+      "bbox": [
+        442.512,
+        214.164,
+        38.55599999999999,
+        12.362399999999997
+      ],
+      "x": 442.512,
+      "y": 214.164,
+      "width": 38.55599999999999,
+      "height": 12.362399999999997,
+      "page": 1,
+      "is_line": true,
+      "original_text": "加入状況"
+    },
+    {
+      "text": "団体総合生活補償保険(MS&AD 型)",
+      "bbox": [
+        52.941599999999994,
+        258.3792,
+        161.26559999999998,
+        11.412000000000006
+      ],
+      "x": 52.941599999999994,
+      "y": 258.3792,
+      "width": 161.26559999999998,
+      "height": 11.412000000000006,
+      "page": 1,
+      "is_line": true,
+      "original_text": "団体総合生活補償保険(MS&AD型)"
+    },
+    {
+      "text": "MS&AD インシュアランスグループ",
+      "bbox": [
+        382.86719999999997,
+        254.5344,
+        157.1184,
+        11.397599999999976
+      ],
+      "x": 382.86719999999997,
+      "y": 254.5344,
+      "width": 157.1184,
+      "height": 11.397599999999976,
+      "page": 1,
+      "is_line": true,
+      "original_text": "MS&ADインシュアランスグループ"
+    },
+    {
+      "text": "最大 40.15%の",
+      "bbox": [
+        51.3648,
+        274.7232,
+        162.58319999999998,
+        31.95360000000003
+      ],
+      "x": 51.3648,
+      "y": 274.7232,
+      "width": 162.58319999999998,
+      "height": 31.95360000000003,
+      "page": 1,
+      "is_line": true,
+      "original_text": "最大40.15%の"
+    },
+    {
+      "text": "社員約 1.6 万人が",
+      "bbox": [
+        381.90959999999995,
+        273.9024,
+        159.84720000000004,
+        32.69520000000003
+      ],
+      "x": 381.90959999999995,
+      "y": 273.9024,
+      "width": 159.84720000000004,
+      "height": 32.69520000000003,
+      "page": 1,
+      "is_line": true,
+      "original_text": "社員約1.6万人が"
+    },
+    {
+      "text": "割引率を適用!",
+      "bbox": [
+        75.36959999999999,
+        307.3104,
+        113.51520000000002,
+        19.634399999999964
+      ],
+      "x": 75.36959999999999,
+      "y": 307.3104,
+      "width": 113.51520000000002,
+      "height": 19.634399999999964,
+      "page": 1,
+      "is_line": true,
+      "original_text": "割引率を適用!"
+    },
+    {
+      "text": "加入!",
+      "bbox": [
+        440.1936,
+        309.4776,
+        42.3936,
+        18.619199999999964
+      ],
+      "x": 440.1936,
+      "y": 309.4776,
+      "width": 42.3936,
+      "height": 18.619199999999964,
+      "page": 1,
+      "is_line": true,
+      "original_text": "加入!"
+    },
+    {
+      "text": "(病気補償部分·特約は 33.5%)",
+      "bbox": [
+        70.7976,
+        328.248,
+        123.58800000000002,
+        11.167200000000001
+      ],
+      "x": 70.7976,
+      "y": 328.248,
+      "width": 123.58800000000002,
+      "height": 11.167200000000001,
+      "page": 1,
+      "is_line": true,
+      "original_text": "(病気補償部分·特約は33.5%)"
+    },
+    {
+      "text": "退職者の皆さまを含めると約 2.4 万人も加入",
+      "bbox": [
+        376.452,
+        331.9272,
+        170.2368,
+        11.9088
+      ],
+      "x": 376.452,
+      "y": 331.9272,
+      "width": 170.2368,
+      "height": 11.9088,
+      "page": 1,
+      "is_line": true,
+      "original_text": "退職者の皆さまを含めると約2.4万人も加入"
+    },
+    {
+      "text": "※ケガ補償には年令別保険料型を導入しています。",
+      "bbox": [
+        41.824799999999996,
+        359.316,
+        176.25600000000003,
+        10.55520000000002
+      ],
+      "x": 41.824799999999996,
+      "y": 359.316,
+      "width": 176.25600000000003,
+      "height": 10.55520000000002,
+      "page": 1,
+      "is_line": true,
+      "original_text": "※ケガ補償には年令別保険料型を導入しています。"
+    },
+    {
+      "text": "年令別保険料は毎年見直しが行われますので、団体",
+      "bbox": [
+        49.0896,
+        369.6264,
+        173.34,
+        9.640799999999977
+      ],
+      "x": 49.0896,
+      "y": 369.6264,
+      "width": 173.34,
+      "height": 9.640799999999977,
+      "page": 1,
+      "is_line": true,
+      "original_text": "年令別保険料は毎年見直しが行われますので、団体"
+    },
+    {
+      "text": "割引等に関わらず保険料が変わることがあります。",
+      "bbox": [
+        49.212,
+        379.74240000000003,
+        168.7968,
+        10.007999999999953
+      ],
+      "x": 49.212,
+      "y": 379.74240000000003,
+      "width": 168.7968,
+      "height": 10.007999999999953,
+      "page": 1,
+      "is_line": true,
+      "original_text": "割引等に関わらず保険料が変わることがあります。"
+    },
+    {
+      "text": "家族も",
+      "bbox": [
+        116.1792,
+        473.0976,
+        32.5296,
+        11.822400000000009
+      ],
+      "x": 116.1792,
+      "y": 473.0976,
+      "width": 32.5296,
+      "height": 11.822400000000009,
+      "page": 1,
+      "is_line": true,
+      "original_text": "家族も"
+    },
+    {
+      "text": "安心",
+      "bbox": [
+        121.4496,
+        486.71999999999997,
+        22.672799999999995,
+        12.139200000000038
+      ],
+      "x": 121.4496,
+      "y": 486.71999999999997,
+      "width": 22.672799999999995,
+      "height": 12.139200000000038,
+      "page": 1,
+      "is_line": true,
+      "original_text": "安心"
+    },
+    {
+      "text": "仪員·従業員の皆さまとご家族の安心に!",
+      "bbox": [
+        200.7432,
+        460.3464,
+        190.03680000000003,
+        66.5136
+      ],
+      "x": 200.7432,
+      "y": 460.3464,
+      "width": 190.03680000000003,
+      "height": 66.5136,
+      "page": 1,
+      "is_line": true,
+      "original_text": "仪員·従業員の皆さまとご家族の安心に!"
+    },
+    {
+      "text": "役立つ",
+      "bbox": [
+        444.70799999999997,
+        474.17040000000003,
+        33.08400000000002,
+        12.153600000000004
+      ],
+      "x": 444.70799999999997,
+      "y": 474.17040000000003,
+      "width": 33.08400000000002,
+      "height": 12.153600000000004,
+      "page": 1,
+      "is_line": true,
+      "original_text": "役立つ"
+    },
+    {
+      "text": "保険",
+      "bbox": [
+        450.1656,
+        487.4616,
+        23.191199999999988,
+        12.023999999999987
+      ],
+      "x": 450.1656,
+      "y": 487.4616,
+      "width": 23.191199999999988,
+      "height": 12.023999999999987,
+      "page": 1,
+      "is_line": true,
+      "original_text": "保険"
+    },
+    {
+      "text": "加入いただけます!",
+      "bbox": [
+        60.732,
+        542.9016,
+        142.4304,
+        18.655200000000008
+      ],
+      "x": 60.732,
+      "y": 542.9016,
+      "width": 142.4304,
+      "height": 18.655200000000008,
+      "page": 1,
+      "is_line": true,
+      "original_text": "加入いただけます!"
+    },
+    {
+      "text": "ご家族も",
+      "bbox": [
+        61.639199999999995,
+        522.4752,
+        66.4632,
+        18.237600000000022
+      ],
+      "x": 61.639199999999995,
+      "y": 522.4752,
+      "width": 66.4632,
+      "height": 18.237600000000022,
+      "page": 1,
+      "is_line": true,
+      "original_text": "ご家族も"
+    },
+    {
+      "text": "約 6,000 件",
+      "bbox": [
+        393.10560000000004,
+        536.8896,
+        136.87919999999997,
+        34.31519999999996
+      ],
+      "x": 393.10560000000004,
+      "y": 536.8896,
+      "width": 136.87919999999997,
+      "height": 34.31519999999996,
+      "page": 1,
+      "is_line": true,
+      "original_text": "約6,000件"
+    },
+    {
+      "text": "保険金支払実績",
+      "bbox": [
+        426.1752,
+        521.1071999999999,
+        71.02799999999996,
+        11.49840000000006
+      ],
+      "x": 426.1752,
+      "y": 521.1071999999999,
+      "width": 71.02799999999996,
+      "height": 11.49840000000006,
+      "page": 1,
+      "is_line": true,
+      "original_text": "保険金支払実績"
+    },
+    {
+      "text": "詳細は P4 をご参照ください。",
+      "bbox": [
+        60.9408,
+        563.9472000000001,
+        126.56879999999998,
+        12.009599999999956
+      ],
+      "x": 60.9408,
+      "y": 563.9472000000001,
+      "width": 126.56879999999998,
+      "height": 12.009599999999956,
+      "page": 1,
+      "is_line": true,
+      "original_text": "詳細はP4をご参照ください。"
+    },
+    {
+      "text": "約 4 億 8,900 万円",
+      "bbox": [
+        379.0152,
+        572.0255999999999,
+        163.87919999999997,
+        35.72640000000006
+      ],
+      "x": 379.0152,
+      "y": 572.0255999999999,
+      "width": 163.87919999999997,
+      "height": 35.72640000000006,
+      "page": 1,
+      "is_line": true,
+      "original_text": "約4億8,900万円"
+    },
+    {
+      "text": "(令和 5 年度実績)",
+      "bbox": [
+        427.6656,
+        608.8391999999999,
+        67.96799999999999,
+        10.800000000000026
+      ],
+      "x": 427.6656,
+      "y": 608.8391999999999,
+      "width": 67.96799999999999,
+      "height": 10.800000000000026,
+      "page": 1,
+      "is_line": true,
+      "original_text": "(令和5年度実績)"
+    },
+    {
+      "text": "簡単な手続き",
+      "bbox": [
+        84.6792,
+        654.1848,
+        89.208,
+        15.955199999999905
+      ],
+      "x": 84.6792,
+      "y": 654.1848,
+      "width": 89.208,
+      "height": 15.955199999999905,
+      "page": 1,
+      "is_line": true,
+      "original_text": "簡単な手続き"
+    },
+    {
+      "text": "退職後も継続できます!",
+      "bbox": [
+        315.072,
+        653.7744,
+        153.20159999999998,
+        16.58159999999998
+      ],
+      "x": 315.072,
+      "y": 653.7744,
+      "width": 153.20159999999998,
+      "height": 16.58159999999998,
+      "page": 1,
+      "is_line": true,
+      "original_text": "退職後も継続できます!"
+    },
+    {
+      "text": "保険料は",
+      "bbox": [
+        95.0616,
+        678.2472,
+        44.51039999999999,
+        11.829600000000056
+      ],
+      "x": 95.0616,
+      "y": 678.2472,
+      "width": 44.51039999999999,
+      "height": 11.829600000000056,
+      "page": 1,
+      "is_line": true,
+      "original_text": "保険料は"
+    },
+    {
+      "text": "ご退職後も団体割引等が引き続き適用となり、継続してご加入いただけます!",
+      "bbox": [
+        244.7928,
+        674.352,
+        294.5591999999999,
+        11.00880000000005
+      ],
+      "x": 244.7928,
+      "y": 674.352,
+      "width": 294.5591999999999,
+      "height": 11.00880000000005,
+      "page": 1,
+      "is_line": true,
+      "original_text": "ご退職後も団体割引等が引き続き適用となり、継続してご加入いただけます!"
+    },
+    {
+      "text": "25",
+      "bbox": [
+        68.95439999999999,
+        688.6224,
+        12.391199999999994,
+        9.972000000000037
+      ],
+      "x": 68.95439999999999,
+      "y": 688.6224,
+      "width": 12.391199999999994,
+      "height": 9.972000000000037,
+      "page": 1,
+      "is_line": true,
+      "original_text": "25"
+    },
+    {
+      "text": "給与からの引き去り",
+      "bbox": [
+        95.0688,
+        691.272,
+        94.1904,
+        12.023999999999987
+      ],
+      "x": 95.0688,
+      "y": 691.272,
+      "width": 94.1904,
+      "height": 12.023999999999987,
+      "page": 1,
+      "is_line": true,
+      "original_text": "給与からの引き去り"
+    },
+    {
+      "text": "♡ 継続できます",
+      "bbox": [
+        246.13920000000002,
+        690.9408,
+        65.4552,
+        11.4696
+      ],
+      "x": 246.13920000000002,
+      "y": 690.9408,
+      "width": 65.4552,
+      "height": 11.4696,
+      "page": 1,
+      "is_line": true,
+      "original_text": "♡ 継続できます"
+    },
+    {
+      "text": "医師の診査は不要で、",
+      "bbox": [
+        95.55839999999999,
+        711.828,
+        103.15440000000001,
+        12.232800000000012
+      ],
+      "x": 95.55839999999999,
+      "y": 711.828,
+      "width": 103.15440000000001,
+      "height": 12.232800000000012,
+      "page": 1,
+      "is_line": true,
+      "original_text": "医師の診査は不要で、"
+    },
+    {
+      "text": "個人補償プラン",
+      "bbox": [
+        247.0536,
+        712.7568,
+        55.67760000000003,
+        9.503999999999976
+      ],
+      "x": 247.0536,
+      "y": 712.7568,
+      "width": 55.67760000000003,
+      "height": 9.503999999999976,
+      "page": 1,
+      "is_line": true,
+      "original_text": "個人補償プラン"
+    },
+    {
+      "text": "親介護補償プラン",
+      "bbox": [
+        312.228,
+        707.8968,
+        55.8648,
+        9.194400000000059
+      ],
+      "x": 312.228,
+      "y": 707.8968,
+      "width": 55.8648,
+      "height": 9.194400000000059,
+      "page": 1,
+      "is_line": true,
+      "original_text": "親介護補償プラン"
+    },
+    {
+      "text": "M11~M13",
+      "bbox": [
+        320.25600000000003,
+        717.8616,
+        39.535199999999946,
+        8.157600000000045
+      ],
+      "x": 320.25600000000003,
+      "y": 717.8616,
+      "width": 39.535199999999946,
+      "height": 8.157600000000045,
+      "page": 1,
+      "is_line": true,
+      "original_text": "M11~M13"
+    },
+    {
+      "text": "加入手続きは簡単",
+      "bbox": [
+        95.12639999999999,
+        725.0544,
+        87.25680000000001,
+        12.052800000000047
+      ],
+      "x": 95.12639999999999,
+      "y": 725.0544,
+      "width": 87.25680000000001,
+      "height": 12.052800000000047,
+      "page": 1,
+      "is_line": true,
+      "original_text": "加入手続きは簡単"
+    },
+    {
+      "text": "継続できません",
+      "bbox": [
+        259.4448,
+        736.3368,
+        61.005600000000015,
+        9.770399999999995
+      ],
+      "x": 259.4448,
+      "y": 736.3368,
+      "width": 61.005600000000015,
+      "height": 9.770399999999995,
+      "page": 1,
+      "is_line": true,
+      "original_text": "継続できません"
+    },
+    {
+      "text": "保険金の",
+      "bbox": [
+        95.2128,
+        745.2432,
+        44.042399999999994,
+        11.93760000000006
+      ],
+      "x": 95.2128,
+      "y": 745.2432,
+      "width": 44.042399999999994,
+      "height": 11.93760000000006,
+      "page": 1,
+      "is_line": true,
+      "original_text": "保険金の"
+    },
+    {
+      "text": "所得",
+      "bbox": [
+        383.63759999999996,
+        751.6008,
+        16.76160000000001,
+        8.625599999999977
+      ],
+      "x": 383.63759999999996,
+      "y": 751.6008,
+      "width": 16.76160000000001,
+      "height": 8.625599999999977,
+      "page": 1,
+      "is_line": true,
+      "original_text": "所得"
+    },
+    {
+      "text": "請求手続きも簡単",
+      "bbox": [
+        95.1336,
+        758.1888,
+        86.1048,
+        12.333600000000033
+      ],
+      "x": 95.1336,
+      "y": 758.1888,
+      "width": 86.1048,
+      "height": 12.333600000000033,
+      "page": 1,
+      "is_line": true,
+      "original_text": "請求手続きも簡単"
+    },
+    {
+      "text": "GLTD",
+      "bbox": [
+        261.108,
+        756.4104,
+        22.831199999999995,
+        8.114400000000018
+      ],
+      "x": 261.108,
+      "y": 756.4104,
+      "width": 22.831199999999995,
+      "height": 8.114400000000018,
+      "page": 1,
+      "is_line": true,
+      "original_text": "GLTD"
+    },
+    {
+      "text": "M14~M19",
+      "bbox": [
+        309.4776,
+        761.3208,
+        45.30959999999998,
+        8.215200000000038
+      ],
+      "x": 309.4776,
+      "y": 761.3208,
+      "width": 45.30959999999998,
+      "height": 8.215200000000038,
+      "page": 1,
+      "is_line": true,
+      "original_text": "M14~M19"
+    },
+    {
+      "text": "補償保険",
+      "bbox": [
+        375.57360000000006,
+        761.2560000000001,
+        32.831999999999965,
+        8.992800000000017
+      ],
+      "x": 375.57360000000006,
+      "y": 761.2560000000001,
+      "width": 32.831999999999965,
+      "height": 8.992800000000017,
+      "page": 1,
+      "is_line": true,
+      "original_text": "補償保険"
+    },
+    {
+      "text": "前年度ご加入いただいた被保険者の人数をもとにした団体割引と損害率による割引等を適用しています。",
+      "bbox": [
+        42.782399999999996,
+        788.1264,
+        360.3816,
+        10.411200000000036
+      ],
+      "x": 42.782399999999996,
+      "y": 788.1264,
+      "width": 360.3816,
+      "height": 10.411200000000036,
+      "page": 1,
+      "is_line": true,
+      "original_text": "前年度ご加入いただいた被保険者の人数をもとにした団体割引と損害率による割引等を適用しています。"
+    }
+  ],
+  "llm_analysis": null,
+  "execution_time": 0.0,
+  "metadata": {
+    "version": "v2_line_based",
+    "extraction_method": "Azure Document Intelligence (Line-based)",
+    "doc1_name": "2023.pdf",
+    "doc2_name": "2024.pdf",
+    "hierarchy_info": {
+      "doc1": {
+        "paragraphs": 71,
+        "lines": 121,
+        "words": 1390
+      },
+      "doc2": {
+        "paragraphs": 67,
+        "lines": 119,
+        "words": 1490
+      }
+    },
+    "extraction_level": "line",
+    "total_differences": 48,
+    "statistics": {
+      "removed": 18,
+      "added": 17,
+      "modified": 13
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "version": "v2_azure",
+  "extraction_method": "Azure Document Intelligence",
+  "preprocessing": {
+    "enabled": true,
+    "effectiveness": {
+      "doc1": {
+        "before": 396,
+        "after": 324,
+        "reduction_rate": "18.2%"
+      },
+      "doc2": {
+        "before": 394,
+        "after": 337,
+        "reduction_rate": "14.5%"
+      }
+    }
+  },
+  "azure_extraction": {
+    "doc1": {
+      "characters": 1390,
+      "grouped_words": 396
+    },
+    "doc2": {
+      "characters": 1490,
+      "grouped_words": 394
+    }
+  },
+  "reading_order": {
+    "algorithm": "coordinate-based estimation",
+    "doc1_elements": 324,
+    "doc2_elements": 337
+  },
+  "difference_detection": {
+    "algorithm": "enhanced diff detector with similarity matching",
+    "results": {
+      "removed": 147,
+      "added": 160,
+      "modified": 7
+    },
+    "total": 314
+  },
+  "improvements_over_v1": [
+    "Azure Document Intelligenceによる高精度抽出",
+    "テキスト前処理による要素数削減",
+    "読み取り順序の自動推定",
+    "変更検出の精度向上（類似度ベース）",
+    "詳細な変更分析機能の追加"
+  ]
+}

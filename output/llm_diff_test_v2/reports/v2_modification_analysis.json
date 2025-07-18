@@ -1,0 +1,51 @@
+{
+  "change_types": {
+    "date_changes": {
+      "count": 0,
+      "examples": []
+    },
+    "amount_changes": {
+      "count": 0,
+      "examples": []
+    },
+    "url_changes": {
+      "count": 0,
+      "examples": []
+    },
+    "year_changes": {
+      "count": 1,
+      "examples": [
+        {
+          "before": "令和 5 年度",
+          "after": "令和 6 年度",
+          "similarity": 0.8571428571428571,
+          "page": 0
+        }
+      ]
+    },
+    "other_changes": {
+      "count": 6,
+      "examples": [
+        {
+          "before": "団",
+          "after": "団体",
+          "similarity": 0.6666666666666666,
+          "page": 0
+        },
+        {
+          "before": "体",
+          "after": "員",
+          "similarity": 0.0,
+          "page": 0
+        },
+        {
+          "before": "Android5.1/6.0/7.0/8.0/9.0/11.0/12.0/13.0",
+          "after": "Android5.1/6.0/7.0/8.0/9.0/10.0/11.0/12.0/13.0",
+          "similarity": 0.9425287356321839,
+          "page": 0
+        }
+      ]
+    }
+  },
+  "total_modifications": 7
+}

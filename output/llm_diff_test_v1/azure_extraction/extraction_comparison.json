@@ -1,0 +1,12 @@
+{
+  "document1": {
+    "standard_extraction": 396,
+    "azure_extraction": 1390,
+    "difference": 994
+  },
+  "document2": {
+    "standard_extraction": 394,
+    "azure_extraction": 1490,
+    "difference": 1096
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "total_differences": 234,
+  "doc1_word_count": 154,
+  "doc2_word_count": 145,
+  "change_type_distribution": {
+    "modification": 1,
+    "deletion": 121,
+    "addition": 112
+  },
+  "pages_with_changes": [
+    1,
+    2
+  ]
+}

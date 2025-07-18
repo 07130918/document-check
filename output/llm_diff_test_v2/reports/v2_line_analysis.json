@@ -1,0 +1,66 @@
+{
+  "extraction_level": "line",
+  "line_changes": {
+    "total_lines_doc1": 121,
+    "total_lines_doc2": 119,
+    "changed_lines": 48
+  },
+  "paragraph_mapping": {
+    "doc1_paragraphs": 71,
+    "doc2_paragraphs": 67
+  },
+  "sample_differences": [
+    {
+      "type": "modification",
+      "page": 0,
+      "before": "令和 5 年度保存版",
+      "after": "令和 6 年度保存版"
+    },
+    {
+      "type": "deletion",
+      "page": 0,
+      "text": "も継続"
+    },
+    {
+      "type": "addition",
+      "page": 0,
+      "text": "も継続"
+    },
+    {
+      "type": "modification",
+      "page": 0,
+      "before": "Babyy",
+      "after": "Babyor"
+    },
+    {
+      "type": "deletion",
+      "page": 0,
+      "text": "出産"
+    },
+    {
+      "type": "addition",
+      "page": 0,
+      "text": "出産"
+    },
+    {
+      "type": "addition",
+      "page": 0,
+      "text": "令和 6 年 10 月 23 日(水)"
+    },
+    {
+      "type": "addition",
+      "page": 0,
+      "text": "P35 または最終ページを"
+    },
+    {
+      "type": "addition",
+      "page": 0,
+      "text": "ご覧ください。"
+    },
+    {
+      "type": "deletion",
+      "page": 0,
+      "text": "令和 5 年 10 月 25 日(水)"
+    }
+  ]
+}
