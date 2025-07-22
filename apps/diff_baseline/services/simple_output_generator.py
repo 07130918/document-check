@@ -1,7 +1,7 @@
 """
 Simple Output Generator - 文字を囲む形式での差分表示
 """
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 from ..models import BBoxTextData, DiffResult, ChangeType
 from ..handlers import PyMuPDFService, DocxService, PptxService
 
@@ -86,7 +86,7 @@ class SimpleOutputGenerator:
                 rect = fitz.Rect(x, y, x + width, y + height)
                 
                 # 赤い枠線を描画（塗りつぶしなし）
-                page.draw_rect(rect, color=(1, 0, 0), width=1.5)
+                page.draw_rect(rect, color=(1, 0, 0), width=2.0, fill=None)
         
         # PDFをバイト列として取得
         return pdf_document.tobytes()
@@ -126,3 +126,81 @@ class SimpleOutputGenerator:
                         diff.modified_bbox['text'],
                         '文書2の差分'
                     ])
+    
+    def generate_side_by_side_pdf(self, 
+                                  file1: bytes, 
+                                  file2: bytes,
+                                  diff_bboxes1: List[BBoxTextData],
+                                  diff_bboxes2: List[BBoxTextData],
+                                  max_pages: Optional[int] = None) -> bytes:
+        """
+        2つのPDFを並べて表示する新しいPDFを生成
+        注: file1とfile2は既にハイライト（赤枠）が追加されたPDFである必要があります
+        
+        Args:
+            file1: 1つ目のPDFファイル（ハイライト付き）
+            file2: 2つ目のPDFファイル（ハイライト付き）
+            diff_bboxes1: 文書1の差分位置（未使用）
+            diff_bboxes2: 文書2の差分位置（未使用）
+            max_pages: 最大ページ数（Noneの場合は全ページ）
+            
+        Returns:
+            並列表示されたPDFのバイト列
+        """
+        import fitz  # PyMuPDF
+        
+        # PDFを開く
+        pdf1 = fitz.open(stream=file1, filetype="pdf")
+        pdf2 = fitz.open(stream=file2, filetype="pdf")
+        
+        # 新しいPDFを作成
+        output_pdf = fitz.open()
+        
+        # ページ数を決定
+        if max_pages is None:
+            max_pages = max(len(pdf1), len(pdf2))
+        else:
+            max_pages = min(max_pages, max(len(pdf1), len(pdf2)))
+        
+        # 各ページを処理
+        for page_idx in range(max_pages):
+            # 左右のページを取得
+            left_page = pdf1[page_idx] if page_idx < len(pdf1) else None
+            right_page = pdf2[page_idx] if page_idx < len(pdf2) else None
+            
+            if left_page is None and right_page is None:
+                continue
+            
+            # ページサイズを計算（A4の2倍幅）
+            page_width = 595 * 2 + 20  # A4幅 * 2 + 間隔
+            page_height = 842  # A4高さ
+            
+            # 新しいページを作成
+            new_page = output_pdf.new_page(width=page_width, height=page_height)
+            
+            # 左側のページを配置
+            if left_page:
+                # ページラベルを追加
+                label_rect = fitz.Rect(10, 10, 300, 30)
+                new_page.insert_textbox(label_rect, f"2023年版 - ページ {page_idx + 1}",
+                                      fontsize=12, fontname="helv", 
+                                      color=(0, 0, 0))
+                
+                # ページコンテンツを配置（ハイライト付きPDFをそのまま表示）
+                left_rect = fitz.Rect(0, 40, 595, page_height)
+                new_page.show_pdf_page(left_rect, pdf1, page_idx)
+            
+            # 右側のページを配置
+            if right_page:
+                # ページラベルを追加
+                label_rect = fitz.Rect(615, 10, 915, 30)
+                new_page.insert_textbox(label_rect, f"2024年版 - ページ {page_idx + 1}",
+                                      fontsize=12, fontname="helv", 
+                                      color=(0, 0, 0))
+                
+                # ページコンテンツを配置（ハイライト付きPDFをそのまま表示）
+                right_rect = fitz.Rect(615, 40, 615 + 595, page_height)
+                new_page.show_pdf_page(right_rect, pdf2, page_idx)
+        
+        # PDFをバイト列として返す
+        return output_pdf.tobytes()

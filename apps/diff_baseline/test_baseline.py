@@ -73,6 +73,7 @@ def test_baseline():
             ("PDFs", "2024_original_order.pdf"),
             ("PDFs", "2023_reading_order.pdf"),
             ("PDFs", "2024_reading_order.pdf"),
+            ("PDFs", "side_by_side_comparison.pdf"),  # 並列表示PDF
             ("reports", "sentence_info.json"),
             ("reports", "reading_order.json"),
             ("reports", "execution_report.json"),

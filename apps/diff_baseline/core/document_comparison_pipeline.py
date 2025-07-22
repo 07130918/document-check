@@ -97,12 +97,31 @@ class DocumentComparisonPipeline:
         self.report_generator.start_phase("output_generation")
         
         # SimpleDiffDetectorを使用している場合は、SimpleOutputGeneratorを使用
+        side_by_side_pdf = None
         if hasattr(self.diff_detector, '__class__') and self.diff_detector.__class__.__name__ == 'SimpleDiffDetector':
             from ..services.simple_output_generator import SimpleOutputGenerator
             simple_output = SimpleOutputGenerator()
             highlighted_file1, highlighted_file2 = simple_output.generate_comparison_report(
                 file1, file2, file_type, doc1_ordered, doc2_ordered, differences
             )
+            
+            # PDFの場合は並列表示PDFも生成
+            if file_type.lower() == 'pdf':
+                # 差分のbboxを抽出
+                diff_bboxes1 = []
+                diff_bboxes2 = []
+                for diff in differences:
+                    if hasattr(diff, 'original_bbox') and diff.original_bbox:
+                        diff_bboxes1.append(diff.original_bbox)
+                    if hasattr(diff, 'modified_bbox') and diff.modified_bbox:
+                        diff_bboxes2.append(diff.modified_bbox)
+                
+                # 最大ページ数を取得（max_pagesが設定されている場合）
+                max_pages = self.doc_engine.max_pages
+                # ハイライト付きPDFを使用して並列表示PDFを生成
+                side_by_side_pdf = simple_output.generate_side_by_side_pdf(
+                    highlighted_file1, highlighted_file2, diff_bboxes1, diff_bboxes2, max_pages
+                )
         else:
             highlighted_file1, highlighted_file2 = self.output_generator.generate_comparison_report(
                 file1, file2, file_type, differences
@@ -143,6 +162,7 @@ class DocumentComparisonPipeline:
         result_summary['_doc2_info'] = doc2_info
         result_summary['_differences'] = differences
         result_summary['_layout_changes'] = layout_changes
+        result_summary['_side_by_side_pdf'] = side_by_side_pdf
         
         return highlighted_file1, highlighted_file2, result_summary
     
@@ -281,6 +301,13 @@ class DocumentComparisonPipeline:
             print(f"    - {order1_path.name}")
             print(f"    - {order2_path.name}")
             
+            # 並列表示PDFを保存（生成された場合）
+            if '_side_by_side_pdf' in summary and summary['_side_by_side_pdf']:
+                side_by_side_path = pdfs_dir / "side_by_side_comparison.pdf"
+                with open(side_by_side_path, 'wb') as f:
+                    f.write(summary['_side_by_side_pdf'])
+                print(f"    - {side_by_side_path.name}")
+            
             # デバッグ用CSVファイルを出力
             self._save_reading_order_debug_csv(
                 original_order_info1, reading_order_info1, 
@@ -334,7 +361,7 @@ class DocumentComparisonPipeline:
                 print(f"    - {diff_file}")
             
             # 内部情報をサマリーから削除
-            for key in ['_doc1_info', '_doc2_info', '_differences', '_layout_changes']:
+            for key in ['_doc1_info', '_doc2_info', '_differences', '_layout_changes', '_side_by_side_pdf']:
                 summary.pop(key, None)
         
         # サマリーに出力パスを追加

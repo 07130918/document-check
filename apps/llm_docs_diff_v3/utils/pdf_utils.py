@@ -134,14 +134,13 @@ class PDFProcessor:
                     # 色を取得
                     color = color_map.get(highlight.get("color", "yellow"), (1, 1, 0))
                     
-                    # ハイライトを追加（透過度を設定）
+                    # 赤枠を描画（ハイライトの代わりに）
                     try:
-                        highlight_annot = page.add_highlight_annot(rect)
-                        highlight_annot.set_colors(stroke=color)
-                        highlight_annot.set_opacity(0.3)  # 透過度30%に設定
-                        highlight_annot.update()
+                        # 赤色の枠線を描画
+                        page.draw_rect(rect, color=(1, 0, 0), width=2.0, fill=None)
+                        logger.debug(f"Drew red rectangle at {rect}")
                     except Exception as e:
-                        logger.debug(f"Failed to add highlight at {rect}: {e}")
+                        logger.debug(f"Failed to add rectangle at {rect}: {e}")
                     
                     # ラベルがある場合はテキスト注釈を追加
                     label = highlight.get("label")
