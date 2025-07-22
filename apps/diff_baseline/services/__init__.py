@@ -6,6 +6,7 @@ from .reading_order_estimator import ReadingOrderEstimator
 from .bbox_diff_detector import BBoxBasedDiffDetector
 from .output_generator import OutputGenerator
 from .layout_aware_diff_detector import LayoutAwareDiffDetector
+from .simple_diff_detector import SimpleDiffDetector
 from .report_generator import ReportGenerator
 from .sentence_aware_diff_detector import SentenceAwareDiffDetector
 
@@ -15,6 +16,7 @@ __all__ = [
     'BBoxBasedDiffDetector',
     'OutputGenerator',
     'LayoutAwareDiffDetector',
+    'SimpleDiffDetector',
     'ReportGenerator',
     'SentenceAwareDiffDetector'
 ]

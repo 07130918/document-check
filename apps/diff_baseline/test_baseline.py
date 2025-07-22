@@ -11,6 +11,7 @@ project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 from apps.diff_baseline.core import DocumentComparisonPipeline
+from apps.diff_baseline.services import SimpleDiffDetector
 
 
 def test_baseline():
@@ -35,12 +36,15 @@ def test_baseline():
     output_dir = project_root / "output" / "baseline_test"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # パイプライン実行（現在の設定をベースラインとする）
+    # パイプライン実行（単純化版の差分検出器を使用）
     pipeline = DocumentComparisonPipeline(
         use_layout_aware_diff=False,        # レイアウト認識差分検出は無効
-        use_sentence_aware_diff=True,       # 文章単位→単語単位の2段階差分検出を使用
+        use_sentence_aware_diff=False,      # 文章単位差分検出も無効
         max_pages=5                         # 5ページに制限
     )
+    
+    # SimpleDiffDetectorに差し替え（差分タイプを分けない）
+    pipeline.diff_detector = SimpleDiffDetector()
 
     try:
         print(f"入力ファイル:")
@@ -99,9 +103,14 @@ def test_baseline():
             diff_info = summary['differences']
             print(f"\n差分検出結果:")
             print(f"  総差分数: {diff_info.get('total', 0)}")
-            print(f"  追加: {diff_info.get('added', 0)}")
-            print(f"  削除: {diff_info.get('deleted', 0)}")
-            print(f"  変更: {diff_info.get('modified', 0)}")
+            # SimpleDiffDetectorはすべて同じタイプなので、内訳は表示しない
+            if 'differences' in diff_info:
+                print(f"  差分数: {diff_info.get('differences', 0)}")
+            else:
+                # 旧形式の場合の表示
+                print(f"  追加: {diff_info.get('added', 0)}")
+                print(f"  削除: {diff_info.get('deleted', 0)}")
+                print(f"  変更: {diff_info.get('modified', 0)}")
 
         # 成功判定
         if missing_files:

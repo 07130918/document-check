@@ -15,6 +15,8 @@ class BBoxTextData(TypedDict):
 
 class ChangeType(Enum):
     """変更タイプの列挙型"""
+    DIFFERENCE = "difference"  # 統一された差分タイプ
+    # 互換性のため旧タイプも保持
     ADDITION = "addition"
     DELETION = "deletion"
     MODIFICATION = "modification"

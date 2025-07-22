@@ -95,9 +95,19 @@ class DocumentComparisonPipeline:
         # 5. ハイライト付きファイル生成
         print("[4/5] Generating output files...")
         self.report_generator.start_phase("output_generation")
-        highlighted_file1, highlighted_file2 = self.output_generator.generate_comparison_report(
-            file1, file2, file_type, differences
-        )
+        
+        # SimpleDiffDetectorを使用している場合は、SimpleOutputGeneratorを使用
+        if hasattr(self.diff_detector, '__class__') and self.diff_detector.__class__.__name__ == 'SimpleDiffDetector':
+            from ..services.simple_output_generator import SimpleOutputGenerator
+            simple_output = SimpleOutputGenerator()
+            highlighted_file1, highlighted_file2 = simple_output.generate_comparison_report(
+                file1, file2, file_type, doc1_ordered, doc2_ordered, differences
+            )
+        else:
+            highlighted_file1, highlighted_file2 = self.output_generator.generate_comparison_report(
+                file1, file2, file_type, differences
+            )
+        
         self.report_generator.end_phase()
         
         # レポートタイマー終了
@@ -443,7 +453,37 @@ class DocumentComparisonPipeline:
         file2_diffs = []
         
         for diff in differences:
-            if diff.change_type == ChangeType.DELETION:
+            # SimpleDiffDetectorの場合
+            if hasattr(diff.change_type, 'value') and diff.change_type.value == 'difference':
+                # 文書1の差分
+                if diff.original_bbox:
+                    bbox = diff.original_bbox
+                    key = (bbox['page'], bbox['bbox'][0], bbox['bbox'][1], bbox['text'])
+                    order = doc1_order_map.get(key, 999999)
+                    
+                    file1_diffs.append({
+                        'order': order,
+                        'id': len(file1_diffs) + 1,
+                        'type': '差分',
+                        'word': bbox['text'],
+                        'page': diff.page
+                    })
+                
+                # 文書2の差分
+                if diff.modified_bbox:
+                    bbox = diff.modified_bbox
+                    key = (bbox['page'], bbox['bbox'][0], bbox['bbox'][1], bbox['text'])
+                    order = doc2_order_map.get(key, 999999)
+                    
+                    file2_diffs.append({
+                        'order': order,
+                        'id': len(file2_diffs) + 1,
+                        'type': '差分',
+                        'word': bbox['text'],
+                        'page': diff.page
+                    })
+            
+            elif diff.change_type == ChangeType.DELETION:
                 # ファイル1での削除
                 bbox = diff.original_bbox
                 key = (bbox['page'], bbox['bbox'][0], bbox['bbox'][1], bbox['text'])
