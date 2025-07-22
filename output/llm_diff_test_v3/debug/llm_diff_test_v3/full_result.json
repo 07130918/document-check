@@ -16360,14 +16360,14 @@
     "doc2_name": "2024.pdf",
     "hierarchy_info": {
       "doc1": {
-        "paragraphs": 71,
-        "lines": 121,
-        "words": 1390
+        "paragraphs": 257,
+        "lines": 416,
+        "words": 4770
       },
       "doc2": {
-        "paragraphs": 67,
-        "lines": 119,
-        "words": 1490
+        "paragraphs": 215,
+        "lines": 346,
+        "words": 3895
       }
     },
     "extraction_level": "line",

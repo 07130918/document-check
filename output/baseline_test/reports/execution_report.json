@@ -1,12 +1,12 @@
 {
   "execution_info": {
-    "timestamp": "2025-07-11T13:20:01.603312",
-    "total_execution_time": "5.36 seconds",
+    "timestamp": "2025-07-22T17:04:14.863948",
+    "total_execution_time": "4.17 seconds",
     "phase_times": {
-      "bbox_extraction": "0.14 seconds",
+      "bbox_extraction": "0.23 seconds",
       "reading_order_estimation": "0.00 seconds",
-      "diff_detection": "0.26 seconds",
-      "output_generation": "4.96 seconds"
+      "diff_detection": "0.01 seconds",
+      "output_generation": "3.92 seconds"
     }
   },
   "document_info": {
@@ -34,596 +34,661 @@
     }
   },
   "diff_summary": {
-    "total_differences": 2397,
+    "total_differences": 480,
     "by_type": {
-      "additions": 902,
-      "deletions": 1463,
-      "modifications": 32
+      "additions": 0,
+      "deletions": 0,
+      "modifications": 0
     },
     "by_page": {
       "0": {
-        "additions": 101,
-        "deletions": 43,
-        "modifications": 11
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
       },
       "1": {
-        "additions": 64,
-        "deletions": 53,
-        "modifications": 3
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
       },
       "2": {
-        "additions": 465,
-        "deletions": 917,
-        "modifications": 6
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
       },
       "3": {
-        "additions": 136,
-        "deletions": 276,
+        "additions": 0,
+        "deletions": 0,
         "modifications": 0
       },
       "4": {
-        "additions": 136,
-        "deletions": 174,
-        "modifications": 12
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
       }
     },
-    "success_rate": 99.61
+    "success_rate": 100.0
   },
   "detailed_differences": [
     {
       "index": 1,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "子供",
+      "original_text": "5",
       "original_position": {
-        "x": 197.71829223632812,
-        "y": 309.25482177734375
+        "x": 469.85791015625,
+        "y": 30.90366554260254
+      },
+      "modified_text": "6",
+      "modified_position": {
+        "x": 469.85791015625,
+        "y": 30.90366554260254
       }
     },
     {
       "index": 2,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "結婚",
-      "original_position": {
-        "x": 382.3486022949219,
-        "y": 314.881591796875
+      "modified_text": "寄り",
+      "modified_position": {
+        "x": 267.143798828125,
+        "y": 351.48150634765625
       }
     },
     {
       "index": 3,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "独立",
-      "original_position": {
-        "x": 197.71829223632812,
-        "y": 319.82720947265625
+      "modified_text": "そう",
+      "modified_position": {
+        "x": 288.27301025390625,
+        "y": 351.48150634765625
       }
     },
     {
       "index": 4,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "あなた",
-      "original_position": {
-        "x": 260.0346984863281,
-        "y": 347.26129150390625
+      "modified_text": "保険",
+      "modified_position": {
+        "x": 309.4022216796875,
+        "y": 351.48150634765625
       }
     },
     {
       "index": 5,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "の",
-      "original_position": {
-        "x": 293.4337506975446,
-        "y": 347.26129150390625
+      "modified_text": "住宅",
+      "modified_position": {
+        "x": 243.87600708007812,
+        "y": 380.4060974121094
       }
     },
     {
       "index": 6,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "人生",
-      "original_position": {
-        "x": 304.56676810128346,
-        "y": 347.26129150390625
+      "modified_text": "P",
+      "modified_position": {
+        "x": 458.8700866699219,
+        "y": 409.02789306640625
       }
     },
     {
       "index": 7,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "に",
-      "original_position": {
-        "x": 326.83280290876115,
-        "y": 347.26129150390625
+      "modified_text": "35",
+      "modified_position": {
+        "x": 465.51292673746747,
+        "y": 409.02789306640625
       }
     },
     {
       "index": 8,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "寄り",
-      "original_position": {
-        "x": 267.143798828125,
-        "y": 360.4815368652344
+      "modified_text": "または",
+      "modified_position": {
+        "x": 478.7986068725586,
+        "y": 409.02789306640625
       }
     },
     {
       "index": 9,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "そう",
-      "original_position": {
-        "x": 288.27301025390625,
-        "y": 360.4815368652344
+      "modified_text": "最終",
+      "modified_position": {
+        "x": 498.7271270751953,
+        "y": 409.02789306640625
       }
     },
     {
       "index": 10,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "保険",
-      "original_position": {
-        "x": 309.4022216796875,
-        "y": 360.4815368652344
+      "modified_text": "ページ",
+      "modified_position": {
+        "x": 512.0128072102865,
+        "y": 409.02789306640625
       }
     },
     {
       "index": 11,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "簡単",
-      "original_position": {
-        "x": 466.3905944824219,
-        "y": 358.8869934082031
+      "modified_text": "を",
+      "modified_position": {
+        "x": 531.9413274129232,
+        "y": 409.02789306640625
       }
     },
     {
       "index": 12,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "！",
-      "original_position": {
-        "x": 489.04542032877606,
-        "y": 358.8869934082031
-      }
-    },
-    {
-      "index": 13,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "ＷＥＢ",
-      "original_position": {
-        "x": 477.41558837890625,
-        "y": 374.1833801269531
-      }
-    },
-    {
-      "index": 14,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "で",
-      "original_position": {
-        "x": 508.9208526611328,
-        "y": 374.1833801269531
-      }
-    },
-    {
-      "index": 15,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "住宅",
-      "original_position": {
-        "x": 243.87600708007812,
-        "y": 389.4060974121094
-      }
-    },
-    {
-      "index": 16,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "保険",
-      "original_position": {
-        "x": 459.87640380859375,
-        "y": 389.4797668457031
-      }
-    },
-    {
-      "index": 17,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "金",
-      "original_position": {
-        "x": 485.53839111328125,
-        "y": 389.4797668457031
-      }
-    },
-    {
-      "index": 18,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "請求",
-      "original_position": {
-        "x": 498.369384765625,
-        "y": 389.4797668457031
-      }
-    },
-    {
-      "index": 19,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "が",
-      "original_position": {
-        "x": 524.0313720703125,
-        "y": 389.4797668457031
-      }
-    },
-    {
-      "index": 20,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "出産",
-      "original_position": {
-        "x": 336.1952819824219,
-        "y": 395.31622314453125
-      }
-    },
-    {
-      "index": 21,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "購入",
-      "original_position": {
-        "x": 243.87600708007812,
-        "y": 399.97845458984375
-      }
-    },
-    {
-      "index": 22,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "でき",
-      "original_position": {
-        "x": 471.3802185058594,
-        "y": 404.7761535644531
-      }
-    },
-    {
-      "index": 23,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "ます",
-      "original_position": {
-        "x": 494.6795959472656,
-        "y": 404.7761535644531
-      }
-    },
-    {
-      "index": 24,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "！",
-      "original_position": {
-        "x": 517.9789733886719,
-        "y": 404.7761535644531
-      }
-    },
-    {
-      "index": 25,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "令和",
-      "original_position": {
-        "x": 166.65869140625,
-        "y": 418.382080078125
-      }
-    },
-    {
-      "index": 26,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
       "original_text": "5",
       "original_position": {
         "x": 196.25487811748798,
         "y": 418.382080078125
+      },
+      "modified_text": "6",
+      "modified_position": {
+        "x": 196.25487811748798,
+        "y": 409.382080078125
       }
     },
     {
-      "index": 27,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "年",
-      "original_position": {
-        "x": 211.05297147310696,
-        "y": 418.382080078125
-      }
-    },
-    {
-      "index": 28,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "10",
-      "original_position": {
-        "x": 225.85106482872595,
-        "y": 418.382080078125
-      }
-    },
-    {
-      "index": 29,
-      "type": "deletion",
-      "page": 1,
-      "confidence": 1.0,
-      "original_text": "月",
-      "original_position": {
-        "x": 255.44725153996393,
-        "y": 418.382080078125
-      }
-    },
-    {
-      "index": 30,
-      "type": "deletion",
+      "index": 13,
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
       "original_text": "25",
       "original_position": {
         "x": 270.24534489558295,
         "y": 418.382080078125
+      },
+      "modified_text": "23",
+      "modified_position": {
+        "x": 270.24534489558295,
+        "y": 409.382080078125
+      }
+    },
+    {
+      "index": 14,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "5",
+      "original_position": {
+        "x": 188.43148110129616,
+        "y": 450.0789794921875
+      },
+      "modified_text": "6",
+      "modified_position": {
+        "x": 188.43148110129616,
+        "y": 441.0780944824219
+      }
+    },
+    {
+      "index": 15,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "6",
+      "original_position": {
+        "x": 344.8104386763139,
+        "y": 450.0789794921875
+      },
+      "modified_text": "7",
+      "modified_position": {
+        "x": 344.8104386763139,
+        "y": 441.0780944824219
+      }
+    },
+    {
+      "index": 16,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "6",
+      "original_position": {
+        "x": 190.59434020996093,
+        "y": 469.7681884765625
+      },
+      "modified_text": "7",
+      "modified_position": {
+        "x": 190.59434020996093,
+        "y": 460.7681884765625
+      }
+    },
+    {
+      "index": 17,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "3",
+      "original_position": {
+        "x": 286.7729176488416,
+        "y": 538.8192749023438
+      },
+      "modified_text": "1",
+      "modified_position": {
+        "x": 286.7729176488416,
+        "y": 525.8182983398438
+      }
+    },
+    {
+      "index": 18,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "25",
+      "original_position": {
+        "x": 368.3144583866514,
+        "y": 538.8192749023438
+      },
+      "modified_text": "23",
+      "modified_position": {
+        "x": 368.3144583866514,
+        "y": 525.8182983398438
+      }
+    },
+    {
+      "index": 19,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "2",
+      "original_position": {
+        "x": 328.3760962332449,
+        "y": 582.3322143554688
+      },
+      "modified_text": "1",
+      "modified_position": {
+        "x": 328.4524492448376,
+        "y": 568.3311767578125
+      }
+    },
+    {
+      "index": 20,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "月",
+      "original_position": {
+        "x": 351.04268178632185,
+        "y": 582.3322143554688
+      },
+      "modified_text": "火",
+      "modified_position": {
+        "x": 351.1255793417654,
+        "y": 568.3311767578125
+      }
+    },
+    {
+      "index": 21,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "eyhe",
+      "original_position": {
+        "x": 243.2492411295573,
+        "y": 645.8946533203125
+      },
+      "modified_text": "6",
+      "modified_position": {
+        "x": 233.58342692057292,
+        "y": 631.8936767578125
+      }
+    },
+    {
+      "index": 22,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "84",
+      "original_position": {
+        "x": 260.0220452202691,
+        "y": 645.8946533203125
+      },
+      "modified_text": "au",
+      "modified_position": {
+        "x": 237.52877638075086,
+        "y": 631.8936767578125
+      }
+    },
+    {
+      "index": 23,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "5",
+      "modified_position": {
+        "x": 245.4194753011068,
+        "y": 631.8936767578125
+      }
+    },
+    {
+      "index": 24,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "j",
+      "modified_position": {
+        "x": 249.36482476128472,
+        "y": 631.8936767578125
+      }
+    },
+    {
+      "index": 25,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "8",
+      "modified_position": {
+        "x": 253.31017422146266,
+        "y": 631.8936767578125
+      }
+    },
+    {
+      "index": 26,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "、",
+      "original_position": {
+        "x": 453.48233710394965,
+        "y": 646.45166015625
+      },
+      "modified_text": "/",
+      "modified_position": {
+        "x": 441.5818695068359,
+        "y": 632.4507446289062
+      }
+    },
+    {
+      "index": 27,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "17",
+      "modified_position": {
+        "x": 446.4778686523438,
+        "y": 632.4507446289062
+      }
+    },
+    {
+      "index": 28,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": ".",
+      "modified_position": {
+        "x": 443.7405285957532,
+        "y": 641.4507446289062
+      }
+    },
+    {
+      "index": 29,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "0",
+      "modified_position": {
+        "x": 447.6470759465144,
+        "y": 641.4507446289062
+      }
+    },
+    {
+      "index": 30,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "/",
+      "modified_position": {
+        "x": 451.55362329727564,
+        "y": 641.4507446289062
       }
     },
     {
       "index": 31,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "日",
-      "original_position": {
-        "x": 299.8415316068209,
-        "y": 418.382080078125
+      "modified_text": "10",
+      "modified_position": {
+        "x": 455.46017064803686,
+        "y": 641.4507446289062
       }
     },
     {
       "index": 32,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "（",
-      "original_position": {
-        "x": 314.63962496243994,
-        "y": 418.382080078125
+      "modified_text": "MS",
+      "modified_position": {
+        "x": 56.133304595947266,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 33,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "水",
-      "original_position": {
-        "x": 329.4377183180589,
-        "y": 418.382080078125
+      "modified_text": "１",
+      "modified_position": {
+        "x": 69.76676516465739,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 34,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "）",
-      "original_position": {
-        "x": 344.23581167367786,
-        "y": 418.382080078125
+      "modified_text": "を",
+      "modified_position": {
+        "x": 76.58349544901243,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 35,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "P",
-      "original_position": {
-        "x": 464.6015930175781,
-        "y": 422.02789306640625
+      "modified_text": "閲覧",
+      "modified_position": {
+        "x": 83.40022573336749,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 36,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "34",
-      "original_position": {
-        "x": 471.42759704589844,
-        "y": 422.02789306640625
+      "modified_text": "できる",
+      "modified_position": {
+        "x": 97.0336863020776,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 37,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "または",
-      "original_position": {
-        "x": 485.07960510253906,
-        "y": 422.02789306640625
+      "modified_text": "方",
+      "modified_position": {
+        "x": 117.48387715514278,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 38,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "裏表",
-      "original_position": {
-        "x": 505.5576171875,
-        "y": 422.02789306640625
+      "modified_text": "、",
+      "modified_position": {
+        "x": 124.30060743949782,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 39,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "紙",
-      "original_position": {
-        "x": 519.2096252441406,
-        "y": 422.02789306640625
+      "modified_text": "ご",
+      "modified_position": {
+        "x": 131.11733772385287,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 40,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "を",
-      "original_position": {
-        "x": 526.0356292724609,
-        "y": 422.02789306640625
+      "modified_text": "自宅",
+      "modified_position": {
+        "x": 137.93406800820793,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 41,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "ご覧",
-      "original_position": {
-        "x": 474.1856384277344,
-        "y": 431.02789306640625
+      "modified_text": "の",
+      "modified_position": {
+        "x": 151.56752857691805,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 42,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "ください",
-      "original_position": {
-        "x": 489.1731959751674,
-        "y": 431.02789306640625
+      "modified_text": "PC",
+      "modified_position": {
+        "x": 158.3842588612731,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 43,
-      "type": "deletion",
+      "type": "difference",
       "page": 1,
       "confidence": 1.0,
-      "original_text": "。",
-      "original_position": {
-        "x": 519.1483110700335,
-        "y": 431.02789306640625
+      "modified_text": "または",
+      "modified_position": {
+        "x": 172.01771942998323,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 44,
-      "type": "deletion",
-      "page": 2,
+      "type": "difference",
+      "page": 1,
       "confidence": 1.0,
-      "original_text": "家族",
-      "original_position": {
-        "x": 116.87989807128906,
-        "y": 470.9178771972656
+      "modified_text": "スマート",
+      "modified_position": {
+        "x": 192.46791028304838,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 45,
-      "type": "deletion",
-      "page": 2,
+      "type": "difference",
+      "page": 1,
       "confidence": 1.0,
-      "original_text": "も",
-      "original_position": {
-        "x": 138.79922993977866,
-        "y": 470.9178771972656
+      "modified_text": "フォン",
+      "modified_position": {
+        "x": 219.73483142046862,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 46,
-      "type": "deletion",
-      "page": 2,
+      "type": "difference",
+      "page": 1,
       "confidence": 1.0,
-      "original_text": "！",
-      "original_position": {
-        "x": 367.6966552734375,
-        "y": 468.2360534667969
+      "modified_text": "で",
+      "modified_position": {
+        "x": 240.18502227353378,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 47,
-      "type": "deletion",
-      "page": 2,
+      "type": "difference",
+      "page": 1,
       "confidence": 1.0,
-      "original_text": "に",
-      "original_position": {
-        "x": 362.86749267578125,
-        "y": 474.2825012207031
+      "modified_text": "お",
+      "modified_position": {
+        "x": 247.00175255788884,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 48,
-      "type": "deletion",
-      "page": 2,
+      "type": "difference",
+      "page": 1,
       "confidence": 1.0,
-      "original_text": "業",
-      "original_position": {
-        "x": 215.5124053955078,
-        "y": 481.3719787597656
+      "modified_text": "手続き",
+      "modified_position": {
+        "x": 253.8184828422439,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 49,
-      "type": "deletion",
-      "page": 2,
+      "type": "difference",
+      "page": 1,
       "confidence": 1.0,
-      "original_text": "役立つ",
-      "original_position": {
-        "x": 445.71038818359375,
-        "y": 471.9911804199219
+      "modified_text": "を",
+      "modified_position": {
+        "x": 274.2686736953091,
+        "y": 750.7481689453125
       }
     },
     {
       "index": 50,
-      "type": "deletion",
-      "page": 2,
+      "type": "difference",
+      "page": 1,
       "confidence": 1.0,
-      "original_text": "従",
-      "original_position": {
-        "x": 206.56448364257812,
-        "y": 472.10736083984375
+      "modified_text": "さ",
+      "modified_position": {
+        "x": 281.0854039796641,
+        "y": 750.7481689453125
       }
     }
   ],
   "layout_changes": [],
   "quality_metrics": {
-    "avg_confidence": 0.9960575719649563,
+    "avg_confidence": 1.0,
     "high_confidence_ratio": 1.0,
     "layout_change_detected": 0,
     "potential_false_positives": 0
@@ -631,34 +696,35 @@
   "examples": {
     "success": [
       {
-        "type": "deletion",
+        "type": "difference",
         "confidence": 1.0,
         "page": 1,
-        "text1": "子供"
+        "text1": "5",
+        "text2": "6"
       },
       {
-        "type": "deletion",
+        "type": "difference",
         "confidence": 1.0,
         "page": 1,
-        "text1": "結婚"
+        "text2": "寄り"
       },
       {
-        "type": "deletion",
+        "type": "difference",
         "confidence": 1.0,
         "page": 1,
-        "text1": "独立"
+        "text2": "そう"
       },
       {
-        "type": "deletion",
+        "type": "difference",
         "confidence": 1.0,
         "page": 1,
-        "text1": "あなた"
+        "text2": "保険"
       },
       {
-        "type": "deletion",
+        "type": "difference",
         "confidence": 1.0,
         "page": 1,
-        "text1": "の"
+        "text2": "住宅"
       }
     ],
     "failure": []
