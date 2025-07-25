@@ -1,0 +1,2403 @@
+{
+  "pages": 2,
+  "metadata": {
+    "extraction_method": "llm_based_simple",
+    "language": "ja"
+  },
+  "blocks": [
+    {
+      "block_id": "e11c646b-c724-48b4-a84f-f8e7028fa0a3",
+      "block_type": "header",
+      "bbox": [
+        38.736000000000004,
+        14.1912,
+        311.0472,
+        10.296000000000001
+      ],
+      "text": "保険金請求やご加入内容確認方法についても記載しております。大切に保管してください。",
+      "elements": [
+        {
+          "text": "保険金請求やご加入内容確認方法についても記載しております。大切に保管してください。",
+          "bbox": [
+            0,
+            0,
+            311.0472,
+            10.296000000000001
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 0,
+            "length": 41,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 0
+    },
+    {
+      "block_id": "79a55304-4b52-4495-9734-cb729a95170f",
+      "block_type": "header",
+      "bbox": [
+        54.5832,
+        39.06,
+        178.2648,
+        16.5672
+      ],
+      "text": "2024年度版(1年間保存)",
+      "elements": [
+        {
+          "text": "2024年度版(1年間保存)",
+          "bbox": [
+            0,
+            0,
+            178.2648,
+            16.5672
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 42,
+            "length": 14,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 1
+    },
+    {
+      "block_id": "a50b51ee-6e41-4db0-9733-34060bdec10c",
+      "block_type": "header",
+      "bbox": [
+        461.0664,
+        93.5784,
+        65.31120000000004,
+        31.56479999999999
+      ],
+      "text": "東電生協 オリジナル",
+      "elements": [
+        {
+          "text": "東電生協 オリジナル",
+          "bbox": [
+            0,
+            0,
+            65.31120000000004,
+            31.56479999999999
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 57,
+            "length": 10,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 2
+    },
+    {
+      "block_id": "6148922b-8cd1-4fcd-8b19-1526337679c5",
+      "block_type": "paragraph",
+      "bbox": [
+        179.3232,
+        192.5928,
+        234.3168,
+        15.631199999999989
+      ],
+      "text": "あなたの暮らしを全力サポート",
+      "elements": [
+        {
+          "text": "あなたの暮らしを全力サポート",
+          "bbox": [
+            0,
+            0,
+            234.3168,
+            15.631199999999989
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 68,
+            "length": 14,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 3
+    },
+    {
+      "block_id": "82625ec3-6c6b-407d-836d-013fc461574c",
+      "block_type": "title",
+      "bbox": [
+        75.2256,
+        225.4752,
+        441.31680000000006,
+        53.55359999999999
+      ],
+      "text": "総合医療保障プラン",
+      "elements": [
+        {
+          "text": "総合医療保障プラン",
+          "bbox": [
+            0,
+            0,
+            441.31680000000006,
+            53.55359999999999
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 83,
+            "length": 9,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 4
+    },
+    {
+      "block_id": "7af3263a-1d82-4c58-9a23-eb2a99429107",
+      "block_type": "paragraph",
+      "bbox": [
+        93.2256,
+        350.48879999999997,
+        23.479200000000006,
+        16.927200000000006
+      ],
+      "text": "哈",
+      "elements": [
+        {
+          "text": "哈",
+          "bbox": [
+            0,
+            0,
+            23.479200000000006,
+            16.927200000000006
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 93,
+            "length": 1,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 5
+    },
+    {
+      "block_id": "f2282342-abfe-4d10-a4eb-a5543d33d29d",
+      "block_type": "paragraph",
+      "bbox": [
+        159.3648,
+        351.0504,
+        274.61519999999996,
+        15.235199999999985
+      ],
+      "text": "今年度の改定内容はP3~4をご確認ください!",
+      "elements": [
+        {
+          "text": "今年度の改定内容はP3~4をご確認ください!",
+          "bbox": [
+            0,
+            0,
+            274.61519999999996,
+            15.235199999999985
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 95,
+            "length": 22,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 6
+    },
+    {
+      "block_id": "d512f4e8-243b-4e03-8e5e-bf085f056f4e",
+      "block_type": "paragraph",
+      "bbox": [
+        153.036,
+        385.3152,
+        288.41760000000005,
+        18.316799999999965
+      ],
+      "text": "総合医療保障プランのうれしいメリット",
+      "elements": [
+        {
+          "text": "総合医療保障プランのうれしいメリット",
+          "bbox": [
+            0,
+            0,
+            288.41760000000005,
+            18.316799999999965
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 118,
+            "length": 18,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 7
+    },
+    {
+      "block_id": "002dfe68-9f8a-4491-9977-a0acac1ccfa3",
+      "block_type": "paragraph",
+      "bbox": [
+        435.7296,
+        430.5384,
+        107.95679999999997,
+        57.74399999999997
+      ],
+      "text": "ご加入者は 約21万人",
+      "elements": [
+        {
+          "text": "ご加入者は 約21万人",
+          "bbox": [
+            0,
+            0,
+            107.95679999999997,
+            57.74399999999997
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 208,
+            "length": 11,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 8
+    },
+    {
+      "block_id": "8e7a3dd5-7129-4082-96b6-8520d3ae4f9a",
+      "block_type": "paragraph",
+      "bbox": [
+        82.512,
+        431.2368,
+        103.68720000000002,
+        92.23920000000003
+      ],
+      "text": "保険料は 約59% 割引 !!",
+      "elements": [
+        {
+          "text": "保険料は 約59% 割引 !!",
+          "bbox": [
+            0,
+            0,
+            103.68720000000002,
+            92.23920000000003
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 140,
+            "length": 15,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 9
+    },
+    {
+      "block_id": "ee7e09c5-c359-4ccd-bed3-5f724dbc4510",
+      "block_type": "paragraph",
+      "bbox": [
+        242.3952,
+        431.4456,
+        110.71440000000001,
+        17.431199999999983
+      ],
+      "text": "ご加入後も安心",
+      "elements": [
+        {
+          "text": "ご加入後も安心",
+          "bbox": [
+            0,
+            0,
+            110.71440000000001,
+            17.431199999999983
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 156,
+            "length": 7,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 10
+    },
+    {
+      "block_id": "8c038104-09f2-42e3-95d5-fadd0d3f788a",
+      "block_type": "paragraph",
+      "bbox": [
+        57.5352,
+        445.2192,
+        29.2608,
+        15.587999999999994
+      ],
+      "text": "最大",
+      "elements": [
+        {
+          "text": "最大",
+          "bbox": [
+            0,
+            0,
+            29.2608,
+            15.587999999999994
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 137,
+            "length": 2,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 11
+    },
+    {
+      "block_id": "da624fbb-ad28-4c7b-8997-a4240a5c2dc6",
+      "block_type": "paragraph",
+      "bbox": [
+        222.5952,
+        459.5184,
+        149.9688,
+        64.46159999999998
+      ],
+      "text": "ライフステージ·家族構成の変化に合わせて 加入内容の見直しが可能! 退職後も継続可能!",
+      "elements": [
+        {
+          "text": "ライフステージ·家族構成の変化に合わせて 加入内容の見直しが可能! 退職後も継続可能!",
+          "bbox": [
+            0,
+            0,
+            149.9688,
+            64.46159999999998
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 164,
+            "length": 43,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 12
+    },
+    {
+      "block_id": "54bdaba3-7306-4c00-a6bc-0349fa78e458",
+      "block_type": "paragraph",
+      "bbox": [
+        405.2088,
+        493.56000000000006,
+        7.415999999999983,
+        20.85839999999999
+      ],
+      "text": "[",
+      "elements": [
+        {
+          "text": "[",
+          "bbox": [
+            0,
+            0,
+            7.415999999999983,
+            20.85839999999999
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 220,
+            "length": 1,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 13
+    },
+    {
+      "block_id": "16989b1d-a323-48e7-872d-3da5bc553d9d",
+      "block_type": "paragraph",
+      "bbox": [
+        414.02160000000003,
+        495.26640000000003,
+        123.15599999999998,
+        29.01599999999997
+      ],
+      "text": "全国の電力関連産業で働く約21万人 の皆さまが加入されている保険です。 (2023年12月時点)",
+      "elements": [
+        {
+          "text": "全国の電力関連産業で働く約21万人 の皆さまが加入されている保険です。 (2023年12月時点)",
+          "bbox": [
+            0,
+            0,
+            123.15599999999998,
+            29.01599999999997
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 222,
+            "length": 48,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 14
+    },
+    {
+      "block_id": "a922a242-f8f4-4350-abc5-566fc0ea7f41",
+      "block_type": "footer",
+      "bbox": [
+        236.52,
+        715.2912,
+        316.044,
+        22.442400000000006
+      ],
+      "text": "間:2024年12月1日午後4時から2025年12月1日午後4時まで1年間 (新規加入、被保険者·プラン·オプションの追加は補償開始時刻が午前0時です。)",
+      "elements": [
+        {
+          "text": "間:2024年12月1日午後4時から2025年12月1日午後4時まで1年間 (新規加入、被保険者·プラン·オプションの追加は補償開始時刻が午前0時です。)",
+          "bbox": [
+            0,
+            0,
+            316.044,
+            22.442400000000006
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 294,
+            "length": 77,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 15
+    },
+    {
+      "block_id": "2a29aa7a-e10a-4dbb-a26f-688d2fec287c",
+      "block_type": "footer",
+      "bbox": [
+        171.288,
+        715.5432000000001,
+        55.1952,
+        10.61279999999995
+      ],
+      "text": "保 険 期",
+      "elements": [
+        {
+          "text": "保 険 期",
+          "bbox": [
+            0,
+            0,
+            55.1952,
+            10.61279999999995
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 288,
+            "length": 5,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 16
+    },
+    {
+      "block_id": "aedc3493-fbd6-4cf6-aaed-22ce171d3222",
+      "block_type": "footer",
+      "bbox": [
+        60.4728,
+        719.0351999999999,
+        90.9216,
+        17.719200000000015
+      ],
+      "text": "【申込締切日】",
+      "elements": [
+        {
+          "text": "【申込締切日】",
+          "bbox": [
+            0,
+            0,
+            90.9216,
+            17.719200000000015
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 271,
+            "length": 7,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 17
+    },
+    {
+      "block_id": "050ecd25-d34b-44b4-aeb2-2fe321d249b3",
+      "block_type": "footer",
+      "bbox": [
+        172.4832,
+        738.3744,
+        220.42799999999997,
+        10.771199999999965
+      ],
+      "text": "加入申込票提出先:担当指定代理店までご提出ください",
+      "elements": [
+        {
+          "text": "加入申込票提出先:担当指定代理店までご提出ください",
+          "bbox": [
+            0,
+            0,
+            220.42799999999997,
+            10.771199999999965
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 372,
+            "length": 25,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 18
+    },
+    {
+      "block_id": "cec1f7da-af7e-4cb6-8293-fa09ccea9d72",
+      "block_type": "footer",
+      "bbox": [
+        42.357600000000005,
+        741.8808,
+        123.94079999999998,
+        26.21519999999991
+      ],
+      "text": "10/15(火)",
+      "elements": [
+        {
+          "text": "10/15(火)",
+          "bbox": [
+            0,
+            0,
+            123.94079999999998,
+            26.21519999999991
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 279,
+            "length": 8,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 19
+    },
+    {
+      "block_id": "9a9e9da1-870a-445f-80ab-f0653f408443",
+      "block_type": "footer",
+      "bbox": [
+        172.44,
+        749.8368,
+        291.5712,
+        22.34879999999997
+      ],
+      "text": "保険料のお支払い:2025年1月より東電生協引落し日(原則毎月22日)に 生協登録口座より引落し(一部職域は27日)",
+      "elements": [
+        {
+          "text": "保険料のお支払い:2025年1月より東電生協引落し日(原則毎月22日)に 生協登録口座より引落し(一部職域は27日)",
+          "bbox": [
+            0,
+            0,
+            291.5712,
+            22.34879999999997
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 398,
+            "length": 58,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 20
+    },
+    {
+      "block_id": "9f772dc0-4fa1-429d-8200-ccc2f6b0ab75",
+      "block_type": "footer",
+      "bbox": [
+        157.0392,
+        788.8464,
+        271.98720000000003,
+        29.527199999999993
+      ],
+      "text": "Toden Seikyo 東電 生活 協同 組合 全国電力生活協同組合連合会",
+      "elements": [
+        {
+          "text": "Toden Seikyo 東電 生活 協同 組合 全国電力生活協同組合連合会",
+          "bbox": [
+            0,
+            0,
+            271.98720000000003,
+            29.527199999999993
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 0,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 457,
+            "length": 38,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 21
+    },
+    {
+      "block_id": "7aa7f33a-5a17-40eb-a5a2-4e0bb0fafee0",
+      "block_type": "header",
+      "bbox": [
+        43.3872,
+        36.5904,
+        92.52,
+        12.103200000000001
+      ],
+      "text": "東電生協オリジナル",
+      "elements": [
+        {
+          "text": "東電生協オリジナル",
+          "bbox": [
+            0,
+            0,
+            92.52,
+            12.103200000000001
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 496,
+            "length": 9,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 22
+    },
+    {
+      "block_id": "9de58e40-67cd-42c2-a6d0-3e0835428fc5",
+      "block_type": "header",
+      "bbox": [
+        27.3384,
+        61.6896,
+        465.53760000000005,
+        40.99679999999999
+      ],
+      "text": "総合医療保障プランのご案内",
+      "elements": [
+        {
+          "text": "総合医療保障プランのご案内",
+          "bbox": [
+            0,
+            0,
+            465.53760000000005,
+            40.99679999999999
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 506,
+            "length": 13,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 23
+    },
+    {
+      "block_id": "85e25e94-d34f-4c0c-9477-2de59797ef58",
+      "block_type": "paragraph",
+      "bbox": [
+        27.813599999999997,
+        113.4144,
+        124.596,
+        13.161600000000005
+      ],
+      "text": "保険にも点検が必要です。",
+      "elements": [
+        {
+          "text": "保険にも点検が必要です。",
+          "bbox": [
+            0,
+            0,
+            124.596,
+            13.161600000000005
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 520,
+            "length": 12,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 24
+    },
+    {
+      "block_id": "88493fee-5b87-4613-9a78-785851e1bd95",
+      "block_type": "paragraph",
+      "bbox": [
+        28.692,
+        128.916,
+        300.816,
+        13.644
+      ],
+      "text": "「いざというときに備え、十分な補償を確保する」「ムダな補償を",
+      "elements": [
+        {
+          "text": "「いざというときに備え、十分な補償を確保する」「ムダな補償を",
+          "bbox": [
+            0,
+            0,
+            300.816,
+            13.644
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 533,
+            "length": 30,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 25
+    },
+    {
+      "block_id": "1a31583c-bac3-4e40-b83b-fc0533dab745",
+      "block_type": "paragraph",
+      "bbox": [
+        27.7416,
+        144.9792,
+        301.644,
+        29.678400000000025
+      ],
+      "text": "削減して保険料を節約する」ために、年に1回のこの機会に「加入 内容の点検·見直し」をおすすめします。",
+      "elements": [
+        {
+          "text": "削減して保険料を節約する」ために、年に1回のこの機会に「加入 内容の点検·見直し」をおすすめします。",
+          "bbox": [
+            0,
+            0,
+            301.644,
+            29.678400000000025
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 564,
+            "length": 50,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 26
+    },
+    {
+      "block_id": "cf9429d4-ff67-4dc5-8da0-3deb96f441d7",
+      "block_type": "paragraph",
+      "bbox": [
+        45.6768,
+        185.0472,
+        277.4016,
+        16.127999999999982
+      ],
+      "text": "全国電力生活協同組合連合会からのお知らせ",
+      "elements": [
+        {
+          "text": "全国電力生活協同組合連合会からのお知らせ",
+          "bbox": [
+            0,
+            0,
+            277.4016,
+            16.127999999999982
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 615,
+            "length": 20,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 27
+    },
+    {
+      "block_id": "2bc74a84-8c49-4b29-9a71-f7d0c5981c9b",
+      "block_type": "paragraph",
+      "bbox": [
+        462.636,
+        201.708,
+        38.81519999999996,
+        23.198400000000003
+      ],
+      "text": "大幅な 割引です!",
+      "elements": [
+        {
+          "text": "大幅な 割引です!",
+          "bbox": [
+            0,
+            0,
+            38.81519999999996,
+            23.198400000000003
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 679,
+            "length": 9,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 28
+    },
+    {
+      "block_id": "aaf673d0-ee93-4608-a2c5-b6e65acf9404",
+      "block_type": "paragraph",
+      "bbox": [
+        45.4896,
+        211.65840000000003,
+        278.76959999999997,
+        14.299199999999992
+      ],
+      "text": "総合医療保障プランに適用されている割引について",
+      "elements": [
+        {
+          "text": "総合医療保障プランに適用されている割引について",
+          "bbox": [
+            0,
+            0,
+            278.76959999999997,
+            14.299199999999992
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 636,
+            "length": 23,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 29
+    },
+    {
+      "block_id": "160958d2-9d98-412a-a17a-bb3018c6f988",
+      "block_type": "paragraph",
+      "bbox": [
+        92.21039999999999,
+        237.88799999999998,
+        185.11200000000002,
+        23.63040000000002
+      ],
+      "text": "1年間のお支払い金額 約147億円※",
+      "elements": [
+        {
+          "text": "1年間のお支払い金額 約147億円※",
+          "bbox": [
+            0,
+            0,
+            185.11200000000002,
+            23.63040000000002
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 660,
+            "length": 18,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 30
+    },
+    {
+      "block_id": "f847e7fc-de2a-41f2-8cc5-a2e3903d5e88",
+      "block_type": "paragraph",
+      "bbox": [
+        308.9952,
+        238.0824,
+        196.29360000000003,
+        23.673599999999983
+      ],
+      "text": "4 保険料は 大幅な割引 最大約59%割引",
+      "elements": [
+        {
+          "text": "4 保険料は 大幅な割引 最大約59%割引",
+          "bbox": [
+            0,
+            0,
+            196.29360000000003,
+            23.673599999999983
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 689,
+            "length": 21,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 31
+    },
+    {
+      "block_id": "8c9598d0-f4d6-4360-a70d-96ff493f829e",
+      "block_type": "paragraph",
+      "bbox": [
+        46.324799999999996,
+        275.7744,
+        504.5184,
+        23.220000000000017
+      ],
+      "text": "●総合医療保障プランの保険金お支払い金額は、全国で147億円※を超え、万一の事故や、予期せぬ病気等への備えとして 多くの組合員の皆さまにお役立ていただいております。(※2023年9月末実績)",
+      "elements": [
+        {
+          "text": "●総合医療保障プランの保険金お支払い金額は、全国で147億円※を超え、万一の事故や、予期せぬ病気等への備えとして 多くの組合員の皆さまにお役立ていただいております。(※2023年9月末実績)",
+          "bbox": [
+            0,
+            0,
+            504.5184,
+            23.220000000000017
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 711,
+            "length": 95,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 32
+    },
+    {
+      "block_id": "e3c6d32a-d7a8-4349-bfb4-3eb1e88003af",
+      "block_type": "paragraph",
+      "bbox": [
+        46.62,
+        299.5344,
+        504.2736,
+        23.35680000000005
+      ],
+      "text": "●総合医療保障プランの割引率は、「数多くの組合員の皆さまにご加入いただくことによるスケールメリット」および「優良 な損害率(全体の保険料とお支払いした全体の保険金の割合)」を背景に、過去から大幅な割引率が適用されております。",
+      "elements": [
+        {
+          "text": "●総合医療保障プランの割引率は、「数多くの組合員の皆さまにご加入いただくことによるスケールメリット」および「優良 な損害率(全体の保険料とお支払いした全体の保険金の割合)」を背景に、過去から大幅な割引率が適用されております。",
+          "bbox": [
+            0,
+            0,
+            504.2736,
+            23.35680000000005
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 807,
+            "length": 112,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 33
+    },
+    {
+      "block_id": "094f201c-5abe-4902-a658-580934b75d34",
+      "block_type": "paragraph",
+      "bbox": [
+        46.6128,
+        322.9416,
+        504.40319999999997,
+        57.33360000000003
+      ],
+      "text": "●総合医療保障プランは、万一の事故や、予期せぬ病気等への備えとして多くの組合員の皆さまにお役立ていただいており ます。2023年度の保険金お支払い金額の実績は、新型コロナウイルスの影響により前年に比べ約21億円増加し、全国で 147億円となりました。そのため、損害率による割引率が40%から35%に変更となりますが、2024年度は、最大で約59%(注) の大幅な割引率が適用されます(長期休業 は適用割引率を別途算出しています。)ので、何卒ご理解賜りますようお願いい たします。",
+      "elements": [
+        {
+          "text": "●総合医療保障プランは、万一の事故や、予期せぬ病気等への備えとして多くの組合員の皆さまにお役立ていただいており ます。2023年度の保険金お支払い金額の実績は、新型コロナウイルスの影響により前年に比べ約21億円増加し、全国で 147億円となりました。そのため、損害率による割引率が40%から35%に変更となりますが、2024年度は、最大で約59%(注) の大幅な割引率が適用されます(長期休業 は適用割引率を別途算出しています。)ので、何卒ご理解賜りますようお願いい たします。",
+          "bbox": [
+            0,
+            0,
+            504.40319999999997,
+            57.33360000000003
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 920,
+            "length": 239,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 34
+    },
+    {
+      "block_id": "163f8e06-aa74-4b91-ab25-94e0d1977f2b",
+      "block_type": "paragraph",
+      "bbox": [
+        55.605599999999995,
+        382.3128,
+        495.5760000000001,
+        30.564000000000007
+      ],
+      "text": "(注)傷害部分(ケガの補償の部分)につきましては、団体割引30%、大口契約割引10%、損害率による割引35%が適用されています。割引前の保険料に これらの割引を連乗して割引後の保険料を算出しており、割引後の保険料水準は、割引前の約41%水準(=(1-30%)×(1-10%)×(1-35%))となり ます。傷害以外の部分につきましては団体割引30%、損害率による割引35%が適用されており、同様の計算で割引前の約45%水準となります。",
+      "elements": [
+        {
+          "text": "(注)傷害部分(ケガの補償の部分)につきましては、団体割引30%、大口契約割引10%、損害率による割引35%が適用されています。割引前の保険料に これらの割引を連乗して割引後の保険料を算出しており、割引後の保険料水準は、割引前の約41%水準(=(1-30%)×(1-10%)×(1-35%))となり ます。傷害以外の部分につきましては団体割引30%、損害率による割引35%が適用されており、同様の計算で割引前の約45%水準となります。",
+          "bbox": [
+            0,
+            0,
+            495.5760000000001,
+            30.564000000000007
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1160,
+            "length": 217,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 35
+    },
+    {
+      "block_id": "b8a32880-eddc-4736-87bd-bac18ab8941c",
+      "block_type": "paragraph",
+      "bbox": [
+        45.8352,
+        422.4024,
+        184.0752,
+        14.047200000000004
+      ],
+      "text": "安定的な制度運営のためのお願い",
+      "elements": [
+        {
+          "text": "安定的な制度運営のためのお願い",
+          "bbox": [
+            0,
+            0,
+            184.0752,
+            14.047200000000004
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1378,
+            "length": 15,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 36
+    },
+    {
+      "block_id": "9059c706-2805-4619-bed1-7661b58bbba3",
+      "block_type": "paragraph",
+      "bbox": [
+        46.3824,
+        437.076,
+        505.9728,
+        34.72560000000003
+      ],
+      "text": "●総合医療保障プランは、全国の電力生協組合員間の相互扶助の観点から、万一の事故や予期せぬ病気等への備えとして、 組合員の皆さまが「低廉な保険料で大きな補償を手に入れる」ことをめざして、制度創設以来運営しています。保険料負担 が少なくご加入いただける本制度に、より多くの組合員の皆さまにご加入いただきますよう、よろしくお願い申し上げます。",
+      "elements": [
+        {
+          "text": "●総合医療保障プランは、全国の電力生協組合員間の相互扶助の観点から、万一の事故や予期せぬ病気等への備えとして、 組合員の皆さまが「低廉な保険料で大きな補償を手に入れる」ことをめざして、制度創設以来運営しています。保険料負担 が少なくご加入いただける本制度に、より多くの組合員の皆さまにご加入いただきますよう、よろしくお願い申し上げます。",
+          "bbox": [
+            0,
+            0,
+            505.9728,
+            34.72560000000003
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1394,
+            "length": 168,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 37
+    },
+    {
+      "block_id": "e9c51114-e2cf-4f05-80aa-36997f5bcfb5",
+      "block_type": "paragraph",
+      "bbox": [
+        46.3464,
+        472.4496,
+        504.4464,
+        23.17680000000002
+      ],
+      "text": "●総合医療保障プランの制度メリットを維持し安定的な制度運営を継続していくために、以下の点についてご理解ください ますよう、お願いいたします。",
+      "elements": [
+        {
+          "text": "●総合医療保障プランの制度メリットを維持し安定的な制度運営を継続していくために、以下の点についてご理解ください ますよう、お願いいたします。",
+          "bbox": [
+            0,
+            0,
+            504.4464,
+            23.17680000000002
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1563,
+            "length": 70,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 38
+    },
+    {
+      "block_id": "916625cc-8ad1-4024-b776-da017569c807",
+      "block_type": "paragraph",
+      "bbox": [
+        56.1888,
+        495.7128,
+        494.4456,
+        35.18639999999998
+      ],
+      "text": "■著しく保険金請求の頻度が高いなど、加入者間の公平性を逸脱する極端な保険金支払いまたはその請求があった場合 には、保険期間終了後、継続加入ができない場合や補償内容を変更させていただくことがあります。また2021年度から 引受ガイドラインを設けました。",
+      "elements": [
+        {
+          "text": "■著しく保険金請求の頻度が高いなど、加入者間の公平性を逸脱する極端な保険金支払いまたはその請求があった場合 には、保険期間終了後、継続加入ができない場合や補償内容を変更させていただくことがあります。また2021年度から 引受ガイドラインを設けました。",
+          "bbox": [
+            0,
+            0,
+            494.4456,
+            35.18639999999998
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1634,
+            "length": 125,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 39
+    },
+    {
+      "block_id": "13041d2e-5e0f-4a51-b66b-4d675f816327",
+      "block_type": "paragraph",
+      "bbox": [
+        67.2336,
+        534.492,
+        147.4056,
+        11.930400000000013
+      ],
+      "text": "モラルリスク",
+      "elements": [
+        {
+          "text": "モラルリスク",
+          "bbox": [
+            0,
+            0,
+            147.4056,
+            11.930400000000013
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1760,
+            "length": 6,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 40
+    },
+    {
+      "block_id": "c4332de5-22f8-44f5-9c80-993416622797",
+      "block_type": "paragraph",
+      "bbox": [
+        214.63920000000002,
+        534.492,
+        167.8248,
+        11.930400000000013
+      ],
+      "text": "携行品損害",
+      "elements": [
+        {
+          "text": "携行品損害",
+          "bbox": [
+            0,
+            0,
+            167.8248,
+            11.930400000000013
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1767,
+            "length": 5,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 41
+    },
+    {
+      "block_id": "b606747b-c945-4793-b4f6-764b858acd1b",
+      "block_type": "paragraph",
+      "bbox": [
+        382.464,
+        534.492,
+        168.81839999999997,
+        11.930400000000013
+      ],
+      "text": "傷害通院",
+      "elements": [
+        {
+          "text": "傷害通院",
+          "bbox": [
+            0,
+            0,
+            168.81839999999997,
+            11.930400000000013
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1773,
+            "length": 4,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 42
+    },
+    {
+      "block_id": "d4a0dfb9-b047-4ec5-aa0b-b292e14b35f0",
+      "block_type": "paragraph",
+      "bbox": [
+        67.2336,
+        546.4224,
+        147.4056,
+        20.390399999999993
+      ],
+      "text": "法令違反や不正な保険金請求が行われ た場合(加入者単位)",
+      "elements": [
+        {
+          "text": "法令違反や不正な保険金請求が行われ た場合(加入者単位)",
+          "bbox": [
+            0,
+            0,
+            147.4056,
+            20.390399999999993
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1778,
+            "length": 28,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 43
+    },
+    {
+      "block_id": "81dc28f8-bec8-4af1-a0ee-5e0849218650",
+      "block_type": "paragraph",
+      "bbox": [
+        214.63920000000002,
+        546.4224,
+        167.8248,
+        20.390399999999993
+      ],
+      "text": "2年間で保険金支払を行った事故件数が3件 以上(被保険者単位)",
+      "elements": [
+        {
+          "text": "2年間で保険金支払を行った事故件数が3件 以上(被保険者単位)",
+          "bbox": [
+            0,
+            0,
+            167.8248,
+            20.390399999999993
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1807,
+            "length": 31,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 44
+    },
+    {
+      "block_id": "22500b89-6a0d-491d-9054-f7112c847e70",
+      "block_type": "paragraph",
+      "bbox": [
+        382.464,
+        546.4224,
+        168.3216,
+        20.887199999999986
+      ],
+      "text": "2年間で保険金支払を行った事故件数が5件 以上、かつ通算50万円以上(被保険者単位)",
+      "elements": [
+        {
+          "text": "2年間で保険金支払を行った事故件数が5件 以上、かつ通算50万円以上(被保険者単位)",
+          "bbox": [
+            0,
+            0,
+            168.3216,
+            20.887199999999986
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1839,
+            "length": 42,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 45
+    },
+    {
+      "block_id": "ab05ab8c-6b5a-4b4e-a69c-48e653dcbdd2",
+      "block_type": "paragraph",
+      "bbox": [
+        67.2336,
+        566.8128,
+        147.90960000000004,
+        22.867199999999976
+      ],
+      "text": "翌年度以降の保険契約は、お引き受け できません。",
+      "elements": [
+        {
+          "text": "翌年度以降の保険契約は、お引き受け できません。",
+          "bbox": [
+            0,
+            0,
+            147.90960000000004,
+            22.867199999999976
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1882,
+            "length": 24,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 46
+    },
+    {
+      "block_id": "62e36f0a-7089-4ffe-b65e-3da6944c04d0",
+      "block_type": "paragraph",
+      "bbox": [
+        214.63920000000002,
+        566.8128,
+        336.14639999999997,
+        22.867199999999976
+      ],
+      "text": "事故の発生状況や保険金請求の内容によっては、ご加入条件を変更させていただくか、引受を お断りするなどを実施する場合があります。予めご了承下さい。",
+      "elements": [
+        {
+          "text": "事故の発生状況や保険金請求の内容によっては、ご加入条件を変更させていただくか、引受を お断りするなどを実施する場合があります。予めご了承下さい。",
+          "bbox": [
+            0,
+            0,
+            336.14639999999997,
+            22.867199999999976
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1907,
+            "length": 72,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 47
+    },
+    {
+      "block_id": "4f46b141-51af-49c3-9a36-0ec36fcb978c",
+      "block_type": "paragraph",
+      "bbox": [
+        56.5272,
+        595.2312,
+        494.63280000000003,
+        23.443200000000104
+      ],
+      "text": "■保険金をお支払いするために必要な事項(注)の確認を行うために、引受保険会社より、医療機関など専門機関の診断結 果の照会等を行うことがあります。",
+      "elements": [
+        {
+          "text": "■保険金をお支払いするために必要な事項(注)の確認を行うために、引受保険会社より、医療機関など専門機関の診断結 果の照会等を行うことがあります。",
+          "bbox": [
+            0,
+            0,
+            494.63280000000003,
+            23.443200000000104
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 1980,
+            "length": 72,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 48
+    },
+    {
+      "block_id": "f0be3e4d-6971-4cd7-93a1-82551894974f",
+      "block_type": "paragraph",
+      "bbox": [
+        55.152,
+        618.7031999999999,
+        496.2312,
+        20.412000000000006
+      ],
+      "text": "(注)保険金をお支払いする事由の有無、保険金をお支払いしない事由の有無、保険金の算出、保険契約の効力の有無、その他引受保険会社がお支 払いすべき保険金の額の確定のために確認が必要な事項をいいます。",
+      "elements": [
+        {
+          "text": "(注)保険金をお支払いする事由の有無、保険金をお支払いしない事由の有無、保険金の算出、保険契約の効力の有無、その他引受保険会社がお支 払いすべき保険金の額の確定のために確認が必要な事項をいいます。",
+          "bbox": [
+            0,
+            0,
+            496.2312,
+            20.412000000000006
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 2053,
+            "length": 98,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 49
+    },
+    {
+      "block_id": "003c07b6-7be4-4569-9c73-793ef94463ef",
+      "block_type": "paragraph",
+      "bbox": [
+        150.3936,
+        643.0752,
+        292.32,
+        13.089600000000061
+      ],
+      "text": "ぜひ、制度趣旨をご理解くださいますよう、お願いいたします。",
+      "elements": [
+        {
+          "text": "ぜひ、制度趣旨をご理解くださいますよう、お願いいたします。",
+          "bbox": [
+            0,
+            0,
+            292.32,
+            13.089600000000061
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "main_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 2152,
+            "length": 29,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 50
+    },
+    {
+      "block_id": "c7e8617f-1e3f-427d-a0ef-d3ceb7b18940",
+      "block_type": "paragraph",
+      "bbox": [
+        45.842400000000005,
+        682.8768,
+        138.5352,
+        15.667199999999937
+      ],
+      "text": "東電生協からのお願い",
+      "elements": [
+        {
+          "text": "東電生協からのお願い",
+          "bbox": [
+            0,
+            0,
+            138.5352,
+            15.667199999999937
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 2182,
+            "length": 10,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 51
+    },
+    {
+      "block_id": "92d450ec-df60-4b41-84c9-c82227405feb",
+      "block_type": "footer",
+      "bbox": [
+        46.2312,
+        708.0912,
+        503.27279999999996,
+        24.127200000000045
+      ],
+      "text": "近年、一部のご加入者さまが契約内容を十分理解されずにご加入され、保険金のお支払い時に「お支払いしない事由」 に該当し、トラブルとなるケースが増加しております。以下、東電生協からお願いを申し上げます。",
+      "elements": [
+        {
+          "text": "近年、一部のご加入者さまが契約内容を十分理解されずにご加入され、保険金のお支払い時に「お支払いしない事由」 に該当し、トラブルとなるケースが増加しております。以下、東電生協からお願いを申し上げます。",
+          "bbox": [
+            0,
+            0,
+            503.27279999999996,
+            24.127200000000045
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 2193,
+            "length": 99,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 52
+    },
+    {
+      "block_id": "5ae655a6-bebb-4728-9f7c-2409837c0cae",
+      "block_type": "footer",
+      "bbox": [
+        48.9816,
+        736.9848000000001,
+        386.964,
+        10.367999999999881
+      ],
+      "text": "1 パンフレットを十分に読んでいただき、ご加入ください。ご不明な点は担当指定代理店にお問合わせください。",
+      "elements": [
+        {
+          "text": "1 パンフレットを十分に読んでいただき、ご加入ください。ご不明な点は担当指定代理店にお問合わせください。",
+          "bbox": [
+            0,
+            0,
+            386.964,
+            10.367999999999881
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 2293,
+            "length": 52,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 53
+    },
+    {
+      "block_id": "48aeeb28-d418-4723-b464-01bad6c0172d",
+      "block_type": "footer",
+      "bbox": [
+        49.096799999999995,
+        751.4567999999999,
+        501.29280000000006,
+        19.915200000000013
+      ],
+      "text": "2 パンフレットは補償内容をわかりやすくご説明する資料です。事故の際には普通保険約款および特約に基づき保険会社より保険金がお支払い されます。約款等の閲覧を希望される場合は、東電生協 保険·共済センターもしくは引受保険会社へご連絡ください。",
+      "elements": [
+        {
+          "text": "2 パンフレットは補償内容をわかりやすくご説明する資料です。事故の際には普通保険約款および特約に基づき保険会社より保険金がお支払い されます。約款等の閲覧を希望される場合は、東電生協 保険·共済センターもしくは引受保険会社へご連絡ください。",
+          "bbox": [
+            0,
+            0,
+            501.29280000000006,
+            19.915200000000013
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 2346,
+            "length": 120,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 54
+    },
+    {
+      "block_id": "62f786e9-d9a6-4d8c-949b-a80ad244fb62",
+      "block_type": "footer",
+      "bbox": [
+        49.3992,
+        774.0648,
+        502.056,
+        29.167200000000065
+      ],
+      "text": "3 定年退職組合員に移行された場合、また、すでに定年退職組合員の方は勤労所得の有無にかかわらず、優々セットに切り替えのうえご継続いた だく必要がありますので、必ず担当指定代理店にご連絡ください。なお、勤労所得がない場合、ファミリーセット·パーソナルセット等にご加入さ れていても本人所得保障部分については保険金をお支払いできません。",
+      "elements": [
+        {
+          "text": "3 定年退職組合員に移行された場合、また、すでに定年退職組合員の方は勤労所得の有無にかかわらず、優々セットに切り替えのうえご継続いた だく必要がありますので、必ず担当指定代理店にご連絡ください。なお、勤労所得がない場合、ファミリーセット·パーソナルセット等にご加入さ れていても本人所得保障部分については保険金をお支払いできません。",
+          "bbox": [
+            0,
+            0,
+            502.056,
+            29.167200000000065
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 2467,
+            "length": 166,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 55
+    },
+    {
+      "block_id": "d0f4d6fc-659c-4b38-b88d-8911bf36963c",
+      "block_type": "footer",
+      "bbox": [
+        20.203200000000002,
+        817.8624,
+        3.1536000000000004,
+        6.8904000000000565
+      ],
+      "text": "1",
+      "elements": [
+        {
+          "text": "1",
+          "bbox": [
+            0,
+            0,
+            3.1536000000000004,
+            6.8904000000000565
+          ],
+          "confidence": 1.0,
+          "font_size": null,
+          "font_family": null,
+          "is_bold": false,
+          "is_italic": false
+        }
+      ],
+      "layout_role": "side_content",
+      "page": 1,
+      "confidence": 1.0,
+      "metadata": {
+        "paragraph_spans": [
+          {
+            "offset": 2634,
+            "length": 1,
+            "bbox": null
+          }
+        ]
+      },
+      "parent_id": null,
+      "children_ids": [],
+      "reading_order": 56
+    }
+  ]
+}

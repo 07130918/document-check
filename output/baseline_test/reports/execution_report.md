@@ -1,14 +1,14 @@
 # 文書差分検出 実行レポート
 
 ## 実行情報
-- 実行日時: 2025-07-22T17:04:14.863948
-- 総実行時間: 4.17 seconds
+- 実行日時: 2025-07-22T20:09:06.593334
+- 総実行時間: 4.18 seconds
 
 ### フェーズ別実行時間
-- bbox_extraction: 0.23 seconds
+- bbox_extraction: 0.15 seconds
 - reading_order_estimation: 0.00 seconds
 - diff_detection: 0.01 seconds
-- output_generation: 3.92 seconds
+- output_generation: 4.01 seconds
 
 ## 文書情報
 

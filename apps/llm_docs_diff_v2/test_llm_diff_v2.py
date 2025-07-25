@@ -6,6 +6,7 @@ LLM Diff Test v2 - Azure Document Intelligence行ベース版
 import os
 import sys
 from pathlib import Path
+import argparse
 
 # プロジェクトのルートパスを追加
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -22,13 +23,39 @@ import json
 # 環境変数の読み込み
 load_dotenv()
 
+def parse_arguments():
+    """コマンドライン引数の解析"""
+    parser = argparse.ArgumentParser(description='LLM Diff Test v2 - 文書差分検出（行ベース版）')
+    parser.add_argument('--dataset', type=str, choices=['default', 'sougou'], default='default',
+                        help='使用するデータセット (default: docs/img/2023.pdf & 2024.pdf, sougou: data/sougou/)')
+    parser.add_argument('--pdf1', type=str, help='比較元のPDFファイルパス（任意）')
+    parser.add_argument('--pdf2', type=str, help='比較先のPDFファイルパス（任意）')
+    return parser.parse_args()
+
 def main():
-    # テストPDFファイル
-    pdf1_path = Path("/root/AICE/prj-ms-document-check/docs/img/2023.pdf")
-    pdf2_path = Path("/root/AICE/prj-ms-document-check/docs/img/2024.pdf")
+    args = parse_arguments()
+    
+    # データセットに基づいてPDFパスを設定
+    if args.pdf1 and args.pdf2:
+        # カスタムパスが指定された場合
+        pdf1_path = Path(args.pdf1)
+        pdf2_path = Path(args.pdf2)
+    elif args.dataset == 'sougou':
+        # sougouデータセットを使用
+        data_dir = Path("/root/AICE/prj-ms-document-check/data/sougou")
+        pdf1_path = data_dir / "サンプル②2024 .pdf"
+        pdf2_path = data_dir / "サンプル②2025.pdf"
+    else:
+        # デフォルトのテストデータを使用
+        pdf1_path = Path("/root/AICE/prj-ms-document-check/docs/img/2023.pdf")
+        pdf2_path = Path("/root/AICE/prj-ms-document-check/docs/img/2024.pdf")
     
     if not pdf1_path.exists() or not pdf2_path.exists():
-        print(f"テストファイルが見つかりません")
+        print(f"エラー: テストファイルが見つかりません")
+        if not pdf1_path.exists():
+            print(f"  PDF1が存在しません: {pdf1_path}")
+        if not pdf2_path.exists():
+            print(f"  PDF2が存在しません: {pdf2_path}")
         return
     
     # PDFファイルを読み込む
@@ -37,18 +64,27 @@ def main():
     with open(pdf2_path, "rb") as f:
         pdf2_bytes = f.read()
     
-    # 出力ディレクトリ（v2専用）
-    output_dir = Path("output/llm_diff_test_v2")
+    # 出力ディレクトリ（v2専用、データセットごとに分ける）
+    if args.dataset == 'sougou':
+        output_dir = Path("output/llm_diff_test_v2/sougou")
+    elif args.pdf1 and args.pdf2:
+        output_dir = Path("output/llm_diff_test_v2/custom")
+    else:
+        output_dir = Path("output/llm_diff_test_v2/default")
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # ========== ステップ1: Azure Document Intelligenceで階層的にPDFから抽出 ==========
     print("===== LLM Diff Test v2 (Azure行ベース版) =====")
+    print(f"使用するPDFファイル:")
+    print(f"  PDF1: {pdf1_path.name}")
+    print(f"  PDF2: {pdf2_path.name}")
+    print(f"  データセット: {args.dataset}")
     print("\n===== ステップ1: Azure Document Intelligenceで階層的にPDFから抽出 =====")
     
     azure_service = AzureDocumentServiceEnhanced()
     text_preprocessor = TextPreprocessor()
     
-    print("\n1. 2023年PDFの処理...")
+    print(f"\n1. {pdf1_path.name}の処理...")
     # 階層構造で抽出
     hierarchy1 = azure_service.extract_layout_with_hierarchy(pdf1_bytes)
     print(f"   段落数: {len(hierarchy1['paragraphs'])}")
@@ -63,7 +99,7 @@ def main():
     bbox_list1 = text_preprocessor.preprocess_bbox_list(line_bbox_list1)
     print(f"   前処理前: {len(line_bbox_list1)} → 前処理後: {len(bbox_list1)}")
     
-    print("\n2. 2024年PDFの処理...")
+    print(f"\n2. {pdf2_path.name}の処理...")
     # 階層構造で抽出
     hierarchy2 = azure_service.extract_layout_with_hierarchy(pdf2_bytes)
     print(f"   段落数: {len(hierarchy2['paragraphs'])}")
@@ -88,11 +124,11 @@ def main():
     )
     
     # 文書1の読み取り順序を確認
-    print("1. 2023年PDFの読み取り順序を確認中...")
+    print(f"1. {pdf1_path.name}の読み取り順序を確認中...")
     ordered_list1 = order_estimator.estimate_reading_order(bbox_list1)
     
     # 文書2の読み取り順序を確認
-    print("2. 2024年PDFの読み取り順序を確認中...")
+    print(f"2. {pdf2_path.name}の読み取り順序を確認中...")
     ordered_list2 = order_estimator.estimate_reading_order(bbox_list2)
     
     # ========== ステップ3: 差分検出 ==========
@@ -123,8 +159,8 @@ def main():
         metadata={
             "version": "v2_line_based",
             "extraction_method": "Azure Document Intelligence (Line-based)",
-            "doc1_name": "2023.pdf",
-            "doc2_name": "2024.pdf",
+            "doc1_name": pdf1_path.name,
+            "doc2_name": pdf2_path.name,
             "hierarchy_info": {
                 "doc1": {
                     "paragraphs": len(hierarchy1['paragraphs']),

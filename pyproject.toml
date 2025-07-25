@@ -39,6 +39,8 @@ python-dotenv = "^1.0.0"
 # Azure Document Intelligence
 azure-ai-documentintelligence = "^1.0.0b1"
 azure-core = "^1.35.0"
+scikit-learn = "^1.7.1"
+opencv-python = "^4.10.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"

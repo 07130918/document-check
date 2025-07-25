@@ -1,12 +1,12 @@
 {
   "execution_info": {
-    "timestamp": "2025-07-22T17:04:14.863948",
-    "total_execution_time": "4.17 seconds",
+    "timestamp": "2025-07-22T20:09:06.593334",
+    "total_execution_time": "4.18 seconds",
     "phase_times": {
-      "bbox_extraction": "0.23 seconds",
+      "bbox_extraction": "0.15 seconds",
       "reading_order_estimation": "0.00 seconds",
       "diff_detection": "0.01 seconds",
-      "output_generation": "3.92 seconds"
+      "output_generation": "4.01 seconds"
     }
   },
   "document_info": {

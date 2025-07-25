@@ -1,0 +1,30 @@
+{
+  "version": "v1_basic",
+  "extraction_method": "Azure Document Intelligence (Word-based)",
+  "extraction_details": {
+    "level": "word",
+    "doc1_elements": 2409,
+    "doc2_elements": 2815,
+    "description": "単語単位の抽出（Azure標準）"
+  },
+  "difference_detection": {
+    "algorithm": "enhanced diff detector",
+    "results": {
+      "removed": 176,
+      "added": 582,
+      "modified": 15
+    },
+    "total": 773
+  },
+  "characteristics": [
+    "Azure Document Intelligenceの単語レベル抽出",
+    "基本的な読み取り順序推定",
+    "単純な差分検出アルゴリズム",
+    "前処理なし"
+  ],
+  "known_issues": [
+    "日本語文字が個別に抽出される場合がある",
+    "レイアウトが複雑な場合、読み取り順序が混在する可能性",
+    "差分が多く検出される傾向"
+  ]
+}

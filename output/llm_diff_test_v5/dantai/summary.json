@@ -1,0 +1,34 @@
+{
+  "total": 24,
+  "by_type": {
+    "modified": 18,
+    "deleted": 5,
+    "added": 1
+  },
+  "by_page": {
+    "0": {
+      "modified": 12,
+      "deleted": 2,
+      "added": 1
+    },
+    "1": {
+      "modified": 6,
+      "deleted": 3
+    }
+  },
+  "by_block_type": {
+    "header": {
+      "modified": 2,
+      "deleted": 1
+    },
+    "paragraph": {
+      "modified": 15,
+      "deleted": 2,
+      "added": 1
+    },
+    "footer": {
+      "modified": 1,
+      "deleted": 2
+    }
+  }
+}

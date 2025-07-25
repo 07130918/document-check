@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-LLM Diff Test v3 簡易版 - 差分タイプ統一・文字囲み版
+LLM Diff Test v3 フルバージョン - 並列表示PDF生成を含む
 """
 import os
 import sys
 from pathlib import Path
+import argparse
 
 # プロジェクトのルートパスを追加
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -12,25 +13,49 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from dotenv import load_dotenv
 from llm_docs_diff_v3.services.azure_service_enhanced import AzureDocumentServiceEnhanced
 from llm_docs_diff_v3.core.text_preprocessing import TextPreprocessor
-from llm_docs_diff_v3.core.simple_diff_detector_v3 import SimpleDiffDetectorV3, SimpleDiffResult
+from llm_docs_diff_v3.core.simple_diff_detector_v3 import SimpleDiffDetectorV3
 from llm_docs_diff_v3.handlers.output_handler import OutputHandler
-from llm_docs_diff_v3.models.bbox_models import ComparisonResult
+from llm_docs_diff_v3.models.bbox_models import ComparisonResult, DiffResult, ChangeType
 from llm_docs_diff_v3.core.reading_order_v2 import ReadingOrderEstimatorV2
-from llm_docs_diff_v3.services.simple_pdf_generator_v3 import SimplePDFGeneratorV3
 from llm_docs_diff_v3.config.settings import settings
-import json
 import time
 
 # 環境変数の読み込み
 load_dotenv()
 
+def parse_arguments():
+    """コマンドライン引数の解析"""
+    parser = argparse.ArgumentParser(description='LLM Diff Test v3 - 文書差分検出（位置ベース）')
+    parser.add_argument('--dataset', type=str, choices=['dantai', 'sougou'], default='dantai',
+                        help='使用するデータセット (dantai: docs/img/2023.pdf & 2024.pdf, sougou: data/sougou/)')
+    parser.add_argument('--pdf1', type=str, help='比較元のPDFファイルパス（任意）')
+    parser.add_argument('--pdf2', type=str, help='比較先のPDFファイルパス（任意）')
+    return parser.parse_args()
+
 def main():
-    # テストPDFファイル
-    pdf1_path = Path("/root/AICE/prj-ms-document-check/docs/img/2023.pdf")
-    pdf2_path = Path("/root/AICE/prj-ms-document-check/docs/img/2024.pdf")
+    args = parse_arguments()
+    
+    # データセットに基づいてPDFパスを設定
+    if args.pdf1 and args.pdf2:
+        # カスタムパスが指定された場合
+        pdf1_path = Path(args.pdf1)
+        pdf2_path = Path(args.pdf2)
+    elif args.dataset == 'sougou':
+        # sougouデータセットを使用
+        data_dir = Path("/root/AICE/prj-ms-document-check/data/sougou")
+        pdf1_path = data_dir / "サンプル②2024 .pdf"
+        pdf2_path = data_dir / "サンプル②2025.pdf"
+    else:  # dantai
+        # dantaiデータセットを使用（旧default）
+        pdf1_path = Path("/root/AICE/prj-ms-document-check/docs/img/2023.pdf")
+        pdf2_path = Path("/root/AICE/prj-ms-document-check/docs/img/2024.pdf")
     
     if not pdf1_path.exists() or not pdf2_path.exists():
-        print(f"テストファイルが見つかりません")
+        print(f"エラー: テストファイルが見つかりません")
+        if not pdf1_path.exists():
+            print(f"  PDF1が存在しません: {pdf1_path}")
+        if not pdf2_path.exists():
+            print(f"  PDF2が存在しません: {pdf2_path}")
         return
     
     # PDFファイルを読み込む
@@ -39,20 +64,29 @@ def main():
     with open(pdf2_path, "rb") as f:
         pdf2_bytes = f.read()
     
-    # 出力ディレクトリ（v3簡易版専用）
-    output_dir = Path("output/llm_diff_test_v3_simple")
+    # 出力ディレクトリ（v3フルバージョン、データセットごとに分ける）
+    if args.dataset == 'sougou':
+        output_dir = Path("output/llm_diff_test_v3/sougou")
+    elif args.pdf1 and args.pdf2:
+        output_dir = Path("output/llm_diff_test_v3/custom")
+    else:  # dantai
+        output_dir = Path("output/llm_diff_test_v3/dantai")
     output_dir.mkdir(parents=True, exist_ok=True)
     
     start_time = time.time()
     
     # ========== ステップ1: Azure Document Intelligenceで階層的にPDFから抽出 ==========
-    print("===== LLM Diff Test v3 簡易版 (差分タイプ統一) =====")
+    print("===== LLM Diff Test v3 フルバージョン =====")
+    print(f"使用するPDFファイル:")
+    print(f"  PDF1: {pdf1_path.name}")
+    print(f"  PDF2: {pdf2_path.name}")
+    print(f"  データセット: {args.dataset}")
     print("\n===== ステップ1: Azure Document Intelligenceで階層的にPDFから抽出 =====")
     
     azure_service = AzureDocumentServiceEnhanced()
     text_preprocessor = TextPreprocessor()
     
-    print("\n1. 2023年PDFの処理...")
+    print(f"\n1. {pdf1_path.name}の処理...")
     # 行ベースのデータを取得
     line_bbox_list1 = azure_service.extract_layout_from_lines(pdf1_bytes)
     print(f"   行ベースの要素数: {len(line_bbox_list1)}")
@@ -61,7 +95,7 @@ def main():
     bbox_list1 = text_preprocessor.preprocess_bbox_list(line_bbox_list1)
     print(f"   前処理後: {len(bbox_list1)}")
     
-    print("\n2. 2024年PDFの処理...")
+    print(f"\n2. {pdf2_path.name}の処理...")
     # 行ベースのデータを取得
     line_bbox_list2 = azure_service.extract_layout_from_lines(pdf2_bytes)
     print(f"   行ベースの要素数: {len(line_bbox_list2)}")
@@ -89,92 +123,69 @@ def main():
     
     print(f"\n検出された差分数: {len(differences)}")
     
-    # 差分を辞書形式に変換
-    diff_dicts = [diff.to_dict() for diff in differences]
+    # SimpleDiffResultをDiffResultに変換
+    diff_results = []
+    for sdiff in differences:
+        # 全ての差分をDIFFERENCE型として扱う
+        diff_result = DiffResult(
+            change_type=ChangeType.MODIFICATION,  # 簡易版では全て変更として扱う
+            original_bbox=sdiff.doc1_bbox,
+            modified_bbox=sdiff.doc2_bbox,
+            page=sdiff.page_num,
+            confidence=sdiff.confidence
+        )
+        diff_results.append(diff_result)
     
-    # ========== ステップ4: 文字を囲む形式でPDF生成 ==========
-    print("\n===== ステップ4: 文字を囲む形式でPDF生成 =====")
+    # ========== ステップ4: ComparisonResultを作成 ==========
+    print("\n===== ステップ4: 比較結果の作成 =====")
     
-    pdf_generator = SimplePDFGeneratorV3()
-    pdf_dir = output_dir / "PDFs"
-    pdf_dir.mkdir(exist_ok=True)
-    
-    pdf1_output, pdf2_output = pdf_generator.generate_comparison_pdfs(
-        str(pdf1_path),
-        str(pdf2_path),
-        diff_dicts,
-        str(pdf_dir)
+    comparison_result = ComparisonResult(
+        diff_results=diff_results,  # DiffResultのリストを使用
+        reading_order_doc1=ordered_bbox_list1,
+        reading_order_doc2=ordered_bbox_list2,
+        metadata={
+            "doc1_total_words": len(ordered_bbox_list1),
+            "doc2_total_words": len(ordered_bbox_list2),
+            "total_differences": len(differences),
+            "doc1_name": pdf1_path.name,
+            "doc2_name": pdf2_path.name
+        }
     )
     
-    print(f"比較用PDF生成完了:")
-    print(f"  - {Path(pdf1_output).name}")
-    print(f"  - {Path(pdf2_output).name}")
+    # ========== ステップ5: OutputHandlerで全ての出力を生成 ==========
+    print("\n===== ステップ5: 出力ファイルの生成 =====")
     
-    # ========== ステップ5: レポート生成 ==========
-    print("\n===== ステップ5: レポート生成 =====")
+    # 出力ディレクトリを設定で上書き
+    settings.OUTPUT_DIR = output_dir
     
-    # 実行時間
-    execution_time = time.time() - start_time
+    output_handler = OutputHandler()
+    saved_files = output_handler.save_comparison_result(
+        comparison_result,
+        "llm_diff_test_v3",
+        pdf1_bytes=pdf1_bytes,
+        pdf2_bytes=pdf2_bytes,
+        pdf1_name=pdf1_path.name,
+        pdf2_name=pdf2_path.name
+    )
     
-    # サマリー生成
-    summary = diff_detector.get_summary(differences)
+    print("\n生成されたファイル:")
+    for key, path in saved_files.items():
+        print(f"  - {key}: {Path(path).name}")
     
-    # 統計情報
-    stats = {
-        "version": "v3_simple",
-        "execution_time": f"{execution_time:.2f} seconds",
-        "total_differences": summary['total_differences'],
-        "difference_type": "unified",
-        "by_page": summary['by_page']
-    }
+    # ========== 処理完了 ==========
+    elapsed_time = time.time() - start_time
     
-    # レポートディレクトリ
-    report_dir = output_dir / "reports"
-    report_dir.mkdir(exist_ok=True)
-    
-    # 統計情報を保存
-    with open(report_dir / "v3_simple_statistics.json", 'w', encoding='utf-8') as f:
-        json.dump(stats, f, ensure_ascii=False, indent=2)
-    
-    # 差分CSVを生成
-    csv_path = output_dir / "v3_simple_differences.csv"
-    with open(csv_path, 'w', encoding='utf-8') as f:
-        f.write("番号,ページ,テキスト,文書\n")
-        for i, diff in enumerate(differences):
-            if diff.doc1_bbox:
-                f.write(f"{i+1},{diff.page_num},{diff.doc1_bbox.get('text', '')},文書1\n")
-            if diff.doc2_bbox:
-                f.write(f"{i+1},{diff.page_num},{diff.doc2_bbox.get('text', '')},文書2\n")
-    
-    print(f"\nCSVファイル生成完了: {csv_path.name}")
-    
-    # 実行レポート
-    report_text = f"""# LLM Diff v3 簡易版 実行レポート
-
-## 概要
-- バージョン: v3_simple (差分タイプ統一)
-- 実行日時: {time.strftime('%Y-%m-%d %H:%M:%S')}
-- 実行時間: {execution_time:.2f}秒
-
-## 検出結果
-- 総差分数: {summary['total_differences']}件
-- 差分タイプ: 統一（すべての差分を同一として扱う）
-
-## ページ別差分数
-"""
-    for page, count in sorted(summary['by_page'].items()):
-        report_text += f"- ページ{page + 1}: {count}件\n"
-    
-    report_text += f"\n## 出力ファイル\n- 比較用PDF: PDFs/\n- 差分CSV: v3_simple_differences.csv\n- 統計情報: reports/v3_simple_statistics.json\n"""
-    
-    with open(report_dir / "v3_simple_report.md", 'w', encoding='utf-8') as f:
-        f.write(report_text)
-    
-    print(f"\nレポート生成完了: reports/v3_simple_report.md")
-    
-    print("\n===== 処理完了 =====")
-    print(f"総実行時間: {execution_time:.2f}秒")
+    print(f"\n===== 処理完了 =====")
+    print(f"総実行時間: {elapsed_time:.2f}秒")
     print(f"出力ディレクトリ: {output_dir}")
+    
+    # 並列表示PDFのページ数を確認
+    side_by_side_path = saved_files.get("side_by_side_pdf")
+    if side_by_side_path and Path(side_by_side_path).exists():
+        import fitz
+        pdf = fitz.open(side_by_side_path)
+        print(f"\n並列表示PDFのページ数: {len(pdf)}ページ")
+        pdf.close()
 
 if __name__ == "__main__":
     main()

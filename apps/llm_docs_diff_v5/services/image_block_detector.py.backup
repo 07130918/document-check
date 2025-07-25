@@ -1,0 +1,224 @@
+"""
+画像ベースのブロック検出サービス
+PDFを画像に変換し、視覚的にブロックを識別
+"""
+import logging
+from typing import List, Dict, Any, Optional, Tuple
+import numpy as np
+from PIL import Image, ImageDraw
+import cv2
+import fitz  # PyMuPDF
+from pathlib import Path
+import uuid
+
+from ..models.block_models import (
+    Block, BlockType, BoundingBox, TextElement, DocumentStructure
+)
+
+logger = logging.getLogger(__name__)
+
+
+class ImageBlockDetector:
+    """画像ベースのブロック検出器"""
+    
+    def __init__(self,
+                 dpi: int = 150,
+                 min_block_area: int = 5000,
+                 merge_threshold: int = 20):
+        """
+        Args:
+            dpi: PDF→画像変換時の解像度
+            min_block_area: 最小ブロック面積（ピクセル）
+            merge_threshold: ブロックマージの距離閾値（ピクセル）
+        """
+        self.dpi = dpi
+        self.min_block_area = min_block_area
+        self.merge_threshold = merge_threshold
+    
+    def detect_blocks_from_pdf(self, pdf_path: str) -> List[Dict[str, Any]]:
+        """PDFから画像ベースでブロックを検出"""
+        logger.info(f"Detecting blocks from PDF: {pdf_path}")
+        
+        pdf_doc = fitz.open(pdf_path)
+        all_blocks = []
+        
+        for page_num in range(len(pdf_doc)):
+            logger.info(f"Processing page {page_num + 1}")
+            
+            # PDFページを画像に変換
+            page_image = self._pdf_page_to_image(pdf_doc, page_num)
+            
+            # 画像からブロックを検出
+            page_blocks = self._detect_blocks_in_image(page_image, page_num)
+            
+            all_blocks.extend(page_blocks)
+        
+        pdf_doc.close()
+        logger.info(f"Detected {len(all_blocks)} blocks total")
+        
+        return all_blocks
+    
+    def _pdf_page_to_image(self, pdf_doc: fitz.Document, page_num: int) -> np.ndarray:
+        """PDFページを画像に変換"""
+        page = pdf_doc[page_num]
+        
+        # 画像に変換
+        mat = fitz.Matrix(self.dpi / 72.0, self.dpi / 72.0)
+        pix = page.get_pixmap(matrix=mat)
+        
+        # PILイメージに変換
+        img_data = pix.tobytes("png")
+        pil_image = Image.open(io.BytesIO(img_data))
+        
+        # NumPy配列に変換
+        img_array = np.array(pil_image)
+        
+        return img_array
+    
+    def _detect_blocks_in_image(self, image: np.ndarray, page_num: int) -> List[Dict[str, Any]]:
+        """画像からブロックを検出"""
+        # グレースケールに変換
+        if len(image.shape) == 3:
+            gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        else:
+            gray = image.copy()
+        
+        # 二値化
+        _, binary = cv2.threshold(gray, 240, 255, cv2.THRESH_BINARY_INV)
+        
+        # モルフォロジー処理でテキストブロックを結合
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (20, 10))
+        dilated = cv2.dilate(binary, kernel, iterations=1)
+        
+        # 輪郭検出
+        contours, _ = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        
+        blocks = []
+        for i, contour in enumerate(contours):
+            # バウンディングボックスを取得
+            x, y, w, h = cv2.boundingRect(contour)
+            
+            # 小さすぎるブロックは無視
+            if w * h < self.min_block_area:
+                continue
+            
+            # ブロック情報を作成
+            block_info = {
+                'page': page_num,
+                'bbox': [x, y, w, h],  # [x, y, width, height]
+                'image': image[y:y+h, x:x+w],  # ブロックの画像
+                'block_id': str(uuid.uuid4()),
+                'contour': contour
+            }
+            
+            blocks.append(block_info)
+        
+        # ブロックをY座標でソート（上から下へ）
+        blocks.sort(key=lambda b: (b['bbox'][1], b['bbox'][0]))
+        
+        # 近接するブロックをマージ
+        merged_blocks = self._merge_nearby_blocks(blocks)
+        
+        return merged_blocks
+    
+    def _merge_nearby_blocks(self, blocks: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """近接するブロックをマージ"""
+        if not blocks:
+            return blocks
+        
+        merged = []
+        used = set()
+        
+        for i, block1 in enumerate(blocks):
+            if i in used:
+                continue
+            
+            # マージ候補を探す
+            merge_group = [block1]
+            
+            for j, block2 in enumerate(blocks[i+1:], i+1):
+                if j in used:
+                    continue
+                
+                # 近接しているかチェック
+                if self._are_blocks_nearby(block1['bbox'], block2['bbox']):
+                    merge_group.append(block2)
+                    used.add(j)
+            
+            # マージ実行
+            if len(merge_group) > 1:
+                merged_block = self._merge_block_group(merge_group)
+                merged.append(merged_block)
+            else:
+                merged.append(block1)
+        
+        return merged
+    
+    def _are_blocks_nearby(self, bbox1: List[int], bbox2: List[int]) -> bool:
+        """2つのブロックが近接しているかチェック"""
+        x1, y1, w1, h1 = bbox1
+        x2, y2, w2, h2 = bbox2
+        
+        # 水平方向の距離
+        h_distance = max(0, max(x1 - (x2 + w2), x2 - (x1 + w1)))
+        
+        # 垂直方向の距離
+        v_distance = max(0, max(y1 - (y2 + h2), y2 - (y1 + h1)))
+        
+        # どちらかが閾値以下なら近接と判定
+        return min(h_distance, v_distance) <= self.merge_threshold
+    
+    def _merge_block_group(self, blocks: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """ブロックグループをマージ"""
+        # バウンディングボックスを計算
+        min_x = min(b['bbox'][0] for b in blocks)
+        min_y = min(b['bbox'][1] for b in blocks)
+        max_x = max(b['bbox'][0] + b['bbox'][2] for b in blocks)
+        max_y = max(b['bbox'][1] + b['bbox'][3] for b in blocks)
+        
+        # 画像を結合（簡略化：最初のブロックの画像を使用）
+        # 実際には全ブロックを含む画像を切り出すべき
+        page_num = blocks[0]['page']
+        
+        merged = {
+            'page': page_num,
+            'bbox': [min_x, min_y, max_x - min_x, max_y - min_y],
+            'image': blocks[0]['image'],  # 簡略化
+            'block_id': str(uuid.uuid4()),
+            'original_blocks': blocks
+        }
+        
+        return merged
+    
+    def visualize_blocks(self, image: np.ndarray, blocks: List[Dict[str, Any]], 
+                        output_path: Optional[str] = None) -> np.ndarray:
+        """ブロックを可視化"""
+        vis_image = image.copy()
+        
+        # カラー画像でない場合は変換
+        if len(vis_image.shape) == 2:
+            vis_image = cv2.cvtColor(vis_image, cv2.COLOR_GRAY2RGB)
+        
+        # 各ブロックを描画
+        colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), 
+                  (255, 0, 255), (0, 255, 255)]
+        
+        for i, block in enumerate(blocks):
+            x, y, w, h = block['bbox']
+            color = colors[i % len(colors)]
+            
+            # 矩形を描画
+            cv2.rectangle(vis_image, (x, y), (x + w, y + h), color, 3)
+            
+            # ブロック番号を描画
+            cv2.putText(vis_image, f"B{i+1}", (x + 5, y + 25),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, 2)
+        
+        # 保存
+        if output_path:
+            cv2.imwrite(output_path, cv2.cvtColor(vis_image, cv2.COLOR_RGB2BGR))
+        
+        return vis_image
+
+
+import io  # 忘れていたインポートを追加

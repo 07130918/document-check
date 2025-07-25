@@ -24,7 +24,8 @@ class OutputHandler:
     
     def save_comparison_result(self, result: ComparisonResult, 
                              output_name: str = "comparison",
-                             pdf1_bytes: bytes = None, pdf2_bytes: bytes = None) -> Dict[str, str]:
+                             pdf1_bytes: bytes = None, pdf2_bytes: bytes = None,
+                             pdf1_name: str = None, pdf2_name: str = None) -> Dict[str, str]:
         """比較結果を保存
         
         Args:
@@ -32,12 +33,24 @@ class OutputHandler:
             output_name: 出力ファイル名のプレフィックス
             pdf1_bytes: 文書1のPDFバイトデータ（読み順序表示用）
             pdf2_bytes: 文書2のPDFバイトデータ（読み順序表示用）
+            pdf1_name: 文書1のファイル名
+            pdf2_name: 文書2のファイル名
             
         Returns:
             保存されたファイルパスの辞書
         """
         # ベースラインと同じように、タイムスタンプを使用しない
         base_name = output_name
+        
+        # ファイル名を取得（metadataから取得、またはパラメータから取得）
+        if not pdf1_name:
+            pdf1_name = result.metadata.get('doc1_name', '2023.pdf')
+        if not pdf2_name:
+            pdf2_name = result.metadata.get('doc2_name', '2024.pdf')
+        
+        # 拡張子を除去
+        pdf1_basename = Path(pdf1_name).stem
+        pdf2_basename = Path(pdf2_name).stem
         
         saved_files = {}
         
@@ -79,25 +92,25 @@ class OutputHandler:
             # 8. 読み順序を可視化したPDFを保存（PDFバイトデータが提供された場合）
             if pdf1_bytes or pdf2_bytes:
                 reading_order_paths = self._save_reading_order_pdfs(
-                    result, base_name, pdf1_bytes, pdf2_bytes
+                    result, base_name, pdf1_bytes, pdf2_bytes, pdf1_basename, pdf2_basename
                 )
                 saved_files.update(reading_order_paths)
                 
                 # 9. 元の順序PDFを保存（ベースライン互換）
                 original_order_paths = self._save_original_order_pdfs(
-                    result, base_name, pdf1_bytes, pdf2_bytes
+                    result, base_name, pdf1_bytes, pdf2_bytes, pdf1_basename, pdf2_basename
                 )
                 saved_files.update(original_order_paths)
                 
                 # 10. 比較用ハイライトPDFを保存（ベースライン互換）
                 compared_paths = self._save_compared_pdfs(
-                    result, base_name, pdf1_bytes, pdf2_bytes
+                    result, base_name, pdf1_bytes, pdf2_bytes, pdf1_basename, pdf2_basename
                 )
                 saved_files.update(compared_paths)
                 
                 # 11. 並列比較PDFを保存（2つのPDFを並べて表示）
                 side_by_side_path = self._save_side_by_side_pdf(
-                    result, base_name, pdf1_bytes, pdf2_bytes
+                    result, base_name, pdf1_bytes, pdf2_bytes, pdf1_basename, pdf2_basename
                 )
                 if side_by_side_path:
                     saved_files["side_by_side_pdf"] = str(side_by_side_path)
@@ -488,7 +501,8 @@ class OutputHandler:
         return highlighted_pdfs
     
     def _save_reading_order_pdfs(self, result: ComparisonResult, base_name: str,
-                                pdf1_bytes: bytes = None, pdf2_bytes: bytes = None) -> Dict[str, str]:
+                                pdf1_bytes: bytes = None, pdf2_bytes: bytes = None,
+                                pdf1_basename: str = "2023", pdf2_basename: str = "2024") -> Dict[str, str]:
         """読み順序を可視化したPDFを保存
         
         Args:
@@ -533,10 +547,10 @@ class OutputHandler:
                     pdf1_bytes, highlights
                 )
             
-            # 保存（ベースラインと同じファイル名）
+            # 保存（元のファイル名を使用）
             pdfs_dir = self.output_dir / "PDFs"
             pdfs_dir.mkdir(exist_ok=True)
-            pdf_path = pdfs_dir / "2023_reading_order.pdf"
+            pdf_path = pdfs_dir / f"{pdf1_basename}_reading_order.pdf"
             with open(pdf_path, 'wb') as f:
                 f.write(reading_order_pdf)
             saved_paths["reading_order_pdf1"] = str(pdf_path)
@@ -574,7 +588,7 @@ class OutputHandler:
             
             pdfs_dir = self.output_dir / "PDFs"
             pdfs_dir.mkdir(exist_ok=True)
-            pdf_path = pdfs_dir / "2024_reading_order.pdf"
+            pdf_path = pdfs_dir / f"{pdf2_basename}_reading_order.pdf"
             with open(pdf_path, 'wb') as f:
                 f.write(reading_order_pdf)
             saved_paths["reading_order_pdf2"] = str(pdf_path)
@@ -596,9 +610,13 @@ class OutputHandler:
         
         saved_paths = {}
         
+        # metadataからファイル名を取得
+        pdf1_basename = Path(result.metadata.get('doc1_name', '2023.pdf')).stem
+        pdf2_basename = Path(result.metadata.get('doc2_name', '2024.pdf')).stem
+        
         # 文書1の元の順序CSV
         if result.metadata.get('doc1_boxes'):
-            csv_path = debug_dir / "2023_reading_order_original.csv"
+            csv_path = debug_dir / f"{pdf1_basename}_reading_order_original.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -609,7 +627,7 @@ class OutputHandler:
         
         # 文書1の推定順序CSV（グローバル順序を使用）
         if result.reading_order_doc1:
-            csv_path = debug_dir / "2023_reading_order_estimated.csv"
+            csv_path = debug_dir / f"{pdf1_basename}_reading_order_estimated.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -621,7 +639,7 @@ class OutputHandler:
         
         # 文書2の元の順序CSV
         if result.metadata.get('doc2_boxes'):
-            csv_path = debug_dir / "2024_reading_order_original.csv"
+            csv_path = debug_dir / f"{pdf2_basename}_reading_order_original.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -632,7 +650,7 @@ class OutputHandler:
         
         # 文書2の推定順序CSV（グローバル順序を使用）
         if result.reading_order_doc2:
-            csv_path = debug_dir / "2024_reading_order_estimated.csv"
+            csv_path = debug_dir / f"{pdf2_basename}_reading_order_estimated.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -656,10 +674,14 @@ class OutputHandler:
         """
         debug_dir = self.output_dir / "debug"
         
+        # metadataからファイル名を取得
+        pdf1_basename = Path(result.metadata.get('doc1_name', '2023.pdf')).stem
+        pdf2_basename = Path(result.metadata.get('doc2_name', '2024.pdf')).stem
+        
         # 文書1の見開き単位デバッグ情報
         if result.reading_order_doc1:
             spreads_data = self._group_by_spreads(result.reading_order_doc1)
-            csv_path = debug_dir / "2023_spreads_debug.csv"
+            csv_path = debug_dir / f"{pdf1_basename}_spreads_debug.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -679,7 +701,7 @@ class OutputHandler:
         # 文書2の見開き単位デバッグ情報
         if result.reading_order_doc2:
             spreads_data = self._group_by_spreads(result.reading_order_doc2)
-            csv_path = debug_dir / "2024_spreads_debug.csv"
+            csv_path = debug_dir / f"{pdf2_basename}_spreads_debug.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -750,7 +772,8 @@ class OutputHandler:
         return spreads_data
     
     def _save_original_order_pdfs(self, result: ComparisonResult, base_name: str,
-                                 pdf1_bytes: bytes = None, pdf2_bytes: bytes = None) -> Dict[str, str]:
+                                 pdf1_bytes: bytes = None, pdf2_bytes: bytes = None,
+                                 pdf1_basename: str = "2023", pdf2_basename: str = "2024") -> Dict[str, str]:
         """元の順序を可視化したPDFを保存（ベースライン互換）
         
         Args:
@@ -831,7 +854,8 @@ class OutputHandler:
         return saved_paths
     
     def _save_compared_pdfs(self, result: ComparisonResult, base_name: str,
-                           pdf1_bytes: bytes = None, pdf2_bytes: bytes = None) -> Dict[str, str]:
+                           pdf1_bytes: bytes = None, pdf2_bytes: bytes = None,
+                           pdf1_basename: str = "2023", pdf2_basename: str = "2024") -> Dict[str, str]:
         """比較用ハイライトPDFを保存（ベースライン互換）
         
         Args:
@@ -852,14 +876,14 @@ class OutputHandler:
         
         # 文書1の比較PDF
         if "doc1" in highlighted_pdfs:
-            pdf_path = pdfs_dir / "2023_compared.pdf"
+            pdf_path = pdfs_dir / f"{pdf1_basename}_compared.pdf"
             with open(pdf_path, 'wb') as f:
                 f.write(highlighted_pdfs["doc1"])
             saved_paths["compared_pdf1"] = str(pdf_path)
         
         # 文書2の比較PDF
         if "doc2" in highlighted_pdfs:
-            pdf_path = pdfs_dir / "2024_compared.pdf"
+            pdf_path = pdfs_dir / f"{pdf2_basename}_compared.pdf"
             with open(pdf_path, 'wb') as f:
                 f.write(highlighted_pdfs["doc2"])
             saved_paths["compared_pdf2"] = str(pdf_path)
@@ -867,7 +891,8 @@ class OutputHandler:
         return saved_paths
     
     def _save_side_by_side_pdf(self, result: ComparisonResult, base_name: str,
-                               pdf1_bytes: bytes = None, pdf2_bytes: bytes = None) -> Optional[Path]:
+                               pdf1_bytes: bytes = None, pdf2_bytes: bytes = None,
+                               pdf1_basename: str = "2023", pdf2_basename: str = "2024") -> Optional[Path]:
         """2つのPDFを並べて表示する比較PDFを作成
         
         Args:

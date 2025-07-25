@@ -6,28 +6,54 @@ Azure Document Intelligenceを使用した単語レベルの差分検出
 import os
 import sys
 from pathlib import Path
+import argparse
 
 # プロジェクトのルートパスを追加
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from dotenv import load_dotenv
-from llm_docs_diff.services.azure_service import AzureDocumentService
-from llm_docs_diff.core.diff_detector import EnhancedDiffDetector
-from llm_docs_diff.handlers.output_handler import OutputHandler
-from llm_docs_diff.models.bbox_models import ComparisonResult, ChangeType, DiffResult, BBoxTextData
-from llm_docs_diff.core.reading_order import ReadingOrderEstimator
+from apps.llm_docs_diff_v1.services.azure_service import AzureDocumentService
+from apps.llm_docs_diff_v1.core.diff_detector import EnhancedDiffDetector
+from apps.llm_docs_diff_v1.handlers.output_handler import OutputHandler
+from apps.llm_docs_diff_v1.models.bbox_models import ComparisonResult, ChangeType, DiffResult, BBoxTextData
 import json
 
 # 環境変数の読み込み
 load_dotenv()
 
+def parse_arguments():
+    """コマンドライン引数の解析"""
+    parser = argparse.ArgumentParser(description='LLM Diff Test v1 - 文書差分検出')
+    parser.add_argument('--dataset', type=str, choices=['default', 'sougou'], default='default',
+                        help='使用するデータセット (default: docs/img/2023.pdf & 2024.pdf, sougou: data/sougou/)')
+    parser.add_argument('--pdf1', type=str, help='比較元のPDFファイルパス（任意）')
+    parser.add_argument('--pdf2', type=str, help='比較先のPDFファイルパス（任意）')
+    return parser.parse_args()
+
 def main():
-    # テストPDFファイル
-    pdf1_path = Path("/root/AICE/prj-ms-document-check/docs/img/2023.pdf")
-    pdf2_path = Path("/root/AICE/prj-ms-document-check/docs/img/2024.pdf")
+    args = parse_arguments()
+    
+    # データセットに基づいてPDFパスを設定
+    if args.pdf1 and args.pdf2:
+        # カスタムパスが指定された場合
+        pdf1_path = Path(args.pdf1)
+        pdf2_path = Path(args.pdf2)
+    elif args.dataset == 'sougou':
+        # sougouデータセットを使用
+        data_dir = Path("/root/AICE/prj-ms-document-check/data/sougou")
+        pdf1_path = data_dir / "サンプル②2024 .pdf"
+        pdf2_path = data_dir / "サンプル②2025.pdf"
+    else:
+        # デフォルトのテストデータを使用
+        pdf1_path = Path("/root/AICE/prj-ms-document-check/docs/img/2023.pdf")
+        pdf2_path = Path("/root/AICE/prj-ms-document-check/docs/img/2024.pdf")
     
     if not pdf1_path.exists() or not pdf2_path.exists():
-        print(f"テストファイルが見つかりません")
+        print(f"エラー: テストファイルが見つかりません")
+        if not pdf1_path.exists():
+            print(f"  PDF1が存在しません: {pdf1_path}")
+        if not pdf2_path.exists():
+            print(f"  PDF2が存在しません: {pdf2_path}")
         return
     
     # PDFファイルを読み込む
@@ -36,36 +62,51 @@ def main():
     with open(pdf2_path, "rb") as f:
         pdf2_bytes = f.read()
     
-    # 出力ディレクトリ（v1専用）
-    output_dir = Path("output/llm_diff_test_v1")
+    # 出力ディレクトリ（v1専用、データセットごとに分ける）
+    if args.dataset == 'sougou':
+        output_dir = Path("output/llm_diff_test_v1/sougou")
+    elif args.pdf1 and args.pdf2:
+        output_dir = Path("output/llm_diff_test_v1/custom")
+    else:
+        output_dir = Path("output/llm_diff_test_v1/default")
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # ========== ステップ1: Azure Document IntelligenceでPDFから抽出 ==========
     print("===== LLM Diff Test v1 (基本版) =====")
+    print(f"使用するPDFファイル:")
+    print(f"  PDF1: {pdf1_path.name}")
+    print(f"  PDF2: {pdf2_path.name}")
+    print(f"  データセット: {args.dataset}")
     print("\n===== ステップ1: Azure Document IntelligenceでPDFから抽出 =====")
     
     azure_service = AzureDocumentService()
     
-    print("\n1. 2023年PDFの処理...")
+    print(f"\n1. {pdf1_path.name}の処理...")
     # Azureで抽出（単語レベルのBBoxTextDataのリストが返される）
     bbox_list1 = azure_service.extract_layout_from_pdf(pdf1_bytes)
     print(f"   抽出された要素数: {len(bbox_list1)}")
     
-    print("\n2. 2024年PDFの処理...")
+    print(f"\n2. {pdf2_path.name}の処理...")
     # Azureで抽出
     bbox_list2 = azure_service.extract_layout_from_pdf(pdf2_bytes)
     print(f"   抽出された要素数: {len(bbox_list2)}")
     
-    # ========== ステップ2: 読み取り順序の推定 ==========
-    print("\n===== ステップ2: 読み取り順序の推定（v1基本版） =====")
+    # ========== ステップ2: 読み取り順序の準備 ==========
+    print("\n===== ステップ2: 読み取り順序の準備（v1基本版） =====")
     
-    # Reading Order Estimator v1を使用
-    order_estimator = ReadingOrderEstimator()
+    # デバッグ: 最初の要素の型を確認
+    if bbox_list1:
+        print(f"デバッグ: bbox_list1[0]の型 = {type(bbox_list1[0])}")
+        if isinstance(bbox_list1[0], dict):
+            print(f"デバッグ: bbox_list1[0] = {bbox_list1[0]}")
     
-    # 文書1の読み取り順序を推定
-    print("1. 2023年PDFの読み取り順序を推定中...")
-    # BBoxTextDataをdict形式に変換
-    dict_list1 = [
+    # BBoxTextDataをdict形式に変換（読み取り順序はAzureの出力順序をそのまま使用）
+    print(f"1. {pdf1_path.name}のデータ準備中...")
+    # すでにdict形式の場合はそのまま使用
+    if bbox_list1 and isinstance(bbox_list1[0], dict):
+        ordered_list1 = bbox_list1
+    else:
+        ordered_list1 = [
         {
             'text': item.text,
             'bbox': item.bbox,
@@ -75,13 +116,15 @@ def main():
             'height': item.bbox[3],
             'page': item.page
         }
-        for item in bbox_list1
-    ]
-    ordered_list1 = order_estimator.estimate_reading_order(dict_list1)
+            for item in bbox_list1
+        ]
     
-    # 文書2の読み取り順序を推定
-    print("2. 2024年PDFの読み取り順序を推定中...")
-    dict_list2 = [
+    print(f"2. {pdf2_path.name}のデータ準備中...")
+    # すでにdict形式の場合はそのまま使用
+    if bbox_list2 and isinstance(bbox_list2[0], dict):
+        ordered_list2 = bbox_list2
+    else:
+        ordered_list2 = [
         {
             'text': item.text,
             'bbox': item.bbox,
@@ -91,9 +134,8 @@ def main():
             'height': item.bbox[3],
             'page': item.page
         }
-        for item in bbox_list2
-    ]
-    ordered_list2 = order_estimator.estimate_reading_order(dict_list2)
+            for item in bbox_list2
+        ]
     
     # ========== ステップ3: 差分検出 ==========
     print("\n===== ステップ3: 差分検出（基本版） =====")
@@ -123,8 +165,8 @@ def main():
         metadata={
             "version": "v1_basic",
             "extraction_method": "Azure Document Intelligence (Word-based)",
-            "doc1_name": "2023.pdf",
-            "doc2_name": "2024.pdf",
+            "doc1_name": pdf1_path.name,
+            "doc2_name": pdf2_path.name,
             "extraction_info": {
                 "doc1_words": len(bbox_list1),
                 "doc2_words": len(bbox_list2)

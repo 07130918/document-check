@@ -1,9 +1,10 @@
 {
-  "document1_sentences": 154,
-  "document2_sentences": 145,
-  "differences": 235,
+  "document1_sentences": 2409,
+  "document2_sentences": 2815,
+  "differences": 773,
   "change_types": {
-    "deletion": 122,
-    "addition": 113
+    "modification": 15,
+    "deletion": 176,
+    "addition": 582
   }
 }
