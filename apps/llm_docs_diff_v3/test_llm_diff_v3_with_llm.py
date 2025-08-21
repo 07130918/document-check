@@ -55,8 +55,8 @@ def main():
         pdf2_path = data_dir / "2024.pdf"
     elif args.dataset == 'sample1':
         data_dir = base_path / "data" / "sample1"
-        pdf1_path = data_dir / "サンプル①2024後半.pdf"
-        pdf2_path = data_dir / "サンプル①2025後半.pdf"
+        pdf1_path = data_dir / "サンプル①2024.pdf"
+        pdf2_path = data_dir / "サンプル①2025.pdf"
     elif args.dataset == 'sample2':
         data_dir = base_path / "data" / "sample2"
         pdf1_path = data_dir / "サンプル②2024 .pdf"

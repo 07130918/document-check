@@ -1,0 +1,446 @@
+{
+  "summary": {
+    "total": 5566,
+    "by_type": {
+      "modified": 608,
+      "deleted": 2464,
+      "added": 2494
+    },
+    "by_page": {
+      "0": {
+        "modified": 12,
+        "deleted": 2,
+        "added": 1
+      },
+      "1": {
+        "modified": 6,
+        "deleted": 3
+      },
+      "2": {
+        "modified": 26,
+        "deleted": 42,
+        "added": 17
+      },
+      "3": {
+        "modified": 17,
+        "deleted": 10
+      },
+      "4": {
+        "modified": 28,
+        "deleted": 10,
+        "added": 7
+      },
+      "5": {
+        "modified": 1,
+        "added": 1
+      },
+      "6": {
+        "modified": 8,
+        "deleted": 5,
+        "added": 6
+      },
+      "7": {
+        "modified": 24,
+        "deleted": 22,
+        "added": 17
+      },
+      "8": {
+        "modified": 40,
+        "deleted": 42,
+        "added": 25
+      },
+      "9": {
+        "modified": 6
+      },
+      "10": {
+        "modified": 30,
+        "deleted": 9,
+        "added": 12
+      },
+      "11": {
+        "modified": 22,
+        "deleted": 16,
+        "added": 20
+      },
+      "12": {
+        "modified": 43,
+        "deleted": 13,
+        "added": 23
+      },
+      "13": {
+        "modified": 96,
+        "deleted": 7,
+        "added": 7
+      },
+      "14": {
+        "modified": 11,
+        "deleted": 4,
+        "added": 5
+      },
+      "15": {
+        "modified": 35,
+        "deleted": 1,
+        "added": 3
+      },
+      "16": {
+        "modified": 51,
+        "deleted": 5,
+        "added": 7
+      },
+      "17": {
+        "modified": 6
+      },
+      "18": {
+        "modified": 22,
+        "deleted": 7,
+        "added": 9
+      },
+      "19": {
+        "deleted": 1
+      },
+      "20": {
+        "modified": 4,
+        "deleted": 5,
+        "added": 4
+      },
+      "21": {
+        "modified": 2,
+        "deleted": 2,
+        "added": 1
+      },
+      "22": {
+        "modified": 3,
+        "deleted": 132,
+        "added": 61
+      },
+      "23": {
+        "deleted": 109,
+        "added": 13
+      },
+      "24": {
+        "modified": 2,
+        "deleted": 94,
+        "added": 51
+      },
+      "25": {
+        "deleted": 133,
+        "added": 82
+      },
+      "26": {
+        "modified": 4,
+        "deleted": 109,
+        "added": 59
+      },
+      "27": {
+        "deleted": 52,
+        "added": 59
+      },
+      "28": {
+        "modified": 16,
+        "deleted": 11,
+        "added": 13
+      },
+      "29": {
+        "deleted": 14,
+        "added": 346
+      },
+      "30": {
+        "modified": 1,
+        "deleted": 53,
+        "added": 148
+      },
+      "31": {
+        "deleted": 87,
+        "added": 65
+      },
+      "32": {
+        "modified": 4,
+        "deleted": 58,
+        "added": 39
+      },
+      "33": {
+        "modified": 3,
+        "deleted": 52,
+        "added": 136
+      },
+      "34": {
+        "modified": 2,
+        "deleted": 27,
+        "added": 39
+      },
+      "35": {
+        "deleted": 32,
+        "added": 23
+      },
+      "36": {
+        "modified": 3,
+        "deleted": 168,
+        "added": 33
+      },
+      "37": {
+        "modified": 8,
+        "deleted": 159,
+        "added": 77
+      },
+      "38": {
+        "modified": 7,
+        "deleted": 41,
+        "added": 190
+      },
+      "39": {
+        "modified": 2,
+        "deleted": 24,
+        "added": 37
+      },
+      "40": {
+        "modified": 3,
+        "deleted": 67,
+        "added": 22
+      },
+      "41": {
+        "modified": 3,
+        "deleted": 27,
+        "added": 32
+      },
+      "42": {
+        "modified": 8,
+        "deleted": 73,
+        "added": 39
+      },
+      "43": {
+        "modified": 3,
+        "deleted": 59,
+        "added": 84
+      },
+      "44": {
+        "modified": 5,
+        "deleted": 44,
+        "added": 49
+      },
+      "45": {
+        "deleted": 24,
+        "added": 36
+      },
+      "46": {
+        "modified": 4,
+        "deleted": 55,
+        "added": 25
+      },
+      "47": {
+        "deleted": 66,
+        "added": 35
+      },
+      "48": {
+        "modified": 1,
+        "deleted": 62,
+        "added": 73
+      },
+      "49": {
+        "modified": 1,
+        "deleted": 49,
+        "added": 54
+      },
+      "50": {
+        "modified": 2,
+        "deleted": 86,
+        "added": 57
+      },
+      "51": {
+        "modified": 3,
+        "deleted": 64,
+        "added": 61
+      },
+      "52": {
+        "modified": 2,
+        "deleted": 45,
+        "added": 73
+      },
+      "53": {
+        "deleted": 52,
+        "added": 39
+      },
+      "54": {
+        "modified": 10,
+        "deleted": 63,
+        "added": 49
+      },
+      "55": {
+        "modified": 4,
+        "deleted": 56,
+        "added": 61
+      },
+      "56": {
+        "modified": 2,
+        "deleted": 6,
+        "added": 65
+      },
+      "57": {
+        "added": 1
+      },
+      "58": {
+        "added": 1
+      },
+      "59": {
+        "modified": 12,
+        "deleted": 5,
+        "added": 2
+      }
+    },
+    "by_block_type": {
+      "header": {
+        "modified": 30,
+        "deleted": 192,
+        "added": 199
+      },
+      "paragraph": {
+        "modified": 549,
+        "deleted": 2075,
+        "added": 2116
+      },
+      "footer": {
+        "modified": 29,
+        "deleted": 197,
+        "added": 179
+      }
+    }
+  },
+  "llm_analysis": {
+    "overall_trend": "文書全体にわたって年度や日付の更新が多く見られ、内容の具体的な数値や情報も修正されている。特に、保険に関する重要な日付や条件が新しい年度に合わせて調整されている。",
+    "key_changes": [
+      "保険期間が令和6年から令和7年に変更された。",
+      "払込方法の開始日が令和6年から令和7年に変更された。",
+      "加入者数のデータが更新され、社員数が減少している。",
+      "重要なQRコード手続きの日付が変更された。"
+    ],
+    "formatting_changes": [
+      "年度表示が令和5年度から令和6年度に変更された。",
+      "URLが変更された。",
+      "ページ番号の参照が更新された。",
+      "推奨環境のOSバージョンが更新された。"
+    ],
+    "impact_assessment": "high - 重要な日付や条件の変更は、加入者に直接影響を及ぼすため、特に注意が必要。",
+    "summary": "文書は年度更新に伴い、重要な日付や加入者数の変更が行われ、手続き方法も修正された。"
+  },
+  "differences": [
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "令和5年度 保存版",
+      "block2_text": "令和6年度 保存版"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "払込方法 令和6年2月分給与より控除開始(12回払)",
+      "block2_text": "払込方法 令和7年2月分給与より控除開始(12回払)"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "保険期間 令和5年12月10日午後4時~令和6年12月10日午後4時",
+      "block2_text": "保険期間 令和6年12月10日午後4時~令和7年12月10日午後4時"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "<MS1でのお手続き> 「MSK保険センター」のホームページまたは10月2日(月)の人事部発信の業務連絡からお手続きください。 ※ネット手続き時間は、平日(月曜~金曜)の7:00~19:00です。",
+      "block2_text": "<MS1でのお手続き> 「MSK保険センター」のホームページまたは10月1日(火)の人事部発信の業務連絡からお手続きください。 ※ネット手続き時間は、平日(月曜~金曜)の7:00~19:00です。"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "MS1のほか、ご自宅のPC、スマートフォンでもお手続き可能です。 お手続き可能期間:【10月3日(火)~10月25日(水)】",
+      "block2_text": "MS1のほか、ご自宅のPC、スマートフォンでもお手続き可能です。 お手続き可能期間:【10月1日(火)~10月23日(水)】"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "申込締切日 令和5年10月25日(水)",
+      "block2_text": "申込締切日 令和6年10月23日(水)"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "https://dantai.ms-ins.com/index.php?ID=eyhe84",
+      "block2_text": "https://dantai.ms-ins.com/index.php?ID=6au5j8"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "右記のQRコード(※)を読み取り、お手続きください。 【推奨環境】 OS:iOS 11/12/13/14/15/16、 Android 5.1/6.0/7.0/8.0/9.0/11.0/12.0/13",
+      "block2_text": "【推奨環境】 OS:iOS 11/12/13/14/15/16/17 Android 5.1/6.0/7.0/8.0/9.0/10.0/11.0/12.0/13.0 ブラウザ: Safari、Goog"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "Babyy",
+      "block2_text": "Babyor"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "P34または裏表紙を ご覧ください。",
+      "block2_text": "P35または最終ページを ご覧ください。"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "本契約は自動継続のため、前年から加入されている方につきましては、お申し出がない場合、前年ご加入内容に応じたセット·口数でのご継続となります。",
+      "block2_text": "本契約は自動継続のため、前年から加入されている方につきましては、お申し出がない場合、前年ご加入内容に応じたセット·口数でのご継続となります。 MS1を閲覧できる方、ご自宅のPCまたはスマートフォンでお"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "三井住友海上",
+      "block2_text": "MS&AD 三井住友海上"
+    },
+    {
+      "type": "deleted",
+      "page": 0,
+      "block1_text": "MS&AD",
+      "block2_text": null
+    },
+    {
+      "type": "deleted",
+      "page": 0,
+      "block1_text": ": ■スマートフォンでのお手続き",
+      "block2_text": null
+    },
+    {
+      "type": "added",
+      "page": 0,
+      "block1_text": null,
+      "block2_text": "■スマートフォンでのお手続き 右記のQRコード(※)を読み取り、お手続きください。"
+    },
+    {
+      "type": "modified",
+      "page": 1,
+      "block1_text": "MS&ADインシュアランスグループ 社員 約 1.8万人が 加入! 退職者の皆さまを含めると約2.5万人も加入",
+      "block2_text": "MS&ADインシュアランスグループ 社員約1.6万人が 加入! 退職者の皆さまを含めると約2.4万人も加入"
+    },
+    {
+      "type": "modified",
+      "page": 1,
+      "block1_text": "従業員の皆さまとご家族の安心に!",
+      "block2_text": "仪員·従業員の皆さまとご家族の安心に!"
+    },
+    {
+      "type": "modified",
+      "page": 1,
+      "block1_text": "約8,600件 約5億3,600万円 (令和4年度実績)",
+      "block2_text": "約6,000件 約4億8,900万円 (令和5年度実績)"
+    },
+    {
+      "type": "modified",
+      "page": 1,
+      "block1_text": "継続できます",
+      "block2_text": "♡ 継続できます"
+    },
+    {
+      "type": "modified",
+      "page": 1,
+      "block1_text": "ご家族も 加入いただけます!",
+      "block2_text": "ご家族も 加入いただけます! 詳細はP4をご参照ください。"
+    }
+  ]
+}

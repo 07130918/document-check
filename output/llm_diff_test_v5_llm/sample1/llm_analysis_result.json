@@ -1,0 +1,360 @@
+{
+  "summary": {
+    "total": 2862,
+    "by_type": {
+      "modified": 249,
+      "deleted": 1168,
+      "added": 1445
+    },
+    "by_page": {
+      "0": {
+        "modified": 12,
+        "deleted": 4,
+        "added": 6
+      },
+      "1": {
+        "modified": 1,
+        "deleted": 18,
+        "added": 47
+      },
+      "2": {
+        "modified": 10,
+        "deleted": 45,
+        "added": 115
+      },
+      "3": {
+        "modified": 15,
+        "deleted": 2,
+        "added": 3
+      },
+      "4": {
+        "modified": 17,
+        "deleted": 6,
+        "added": 5
+      },
+      "5": {
+        "modified": 31,
+        "deleted": 9,
+        "added": 16
+      },
+      "6": {
+        "modified": 25,
+        "deleted": 53,
+        "added": 121
+      },
+      "7": {
+        "modified": 7,
+        "deleted": 41,
+        "added": 77
+      },
+      "8": {
+        "modified": 6,
+        "deleted": 46,
+        "added": 51
+      },
+      "9": {
+        "modified": 5,
+        "deleted": 91,
+        "added": 42
+      },
+      "10": {
+        "modified": 30,
+        "deleted": 14,
+        "added": 10
+      },
+      "11": {
+        "modified": 21,
+        "deleted": 4,
+        "added": 10
+      },
+      "12": {
+        "modified": 14,
+        "deleted": 1
+      },
+      "13": {
+        "modified": 3
+      },
+      "14": {
+        "modified": 10,
+        "added": 2
+      },
+      "15": {
+        "modified": 16,
+        "deleted": 8,
+        "added": 7
+      },
+      "16": {
+        "modified": 8,
+        "deleted": 4,
+        "added": 21
+      },
+      "17": {
+        "modified": 3,
+        "deleted": 9,
+        "added": 4
+      },
+      "18": {
+        "modified": 4,
+        "deleted": 27,
+        "added": 12
+      },
+      "19": {
+        "modified": 3,
+        "deleted": 11,
+        "added": 4
+      },
+      "20": {
+        "deleted": 48,
+        "added": 21
+      },
+      "21": {
+        "deleted": 45,
+        "added": 23
+      },
+      "22": {
+        "deleted": 49,
+        "added": 13
+      },
+      "23": {
+        "modified": 1,
+        "deleted": 28,
+        "added": 16
+      },
+      "24": {
+        "deleted": 14,
+        "added": 51
+      },
+      "25": {
+        "modified": 4,
+        "deleted": 52,
+        "added": 42
+      },
+      "26": {
+        "deleted": 46,
+        "added": 49
+      },
+      "27": {
+        "modified": 1,
+        "deleted": 41,
+        "added": 26
+      },
+      "28": {
+        "deleted": 52,
+        "added": 16
+      },
+      "29": {
+        "deleted": 41,
+        "added": 58
+      },
+      "30": {
+        "deleted": 26,
+        "added": 46
+      },
+      "31": {
+        "deleted": 31,
+        "added": 43
+      },
+      "32": {
+        "deleted": 36,
+        "added": 54
+      },
+      "33": {
+        "deleted": 44,
+        "added": 41
+      },
+      "34": {
+        "deleted": 31,
+        "added": 26
+      },
+      "35": {
+        "deleted": 50,
+        "added": 31
+      },
+      "36": {
+        "deleted": 58,
+        "added": 37
+      },
+      "37": {
+        "modified": 2,
+        "deleted": 32,
+        "added": 42
+      },
+      "38": {
+        "deleted": 51,
+        "added": 31
+      },
+      "39": {
+        "added": 52
+      },
+      "40": {
+        "added": 60
+      },
+      "41": {
+        "added": 34
+      },
+      "42": {
+        "added": 56
+      },
+      "43": {
+        "added": 24
+      }
+    },
+    "by_block_type": {
+      "title": {
+        "modified": 1
+      },
+      "header": {
+        "modified": 22,
+        "deleted": 130,
+        "added": 186
+      },
+      "paragraph": {
+        "modified": 203,
+        "deleted": 917,
+        "added": 1098
+      },
+      "footer": {
+        "modified": 23,
+        "added": 161,
+        "deleted": 121
+      }
+    }
+  },
+  "llm_analysis": {
+    "overall_trend": "文書全体にわたって、補償内容の増加や年度の更新が行われており、特に新しい特約や補償の充実が強調されています。また、不要な情報の削除も見られます。",
+    "key_changes": [
+      "補償内容が8つから9つに増加したこと",
+      "令和6年度から令和7年度への年度更新",
+      "新しい特約としてCT·MRI検査とセカンドオピニオンが追加されたこと"
+    ],
+    "formatting_changes": [
+      "日付が令和6年から令和7年に変更された",
+      "募集期間が更新された",
+      "フッターに新しい情報が追加された"
+    ],
+    "impact_assessment": "high - 新しい補償内容の追加や年度の更新は、保険契約者にとって重要な情報であり、契約の選択に大きな影響を与える可能性があるため。",
+    "summary": "補償内容の増加や年度更新が行われ、新しい特約が追加されるなど、文書全体にわたる重要な変更が見られます。"
+  },
+  "differences": [
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "8つの補償でサポート 刑務共済組合員さまとご家族の補償をします。",
+      "block2_text": "9つの補償でサポート 刑務共済組合員さまとご家族の補償をします。"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "令和6年度募集",
+      "block2_text": "令和7年度募集"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "令和6年9月1日(日)~9月15日(日)まで",
+      "block2_text": "令和7年9月1日(月)~9月15日(月)まで"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "親介護",
+      "block2_text": "親介護"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "がん重点",
+      "block2_text": "がん重点"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "病気",
+      "block2_text": "病気"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "長期収入サポート",
+      "block2_text": "長期収入サポート"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "三大疾病",
+      "block2_text": "三大疾病"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "先進医療",
+      "block2_text": "先進医療"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "賠償責任",
+      "block2_text": "賠償責任"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "令和7年1月1日午後4時~令和8年1月1日午後4時",
+      "block2_text": "令和8年1月1日午後4時~令和9年1月1日午後4時 令和8年1月給与から引去り(分割12回払)"
+    },
+    {
+      "type": "modified",
+      "page": 0,
+      "block1_text": "ケガ",
+      "block2_text": "ケ ガ"
+    },
+    {
+      "type": "deleted",
+      "page": 0,
+      "block1_text": "募集期間中のお手続きはこちらから!",
+      "block2_text": null
+    },
+    {
+      "type": "deleted",
+      "page": 0,
+      "block1_text": "改定",
+      "block2_text": null
+    },
+    {
+      "type": "deleted",
+      "page": 0,
+      "block1_text": "長期収入サポート",
+      "block2_text": null
+    },
+    {
+      "type": "deleted",
+      "page": 0,
+      "block1_text": "「免責期間」と「補償可能 期間」を改定しています。 詳細はパンフレットP 10 をご確認ください。",
+      "block2_text": null
+    },
+    {
+      "type": "added",
+      "page": 0,
+      "block1_text": null,
+      "block2_text": "お手続きはこちら/"
+    },
+    {
+      "type": "added",
+      "page": 0,
+      "block1_text": null,
+      "block2_text": "CT·MRI検査+セカンドオピニオン"
+    },
+    {
+      "type": "added",
+      "page": 0,
+      "block1_text": null,
+      "block2_text": "NEW"
+    },
+    {
+      "type": "added",
+      "page": 0,
+      "block1_text": null,
+      "block2_text": "CT·MRI検査 ＋ セカンドオピニオン"
+    }
+  ]
+}

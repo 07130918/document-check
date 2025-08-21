@@ -465,7 +465,7 @@ class OutputHandler:
         report.append("\n## 差分の詳細分析\n")
         
         # 変更タイプごとの分析
-        for change_type in ['added', 'deleted', 'modified', 'moved']:
+        for change_type in ['added', 'deleted', 'modified']:
             type_diffs = [d for d in differences if d.change_type == change_type]
             if not type_diffs:
                 continue

@@ -53,10 +53,6 @@ class BlockDiffDetector:
             page_diffs = self._detect_page_differences(blocks1, blocks2, page_num)
             differences.extend(page_diffs)
         
-        # 移動検出（異なるページ間）
-        moved_diffs = self._detect_moved_blocks(doc1, doc2, differences)
-        differences.extend(moved_diffs)
-        
         return differences
     
     def _detect_page_differences(self, 
@@ -223,56 +219,6 @@ class BlockDiffDetector:
                 abs(bbox1.width - bbox2.width) <= self.position_tolerance and
                 abs(bbox1.height - bbox2.height) <= self.position_tolerance)
     
-    def _detect_moved_blocks(self, 
-                           doc1: DocumentStructure, 
-                           doc2: DocumentStructure,
-                           existing_diffs: List[BlockDifference]) -> List[BlockDifference]:
-        """移動したブロックを検出"""
-        moved_diffs = []
-        
-        # 削除と追加のペアから移動を検出
-        deleted_blocks = [d for d in existing_diffs if d.change_type == "deleted"]
-        added_blocks = [d for d in existing_diffs if d.change_type == "added"]
-        
-        for del_diff in deleted_blocks:
-            best_match = None
-            best_similarity = 0.0
-            
-            for add_diff in added_blocks:
-                # 異なるページのブロックのみチェック
-                if del_diff.block1.page == add_diff.block2.page:
-                    continue
-                
-                # コンテンツの類似度をチェック
-                similarity = self._calculate_content_similarity(
-                    del_diff.block1.text, 
-                    add_diff.block2.text
-                )
-                
-                if similarity > best_similarity and similarity >= 0.8:
-                    best_similarity = similarity
-                    best_match = add_diff
-            
-            if best_match:
-                # 移動として記録
-                moved_diffs.append(BlockDifference(
-                    change_type="moved",
-                    block1=del_diff.block1,
-                    block2=best_match.block2,
-                    similarity=best_similarity,
-                    details={
-                        'from_page': del_diff.block1.page,
-                        'to_page': best_match.block2.page,
-                        'position_changed': True
-                    }
-                ))
-                
-                # 元の削除と追加を除外
-                existing_diffs.remove(del_diff)
-                existing_diffs.remove(best_match)
-                added_blocks.remove(best_match)
-        
-        return moved_diffs
     
     def generate_summary(self, differences: List[BlockDifference]) -> Dict[str, Any]:
         """差分のサマリーを生成"""

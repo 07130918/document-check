@@ -17,16 +17,14 @@ class ChangeTypeV3(Enum):
     ADDITION = "addition"
     DELETION = "deletion"
     MODIFICATION = "modification"
-    MOVEMENT = "movement"  # 新規: 移動
 
 
 class DiffResultV3(DiffResult):
     """差分結果（v3拡張版）"""
-    def __init__(self, *args, movement_info: Optional[Dict[str, Any]] = None, **kwargs):
+    def __init__(self, *args, **kwargs):
         # spatial_similarityを取り除く（v3では使用しない）
         kwargs.pop('spatial_similarity', None)
         super().__init__(*args, **kwargs)
-        self.movement_info = movement_info
 
 
 class ContentBasedDiffDetector:
@@ -66,31 +64,13 @@ class ContentBasedDiffDetector:
         
         results = []
         
-        # 完全一致するテキストを先に処理（移動の検出）
+        # 完全一致するテキストを先に処理
         matched_texts = set(doc1_by_text.keys()) & set(doc2_by_text.keys())
         for text in matched_texts:
             items1 = doc1_by_text[text]
             items2 = doc2_by_text[text]
             
-            # 同じテキストが両方の文書にある場合
-            if len(items1) == 1 and len(items2) == 1:
-                # 位置が大きく変わった場合は移動として記録
-                if self._is_moved(items1[0], items2[0]):
-                    result = DiffResultV3(
-                        change_type=ChangeType.MODIFICATION,  # 互換性のため
-                        page=items1[0]['page'],
-                        original_bbox=items1[0],
-                        modified_bbox=items2[0],
-                        semantic_similarity=1.0,
-                        movement_info={
-                            'type': 'movement',
-                            'from_position': self._get_position_info(items1[0]),
-                            'to_position': self._get_position_info(items2[0])
-                        }
-                    )
-                    results.append(result)
-            
-            # 完全一致したものは処理済みとしてマーク
+            # 完全一致したものは処理済みとしてマーク（差分なしとして扱う）
             del doc1_by_text[text]
             del doc2_by_text[text]
         
@@ -175,26 +155,6 @@ class ContentBasedDiffDetector:
                 groups[text].append(item)
         return groups
     
-    def _is_moved(self, item1: Dict[str, Any], item2: Dict[str, Any]) -> bool:
-        """アイテムが移動したかどうかを判定"""
-        # ページが違う場合は移動
-        if item1.get('page', 0) != item2.get('page', 0):
-            return True
-        
-        # 同じページ内での大きな位置変化を検出
-        y_diff = abs(item1.get('y', 0) - item2.get('y', 0))
-        height = max(item1.get('height', 1), item2.get('height', 1))
-        
-        # Y座標の差が高さの3倍以上なら移動とみなす
-        return y_diff > height * 3
-    
-    def _get_position_info(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        """位置情報を取得"""
-        return {
-            'page': item.get('page', 0),
-            'x': item.get('x', 0),
-            'y': item.get('y', 0)
-        }
     
     def _calculate_similarity_matrix(self, 
                                    items1: List[Dict[str, Any]], 
@@ -254,27 +214,6 @@ class ContentBasedDiffDetector:
         
         # 編集距離ベースの類似度
         similarity = difflib.SequenceMatcher(None, text1, text2).ratio()
-        
-        # 類似度が0.5以上で、かつ共通の重要な部分を含む場合はボーナス
-        if similarity > 0.5:
-            # 日本語の場合の共通部分チェック
-            # 「または」などの共通キーワードを探す
-            common_keywords = ['または', 'ページ', '保険', '手続', '加入', '年度']
-            keyword_count = sum(1 for keyword in common_keywords if keyword in text1 and keyword in text2)
-            
-            if keyword_count >= 1:  # 共通キーワードがある
-                similarity = min(similarity + 0.15, 1.0)
-            
-            # 文字n-gramによる類似度も考慮（日本語対応）
-            def get_ngrams(text, n=2):
-                return set(text[i:i+n] for i in range(len(text)-n+1))
-            
-            bigrams1 = get_ngrams(text1, 2)
-            bigrams2 = get_ngrams(text2, 2)
-            if bigrams1 and bigrams2:
-                bigram_similarity = len(bigrams1 & bigrams2) / max(len(bigrams1), len(bigrams2))
-                if bigram_similarity > 0.5:
-                    similarity = max(similarity, 0.7 + bigram_similarity * 0.2)
         
         return similarity
     

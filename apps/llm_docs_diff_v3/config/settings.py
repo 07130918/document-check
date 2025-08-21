@@ -35,7 +35,7 @@ class Settings:
     # 処理設定
     MAX_FILE_SIZE_MB: int = int(os.getenv("MAX_FILE_SIZE_MB", "40"))
     MAX_PAGES: int = int(os.getenv("MAX_PAGES", "100"))
-    TEST_MAX_PAGES: int = 5  # テスト時の最大ページ数制限
+    TEST_MAX_PAGES: Optional[int] = None  # テスト時の最大ページ数制限（Noneで無制限）
     PARALLEL_WORKERS: int = int(os.getenv("PARALLEL_WORKERS", "4"))
     MEMORY_LIMIT_MB: int = int(os.getenv("MEMORY_LIMIT_MB", "2048"))
     PROCESSING_TIMEOUT_SECONDS: int = int(os.getenv("PROCESSING_TIMEOUT_SECONDS", "300"))

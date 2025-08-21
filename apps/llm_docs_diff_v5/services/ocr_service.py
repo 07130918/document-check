@@ -62,7 +62,7 @@ class AzureOCRService:
             logger.error(f"Error extracting text from PDF: {e}")
             raise
     
-    def extract_layout_from_pdf(self, pdf_path: str, max_pages: Optional[int] = 5) -> Any:
+    def extract_layout_from_pdf(self, pdf_path: str, max_pages: Optional[int] = None) -> Any:
         """PDFからレイアウト情報を含む詳細な構造を抽出"""
         logger.info(f"Extracting layout from PDF: {pdf_path}")
         
@@ -75,9 +75,9 @@ class AzureOCRService:
             file_size_mb = len(pdf_content) / (1024 * 1024)
             logger.info(f"PDF file size: {file_size_mb:.2f} MB")
             
-            # 大きすぎる場合はページ数を制限
-            if file_size_mb > 4 or max_pages:  # Azure制限は4MB
-                logger.info(f"Limiting PDF to {max_pages} pages for Azure processing")
+            # max_pagesが明示的に指定されている場合のみページ数を制限
+            if max_pages:
+                logger.info(f"Limiting PDF to {max_pages} pages")
                 pdf_content = self._limit_pdf_pages(pdf_content, max_pages)
                 new_size_mb = len(pdf_content) / (1024 * 1024)
                 logger.info(f"Reduced PDF size: {new_size_mb:.2f} MB")

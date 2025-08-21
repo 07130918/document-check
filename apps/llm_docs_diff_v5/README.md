@@ -16,17 +16,22 @@ v5は、v4からさらに改良を加えた最新バージョンです。主な�
 - 単語ごとのポリゴン座標（8点）を使用した正確な位置特定
 - ブロック内の単語情報を直接参照可能
 
-### 3. 差分表示の統一
-- ユーザーのフィードバックに基づき、削除・追加・修正の区別を廃止
+### 3. ブロック単位の階層的差分検出
+- **BlockDiffDetector**: ブロック単位での構造的な差分検出
+- 位置（30%）、内容（50%）、タイプ（20%）の重み付けによるバランスの取れた検出
+- ブロックタイプ（段落、表、タイトル等）を考慮した意味的な差分検出
+
+### 4. 差分表示の統一
+- ユーザーのフィードバックに基づき、削除・追加・修正の区別を維持しつつシンプルに表示
 - すべての差分を同じ方法（赤枠）で表示
 - よりシンプルで直感的な差分表示
 
-### 4. 出力ページの最適化
+### 5. 出力ページの最適化
 - 差分があるページの最大値を自動検出
 - 必要なページのみを出力PDFに含める（ファイルサイズの削減）
 - 差分がない場合は1ページ目のみ出力
 
-### 5. 座標変換の完全性
+### 6. 座標変換の完全性
 - Azure OCRのインチ単位座標をポイント単位に正確に変換（×72）
 - ブロックと単語の両方で一貫した座標変換
 - 座標系の不一致によるハイライト位置のずれを完全に解消
@@ -36,25 +41,26 @@ v5は、v4からさらに改良を加えた最新バージョンです。主な�
 ```
 llm_docs_diff_v5/
 ├── models/
-│   ├── document.py        # ドキュメント構造のデータモデル
-│   └── difference.py      # 差分情報のデータモデル
-├── services/
-│   ├── ocr_service.py     # Azure OCR連携
-│   ├── llm_block_extractor_simple.py  # ブロック抽出（Azure結果保持）
-│   ├── block_matcher.py   # ブロックマッチング
-│   └── difference_detector.py  # 差分検出
+│   └── block_models.py    # ブロック構造のデータモデル
+├── core/
+│   ├── ocr_analyzer.py    # Azure OCR解析
+│   ├── document_structure_builder.py  # 文書構造の構築
+│   ├── block_diff_detector.py  # ブロック差分検出
+│   └── llm_evaluator.py  # LLM評価
 ├── handlers/
 │   ├── output_handler.py  # 従来の出力処理（v4互換）
 │   └── output_handler_v2.py  # 新しい単語レベル出力処理
-└── test_llm_diff_v5.py    # メインスクリプト
+└── test_llm_diff_v5_with_llm.py  # メインスクリプト
 ```
 
 ## 主な特徴
 
 1. **単語レベルの精密性**: Azure OCRの単語情報を直接使用した高精度な差分表示
-2. **座標系の統一**: PyMuPDFを排除し、Azure OCRの座標系のみを使用
-3. **シンプルな差分表示**: すべての変更を同一の方法で表示
-4. **効率的な出力**: 必要なページのみを含むPDF生成
+2. **ブロック単位の構造的検出**: 文書の論理構造を理解した差分検出
+3. **座標系の統一**: PyMuPDFを排除し、Azure OCRの座標系のみを使用
+4. **バランスの取れた検出**: 位置、内容、タイプを総合的に評価
+5. **シンプルな差分表示**: すべての変更を同一の方法で表示
+6. **効率的な出力**: 必要なページのみを含むPDF生成
 
 ## 技術的な改善点
 
@@ -81,7 +87,7 @@ for word in azure_page.words:
 ## 使用方法
 
 ```bash
-poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5.py --dataset <dataset_name>
+poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5_with_llm.py --dataset <dataset_name>
 ```
 
 ## v4との互換性

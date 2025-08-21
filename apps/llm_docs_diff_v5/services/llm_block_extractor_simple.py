@@ -29,8 +29,8 @@ class SimpleLLMBlockExtractor:
         """PDFからLLMを使ってブロックを抽出（シンプル版）"""
         logger.info(f"Extracting blocks with simple LLM approach from: {pdf_path}")
         
-        # 1. Azure OCRでレイアウトを抽出（テスト用に5ページまでに制限）
-        azure_result = self.ocr_service.extract_layout_from_pdf(pdf_path, max_pages=5)
+        # 1. Azure OCRでレイアウトを抽出（有料版では制限なし）
+        azure_result = self.ocr_service.extract_layout_from_pdf(pdf_path)
         processed_pages = len(azure_result.pages) if hasattr(azure_result, 'pages') else 0
         logger.info(f"Azure OCR processed {processed_pages} pages")
         

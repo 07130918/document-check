@@ -40,8 +40,8 @@ def parse_arguments():
                         help='LLMで要約を生成する（デフォルト: True）')
     parser.add_argument('--analyze-each', action='store_true',
                         help='各差分を個別にLLMで分析する')
-    parser.add_argument('--max-pages', type=int, default=5,
-                        help='処理する最大ページ数')
+    parser.add_argument('--max-pages', type=int, default=None,
+                        help='処理する最大ページ数（指定しない場合は全ページ）')
     return parser.parse_args()
 
 

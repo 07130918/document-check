@@ -58,32 +58,12 @@ class AzureDocumentServiceEnhanced:
             from ..utils.pdf_utils import PDFProcessor
             pdf_processor = PDFProcessor()
             
-            # テスト用に最大ページ数を制限
-            max_pages = getattr(settings, 'TEST_MAX_PAGES', 5)
-            if max_pages:
-                print(f"[DEBUG] Limiting PDF to {max_pages} pages for Azure processing")
-                logger.info(f"Limiting PDF to {max_pages} pages for Azure processing")
-                # 制限前のPDFページ数を確認
-                import fitz
-                doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-                original_pages = len(doc)
-                doc.close()
-                print(f"[DEBUG] Original PDF has {original_pages} pages")
-                
-                pdf_bytes = pdf_processor.limit_pdf_pages(pdf_bytes, max_pages)
-                
-                # 制限後のPDFページ数を確認
-                doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-                limited_pages = len(doc)
-                doc.close()
-                print(f"[DEBUG] Limited PDF has {limited_pages} pages")
-                
-                # デバッグ用: 制限されたPDFを一時的に保存
-                import os
-                debug_path = f"/tmp/limited_pdf_{os.getpid()}.pdf"
-                with open(debug_path, "wb") as f:
-                    f.write(pdf_bytes)
-                print(f"[DEBUG] Limited PDF saved to {debug_path} (size: {len(pdf_bytes)} bytes)")
+            # 有料版では制限なし - 全ページを処理
+            import fitz
+            doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+            total_pages = len(doc)
+            doc.close()
+            print(f"[DEBUG] Processing all {total_pages} pages with Azure Document Intelligence")
             
             # Document Intelligenceでレイアウト解析
             print(f"[DEBUG] Sending {len(pdf_bytes)} bytes to Azure Document Intelligence")
@@ -354,8 +334,8 @@ class AzureDocumentServiceEnhanced:
         Returns:
             行ベースのBBoxデータのリスト
         """
-        # バッチ処理メソッドを使用して2ページ制限を回避
-        hierarchy = self.extract_layout_with_hierarchy_batch(pdf_bytes)
+        # 有料版では一度に全ページを処理
+        hierarchy = self.extract_layout_with_hierarchy(pdf_bytes)
         
         # 行データを既存の形式に変換
         line_bbox_list = []
@@ -384,8 +364,8 @@ class AzureDocumentServiceEnhanced:
         Returns:
             段落ベースのBBoxデータのリスト
         """
-        # バッチ処理メソッドを使用して2ページ制限を回避
-        hierarchy = self.extract_layout_with_hierarchy_batch(pdf_bytes)
+        # 有料版では一度に全ページを処理
+        hierarchy = self.extract_layout_with_hierarchy(pdf_bytes)
         
         # 段落データを既存の形式に変換
         para_bbox_list = []
