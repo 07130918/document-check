@@ -1,0 +1,15 @@
+{
+  "total_differences": 221,
+  "doc1_word_count": 369,
+  "doc2_word_count": 368,
+  "change_type_distribution": {
+    "modification": 221
+  },
+  "pages_with_changes": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}

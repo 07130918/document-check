@@ -22,6 +22,28 @@ class OutputHandler:
         self.pdf_processor = PDFProcessor()
         self.output_dir = settings.OUTPUT_DIR
     
+    def save_all_outputs(self, comparison_result: ComparisonResult,
+                        pdf1_bytes: bytes, pdf2_bytes: bytes,
+                        pdf1_path: Path, pdf2_path: Path,
+                        output_dir: Path = None):
+        """すべての出力を保存（v3 LLM版用）"""
+        if output_dir:
+            self.output_dir = output_dir
+        
+        # ファイル名を取得
+        pdf1_name = pdf1_path.name
+        pdf2_name = pdf2_path.name
+        
+        # 比較結果を保存
+        return self.save_comparison_result(
+            result=comparison_result,
+            output_name="comparison",
+            pdf1_bytes=pdf1_bytes,
+            pdf2_bytes=pdf2_bytes,
+            pdf1_name=pdf1_name,
+            pdf2_name=pdf2_name
+        )
+    
     def save_comparison_result(self, result: ComparisonResult, 
                              output_name: str = "comparison",
                              pdf1_bytes: bytes = None, pdf2_bytes: bytes = None,

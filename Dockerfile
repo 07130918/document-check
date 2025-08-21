@@ -1,4 +1,4 @@
-# PDF差分検出システム - ベースライン実装用Docker環境
+# PDF差分検出システム - フル機能版Docker環境
 FROM python:3.11-slim
 
 # システム依存関係のインストール
@@ -10,12 +10,23 @@ RUN apt-get update && apt-get install -y \
     # PDF処理用
     libxml2-dev \
     libxslt1-dev \
+    poppler-utils \
+    # 画像処理用
+    libgl1 \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    # LibreOffice（Word/PowerPoint変換用）
+    libreoffice \
     # コンパイル用
     gcc \
     g++ \
     make \
     # その他
     curl \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Poetry インストール
@@ -49,8 +60,20 @@ COPY . .
 # プロジェクト自体をインストール（開発モード）
 RUN poetry install --only-root
 
+# 環境変数のテンプレートファイルを作成
+RUN echo "# Azure Document Intelligence設定" > .env.template && \
+    echo "AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT=" >> .env.template && \
+    echo "AZURE_DOCUMENT_INTELLIGENCE_KEY=" >> .env.template && \
+    echo "" >> .env.template && \
+    echo "# OpenAI API設定" >> .env.template && \
+    echo "OPENAI_API_KEY=" >> .env.template && \
+    echo "" >> .env.template && \
+    echo "# その他の設定" >> .env.template && \
+    echo "LOG_LEVEL=INFO" >> .env.template && \
+    echo "DEBUG=False" >> .env.template
+
 # ポート公開（将来のWebAPI用）
 EXPOSE 8000
 
 # デフォルトコマンド
-CMD ["python", "run_baseline_test.py"]
+CMD ["python", "-m", "apps.llm_docs_diff_v5.test_llm_diff_v5"]

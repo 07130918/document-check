@@ -207,9 +207,9 @@ def parse_arguments():
     parser.add_argument(
         '--dataset',
         type=str,
-        choices=['dantai', 'sougou'],
+        choices=['dantai', 'sample1', 'sample2', 'sample3', 'sample4', 'sample5'],
         default='dantai',
-        help='使用するデータセット (dantai: docs/img/2023.pdf & 2024.pdf, sougou: data/sougou/)'
+        help='使用するデータセット (dantai: data/dantaihoken/, sample1-5: data/sample1-5/)'
     )
     
     parser.add_argument(
@@ -296,17 +296,23 @@ def main():
     else:
         # データセットに基づいてパスを設定
         if args.dataset == 'dantai':
-            pdf1_path = 'docs/img/2023.pdf'
-            pdf2_path = 'docs/img/2024.pdf'
-        else:  # sougou
-            # 総合データセットのPDFを探す
-            sougou_dir = Path('data/sougou')
-            pdf_files = sorted(sougou_dir.glob('*.pdf'))
-            if len(pdf_files) < 2:
-                logger.error(f"総合データセットに十分なPDFファイルがありません: {len(pdf_files)} files found")
-                sys.exit(1)
-            pdf1_path = str(pdf_files[0])
-            pdf2_path = str(pdf_files[1])
+            pdf1_path = 'data/dantaihoken/2023.pdf'
+            pdf2_path = 'data/dantaihoken/2024.pdf'
+        elif args.dataset == 'sample1':
+            pdf1_path = 'data/sample1/サンプル①2024後半.pdf'
+            pdf2_path = 'data/sample1/サンプル①2025後半.pdf'
+        elif args.dataset == 'sample2':
+            pdf1_path = 'data/sample2/サンプル②2024 .pdf'
+            pdf2_path = 'data/sample2/サンプル②2025.pdf'
+        elif args.dataset == 'sample3':
+            pdf1_path = 'data/sample3/サンプル③2023.pdf'
+            pdf2_path = 'data/sample3/サンプル③2024.pdf'
+        elif args.dataset == 'sample4':
+            pdf1_path = 'data/sample4/サンプル④2024_アノテーション.pdf'
+            pdf2_path = 'data/sample4/サンプル④2025_アノテーション.pdf'
+        else:  # sample5
+            pdf1_path = 'data/sample5/サンプル⑤2024_アノテーション.pdf'
+            pdf2_path = 'data/sample5/サンプル⑤2025_アノテーション.pdf'
         
         dataset_name = args.dataset
     
