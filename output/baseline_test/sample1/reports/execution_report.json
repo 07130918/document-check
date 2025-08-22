@@ -1,0 +1,1109 @@
+{
+  "execution_info": {
+    "timestamp": "2025-08-22T01:19:43.587395",
+    "total_execution_time": "37.83 seconds",
+    "phase_times": {
+      "bbox_extraction": "0.53 seconds",
+      "reading_order_estimation": "0.09 seconds",
+      "diff_detection": "5.30 seconds",
+      "output_generation": "31.89 seconds"
+    }
+  },
+  "document_info": {
+    "document1": {
+      "total_words": 47678,
+      "total_pages": 39,
+      "words_per_page": {
+        "0": 217,
+        "1": 276,
+        "2": 1014,
+        "3": 685,
+        "4": 851,
+        "5": 657,
+        "6": 668,
+        "7": 538,
+        "8": 580,
+        "9": 837,
+        "10": 924,
+        "11": 586,
+        "12": 521,
+        "13": 1107,
+        "14": 1589,
+        "15": 1809,
+        "16": 2243,
+        "17": 1745,
+        "18": 1938,
+        "19": 1296,
+        "20": 1453,
+        "21": 1508,
+        "22": 1514,
+        "23": 1526,
+        "24": 1093,
+        "25": 1670,
+        "26": 1446,
+        "27": 1271,
+        "28": 1994,
+        "29": 1405,
+        "30": 1578,
+        "31": 1630,
+        "32": 1235,
+        "33": 1819,
+        "34": 862,
+        "35": 1820,
+        "36": 1285,
+        "37": 1720,
+        "38": 768
+      }
+    },
+    "document2": {
+      "total_words": 55686,
+      "total_pages": 44,
+      "words_per_page": {
+        "0": 218,
+        "1": 695,
+        "2": 1167,
+        "3": 759,
+        "4": 868,
+        "5": 572,
+        "6": 1259,
+        "7": 592,
+        "8": 494,
+        "9": 595,
+        "10": 902,
+        "11": 575,
+        "12": 524,
+        "13": 1105,
+        "14": 1624,
+        "15": 1864,
+        "16": 2338,
+        "17": 1213,
+        "18": 1799,
+        "19": 1534,
+        "20": 1695,
+        "21": 1643,
+        "22": 1141,
+        "23": 1267,
+        "24": 1511,
+        "25": 1578,
+        "26": 1542,
+        "27": 1560,
+        "28": 1126,
+        "29": 1742,
+        "30": 1484,
+        "31": 1301,
+        "32": 2138,
+        "33": 1507,
+        "34": 1576,
+        "35": 1630,
+        "36": 1293,
+        "37": 1825,
+        "38": 864,
+        "39": 1858,
+        "40": 1286,
+        "41": 1765,
+        "42": 972,
+        "43": 685
+      }
+    }
+  },
+  "diff_summary": {
+    "total_differences": 20089,
+    "by_type": {
+      "additions": 0,
+      "deletions": 0,
+      "modifications": 0
+    },
+    "by_page": {
+      "0": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "1": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "2": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "3": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "4": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "5": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "6": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "7": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "8": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "9": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "10": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "11": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "12": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "13": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "14": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "15": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "16": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "17": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "18": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "19": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "20": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "21": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "22": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "23": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "24": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "25": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "26": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "27": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "28": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "29": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "30": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "31": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "32": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "33": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "34": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "35": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "36": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "37": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "38": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "39": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "40": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "41": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "42": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      },
+      "43": {
+        "additions": 0,
+        "deletions": 0,
+        "modifications": 0
+      }
+    },
+    "success_rate": 100.0
+  },
+  "detailed_differences": [
+    {
+      "index": 1,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "6",
+      "original_position": {
+        "x": 61.996035439627505,
+        "y": 27.31778335571289
+      },
+      "modified_text": "7",
+      "modified_position": {
+        "x": 61.996035439627505,
+        "y": 27.31778335571289
+      }
+    },
+    {
+      "index": 2,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "募集",
+      "original_position": {
+        "x": 215.89239501953125,
+        "y": 27.19870376586914
+      },
+      "modified_text": "＼",
+      "modified_position": {
+        "x": 442.37078857421875,
+        "y": 37.50486755371094
+      }
+    },
+    {
+      "index": 3,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "から",
+      "original_position": {
+        "x": 420.6751170438879,
+        "y": 27.19870376586914
+      },
+      "modified_text": "／",
+      "modified_position": {
+        "x": 547.0816467285156,
+        "y": 37.50486755371094
+      }
+    },
+    {
+      "index": 4,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "6",
+      "original_position": {
+        "x": 165.02026922052556,
+        "y": 188.73545837402344
+      },
+      "modified_text": "7",
+      "modified_position": {
+        "x": 165.02026922052556,
+        "y": 187.31846618652344
+      }
+    },
+    {
+      "index": 5,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "日",
+      "original_position": {
+        "x": 276.4741613214666,
+        "y": 188.73545837402344
+      },
+      "modified_text": "月",
+      "modified_position": {
+        "x": 276.4741613214666,
+        "y": 187.31846618652344
+      }
+    },
+    {
+      "index": 6,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "日",
+      "original_position": {
+        "x": 419.7720225941051,
+        "y": 188.73545837402344
+      },
+      "modified_text": "月",
+      "modified_position": {
+        "x": 419.7720225941051,
+        "y": 187.31846618652344
+      }
+    },
+    {
+      "index": 7,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "８つ",
+      "original_position": {
+        "x": 82.00789642333984,
+        "y": 233.9281463623047
+      },
+      "modified_text": "９つ",
+      "modified_position": {
+        "x": 90.34529876708984,
+        "y": 228.25914001464844
+      }
+    },
+    {
+      "index": 8,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "長期",
+      "modified_position": {
+        "x": 430.9028015136719,
+        "y": 303.9263916015625
+      }
+    },
+    {
+      "index": 9,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "長期",
+      "modified_position": {
+        "x": 430.9028015136719,
+        "y": 303.9263916015625
+      }
+    },
+    {
+      "index": 10,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "収入",
+      "modified_position": {
+        "x": 454.2917709350586,
+        "y": 303.9263916015625
+      }
+    },
+    {
+      "index": 11,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "収入",
+      "modified_position": {
+        "x": 454.2917709350586,
+        "y": 303.9263916015625
+      }
+    },
+    {
+      "index": 12,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "サポート",
+      "modified_position": {
+        "x": 477.6807403564453,
+        "y": 303.9263916015625
+      }
+    },
+    {
+      "index": 13,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "サポート",
+      "modified_position": {
+        "x": 477.6807403564453,
+        "y": 303.9263916015625
+      }
+    },
+    {
+      "index": 14,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "CT",
+      "modified_position": {
+        "x": 216.42039489746094,
+        "y": 346.9927062988281
+      }
+    },
+    {
+      "index": 15,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "・",
+      "modified_position": {
+        "x": 234.19185384114584,
+        "y": 346.9927062988281
+      }
+    },
+    {
+      "index": 16,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "ＭＲＩ",
+      "modified_position": {
+        "x": 243.07758331298828,
+        "y": 346.9927062988281
+      }
+    },
+    {
+      "index": 17,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "検査",
+      "modified_position": {
+        "x": 269.7347717285156,
+        "y": 346.9927062988281
+      }
+    },
+    {
+      "index": 18,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "＋",
+      "modified_position": {
+        "x": 287.5062306722005,
+        "y": 346.9927062988281
+      }
+    },
+    {
+      "index": 19,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "セカンド",
+      "modified_position": {
+        "x": 296.39196014404297,
+        "y": 346.9927062988281
+      }
+    },
+    {
+      "index": 20,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "オピニオン",
+      "modified_position": {
+        "x": 331.9348780314128,
+        "y": 346.9927062988281
+      }
+    },
+    {
+      "index": 21,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "改",
+      "original_position": {
+        "x": 96.54060363769531,
+        "y": 584.919921875
+      },
+      "modified_text": "NEW",
+      "modified_position": {
+        "x": 91.17389678955078,
+        "y": 569.9117431640625
+      }
+    },
+    {
+      "index": 22,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "定",
+      "original_position": {
+        "x": 113.7151107788086,
+        "y": 584.919921875
+      },
+      "modified_text": "CT",
+      "modified_position": {
+        "x": 75.78130340576172,
+        "y": 603.7052001953125
+      }
+    },
+    {
+      "index": 23,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "長期",
+      "original_position": {
+        "x": 70.05169677734375,
+        "y": 616.349853515625
+      },
+      "modified_text": "・",
+      "modified_position": {
+        "x": 92.90471839904785,
+        "y": 603.7052001953125
+      }
+    },
+    {
+      "index": 24,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "長期",
+      "original_position": {
+        "x": 70.05169677734375,
+        "y": 616.349853515625
+      },
+      "modified_text": "ＭＲＩ",
+      "modified_position": {
+        "x": 101.46642589569092,
+        "y": 603.7052001953125
+      }
+    },
+    {
+      "index": 25,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "収入",
+      "original_position": {
+        "x": 91.66987609863281,
+        "y": 616.349853515625
+      },
+      "modified_text": "検査",
+      "modified_position": {
+        "x": 127.15154838562012,
+        "y": 603.7052001953125
+      }
+    },
+    {
+      "index": 26,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "収入",
+      "original_position": {
+        "x": 91.66987609863281,
+        "y": 616.349853515625
+      },
+      "modified_text": "＋",
+      "modified_position": {
+        "x": 104.5062255859375,
+        "y": 618.4302368164062
+      }
+    },
+    {
+      "index": 27,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "サポート",
+      "original_position": {
+        "x": 113.28805541992188,
+        "y": 616.349853515625
+      },
+      "modified_text": "セカンド",
+      "modified_position": {
+        "x": 64.00860595703125,
+        "y": 633.1553344726562
+      }
+    },
+    {
+      "index": 28,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "サポート",
+      "original_position": {
+        "x": 113.28805541992188,
+        "y": 616.349853515625
+      },
+      "modified_text": "オピニオン",
+      "modified_position": {
+        "x": 106.07322184244791,
+        "y": 633.1553344726562
+      }
+    },
+    {
+      "index": 29,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "「",
+      "original_position": {
+        "x": 50.274898529052734,
+        "y": 645.4254150390625
+      },
+      "modified_text": "新しい",
+      "modified_position": {
+        "x": 55.928199768066406,
+        "y": 657.1992797851562
+      }
+    },
+    {
+      "index": 30,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "免責",
+      "original_position": {
+        "x": 60.51648871103922,
+        "y": 645.4254150390625
+      },
+      "modified_text": "特約",
+      "modified_position": {
+        "x": 85.00602531433105,
+        "y": 657.1992797851562
+      }
+    },
+    {
+      "index": 31,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "期間",
+      "original_position": {
+        "x": 80.9996690750122,
+        "y": 645.4254150390625
+      },
+      "modified_text": "が",
+      "modified_position": {
+        "x": 104.39124234517416,
+        "y": 657.1992797851562
+      }
+    },
+    {
+      "index": 32,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "」",
+      "original_position": {
+        "x": 101.4828494389852,
+        "y": 645.4254150390625
+      },
+      "modified_text": "でき",
+      "modified_position": {
+        "x": 114.0838508605957,
+        "y": 657.1992797851562
+      }
+    },
+    {
+      "index": 33,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "と",
+      "original_position": {
+        "x": 111.72443962097168,
+        "y": 645.4254150390625
+      },
+      "modified_text": "まし",
+      "modified_position": {
+        "x": 133.46906789143878,
+        "y": 657.1992797851562
+      }
+    },
+    {
+      "index": 34,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "「",
+      "original_position": {
+        "x": 121.96602980295818,
+        "y": 645.4254150390625
+      },
+      "modified_text": "た",
+      "modified_position": {
+        "x": 152.85428492228192,
+        "y": 657.1992797851562
+      }
+    },
+    {
+      "index": 35,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "補償",
+      "original_position": {
+        "x": 132.20761998494464,
+        "y": 645.4254150390625
+      },
+      "modified_text": "！",
+      "modified_position": {
+        "x": 162.54689343770343,
+        "y": 657.1992797851562
+      }
+    },
+    {
+      "index": 36,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "償",
+      "original_position": {
+        "x": 139.18130493164062,
+        "y": 645.4254150390625
+      },
+      "modified_text": "詳しく",
+      "modified_position": {
+        "x": 71.85179138183594,
+        "y": 671.3689575195312
+      }
+    },
+    {
+      "index": 37,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "可能",
+      "original_position": {
+        "x": 150.51216634114584,
+        "y": 645.4254150390625
+      },
+      "modified_text": "は",
+      "modified_position": {
+        "x": 96.73883209228515,
+        "y": 671.3689575195312
+      }
+    },
+    {
+      "index": 38,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "10",
+      "original_position": {
+        "x": 155.23612213134766,
+        "y": 671.6405029296875
+      },
+      "modified_text": "1",
+      "modified_position": {
+        "x": 113.33019256591797,
+        "y": 671.3689575195312
+      }
+    },
+    {
+      "index": 39,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "詳細",
+      "original_position": {
+        "x": 57.55428695678711,
+        "y": 671.641357421875
+      },
+      "modified_text": "、",
+      "modified_position": {
+        "x": 121.62587280273436,
+        "y": 671.3689575195312
+      }
+    },
+    {
+      "index": 40,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "は",
+      "original_position": {
+        "x": 76.71273994445801,
+        "y": 671.641357421875
+      },
+      "modified_text": "P",
+      "modified_position": {
+        "x": 129.9215530395508,
+        "y": 671.3689575195312
+      }
+    },
+    {
+      "index": 41,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "パンフレット",
+      "original_position": {
+        "x": 86.29196643829346,
+        "y": 671.641357421875
+      },
+      "modified_text": "6",
+      "modified_position": {
+        "x": 138.2172332763672,
+        "y": 671.3689575195312
+      }
+    },
+    {
+      "index": 42,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "Ｐ",
+      "original_position": {
+        "x": 143.76732540130615,
+        "y": 671.641357421875
+      },
+      "modified_text": "を",
+      "modified_position": {
+        "x": 146.5129135131836,
+        "y": 671.3689575195312
+      }
+    },
+    {
+      "index": 43,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "10",
+      "original_position": {
+        "x": 153.3465518951416,
+        "y": 671.641357421875
+      },
+      "modified_text": "たすけ",
+      "modified_position": {
+        "x": 276.11761474609375,
+        "y": 684.4458618164062
+      }
+    },
+    {
+      "index": 44,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "。",
+      "original_position": {
+        "x": 139.37429809570312,
+        "y": 684.7473754882812
+      },
+      "modified_text": "ささえ",
+      "modified_position": {
+        "x": 449.7017822265625,
+        "y": 684.4458618164062
+      }
+    },
+    {
+      "index": 45,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "。",
+      "original_position": {
+        "x": 140.3220257229275,
+        "y": 684.748779296875
+      },
+      "modified_text": "！",
+      "modified_position": {
+        "x": 142.37986850738525,
+        "y": 685.5375366210938
+      }
+    },
+    {
+      "index": 46,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "7",
+      "original_position": {
+        "x": 166.85156127929687,
+        "y": 747.9586181640625
+      },
+      "modified_text": "8",
+      "modified_position": {
+        "x": 166.85156127929687,
+        "y": 733.78662109375
+      }
+    },
+    {
+      "index": 47,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "original_text": "8",
+      "original_position": {
+        "x": 385.7407592773437,
+        "y": 747.9586181640625
+      },
+      "modified_text": "9",
+      "modified_position": {
+        "x": 385.7407592773437,
+        "y": 733.78662109375
+      }
+    },
+    {
+      "index": 48,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "払込",
+      "modified_position": {
+        "x": 50.50870132446289,
+        "y": 765.5317993164062
+      }
+    },
+    {
+      "index": 49,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "刑務",
+      "modified_position": {
+        "x": 250.39649963378906,
+        "y": 803.0963134765625
+      }
+    },
+    {
+      "index": 50,
+      "type": "difference",
+      "page": 1,
+      "confidence": 1.0,
+      "modified_text": "共済",
+      "modified_position": {
+        "x": 282.39649454752606,
+        "y": 803.0963134765625
+      }
+    }
+  ],
+  "layout_changes": [],
+  "quality_metrics": {
+    "avg_confidence": 1.0,
+    "high_confidence_ratio": 1.0,
+    "layout_change_detected": 0,
+    "potential_false_positives": 0
+  },
+  "examples": {
+    "success": [
+      {
+        "type": "difference",
+        "confidence": 1.0,
+        "page": 1,
+        "text1": "6",
+        "text2": "7"
+      },
+      {
+        "type": "difference",
+        "confidence": 1.0,
+        "page": 1,
+        "text1": "募集",
+        "text2": "＼"
+      },
+      {
+        "type": "difference",
+        "confidence": 1.0,
+        "page": 1,
+        "text1": "から",
+        "text2": "／"
+      },
+      {
+        "type": "difference",
+        "confidence": 1.0,
+        "page": 1,
+        "text1": "6",
+        "text2": "7"
+      },
+      {
+        "type": "difference",
+        "confidence": 1.0,
+        "page": 1,
+        "text1": "日",
+        "text2": "月"
+      }
+    ],
+    "failure": []
+  }
+}

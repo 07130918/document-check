@@ -11,7 +11,6 @@ import argparse
 # プロジェクトのルートパスを追加
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from dotenv import load_dotenv
 from llm_docs_diff_v2.services.azure_service_enhanced import AzureDocumentServiceEnhanced
 from llm_docs_diff_v2.core.text_preprocessing import TextPreprocessor
 from llm_docs_diff_v2.core.diff_detector import EnhancedDiffDetector
@@ -20,14 +19,15 @@ from llm_docs_diff_v2.models.bbox_models import ComparisonResult, ChangeType, Di
 from llm_docs_diff_v2.core.reading_order_v2 import ReadingOrderEstimatorV2
 import json
 
-# 環境変数の読み込み
-load_dotenv()
+# Docker環境では環境変数は既に設定されている
 
 def parse_arguments():
     """コマンドライン引数の解析"""
     parser = argparse.ArgumentParser(description='LLM Diff Test v2 - 文書差分検出（行ベース版）')
-    parser.add_argument('--dataset', type=str, choices=['default', 'sougou'], default='default',
-                        help='使用するデータセット (default: docs/img/2023.pdf & 2024.pdf, sougou: data/sougou/)')
+    parser.add_argument('--dataset', type=str, 
+                        choices=['default', 'sougou', 'sample1', 'sample2', 'sample3', 'sample4', 'sample5'],
+                        default='default',
+                        help='使用するデータセット')
     parser.add_argument('--pdf1', type=str, help='比較元のPDFファイルパス（任意）')
     parser.add_argument('--pdf2', type=str, help='比較先のPDFファイルパス（任意）')
     return parser.parse_args()
@@ -36,19 +36,41 @@ def main():
     args = parse_arguments()
     
     # データセットに基づいてPDFパスを設定
+    base_path = Path(__file__).parent.parent.parent
+    
     if args.pdf1 and args.pdf2:
         # カスタムパスが指定された場合
         pdf1_path = Path(args.pdf1)
         pdf2_path = Path(args.pdf2)
     elif args.dataset == 'sougou':
         # sougouデータセットを使用
-        data_dir = Path("/root/AICE/prj-ms-document-check/data/sougou")
+        data_dir = base_path / "data" / "sougou"
         pdf1_path = data_dir / "サンプル②2024 .pdf"
         pdf2_path = data_dir / "サンプル②2025.pdf"
+    elif args.dataset == 'sample1':
+        data_dir = base_path / "data" / "sample1"
+        pdf1_path = data_dir / "サンプル①2024.pdf"
+        pdf2_path = data_dir / "サンプル①2025.pdf"
+    elif args.dataset == 'sample2':
+        data_dir = base_path / "data" / "sample2"
+        pdf1_path = data_dir / "サンプル②2024 .pdf"
+        pdf2_path = data_dir / "サンプル②2025.pdf"
+    elif args.dataset == 'sample3':
+        data_dir = base_path / "data" / "sample3"
+        pdf1_path = data_dir / "サンプル③2023.pdf"
+        pdf2_path = data_dir / "サンプル③2024.pdf"
+    elif args.dataset == 'sample4':
+        data_dir = base_path / "data" / "sample4"
+        pdf1_path = data_dir / "サンプル④2024.pdf"
+        pdf2_path = data_dir / "サンプル④2025.pdf"
+    elif args.dataset == 'sample5':
+        data_dir = base_path / "data" / "sample5"
+        pdf1_path = data_dir / "サンプル⑤2024.pdf"
+        pdf2_path = data_dir / "サンプル⑤2025.pdf"
     else:
         # デフォルトのテストデータを使用
-        pdf1_path = Path("/root/AICE/prj-ms-document-check/docs/img/2023.pdf")
-        pdf2_path = Path("/root/AICE/prj-ms-document-check/docs/img/2024.pdf")
+        pdf1_path = base_path / "docs" / "img" / "2023.pdf"
+        pdf2_path = base_path / "docs" / "img" / "2024.pdf"
     
     if not pdf1_path.exists() or not pdf2_path.exists():
         print(f"エラー: テストファイルが見つかりません")
@@ -65,12 +87,10 @@ def main():
         pdf2_bytes = f.read()
     
     # 出力ディレクトリ（v2専用、データセットごとに分ける）
-    if args.dataset == 'sougou':
-        output_dir = Path("output/llm_diff_test_v2/sougou")
-    elif args.pdf1 and args.pdf2:
+    if args.pdf1 and args.pdf2:
         output_dir = Path("output/llm_diff_test_v2/custom")
     else:
-        output_dir = Path("output/llm_diff_test_v2/default")
+        output_dir = Path(f"output/llm_diff_test_v2/{args.dataset}")
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # ========== ステップ1: Azure Document Intelligenceで階層的にPDFから抽出 ==========

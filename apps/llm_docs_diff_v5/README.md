@@ -50,7 +50,7 @@ llm_docs_diff_v5/
 ├── handlers/
 │   ├── output_handler.py  # 従来の出力処理（v4互換）
 │   └── output_handler_v2.py  # 新しい単語レベル出力処理
-└── test_llm_diff_v5_with_llm.py  # メインスクリプト
+└── test_llm_diff_v5.py  # メインスクリプト
 ```
 
 ## 主な特徴
@@ -87,7 +87,7 @@ for word in azure_page.words:
 ## 使用方法
 
 ```bash
-poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5_with_llm.py --dataset <dataset_name>
+poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5.py --dataset <dataset_name>
 ```
 
 ## v4との互換性

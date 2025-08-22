@@ -1,0 +1,12 @@
+{
+  "version": "v4",
+  "description": "改善された位置ベースの差分検出",
+  "timestamp": "2025-08-22T00:27:32.262785",
+  "statistics": {
+    "additions": 311,
+    "deletions": 34,
+    "modifications": 1452,
+    "total": 1797
+  },
+  "total_differences": 1797
+}

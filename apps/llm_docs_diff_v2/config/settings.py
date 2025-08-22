@@ -4,12 +4,7 @@ LLM文書差分検出システムの設定
 import os
 from typing import Optional
 from pathlib import Path
-from dotenv import load_dotenv
-
-# .envファイルを読み込む（プロジェクトルートから）
-project_root = Path(__file__).parent.parent.parent.parent
-env_path = project_root / ".env"
-load_dotenv(env_path)
+# Docker環境では環境変数は既に設定されている
 
 
 class Settings:
@@ -17,7 +12,8 @@ class Settings:
     
     # プロジェクトルート
     PROJECT_ROOT = Path(__file__).parent.parent
-    OUTPUT_DIR = PROJECT_ROOT / "output" / "llm_diff_test"
+    # ルートのoutputディレクトリを使用するように変更
+    OUTPUT_DIR = Path("output/llm_diff_test_v2")
     
     # OpenAI設定
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")

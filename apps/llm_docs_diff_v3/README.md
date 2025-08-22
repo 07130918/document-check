@@ -51,7 +51,7 @@ llm_docs_diff_v3/
 
 ```bash
 # 基本的な使用方法
-poetry run python apps/llm_docs_diff_v3/test_llm_diff_v3_with_llm.py --dataset dantai
+poetry run python apps/llm_docs_diff_v3/test_llm_diff_v3.py --dataset dantai
 
 # 利用可能なデータセット
 --dataset dantai    # 団体保険

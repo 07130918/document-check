@@ -4,6 +4,7 @@
 現在の実装をベースラインとして、機能の動作確認を行う
 """
 import sys
+import argparse
 from pathlib import Path
 
 # プロジェクトルートをパスに追加
@@ -14,17 +15,57 @@ from apps.diff_baseline.core import DocumentComparisonPipeline
 from apps.diff_baseline.services import SimpleDiffDetector
 
 
+def parse_arguments():
+    """コマンドライン引数の解析"""
+    parser = argparse.ArgumentParser(description='ベースライン実装テスト')
+    parser.add_argument('--dataset', type=str, 
+                        choices=['default', 'sample1', 'sample2', 'sample3', 'sample4', 'sample5'],
+                        default='default',
+                        help='使用するデータセット')
+    parser.add_argument('--pdf1', type=str, help='比較元のPDFファイルパス（任意）')
+    parser.add_argument('--pdf2', type=str, help='比較先のPDFファイルパス（任意）')
+    return parser.parse_args()
+
+
 def test_baseline():
     """
     ベースライン実装のテスト
-    5ページ制限付きで文書比較を実行し、すべての出力ファイルが正しく生成されることを確認
+    全ページで文書比較を実行し、すべての出力ファイルが正しく生成されることを確認
     """
+    args = parse_arguments()
+    
     print("=== ベースライン実装テスト ===")
-    print("5ページ制限で文書比較を実行します\n")
+    print("全ページで文書比較を実行します（有料版）\n")
 
-    # 入力ファイル
-    file1 = project_root / "docs" / "img" / "2023.pdf"
-    file2 = project_root / "docs" / "img" / "2024.pdf"
+    # データセットに基づいてPDFパスを設定
+    if args.pdf1 and args.pdf2:
+        # カスタムパスが指定された場合
+        file1 = Path(args.pdf1)
+        file2 = Path(args.pdf2)
+    elif args.dataset == 'sample1':
+        data_dir = project_root / "data" / "sample1"
+        file1 = data_dir / "サンプル①2024.pdf"
+        file2 = data_dir / "サンプル①2025.pdf"
+    elif args.dataset == 'sample2':
+        data_dir = project_root / "data" / "sample2"
+        file1 = data_dir / "サンプル②2024 .pdf"
+        file2 = data_dir / "サンプル②2025.pdf"
+    elif args.dataset == 'sample3':
+        data_dir = project_root / "data" / "sample3"
+        file1 = data_dir / "サンプル③2023.pdf"
+        file2 = data_dir / "サンプル③2024.pdf"
+    elif args.dataset == 'sample4':
+        data_dir = project_root / "data" / "sample4"
+        file1 = data_dir / "サンプル④2024.pdf"
+        file2 = data_dir / "サンプル④2025.pdf"
+    elif args.dataset == 'sample5':
+        data_dir = project_root / "data" / "sample5"
+        file1 = data_dir / "サンプル⑤2024.pdf"
+        file2 = data_dir / "サンプル⑤2025.pdf"
+    else:
+        # デフォルトのテストデータを使用
+        file1 = project_root / "docs" / "img" / "2023.pdf"
+        file2 = project_root / "docs" / "img" / "2024.pdf"
 
     if not (file1.exists() and file2.exists()):
         print("Error: 入力ファイルが見つかりません")
@@ -32,15 +73,18 @@ def test_baseline():
         print(f"  - {file2}")
         return False
 
-    # 出力ディレクトリ
-    output_dir = project_root / "output" / "baseline_test"
+    # 出力ディレクトリ（データセットごとに分ける）
+    if args.pdf1 and args.pdf2:
+        output_dir = project_root / "output" / "baseline_test" / "custom"
+    else:
+        output_dir = project_root / "output" / "baseline_test" / args.dataset
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # パイプライン実行（単純化版の差分検出器を使用）
     pipeline = DocumentComparisonPipeline(
         use_layout_aware_diff=False,        # レイアウト認識差分検出は無効
         use_sentence_aware_diff=False,      # 文章単位差分検出も無効
-        max_pages=5                         # 5ページに制限
+        max_pages=None                      # 有料版：全ページを処理
     )
     
     # SimpleDiffDetectorに差し替え（差分タイプを分けない）
@@ -66,22 +110,24 @@ def test_baseline():
         print("=" * 50)
 
         # 期待される出力ファイルの確認（新しいディレクトリ構造）
+        base1 = file1.stem  # 拡張子なしのファイル名
+        base2 = file2.stem
         expected_files = [
-            ("PDFs", "2023_compared.pdf"),
-            ("PDFs", "2024_compared.pdf"),
-            ("PDFs", "2023_original_order.pdf"),
-            ("PDFs", "2024_original_order.pdf"),
-            ("PDFs", "2023_reading_order.pdf"),
-            ("PDFs", "2024_reading_order.pdf"),
+            ("PDFs", f"{base1}_compared.pdf"),
+            ("PDFs", f"{base2}_compared.pdf"),
+            ("PDFs", f"{base1}_original_order.pdf"),
+            ("PDFs", f"{base2}_original_order.pdf"),
+            ("PDFs", f"{base1}_reading_order.pdf"),
+            ("PDFs", f"{base2}_reading_order.pdf"),
             ("PDFs", "side_by_side_comparison.pdf"),  # 並列表示PDF
             ("reports", "sentence_info.json"),
             ("reports", "reading_order.json"),
             ("reports", "execution_report.json"),
             ("reports", "execution_report.md"),
-            ("debug", "2023_reading_order_original.csv"),
-            ("debug", "2023_reading_order_estimated.csv"),
-            ("debug", "2024_reading_order_original.csv"),
-            ("debug", "2024_reading_order_estimated.csv")
+            ("debug", f"{base1}_reading_order_original.csv"),
+            ("debug", f"{base1}_reading_order_estimated.csv"),
+            ("debug", f"{base2}_reading_order_original.csv"),
+            ("debug", f"{base2}_reading_order_estimated.csv")
         ]
 
         print("\n生成されたファイル:")

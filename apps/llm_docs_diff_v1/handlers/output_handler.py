@@ -518,7 +518,10 @@ class OutputHandler:
             # 保存（ベースラインと同じファイル名）
             pdfs_dir = self.output_dir / "PDFs"
             pdfs_dir.mkdir(exist_ok=True)
-            pdf_path = pdfs_dir / "2023_reading_order.pdf"
+            # データセット対応のファイル名を使用
+            doc1_name = result.metadata.get('doc1_name', '2023.pdf')
+            doc1_base = Path(doc1_name).stem  # 拡張子を除いたファイル名
+            pdf_path = pdfs_dir / f"{doc1_base}_reading_order.pdf"
             with open(pdf_path, 'wb') as f:
                 f.write(reading_order_pdf)
             saved_paths["reading_order_pdf1"] = str(pdf_path)
@@ -556,7 +559,10 @@ class OutputHandler:
             
             pdfs_dir = self.output_dir / "PDFs"
             pdfs_dir.mkdir(exist_ok=True)
-            pdf_path = pdfs_dir / "2024_reading_order.pdf"
+            # データセット対応のファイル名を使用
+            doc2_name = result.metadata.get('doc2_name', '2024.pdf')
+            doc2_base = Path(doc2_name).stem  # 拡張子を除いたファイル名
+            pdf_path = pdfs_dir / f"{doc2_base}_reading_order.pdf"
             with open(pdf_path, 'wb') as f:
                 f.write(reading_order_pdf)
             saved_paths["reading_order_pdf2"] = str(pdf_path)
@@ -580,7 +586,9 @@ class OutputHandler:
         
         # 文書1の元の順序CSV
         if result.metadata.get('doc1_boxes'):
-            csv_path = debug_dir / "2023_reading_order_original.csv"
+            doc1_name = result.metadata.get('doc1_name', '2023.pdf')
+            doc1_base = Path(doc1_name).stem
+            csv_path = debug_dir / f"{doc1_base}_reading_order_original.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -591,7 +599,9 @@ class OutputHandler:
         
         # 文書1の推定順序CSV（グローバル順序を使用）
         if result.reading_order_doc1:
-            csv_path = debug_dir / "2023_reading_order_estimated.csv"
+            doc1_name = result.metadata.get('doc1_name', '2023.pdf')
+            doc1_base = Path(doc1_name).stem
+            csv_path = debug_dir / f"{doc1_base}_reading_order_estimated.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -603,7 +613,9 @@ class OutputHandler:
         
         # 文書2の元の順序CSV
         if result.metadata.get('doc2_boxes'):
-            csv_path = debug_dir / "2024_reading_order_original.csv"
+            doc2_name = result.metadata.get('doc2_name', '2024.pdf')
+            doc2_base = Path(doc2_name).stem
+            csv_path = debug_dir / f"{doc2_base}_reading_order_original.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -614,7 +626,9 @@ class OutputHandler:
         
         # 文書2の推定順序CSV（グローバル順序を使用）
         if result.reading_order_doc2:
-            csv_path = debug_dir / "2024_reading_order_estimated.csv"
+            doc2_name = result.metadata.get('doc2_name', '2024.pdf')
+            doc2_base = Path(doc2_name).stem
+            csv_path = debug_dir / f"{doc2_base}_reading_order_estimated.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -641,7 +655,9 @@ class OutputHandler:
         # 文書1の見開き単位デバッグ情報
         if result.reading_order_doc1:
             spreads_data = self._group_by_spreads(result.reading_order_doc1)
-            csv_path = debug_dir / "2023_spreads_debug.csv"
+            doc1_name = result.metadata.get('doc1_name', '2023.pdf')
+            doc1_base = Path(doc1_name).stem
+            csv_path = debug_dir / f"{doc1_base}_spreads_debug.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -661,7 +677,9 @@ class OutputHandler:
         # 文書2の見開き単位デバッグ情報
         if result.reading_order_doc2:
             spreads_data = self._group_by_spreads(result.reading_order_doc2)
-            csv_path = debug_dir / "2024_spreads_debug.csv"
+            doc2_name = result.metadata.get('doc2_name', '2024.pdf')
+            doc2_base = Path(doc2_name).stem
+            csv_path = debug_dir / f"{doc2_base}_spreads_debug.csv"
             with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -767,7 +785,10 @@ class OutputHandler:
             # 保存
             pdfs_dir = self.output_dir / "PDFs"
             pdfs_dir.mkdir(exist_ok=True)
-            pdf_path = pdfs_dir / "2023_original_order.pdf"
+            # データセット対応のファイル名を使用
+            doc1_name = result.metadata.get('doc1_name', '2023.pdf')
+            doc1_base = Path(doc1_name).stem
+            pdf_path = pdfs_dir / f"{doc1_base}_original_order.pdf"
             with open(pdf_path, 'wb') as f:
                 f.write(original_order_pdf)
             saved_paths["original_order_pdf1"] = str(pdf_path)
@@ -788,7 +809,10 @@ class OutputHandler:
                 pdf2_bytes, highlights
             )
             
-            pdf_path = pdfs_dir / "2024_original_order.pdf"
+            # データセット対応のファイル名を使用
+            doc2_name = result.metadata.get('doc2_name', '2024.pdf')
+            doc2_base = Path(doc2_name).stem
+            pdf_path = pdfs_dir / f"{doc2_base}_original_order.pdf"
             with open(pdf_path, 'wb') as f:
                 f.write(original_order_pdf)
             saved_paths["original_order_pdf2"] = str(pdf_path)
@@ -817,14 +841,20 @@ class OutputHandler:
         
         # 文書1の比較PDF
         if "doc1" in highlighted_pdfs:
-            pdf_path = pdfs_dir / "2023_compared.pdf"
+            # データセット対応のファイル名を使用
+            doc1_name = result.metadata.get('doc1_name', '2023.pdf')
+            doc1_base = Path(doc1_name).stem
+            pdf_path = pdfs_dir / f"{doc1_base}_compared.pdf"
             with open(pdf_path, 'wb') as f:
                 f.write(highlighted_pdfs["doc1"])
             saved_paths["compared_pdf1"] = str(pdf_path)
         
         # 文書2の比較PDF
         if "doc2" in highlighted_pdfs:
-            pdf_path = pdfs_dir / "2024_compared.pdf"
+            # データセット対応のファイル名を使用
+            doc2_name = result.metadata.get('doc2_name', '2024.pdf')
+            doc2_base = Path(doc2_name).stem
+            pdf_path = pdfs_dir / f"{doc2_base}_compared.pdf"
             with open(pdf_path, 'wb') as f:
                 f.write(highlighted_pdfs["doc2"])
             saved_paths["compared_pdf2"] = str(pdf_path)
@@ -857,13 +887,15 @@ class OutputHandler:
                 "words": result.metadata['azure_doc1_boxes']
             }
             
-            azure1_path = azure_dir / "2023_azure_extraction.json"
+            doc1_name = result.metadata.get('doc1_name', '2023.pdf')
+            doc1_base = Path(doc1_name).stem
+            azure1_path = azure_dir / f"{doc1_base}_azure_extraction.json"
             with open(azure1_path, 'w', encoding='utf-8') as f:
                 json.dump(azure_data1, f, ensure_ascii=False, indent=2)
             saved_paths["azure_doc1"] = str(azure1_path)
             
             # Azure抽出データのCSV
-            csv1_path = azure_dir / "2023_azure_words.csv"
+            csv1_path = azure_dir / f"{doc1_base}_azure_words.csv"
             with open(csv1_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)
@@ -891,13 +923,15 @@ class OutputHandler:
                 "words": result.metadata['azure_doc2_boxes']
             }
             
-            azure2_path = azure_dir / "2024_azure_extraction.json"
+            doc2_name = result.metadata.get('doc2_name', '2024.pdf')
+            doc2_base = Path(doc2_name).stem
+            azure2_path = azure_dir / f"{doc2_base}_azure_extraction.json"
             with open(azure2_path, 'w', encoding='utf-8') as f:
                 json.dump(azure_data2, f, ensure_ascii=False, indent=2)
             saved_paths["azure_doc2"] = str(azure2_path)
             
             # Azure抽出データのCSV
-            csv2_path = azure_dir / "2024_azure_words.csv"
+            csv2_path = azure_dir / f"{doc2_base}_azure_words.csv"
             with open(csv2_path, 'w', encoding='utf-8-sig', newline='') as f:
                 import csv
                 writer = csv.writer(f)

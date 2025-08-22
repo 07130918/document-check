@@ -1,0 +1,37 @@
+{
+  "version": "v2_line_based",
+  "extraction_method": "Azure Document Intelligence (Hierarchical)",
+  "comparison": {
+    "word_level": {
+      "doc1": 69362,
+      "doc2": 81665,
+      "description": "文字単位（最も詳細だが、レイアウトが混在しやすい）"
+    },
+    "line_level": {
+      "doc1": 3702,
+      "doc2": 4697,
+      "description": "行単位（視覚的な行を保持、レイアウトの混在を防ぐ）"
+    },
+    "paragraph_level": {
+      "doc1": 1719,
+      "doc2": 1996,
+      "description": "段落単位（論理的な文章のまとまりを保持）"
+    }
+  },
+  "difference_detection": {
+    "level": "line",
+    "results": {
+      "removed": 1309,
+      "added": 2028,
+      "modified": 197
+    },
+    "total": 3534
+  },
+  "improvements_over_v1": [
+    "Azure Document Intelligenceの階層構造を活用",
+    "行レベルでの抽出により「団体保険制度」と「役員・従業員...」の混在を防止",
+    "段落レベルの情報も取得可能",
+    "より正確なレイアウト認識",
+    "論理的な文書構造の保持"
+  ]
+}

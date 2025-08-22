@@ -152,25 +152,25 @@ LLM_TEMPERATURE = 0.1
 
 ## 6. 使用方法
 
-### 6.1 基本的な使用（LLMなし）
+### 6.1 基本的な使用
 ```bash
-python test_llm_diff_v3.py --pdf1 path/to/pdf1.pdf --pdf2 path/to/pdf2.pdf
-```
-
-### 6.2 LLM統合版の使用
-```bash
-python test_llm_diff_v3_with_llm.py \
-    --pdf1 path/to/pdf1.pdf \
-    --pdf2 path/to/pdf2.pdf \
-    --use-llm-order \
-    --use-llm-summary
-```
-
-### 6.3 データセットの使用
-```bash
-# 事前定義されたデータセットを使用
 python test_llm_diff_v3.py --dataset dantai
 ```
+
+### 6.2 LLM機能の使用
+```bash
+python test_llm_diff_v3.py \
+    --dataset sample1 \
+    --use-llm-order \
+    --use-llm-summary \
+    --analyze-structure
+```
+
+### 6.3 利用可能なオプション
+- `--dataset`: 使用するデータセット (dantai, sample1, sample2, sample3, sample4, sample5)
+- `--use-llm-order`: LLMで読み順序を推定
+- `--use-llm-summary`: LLMで差分を要約
+- `--analyze-structure`: LLMで文書構造を解析
 
 ## 7. 出力形式
 

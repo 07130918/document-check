@@ -4,12 +4,7 @@ LLM文書差分検出システムの設定
 import os
 from typing import Optional
 from pathlib import Path
-from dotenv import load_dotenv
-
-# .envファイルを読み込む（プロジェクトルートから）
-project_root = Path(__file__).parent.parent.parent.parent
-env_path = project_root / ".env"
-load_dotenv(env_path)
+# Docker環境では環境変数は既に設定されている
 
 
 class Settings:

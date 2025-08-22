@@ -58,11 +58,8 @@ class AzureDocumentServiceEnhanced:
             from ..utils.pdf_utils import PDFProcessor
             pdf_processor = PDFProcessor()
             
-            # テスト用に最大ページ数を制限
-            max_pages = getattr(settings, 'TEST_MAX_PAGES', 5)
-            if max_pages:
-                logger.info(f"Limiting PDF to {max_pages} pages for Azure processing")
-                pdf_bytes = pdf_processor.limit_pdf_pages(pdf_bytes, max_pages)
+            # 有料版では制限なし - 全ページを処理
+            logger.info("Processing all pages with Azure Document Intelligence (paid version)")
             
             # Document Intelligenceでレイアウト解析
             poller = self.client.begin_analyze_document(

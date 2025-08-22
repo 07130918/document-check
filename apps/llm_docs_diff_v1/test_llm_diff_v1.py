@@ -11,21 +11,17 @@ import argparse
 # プロジェクトのルートパスを追加
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from dotenv import load_dotenv
 from apps.llm_docs_diff_v1.services.azure_service import AzureDocumentService
 from apps.llm_docs_diff_v1.core.diff_detector import EnhancedDiffDetector
 from apps.llm_docs_diff_v1.handlers.output_handler import OutputHandler
 from apps.llm_docs_diff_v1.models.bbox_models import ComparisonResult, ChangeType, DiffResult, BBoxTextData
 import json
 
-# 環境変数の読み込み
-load_dotenv()
-
 def parse_arguments():
     """コマンドライン引数の解析"""
     parser = argparse.ArgumentParser(description='LLM Diff Test v1 - 文書差分検出')
-    parser.add_argument('--dataset', type=str, choices=['default', 'sougou'], default='default',
-                        help='使用するデータセット (default: docs/img/2023.pdf & 2024.pdf, sougou: data/sougou/)')
+    parser.add_argument('--dataset', type=str, choices=['default', 'sougou', 'sample1'], default='default',
+                        help='使用するデータセット (default: docs/img/2023.pdf & 2024.pdf, sougou: data/sougou/, sample1: data/sample1/)')
     parser.add_argument('--pdf1', type=str, help='比較元のPDFファイルパス（任意）')
     parser.add_argument('--pdf2', type=str, help='比較先のPDFファイルパス（任意）')
     return parser.parse_args()
@@ -40,13 +36,18 @@ def main():
         pdf2_path = Path(args.pdf2)
     elif args.dataset == 'sougou':
         # sougouデータセットを使用
-        data_dir = Path("/root/AICE/prj-ms-document-check/data/sougou")
+        data_dir = Path(__file__).parent.parent.parent / "data" / "sougou"
         pdf1_path = data_dir / "サンプル②2024 .pdf"
         pdf2_path = data_dir / "サンプル②2025.pdf"
+    elif args.dataset == 'sample1':
+        # sample1データセットを使用
+        data_dir = Path(__file__).parent.parent.parent / "data" / "sample1"
+        pdf1_path = data_dir / "サンプル①2024.pdf"
+        pdf2_path = data_dir / "サンプル①2025.pdf"
     else:
         # デフォルトのテストデータを使用
-        pdf1_path = Path("/root/AICE/prj-ms-document-check/docs/img/2023.pdf")
-        pdf2_path = Path("/root/AICE/prj-ms-document-check/docs/img/2024.pdf")
+        pdf1_path = Path(__file__).parent.parent.parent / "docs" / "img" / "2023.pdf"
+        pdf2_path = Path(__file__).parent.parent.parent / "docs" / "img" / "2024.pdf"
     
     if not pdf1_path.exists() or not pdf2_path.exists():
         print(f"エラー: テストファイルが見つかりません")
@@ -65,6 +66,8 @@ def main():
     # 出力ディレクトリ（v1専用、データセットごとに分ける）
     if args.dataset == 'sougou':
         output_dir = Path("output/llm_diff_test_v1/sougou")
+    elif args.dataset == 'sample1':
+        output_dir = Path("output/llm_diff_test_v1/sample1")
     elif args.pdf1 and args.pdf2:
         output_dir = Path("output/llm_diff_test_v1/custom")
     else:

@@ -1,0 +1,370 @@
+{
+  "total": 9695,
+  "by_type": {
+    "modified": 648,
+    "deleted": 4352,
+    "added": 4695
+  },
+  "by_page": {
+    "0": {
+      "modified": 13,
+      "deleted": 3,
+      "added": 10
+    },
+    "1": {
+      "modified": 8,
+      "deleted": 2,
+      "added": 4
+    },
+    "2": {
+      "modified": 18,
+      "deleted": 7,
+      "added": 13
+    },
+    "3": {
+      "modified": 3,
+      "deleted": 28,
+      "added": 71
+    },
+    "4": {
+      "modified": 31,
+      "deleted": 85,
+      "added": 57
+    },
+    "5": {
+      "deleted": 44,
+      "added": 126
+    },
+    "6": {
+      "modified": 2,
+      "deleted": 108,
+      "added": 53
+    },
+    "7": {
+      "deleted": 40,
+      "added": 44
+    },
+    "8": {
+      "deleted": 47,
+      "added": 109
+    },
+    "9": {
+      "deleted": 126,
+      "added": 47
+    },
+    "10": {
+      "deleted": 71,
+      "added": 49
+    },
+    "11": {
+      "deleted": 53,
+      "added": 164
+    },
+    "12": {
+      "deleted": 143,
+      "added": 62
+    },
+    "13": {
+      "modified": 21,
+      "deleted": 9,
+      "added": 13
+    },
+    "14": {
+      "modified": 101,
+      "deleted": 24,
+      "added": 44
+    },
+    "15": {
+      "deleted": 57,
+      "added": 48
+    },
+    "16": {
+      "modified": 76,
+      "deleted": 97,
+      "added": 80
+    },
+    "17": {
+      "modified": 2,
+      "deleted": 74,
+      "added": 48
+    },
+    "18": {
+      "modified": 87,
+      "deleted": 89,
+      "added": 82
+    },
+    "19": {
+      "modified": 3,
+      "deleted": 115,
+      "added": 74
+    },
+    "20": {
+      "modified": 46,
+      "deleted": 85,
+      "added": 144
+    },
+    "21": {
+      "modified": 26,
+      "deleted": 179,
+      "added": 89
+    },
+    "22": {
+      "modified": 1,
+      "deleted": 75,
+      "added": 132
+    },
+    "23": {
+      "modified": 88,
+      "deleted": 66,
+      "added": 113
+    },
+    "24": {
+      "modified": 1,
+      "deleted": 85,
+      "added": 72
+    },
+    "25": {
+      "modified": 10,
+      "deleted": 77,
+      "added": 148
+    },
+    "26": {
+      "modified": 9,
+      "deleted": 103,
+      "added": 77
+    },
+    "27": {
+      "modified": 13,
+      "deleted": 183,
+      "added": 67
+    },
+    "28": {
+      "modified": 31,
+      "deleted": 140,
+      "added": 85
+    },
+    "29": {
+      "modified": 1,
+      "deleted": 80,
+      "added": 196
+    },
+    "30": {
+      "modified": 38,
+      "deleted": 72,
+      "added": 141
+    },
+    "31": {
+      "modified": 10,
+      "deleted": 39,
+      "added": 72
+    },
+    "32": {
+      "deleted": 32,
+      "added": 113
+    },
+    "33": {
+      "deleted": 45,
+      "added": 49
+    },
+    "34": {
+      "deleted": 34,
+      "added": 33
+    },
+    "35": {
+      "deleted": 46,
+      "added": 50
+    },
+    "36": {
+      "modified": 1,
+      "deleted": 57,
+      "added": 34
+    },
+    "37": {
+      "deleted": 44,
+      "added": 51
+    },
+    "38": {
+      "deleted": 33,
+      "added": 59
+    },
+    "39": {
+      "deleted": 44,
+      "added": 47
+    },
+    "40": {
+      "deleted": 43,
+      "added": 110
+    },
+    "41": {
+      "deleted": 31,
+      "added": 50
+    },
+    "42": {
+      "deleted": 23,
+      "added": 25
+    },
+    "43": {
+      "deleted": 11,
+      "added": 40
+    },
+    "44": {
+      "deleted": 38,
+      "added": 43
+    },
+    "45": {
+      "deleted": 34,
+      "added": 1
+    },
+    "46": {
+      "deleted": 30,
+      "added": 1
+    },
+    "47": {
+      "deleted": 24,
+      "added": 63
+    },
+    "48": {
+      "modified": 1,
+      "deleted": 30,
+      "added": 43
+    },
+    "49": {
+      "modified": 3,
+      "deleted": 15,
+      "added": 26
+    },
+    "50": {
+      "modified": 1,
+      "deleted": 23,
+      "added": 33
+    },
+    "51": {
+      "modified": 1,
+      "deleted": 23,
+      "added": 19
+    },
+    "52": {
+      "modified": 1,
+      "deleted": 27,
+      "added": 21
+    },
+    "53": {
+      "deleted": 63,
+      "added": 28
+    },
+    "54": {
+      "deleted": 78,
+      "added": 16
+    },
+    "55": {
+      "deleted": 66,
+      "added": 13
+    },
+    "56": {
+      "deleted": 61,
+      "added": 29
+    },
+    "57": {
+      "deleted": 60,
+      "added": 60
+    },
+    "58": {
+      "deleted": 147,
+      "added": 49
+    },
+    "59": {
+      "deleted": 114,
+      "added": 17
+    },
+    "60": {
+      "modified": 1,
+      "deleted": 94,
+      "added": 46
+    },
+    "61": {
+      "deleted": 62,
+      "added": 16
+    },
+    "62": {
+      "deleted": 56,
+      "added": 20
+    },
+    "63": {
+      "deleted": 69,
+      "added": 26
+    },
+    "64": {
+      "deleted": 49,
+      "added": 27
+    },
+    "65": {
+      "deleted": 76,
+      "added": 35
+    },
+    "66": {
+      "deleted": 117,
+      "added": 26
+    },
+    "67": {
+      "deleted": 42,
+      "added": 61
+    },
+    "68": {
+      "deleted": 38,
+      "added": 48
+    },
+    "69": {
+      "deleted": 2,
+      "added": 54
+    },
+    "70": {
+      "deleted": 2,
+      "added": 62
+    },
+    "71": {
+      "deleted": 63,
+      "added": 59
+    },
+    "72": {
+      "added": 56
+    },
+    "73": {
+      "added": 175
+    },
+    "74": {
+      "added": 55
+    },
+    "75": {
+      "added": 50
+    },
+    "76": {
+      "added": 60
+    },
+    "77": {
+      "added": 51
+    },
+    "78": {
+      "added": 67
+    },
+    "79": {
+      "added": 44
+    }
+  },
+  "by_block_type": {
+    "header": {
+      "modified": 32,
+      "deleted": 370,
+      "added": 395
+    },
+    "footer": {
+      "modified": 105,
+      "deleted": 579,
+      "added": 616
+    },
+    "paragraph": {
+      "modified": 511,
+      "deleted": 3403,
+      "added": 3684
+    }
+  }
+}

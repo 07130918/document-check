@@ -4,41 +4,33 @@ MS&ADインシュアランスグループ向けのPDF文書差分検出システ
 
 ## 🌟 特徴
 
-- **高精度なOCR**: Azure Document Intelligenceを使用した文書解析
+- **高精度なOCR**: Azure Document Intelligence（有料版）を使用した全ページ文書解析
 - **LLM統合**: OpenAI GPTを使用した差分の意味的分析と要約
 - **単語レベル差分検出**: 細かい変更も見逃さない精密な比較
 - **視覚的な差分表示**: 変更箇所をハイライト表示したPDF出力
 - **多様な文書形式対応**: PDF、Word、PowerPointに対応
-- **バッチ処理対応**: 複数ページの効率的な処理
+- **全ページ処理**: Azure有料版により無制限のページ数に対応
 
-## 📊 システムバージョン
+## 📊 推奨システムバージョン
 
 ### v5 (最新版) - LLM統合版
 - Azure OCRの単語レベル情報を直接活用
 - LLMによる差分の意味的分析
 - 変更の重要度自動評価
 - 自然言語での差分要約生成
+- 最も高精度で実用的
 
-### v4 - ブロックベース高精度版
-- Azure OCRの段落認識を活用
-- 高精度なブロックマッチング
-- 座標系の完全な統一
-
-### v3 - LLM実験版
-- LLMによる読み順序推定
-- 文書構造の自動解析
-- 差分の要約生成
-
-### v2 - 行ベース版
-- Azure OCRの行認識を活用
-- 行単位での差分検出
-
-### v1 - 基本版
-- 単語ベースの基本的な差分検出
+### v3 - 内容ベース差分検出版
+- 内容の類似度に基づく高精度なマッチング（90%内容、10%位置）
+- LLMによる差分要約生成（オプション）
+- 複雑なレイアウトに対応
+- 移動検出は非実装（不要と判断）
 
 ### baseline - ベースライン版
 - prj-meiji-document-checkアルゴリズムベース
 - SequenceMatcher + レーベンシュタイン距離
+- シンプルで高速な処理
+- 基本的な差分検出に最適
 
 ## 🚀 クイックスタート
 
@@ -49,26 +41,35 @@ MS&ADインシュアランスグループ向けのPDF文書差分検出システ
 ./scripts/docker-setup.sh
 
 # 2. v5 LLM版の実行（最新・推奨）
-docker compose run pdf-diff-v5-llm
+docker compose run --rm pdf-diff-v5-llm
 
 # 3. 結果確認
 ls -la output/llm_diff_test_v5_llm/dantai/
 ```
 
-### データセットを指定して実行
+### 各バージョンの実行
 
 ```bash
-# dantaiデータセット（デフォルト）
-docker compose run --rm pdf-diff-v5-llm
+# v5 LLM版（最高精度・推奨）
+docker compose run --rm pdf-diff-v5-llm poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5_with_llm.py --dataset sample1 --use-llm --llm-summary
 
-# sample1データセット
-docker compose run --rm pdf-diff-v5-llm poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5_with_llm.py --dataset sample1
+# v3 内容ベース版（高速・実用的）
+docker compose run --rm pdf-diff-v3-llm poetry run python apps/llm_docs_diff_v3/test_llm_diff_v3_with_llm.py --dataset sample1 --use-llm-summary
 
-# sample2データセット
-docker compose run --rm pdf-diff-v5-llm poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5_with_llm.py --dataset sample2
+# baseline版（シンプル・高速）
+docker compose run --rm pdf-diff-baseline poetry run python apps/diff_baseline/test_baseline.py --dataset sample1
+```
 
-# v3版でsample3を実行
-docker compose run --rm pdf-diff-v3-llm poetry run python apps/llm_docs_diff_v3/test_llm_diff_v3_with_llm.py --dataset sample3
+### 利用可能なデータセット
+
+```bash
+# 各バージョンは以下のデータセットをサポート:
+# - dantai: 団体保険データセット
+# - sample1: サンプル①（保険募集資料）
+# - sample2: サンプル②（総合保険）
+# - sample3: サンプル③
+# - sample4: サンプル④（アノテーション付き）
+# - sample5: サンプル⑤（アノテーション付き）
 ```
 
 ### ローカル環境での実行
@@ -84,9 +85,15 @@ poetry install --with dev,test --extras "full"
 cp .env.template .env
 # .envファイルを編集してAPIキーを設定
 
-# 4. v5 LLM版の実行
-poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5_with_llm.py \
-  --dataset dantai --use-llm --llm-summary
+# 4. 実行例
+# v5 LLM版
+poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5_with_llm.py --dataset sample1 --use-llm --llm-summary
+
+# v3 内容ベース版
+poetry run python apps/llm_docs_diff_v3/test_llm_diff_v3_with_llm.py --dataset sample1 --use-llm-summary
+
+# baseline版
+poetry run python apps/diff_baseline/test_baseline.py --dataset sample1
 ```
 
 ## 📁 プロジェクト構成
@@ -94,15 +101,17 @@ poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5_with_llm.py \
 ```
 prj-ms-document-check/
 ├── apps/                        # アプリケーションバージョン
-│   ├── llm_docs_diff_v5/       # v5: LLM統合版（最新）
+│   ├── llm_docs_diff_v5/       # v5: LLM統合版（最新・推奨）
 │   │   ├── services/           # Azure OCR & LLMサービス
 │   │   ├── handlers/           # 出力処理（単語レベルハイライト）
 │   │   └── test_llm_diff_v5_with_llm.py  # LLM版実行スクリプト
-│   ├── llm_docs_diff_v4/       # v4: ブロックベース版
-│   ├── llm_docs_diff_v3/       # v3: LLM実験版
-│   ├── llm_docs_diff_v2/       # v2: 行ベース版
-│   ├── llm_docs_diff_v1/       # v1: 基本版
+│   ├── llm_docs_diff_v3/       # v3: 内容ベース差分検出版
+│   │   ├── core/               # 差分検出コア（90%内容、10%位置）
+│   │   ├── services/           # Azure階層構造抽出
+│   │   └── test_llm_diff_v3_with_llm.py  # 実行スクリプト
 │   └── diff_baseline/          # ベースライン実装
+│       ├── core/               # 基本差分検出
+│       └── test_baseline.py    # 実行スクリプト
 ├── data/                        # テストデータ
 │   ├── dantaihoken/            # 団体保険データセット
 │   ├── sample1/                # サンプル①データセット
@@ -172,17 +181,22 @@ chmod +x scripts/docker-setup.sh
 
 #### v5 LLM版（推奨）
 ```bash
-docker compose run pdf-diff-v5-llm
+docker compose run --rm pdf-diff-v5-llm
 ```
 
-#### v3 LLM版
+#### v3 内容ベース版
 ```bash
-docker compose run pdf-diff-v3-llm
+docker compose run --rm pdf-diff-v3-llm
+```
+
+#### baseline版
+```bash
+docker compose run --rm pdf-diff-baseline
 ```
 
 #### 開発用対話環境
 ```bash
-docker compose run pdf-diff-dev
+docker compose run --rm pdf-diff-dev
 ```
 
 #### Jupyter Lab環境
@@ -195,23 +209,24 @@ docker compose up pdf-diff-jupyter
 
 #### 共通オプション
 - `--dataset`: 使用するデータセット
-  - `dantai`: 団体保険データセット（デフォルト）
-  - `sample1`: サンプル①（後半部分）
+  - `dantai`: 団体保険データセット（v5, v3のデフォルト）
+  - `sample1`: サンプル①（保険募集資料）
   - `sample2`: サンプル②（総合保険）
   - `sample3`: サンプル③
   - `sample4`: サンプル④（アノテーション付き）
   - `sample5`: サンプル⑤（アノテーション付き）
+  - `default`: デフォルトテストデータ（baselineのデフォルト）
 
 #### v5 LLM版オプション
 - `--use-llm`: LLMで差分を分析（デフォルト: True）
 - `--llm-summary`: LLMで要約を生成（デフォルト: True）
 - `--analyze-each`: 各差分を個別にLLMで分析
-- `--max-pages`: 処理する最大ページ数（デフォルト: 5）
 
-#### v3 LLM版オプション
-- `--use-llm-order`: LLMで読み順序を推定
-- `--use-llm-summary`: LLMで差分を要約
-- `--analyze-structure`: LLMで文書構造を解析
+#### v3 内容ベース版オプション
+- `--use-llm-summary`: LLMで差分を要約（オプション）
+
+#### baseline版オプション
+- データセット選択のみ（追加オプションなし）
 
 ## 📊 出力ファイル
 
@@ -220,9 +235,6 @@ docker compose up pdf-diff-jupyter
 ```
 output/
 ├── llm_diff_test_v5_llm/         # v5 LLM版の結果
-│   ├── dantai/                   # 団体保険データセット
-│   ├── sample1/                  # サンプル①
-│   ├── sample2/                  # サンプル②
 │   └── [dataset]/
 │       ├── [pdf1]_highlighted.pdf   # 文書1のハイライト版
 │       ├── [pdf2]_highlighted.pdf   # 文書2のハイライト版
@@ -231,14 +243,16 @@ output/
 │       ├── summary.json          # 差分サマリー
 │       ├── llm_analysis_result.json  # LLM分析結果
 │       └── evaluation_document.md    # 評価用ドキュメント
-└── llm_diff_test_v3_llm/         # v3 LLM版の結果
-    ├── dantai/
-    ├── sample1/
-    ├── sample2/
+├── llm_diff_test_v3_llm/         # v3 内容ベース版の結果
+│   └── [dataset]/
+│       ├── PDFs/                  # 各種PDF出力
+│       ├── reports/               # レポート類
+│       └── debug/                 # デバッグ情報
+└── baseline_test/                # baseline版の結果
     └── [dataset]/
-        ├── PDFs/                  # 各種PDF出力
-        ├── reports/               # レポート類
-        └── debug/                 # デバッグ情報
+        ├── PDFs/                  # ハイライト付きPDF
+        ├── reports/               # 差分レポート
+        └── debug/                 # 読み順序CSV等
 ```
 
 ## 🤖 LLM分析結果の例
@@ -326,15 +340,20 @@ make clean        # クリーンアップ
 
 ## 📈 パフォーマンス
 
-### 処理時間の目安（5ページのPDF）
-- v5 LLM版: 約30秒
-- v5 標準版: 約15秒
-- v3 LLM版: 約90秒
-- ベースライン: 約0.01秒
+### 処理時間の目安（Azure有料版使用時）
+#### 44ページのPDF（sample1データセット）の場合：
+- v5 LLM版: 約2-3分（LLM分析含む）
+- v3 内容ベース版: 約1-2分
+- baseline版: 約40秒
 
 ### メモリ使用量
-- 通常: 500MB以下
-- 大きなPDF（100ページ以上）: 2GB程度
+- 通常: 500MB-1GB
+- 大きなPDF（100ページ以上）: 2-3GB程度
+
+### 推奨用途
+- **v5 LLM版**: 重要文書の詳細な差分分析、変更理由の把握が必要な場合
+- **v3 内容ベース版**: 日常的な文書比較、高速処理が必要な場合
+- **baseline版**: シンプルな差分検出、大量文書の一括処理
 
 ## 🔒 セキュリティ
 

@@ -1,0 +1,65 @@
+{
+  "extraction_level": "line",
+  "line_changes": {
+    "total_lines_doc1": 3702,
+    "total_lines_doc2": 4697,
+    "changed_lines": 3534
+  },
+  "paragraph_mapping": {
+    "doc1_paragraphs": 1719,
+    "doc2_paragraphs": 1996
+  },
+  "sample_differences": [
+    {
+      "type": "deletion",
+      "page": 0,
+      "text": "令和 6 年度募集"
+    },
+    {
+      "type": "deletion",
+      "page": 0,
+      "text": "募集期間中のお手続きはこちらから!"
+    },
+    {
+      "type": "addition",
+      "page": 0,
+      "text": "令和 7 年度募集"
+    },
+    {
+      "type": "addition",
+      "page": 0,
+      "text": "お手続きはこちら/"
+    },
+    {
+      "type": "deletion",
+      "page": 0,
+      "text": "令和 6 年 9 月 1 日(日)~9 月 15 日(日)まで"
+    },
+    {
+      "type": "deletion",
+      "page": 0,
+      "text": "8 つの補償でサポート"
+    },
+    {
+      "type": "addition",
+      "page": 0,
+      "text": "令和 7 年 9 月 1 日(月)~9 月 15 日(月)まで"
+    },
+    {
+      "type": "addition",
+      "page": 0,
+      "text": "9 つの補償でサポート"
+    },
+    {
+      "type": "modification",
+      "page": 0,
+      "before": "賠償責任",
+      "after": "長期収入サポート"
+    },
+    {
+      "type": "addition",
+      "page": 0,
+      "text": "CT·MRI 検査+セカンドオピニオン"
+    }
+  ]
+}

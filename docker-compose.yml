@@ -25,7 +25,76 @@ services:
       - AZURE_DOCUMENT_INTELLIGENCE_KEY=${AZURE_DOCUMENT_INTELLIGENCE_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     working_dir: /app
-    command: poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5_with_llm.py --dataset dantai --use-llm --llm-summary
+    command: poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5.py --dataset dantai --use-llm
+    
+  # v1 標準版サービス
+  pdf-diff-v1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pdf-diff-v1
+    volumes:
+      - .:/app
+      - ./output:/app/output
+      - ./data:/app/data
+      - ./docs:/app/docs
+    environment:
+      - MECAB_CHARSET=utf8
+      - MECAB_DICDIR=/var/lib/mecab/dic/ipadic
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+      - AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT=${AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT}
+      - AZURE_DOCUMENT_INTELLIGENCE_KEY=${AZURE_DOCUMENT_INTELLIGENCE_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - USE_AZURE_FOR_OCR=True
+    working_dir: /app
+    command: poetry run python apps/llm_docs_diff_v1/test_llm_diff_v1.py --dataset sample1
+    
+  # v2 標準版サービス
+  pdf-diff-v2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pdf-diff-v2
+    volumes:
+      - .:/app
+      - ./output:/app/output
+      - ./data:/app/data
+      - ./docs:/app/docs
+    environment:
+      - MECAB_CHARSET=utf8
+      - MECAB_DICDIR=/var/lib/mecab/dic/ipadic
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+      - AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT=${AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT}
+      - AZURE_DOCUMENT_INTELLIGENCE_KEY=${AZURE_DOCUMENT_INTELLIGENCE_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - USE_AZURE_FOR_OCR=True
+    working_dir: /app
+    command: poetry run python apps/llm_docs_diff_v2/test_llm_diff_v2.py --dataset sample1
+    
+  # v4 標準版サービス
+  pdf-diff-v4:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pdf-diff-v4
+    volumes:
+      - .:/app
+      - ./output:/app/output
+      - ./data:/app/data
+      - ./docs:/app/docs
+    environment:
+      - MECAB_CHARSET=utf8
+      - MECAB_DICDIR=/var/lib/mecab/dic/ipadic
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+      - AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT=${AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT}
+      - AZURE_DOCUMENT_INTELLIGENCE_KEY=${AZURE_DOCUMENT_INTELLIGENCE_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - USE_AZURE_FOR_OCR=True
+    working_dir: /app
+    command: poetry run python apps/llm_docs_diff_v4/test_llm_diff_v4_sample1.py
     
   # v3 LLM版サービス
   pdf-diff-v3-llm:
@@ -47,7 +116,7 @@ services:
       - AZURE_DOCUMENT_INTELLIGENCE_KEY=${AZURE_DOCUMENT_INTELLIGENCE_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     working_dir: /app
-    command: poetry run python apps/llm_docs_diff_v3/test_llm_diff_v3_with_llm.py --dataset dantai --use-llm-summary
+    command: poetry run python apps/llm_docs_diff_v3/test_llm_diff_v3.py --dataset dantai --use-llm-summary
     
   # v5 標準版サービス
   pdf-diff-v5:
@@ -69,6 +138,27 @@ services:
       - AZURE_DOCUMENT_INTELLIGENCE_KEY=${AZURE_DOCUMENT_INTELLIGENCE_KEY}
     working_dir: /app
     command: poetry run python apps/llm_docs_diff_v5/test_llm_diff_v5.py --dataset dantai
+    
+  # ベースライン版サービス
+  pdf-diff-baseline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pdf-diff-baseline
+    volumes:
+      - .:/app
+      - ./output:/app/output
+      - ./data:/app/data
+      - ./docs:/app/docs
+    environment:
+      - MECAB_CHARSET=utf8
+      - MECAB_DICDIR=/var/lib/mecab/dic/ipadic
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+      - AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT=${AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT}
+      - AZURE_DOCUMENT_INTELLIGENCE_KEY=${AZURE_DOCUMENT_INTELLIGENCE_KEY}
+    working_dir: /app
+    command: poetry run python apps/diff_baseline/test_baseline.py --dataset default
     
   # 開発用サービス（対話的実行）
   pdf-diff-dev:
