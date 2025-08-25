@@ -516,7 +516,16 @@ class AzureDocumentServiceEnhanced:
                 
                 # 2つの領域の結果をマージ
                 if region_results:
+                    # マージ前に各領域の「補」を含む行数をカウント
+                    for i, result in enumerate(region_results):
+                        ho_count = sum(1 for item in result['text_items'] if '補' in item['text'])
+                        print(f"[DEBUG] Page {page_num + 1}, {result['region']['quadrant']} region: {ho_count} lines containing '補'")
+                    
                     merged_lines = splitter.merge_ocr_results(region_results)
+                    
+                    # マージ後の「補」を含む行数をカウント
+                    ho_count_after = sum(1 for line in merged_lines if '補' in line['text'])
+                    print(f"[DEBUG] Page {page_num + 1} after merging: {ho_count_after} lines containing '補'")
                     
                     # ページ番号を追加して形式を整える
                     for line in merged_lines:
@@ -526,7 +535,11 @@ class AzureDocumentServiceEnhanced:
                     
                     print(f"[DEBUG] Total {len(merged_lines)} unique lines after merging for page {page_num + 1}")
             
+            # 全体の「補」を含む行数をカウント
+            total_ho_count = sum(1 for line in all_lines if '補' in line['text'])
             print(f"[DEBUG] Total lines extracted with split OCR: {len(all_lines)}")
+            print(f"[DEBUG] Total lines containing '補': {total_ho_count}")
+            
             return all_lines
             
         except Exception as e:

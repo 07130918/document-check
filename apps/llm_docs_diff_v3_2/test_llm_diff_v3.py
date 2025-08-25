@@ -23,8 +23,11 @@ from apps.llm_docs_diff_v3_2.handlers.output_handler import OutputHandler
 from apps.llm_docs_diff_v3_2.models.bbox_models import ComparisonResult, DiffResult, ChangeType
 from apps.llm_docs_diff_v3_2.core.reading_order_v2 import ReadingOrderEstimatorV2
 from apps.llm_docs_diff_v3_2.config.settings import settings
+from apps.llm_docs_diff_v3_2.utils.pdf_highlighter import PDFHighlighter
 import time
 import logging
+import json
+import csv
 
 # 環境変数の読み込み
 load_dotenv()
@@ -36,6 +39,43 @@ logger = logging.getLogger(__name__)
 # Azureの詳細なHTTPログを無効化
 logging.getLogger("azure.core.pipeline.policies.http_logging_policy").setLevel(logging.WARNING)
 logging.getLogger("azure").setLevel(logging.WARNING)
+
+def save_extracted_texts_to_csv(bbox_list, output_path, include_source_region=False):
+    """
+    抽出されたテキストをCSVファイルに保存
+    
+    Args:
+        bbox_list: BBoxのリスト
+        output_path: 出力CSVファイルのパス
+        include_source_region: ページ分割情報を含めるかどうか
+    """
+    # 出力ディレクトリが存在しない場合は作成
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    with open(output_path, 'w', newline='', encoding='utf-8') as f:
+        fieldnames = ['index', 'page', 'x', 'y', 'width', 'height', 'text']
+        if include_source_region:
+            fieldnames.append('source_region')
+        
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        
+        for i, bbox in enumerate(bbox_list):
+            row = {
+                'index': i,
+                'page': bbox['page'],
+                'x': bbox['x'],
+                'y': bbox['y'],
+                'width': bbox['width'],
+                'height': bbox['height'],
+                'text': bbox['text']
+            }
+            
+            # ページ分割の情報があれば追加
+            if include_source_region and 'source_region' in bbox:
+                row['source_region'] = bbox['source_region']
+            
+            writer.writerow(row)
 
 def parse_arguments():
     """コマンドライン引数の解析"""
@@ -101,6 +141,7 @@ def main():
         pdf2_bytes = f.read()
     
     start_time = time.time()
+    timing_info = {}  # 処理時間を記録する辞書
     
     # ========== ステップ1: Azure Document Intelligenceで抽出 ==========
     print("===== LLM Diff Test v3-2 with LLM =====")
@@ -157,25 +198,70 @@ def main():
     llm_service = LLMService()
     
     print(f"\n1. {pdf1_path.name}の処理...")
+    ocr_start1 = time.time()
     if args.use_page_split:
         print("   [ページ分割OCRモード]")
         line_bbox_list1 = azure_service.extract_layout_from_lines_with_split(pdf1_bytes)
+        timing_info['page_split_document1'] = True
     else:
         line_bbox_list1 = azure_service.extract_layout_from_lines(pdf1_bytes)
+        timing_info['page_split_document1'] = False
     bbox_list1 = text_preprocessor.preprocess_bbox_list(line_bbox_list1)
+    ocr_time1 = time.time() - ocr_start1
+    timing_info['ocr_document1'] = ocr_time1
     print(f"   要素数: {len(bbox_list1)}")
+    print(f"   OCR処理時間: {ocr_time1:.2f}秒")
+    
+    # デバッグ用のテキスト抽出順序をCSVに保存
+    # 抽出されたテキストを保存（標準機能）
+    debug_dir = output_dir / "debug"
+    debug_dir.mkdir(exist_ok=True)
+    csv_path1 = debug_dir / "extracted_texts_doc1.csv"
+    save_extracted_texts_to_csv(line_bbox_list1, csv_path1, include_source_region=args.use_page_split)
+    print(f"   抽出されたテキストを保存: {csv_path1}")
     
     print(f"\n2. {pdf2_path.name}の処理...")
+    ocr_start2 = time.time()
     if args.use_page_split:
         print("   [ページ分割OCRモード]")
         line_bbox_list2 = azure_service.extract_layout_from_lines_with_split(pdf2_bytes)
+        timing_info['page_split_document2'] = True
     else:
         line_bbox_list2 = azure_service.extract_layout_from_lines(pdf2_bytes)
+        timing_info['page_split_document2'] = False
     bbox_list2 = text_preprocessor.preprocess_bbox_list(line_bbox_list2)
+    ocr_time2 = time.time() - ocr_start2
+    timing_info['ocr_document2'] = ocr_time2
     print(f"   要素数: {len(bbox_list2)}")
+    print(f"   OCR処理時間: {ocr_time2:.2f}秒")
+    
+    # 抽出されたテキストを保存（標準機能）
+    csv_path2 = debug_dir / "extracted_texts_doc2.csv"
+    save_extracted_texts_to_csv(line_bbox_list2, csv_path2, include_source_region=args.use_page_split)
+    print(f"   抽出されたテキストを保存: {csv_path2}")
+    
+    # ハイライトPDFを生成（デバッグ用）
+    print("\n===== OCR結果のハイライトPDFを生成 =====")
+    highlighter = PDFHighlighter()
+    
+    # 文書1のハイライトPDF
+    highlight_pdf1 = debug_dir / "highlighted_doc1.pdf"
+    highlighter.highlight_extracted_texts(pdf1_bytes, line_bbox_list1, str(highlight_pdf1))
+    print(f"文書1のハイライトPDF: {highlight_pdf1}")
+    
+    # 文書2のハイライトPDF
+    highlight_pdf2 = debug_dir / "highlighted_doc2.pdf"
+    highlighter.highlight_extracted_texts(pdf2_bytes, line_bbox_list2, str(highlight_pdf2))
+    print(f"文書2のハイライトPDF: {highlight_pdf2}")
+    
+    # 比較用PDF（2つを並べて表示）
+    comparison_pdf = debug_dir / "highlighted_comparison.pdf"
+    highlighter.create_comparison_pdf(pdf1_bytes, line_bbox_list1, pdf2_bytes, line_bbox_list2, str(comparison_pdf))
+    print(f"比較用PDF: {comparison_pdf}")
     
     # ========== ステップ2: 読み取り順序の推定 ==========
     print("\n===== ステップ2: 読み取り順序の推定 =====")
+    order_start = time.time()
     
     if args.use_llm_order:
         print("LLMを使用して読み順序を推定中...")
@@ -214,6 +300,10 @@ def main():
         ordered_list1 = order_estimator.estimate_reading_order(bbox_list1)
         ordered_list2 = order_estimator.estimate_reading_order(bbox_list2)
     
+    order_time = time.time() - order_start
+    timing_info['reading_order_estimation'] = order_time
+    print(f"\n読み順序推定時間: {order_time:.2f}秒")
+    
     # ========== ステップ3: 文書構造解析（オプション） ==========
     if args.analyze_structure:
         print("\n===== 文書構造解析（LLM） =====")
@@ -238,12 +328,16 @@ def main():
     
     # ========== ステップ4: 差分検出 ==========
     print("\n===== ステップ4: 差分検出 =====")
+    diff_start = time.time()
     # ContentBasedDiffDetectorを使用（position_weight=0.0で内容のみで判定）
     diff_detector = ContentBasedDiffDetector(
         similarity_threshold=0.8,
         position_weight=0.0  # 位置を完全に無視、内容のみで判定
     )
     diff_results = diff_detector.detect_differences(ordered_list1, ordered_list2)
+    diff_time = time.time() - diff_start
+    timing_info['diff_detection'] = diff_time
+    print(f"\n差分検出時間: {diff_time:.2f}秒")
     
     # 差分の統計
     stats = {
@@ -293,11 +387,13 @@ def main():
                 "structure_analysis": args.analyze_structure
             },
             # 完全一致したアイテムを追加
-            "matched_items": diff_detector.matched_items
+            "matched_items": diff_detector.matched_items,
+            "timing_info": timing_info
         }
     )
     
     # 出力ハンドラーでPDFとレポートを生成
+    output_start = time.time()
     output_handler = OutputHandler()
     output_handler.save_all_outputs(
         comparison_result=comparison_result,
@@ -307,6 +403,40 @@ def main():
         pdf2_path=pdf2_path,
         output_dir=output_dir
     )
+    output_time = time.time() - output_start
+    timing_info['output_generation'] = output_time
+    
+    # タイミングレポートを保存
+    total_time = time.time() - start_time
+    timing_report = {
+        "total_execution_time": total_time,
+        "individual_timings": timing_info,
+        "ocr_total": timing_info.get('ocr_document1', 0) + timing_info.get('ocr_document2', 0),
+        "processing_metadata": {
+            "dataset": args.dataset,
+            "use_llm_order": args.use_llm_order,
+            "use_llm_summary": args.use_llm_summary,
+            "high_resolution_ocr": settings.USE_HIGH_RESOLUTION_OCR,
+            "use_page_split": args.use_page_split,
+            "max_pages": settings.TEST_MAX_PAGES if hasattr(settings, 'TEST_MAX_PAGES') else None
+        }
+    }
+    
+    # reports ディレクトリに保存
+    reports_dir = output_dir / "reports"
+    reports_dir.mkdir(exist_ok=True)
+    timing_report_path = reports_dir / "timing_report.json"
+    with open(timing_report_path, "w", encoding="utf-8") as f:
+        json.dump(timing_report, f, ensure_ascii=False, indent=2)
+    
+    # コンソールに処理時間のサマリーを表示
+    print("\n===== 処理時間サマリー =====")
+    print(f"OCR処理 (文書1): {timing_info.get('ocr_document1', 0):.2f}秒 {' [ページ分割]' if timing_info.get('page_split_document1', False) else ''}")
+    print(f"OCR処理 (文書2): {timing_info.get('ocr_document2', 0):.2f}秒 {' [ページ分割]' if timing_info.get('page_split_document2', False) else ''}")
+    print(f"読み順序推定: {timing_info.get('reading_order_estimation', 0):.2f}秒")
+    print(f"差分検出: {timing_info.get('diff_detection', 0):.2f}秒")
+    print(f"出力生成: {timing_info.get('output_generation', 0):.2f}秒")
+    print(f"合計実行時間: {total_time:.2f}秒")
     
     print(f"\n処理完了！実行時間: {comparison_result.execution_time:.2f}秒")
     # 相対パスで表示

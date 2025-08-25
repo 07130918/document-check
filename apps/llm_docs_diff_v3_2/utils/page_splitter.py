@@ -14,16 +14,19 @@ logger = logging.getLogger(__name__)
 class PageSplitter:
     """ページを上下2分割してOCR処理の精度を向上させるクラス"""
     
-    def __init__(self, overlap_ratio: float = 0.1, scale_factor: float = 2.0):
+    def __init__(self, overlap_ratio: float = 0.1, scale_factor: float = 2.0, 
+                 dedup_distance_threshold: float = 10.0):
         """
         初期化
         
         Args:
             overlap_ratio: 領域の重複率（0.1 = 10%）
             scale_factor: 拡大倍率（2.0 = 2倍）
+            dedup_distance_threshold: 重複除去の距離閾値（ポイント単位）
         """
         self.overlap_ratio = overlap_ratio
         self.scale_factor = scale_factor
+        self.dedup_distance_threshold = dedup_distance_threshold
     
     def split_page_to_regions(self, pdf_bytes: bytes, page_num: int) -> List[Dict[str, Any]]:
         """
@@ -183,7 +186,7 @@ class PageSplitter:
                 all_items.append(merged_item)
         
         # 重複除去（同じテキストで位置が近いものを除去）
-        unique_items = self._remove_duplicates(all_items)
+        unique_items = self._remove_duplicates(all_items, self.dedup_distance_threshold)
         
         return unique_items
     
@@ -206,6 +209,7 @@ class PageSplitter:
         sorted_items = sorted(items, key=lambda x: (x['text'], x['x'], x['y']))
         
         unique_items = []
+        
         for item in sorted_items:
             # 既存のアイテムと比較
             is_duplicate = False
@@ -221,6 +225,7 @@ class PageSplitter:
             if not is_duplicate:
                 unique_items.append(item)
         
-        logger.info(f"Removed {len(items) - len(unique_items)} duplicate items")
+        
+        logger.info(f"Removed {len(items) - len(unique_items)} duplicate items in total")
         
         return unique_items
