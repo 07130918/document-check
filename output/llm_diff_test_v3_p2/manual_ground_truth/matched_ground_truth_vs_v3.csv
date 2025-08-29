@@ -1,0 +1,24 @@
+カテゴリ,正解テキスト,正解文脈,v3_元テキスト,v3_変更後テキスト,v3_変更タイプ,検索方法,座標_X,座標_Y
+ご確認ください,P7,プロの目線でみるメリット P7,プロの目線でみるメリット P5,プロの目線でみるメリット P7,modification,exact_search,559.35,121.71
+ご確認ください,P11,インフォメーション P11,インフォメーション P9,インフォメーション P11,modification,exact_search,559.35,141.71
+ご確認ください,P11,インフォメーション P11,ファミリー P11,ファミリー,modification,exact_search,559.35,141.71
+基本セット,P13,ファミリー P13,,P13,modification,exact_search,549.63,272.5
+基本セット,P13,ファミリー P13,P13,P15,modification,exact_search,549.63,272.5
+ご確認ください,P11,インフォメーション P11,※家族の範囲は P11 をご覧ください.,※家族の範囲は P13 をご覧ください.,modification,exact_search,559.35,141.71
+基本セット,P15,パーソナル P15,"医療ワイドかんぺき P15,19",医療ワイドかんぺき,modification,exact_search,549.63,287.04
+追加オプション,"P17,21","医療ワイドかんぺき P17,21",,"P17,21",modification,partial_match,570.39,816.11
+追加オプション,"P19,22","五大疾病 P19,22","P17,20","P19,22",modification,partial_match,570.39,816.11
+追加オプション,P25,医療ワイド P25,,P25,modification,exact_search,549.79,422.49
+追加オプション,P26,携行品 P26,P24,P26,modification,exact_search,549.79,437.66
+追加オプション,P26,携行品 P26,P24,P26,modification,exact_search,549.79,437.66
+追加オプション,P26,携行品 P26,P24,P26,modification,exact_search,549.79,437.66
+追加オプション,P25,医療ワイド P25,P25,P27,modification,exact_search,549.79,422.49
+追加オプション,P26,携行品 P26,P26,P28,modification,exact_search,549.79,437.66
+単品コース,P27,長期休業 P27,P27,P29,modification,exact_search,549.79,539.99
+単品コース,P28,キッズ P28,○傷害保障コース P28,傷害,modification,exact_search,549.79,555.34
+単品コース,P30,傷害保障コース P30,,P30,modification,exact_search,549.79,586.27
+単品コース,P28,キッズ P28,○家族傷害保障コース P28,家族傷害,modification,exact_search,549.79,555.34
+単品コース,P30,傷害保障コース P30,,P30,modification,exact_search,549.79,586.27
+単品コース,P28,キッズ P28,○本人所得保障コース P28,本人所得,modification,exact_search,549.79,555.34
+単品コース,P30,傷害保障コース P30,,P30,modification,exact_search,549.79,586.27
+単品コース,P29,別居の親介護 P29,P29~,P31~,modification,exact_search,549.79,570.57
