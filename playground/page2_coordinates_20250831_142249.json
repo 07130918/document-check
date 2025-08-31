@@ -1,0 +1,1474 @@
+{
+  "source_file": "data/data2/sougou/サンプル②2025.pdf",
+  "analyzed_at": "2025-08-31T14:22:49.760476",
+  "target_page": 2,
+  "summary": {
+    "total_sections": 11,
+    "total_paragraphs": 91,
+    "paragraphs_with_coordinates": 91,
+    "sections_with_coordinates": 11
+  },
+  "sections": [
+    {
+      "section_number": 1,
+      "title": "総合医療保障プランの ラインアップ",
+      "content_length": 57,
+      "word_count": 4,
+      "paragraph_count": 2,
+      "coordinates": {
+        "left": 0.66,
+        "top": 1.0186,
+        "right": 7.3702,
+        "bottom": 7.494,
+        "width": 6.7101999999999995,
+        "height": 6.4754
+      },
+      "paragraphs": [
+        {
+          "content": "総合医療保障プランの ラインアップ",
+          "role": "ParagraphRole.TITLE",
+          "length": 17,
+          "paragraph_index": 0,
+          "coordinates": {
+            "left": 0.66,
+            "top": 1.0186,
+            "right": 4.5555,
+            "bottom": 1.8935,
+            "width": 3.8955,
+            "height": 0.8749
+          }
+        },
+        {
+          "content": "基本セットに病気や介護の補償など幅広いオプション をプラスすることができます。",
+          "role": null,
+          "length": 39,
+          "paragraph_index": 1,
+          "coordinates": {
+            "left": 0.6617,
+            "top": 2.0022,
+            "right": 7.3702,
+            "bottom": 7.494,
+            "width": 6.7085,
+            "height": 5.4918
+          }
+        }
+      ]
+    },
+    {
+      "section_number": 2,
+      "title": "基本セット",
+      "content_length": 147,
+      "word_count": 10,
+      "paragraph_count": 8,
+      "coordinates": {
+        "left": 0.628,
+        "top": 2.607,
+        "right": 7.8209,
+        "bottom": 11.0009,
+        "width": 7.1929,
+        "height": 8.393899999999999
+      },
+      "paragraphs": [
+        {
+          "content": "基本セット",
+          "role": "ParagraphRole.SECTION_HEADING",
+          "length": 5,
+          "paragraph_index": 2,
+          "coordinates": {
+            "left": 0.8134,
+            "top": 2.607,
+            "right": 7.3702,
+            "bottom": 3.5522,
+            "width": 6.5568,
+            "height": 0.9451999999999998
+          }
+        },
+        {
+          "content": "ケガの補償をメインに、所得(組合員本人のみ)、賠償責任、弁護士費用も補償 !!",
+          "role": null,
+          "length": 39,
+          "paragraph_index": 3,
+          "coordinates": {
+            "left": 0.628,
+            "top": 2.9857,
+            "right": 5.6536,
+            "bottom": 11.0009,
+            "width": 5.0256,
+            "height": 8.0152
+          }
+        },
+        {
+          "content": "▼いずれかのセットをご選択いただきます。",
+          "role": null,
+          "length": 20,
+          "paragraph_index": 4,
+          "coordinates": {
+            "left": 0.8954,
+            "top": 3.3992,
+            "right": 3.498,
+            "bottom": 3.5687,
+            "width": 2.6026000000000002,
+            "height": 0.1695000000000002
+          }
+        },
+        {
+          "content": "ファミリー",
+          "role": null,
+          "length": 5,
+          "paragraph_index": 5,
+          "coordinates": {
+            "left": 1.0356,
+            "top": 3.7147,
+            "right": 7.4037,
+            "bottom": 3.9097,
+            "width": 6.3681,
+            "height": 0.19499999999999984
+          }
+        },
+        {
+          "content": "ご家族も補償",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 6,
+          "coordinates": {
+            "left": 2.0293,
+            "top": 3.6901,
+            "right": 4.8332,
+            "bottom": 7.494,
+            "width": 2.8038999999999996,
+            "height": 3.8038999999999996
+          }
+        },
+        {
+          "content": "パーソナル",
+          "role": null,
+          "length": 5,
+          "paragraph_index": 7,
+          "coordinates": {
+            "left": 0.9979,
+            "top": 3.9917,
+            "right": 7.4249,
+            "bottom": 4.285,
+            "width": 6.427,
+            "height": 0.29330000000000034
+          }
+        },
+        {
+          "content": "組合員本人のみ補償",
+          "role": null,
+          "length": 9,
+          "paragraph_index": 8,
+          "coordinates": {
+            "left": 2.0134,
+            "top": 4.0757,
+            "right": 4.8332,
+            "bottom": 7.494,
+            "width": 2.8198,
+            "height": 3.4182999999999995
+          }
+        },
+        {
+          "content": "(賠償責任、弁護士費用は配偶者および家族(※)も対象となります) ※家族の範囲はP13をご覧ください。",
+          "role": null,
+          "length": 51,
+          "paragraph_index": 9,
+          "coordinates": {
+            "left": 0.8752,
+            "top": 3.805,
+            "right": 7.8209,
+            "bottom": 4.7345,
+            "width": 6.9457,
+            "height": 0.9294999999999995
+          }
+        }
+      ]
+    },
+    {
+      "section_number": 3,
+      "title": "追加オプション A 基本セットに加入した場合のみ追加できます",
+      "content_length": 30,
+      "word_count": 3,
+      "paragraph_count": 1,
+      "coordinates": {
+        "left": 0.8134,
+        "top": 2.607,
+        "right": 7.6476,
+        "bottom": 5.1273,
+        "width": 6.8342,
+        "height": 2.5202999999999998
+      },
+      "paragraphs": [
+        {
+          "content": "追加オプション A 基本セットに加入した場合のみ追加できます",
+          "role": "ParagraphRole.SECTION_HEADING",
+          "length": 30,
+          "paragraph_index": 10,
+          "coordinates": {
+            "left": 0.8134,
+            "top": 2.607,
+            "right": 7.6476,
+            "bottom": 5.1273,
+            "width": 6.8342,
+            "height": 2.5202999999999998
+          }
+        }
+      ]
+    },
+    {
+      "section_number": 4,
+      "title": "おすすめ",
+      "content_length": 4,
+      "word_count": 1,
+      "paragraph_count": 1,
+      "coordinates": {
+        "left": 0.791,
+        "top": 5.4944,
+        "right": 1.2981,
+        "bottom": 5.6561,
+        "width": 0.5071,
+        "height": 0.16170000000000062
+      },
+      "paragraphs": [
+        {
+          "content": "おすすめ",
+          "role": "ParagraphRole.SECTION_HEADING",
+          "length": 4,
+          "paragraph_index": 11,
+          "coordinates": {
+            "left": 0.791,
+            "top": 5.4944,
+            "right": 1.2981,
+            "bottom": 5.6561,
+            "width": 0.5071,
+            "height": 0.16170000000000062
+          }
+        }
+      ]
+    },
+    {
+      "section_number": 5,
+      "title": "医療の補償",
+      "content_length": 61,
+      "word_count": 9,
+      "paragraph_count": 7,
+      "coordinates": {
+        "left": 1.0759,
+        "top": 5.0358,
+        "right": 7.5028,
+        "bottom": 7.494,
+        "width": 6.4269,
+        "height": 2.4581999999999997
+      },
+      "paragraphs": [
+        {
+          "content": "医療の補償",
+          "role": "ParagraphRole.SECTION_HEADING",
+          "length": 5,
+          "paragraph_index": 12,
+          "coordinates": {
+            "left": 1.7585,
+            "top": 5.538,
+            "right": 4.8332,
+            "bottom": 7.494,
+            "width": 3.0747,
+            "height": 1.9559999999999995
+          }
+        },
+        {
+          "content": "医療ワイドかんぺき",
+          "role": null,
+          "length": 9,
+          "paragraph_index": 13,
+          "coordinates": {
+            "left": 1.0787,
+            "top": 5.0358,
+            "right": 7.5028,
+            "bottom": 7.3392,
+            "width": 6.424099999999999,
+            "height": 2.3034
+          }
+        },
+        {
+          "content": "病気の治療費用 を幅広く補償",
+          "role": null,
+          "length": 14,
+          "paragraph_index": 14,
+          "coordinates": {
+            "left": 2.0856,
+            "top": 5.9949,
+            "right": 4.8332,
+            "bottom": 7.494,
+            "width": 2.7476,
+            "height": 1.4990999999999994
+          }
+        },
+        {
+          "content": "五大疾病",
+          "role": null,
+          "length": 4,
+          "paragraph_index": 15,
+          "coordinates": {
+            "left": 1.2081,
+            "top": 5.2482,
+            "right": 7.3697,
+            "bottom": 6.8019,
+            "width": 6.1616,
+            "height": 1.5537
+          }
+        },
+        {
+          "content": "五大疾病の補償",
+          "role": null,
+          "length": 7,
+          "paragraph_index": 16,
+          "coordinates": {
+            "left": 1.2081,
+            "top": 5.2482,
+            "right": 7.3697,
+            "bottom": 7.494,
+            "width": 6.1616,
+            "height": 2.2458
+          }
+        },
+        {
+          "content": "抗ガン剤治療",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 17,
+          "coordinates": {
+            "left": 1.0759,
+            "top": 5.4486,
+            "right": 7.4862,
+            "bottom": 7.3164,
+            "width": 6.4103,
+            "height": 1.8678
+          }
+        },
+        {
+          "content": "抗ガン剤治療の 補償",
+          "role": null,
+          "length": 10,
+          "paragraph_index": 18,
+          "coordinates": {
+            "left": 1.0759,
+            "top": 5.4486,
+            "right": 7.4862,
+            "bottom": 7.494,
+            "width": 6.4103,
+            "height": 2.0454
+          }
+        }
+      ]
+    },
+    {
+      "section_number": 6,
+      "title": "介護費用",
+      "content_length": 131,
+      "word_count": 16,
+      "paragraph_count": 12,
+      "coordinates": {
+        "left": 0.628,
+        "top": 2.607,
+        "right": 7.4929,
+        "bottom": 11.0009,
+        "width": 6.8649,
+        "height": 8.393899999999999
+      },
+      "paragraphs": [
+        {
+          "content": "介護費用",
+          "role": "ParagraphRole.SECTION_HEADING",
+          "length": 4,
+          "paragraph_index": 19,
+          "coordinates": {
+            "left": 3.813,
+            "top": 5.3762,
+            "right": 7.3713,
+            "bottom": 5.7867,
+            "width": 3.5582999999999996,
+            "height": 0.41049999999999986
+          }
+        },
+        {
+          "content": "介護の補償",
+          "role": null,
+          "length": 5,
+          "paragraph_index": 20,
+          "coordinates": {
+            "left": 2.0856,
+            "top": 5.371,
+            "right": 5.2559,
+            "bottom": 7.494,
+            "width": 3.1702999999999997,
+            "height": 2.1229999999999993
+          }
+        },
+        {
+          "content": "携行品",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 21,
+          "coordinates": {
+            "left": 3.8741,
+            "top": 5.7204,
+            "right": 7.3179,
+            "bottom": 6.2088,
+            "width": 3.4438,
+            "height": 0.4884000000000004
+          }
+        },
+        {
+          "content": "携行品の補償",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 22,
+          "coordinates": {
+            "left": 2.0856,
+            "top": 5.7186,
+            "right": 7.3179,
+            "bottom": 7.494,
+            "width": 5.2323,
+            "height": 1.7753999999999994
+          }
+        },
+        {
+          "content": "ホールインワン",
+          "role": null,
+          "length": 7,
+          "paragraph_index": 23,
+          "coordinates": {
+            "left": 3.6964,
+            "top": 6.069,
+            "right": 7.4929,
+            "bottom": 6.4138,
+            "width": 3.7964999999999995,
+            "height": 0.3448000000000002
+          }
+        },
+        {
+          "content": "ゴルフの補償",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 24,
+          "coordinates": {
+            "left": 2.0856,
+            "top": 6.0665,
+            "right": 5.3832,
+            "bottom": 7.494,
+            "width": 3.2976000000000005,
+            "height": 1.4275000000000002
+          }
+        },
+        {
+          "content": "大家さん賠償",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 25,
+          "coordinates": {
+            "left": 3.7046,
+            "top": 6.4345,
+            "right": 7.4703,
+            "bottom": 6.6241,
+            "width": 3.7657,
+            "height": 0.18960000000000043
+          }
+        },
+        {
+          "content": "大家さんへの 賠償責任の補償",
+          "role": null,
+          "length": 14,
+          "paragraph_index": 26,
+          "coordinates": {
+            "left": 2.0856,
+            "top": 6.3722,
+            "right": 5.5335,
+            "bottom": 7.494,
+            "width": 3.4479,
+            "height": 1.1217999999999995
+          }
+        },
+        {
+          "content": "! 新規加入できません",
+          "role": null,
+          "length": 11,
+          "paragraph_index": 27,
+          "coordinates": {
+            "left": 0.628,
+            "top": 6.8565,
+            "right": 5.2891,
+            "bottom": 11.0009,
+            "width": 4.6611,
+            "height": 4.1444
+          }
+        },
+        {
+          "content": "医療ワイド",
+          "role": null,
+          "length": 5,
+          "paragraph_index": 28,
+          "coordinates": {
+            "left": 3.7741,
+            "top": 5.8719,
+            "right": 7.4175,
+            "bottom": 7.3392,
+            "width": 3.6434000000000006,
+            "height": 1.4672999999999998
+          }
+        },
+        {
+          "content": "入院(ケガ·病気)と 手術(ケガのみ)を 補償",
+          "role": null,
+          "length": 23,
+          "paragraph_index": 29,
+          "coordinates": {
+            "left": 2.0856,
+            "top": 7.038,
+            "right": 5.6403,
+            "bottom": 7.494,
+            "width": 3.5547,
+            "height": 0.4559999999999995
+          }
+        },
+        {
+          "content": "単独で加入できます!(基本セットに加入しなくても加入OK!)",
+          "role": null,
+          "length": 30,
+          "paragraph_index": 30,
+          "coordinates": {
+            "left": 0.628,
+            "top": 2.607,
+            "right": 7.3702,
+            "bottom": 11.0009,
+            "width": 6.7421999999999995,
+            "height": 8.393899999999999
+          }
+        }
+      ]
+    },
+    {
+      "section_number": 7,
+      "title": "単品コース",
+      "content_length": 464,
+      "word_count": 35,
+      "paragraph_count": 20,
+      "coordinates": {
+        "left": 0.628,
+        "top": 0.6606,
+        "right": 8.0317,
+        "bottom": 11.4591,
+        "width": 7.403700000000001,
+        "height": 10.798499999999999
+      },
+      "paragraphs": [
+        {
+          "content": "単品コース",
+          "role": "ParagraphRole.SECTION_HEADING",
+          "length": 5,
+          "paragraph_index": 31,
+          "coordinates": {
+            "left": 0.8224,
+            "top": 7.1558,
+            "right": 7.4157,
+            "bottom": 8.2393,
+            "width": 6.5933,
+            "height": 1.0835
+          }
+        },
+        {
+          "content": "長期休業",
+          "role": null,
+          "length": 4,
+          "paragraph_index": 32,
+          "coordinates": {
+            "left": 0.9947,
+            "top": 7.4997,
+            "right": 7.3779,
+            "bottom": 8.6175,
+            "width": 6.3832,
+            "height": 1.1178
+          }
+        },
+        {
+          "content": "長期にわたり働けなく なった場合の補償",
+          "role": null,
+          "length": 19,
+          "paragraph_index": 33,
+          "coordinates": {
+            "left": 1.7277,
+            "top": 7.2457,
+            "right": 4.8332,
+            "bottom": 8.7095,
+            "width": 3.1054999999999997,
+            "height": 1.4638
+          }
+        },
+        {
+          "content": "傷害",
+          "role": null,
+          "length": 2,
+          "paragraph_index": 34,
+          "coordinates": {
+            "left": 3.5052,
+            "top": 8.1417,
+            "right": 7.266,
+            "bottom": 8.5295,
+            "width": 3.7608,
+            "height": 0.38780000000000037
+          }
+        },
+        {
+          "content": "ケガによる死亡·後遺障害、 入院、手術、通院を補償",
+          "role": null,
+          "length": 25,
+          "paragraph_index": 35,
+          "coordinates": {
+            "left": 2.0856,
+            "top": 7.2457,
+            "right": 5.7453,
+            "bottom": 8.7612,
+            "width": 3.6597000000000004,
+            "height": 1.5155000000000003
+          }
+        },
+        {
+          "content": "家族傷害",
+          "role": null,
+          "length": 4,
+          "paragraph_index": 36,
+          "coordinates": {
+            "left": 3.4031,
+            "top": 8.1417,
+            "right": 7.378,
+            "bottom": 8.7787,
+            "width": 3.9749000000000003,
+            "height": 0.6370000000000005
+          }
+        },
+        {
+          "content": "キッズ",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 37,
+          "coordinates": {
+            "left": 1.0734,
+            "top": 7.7118,
+            "right": 7.3139,
+            "bottom": 9.0381,
+            "width": 6.240500000000001,
+            "height": 1.3262999999999998
+          }
+        },
+        {
+          "content": "お子さまの補償",
+          "role": null,
+          "length": 7,
+          "paragraph_index": 38,
+          "coordinates": {
+            "left": 1.7287,
+            "top": 7.2457,
+            "right": 4.8332,
+            "bottom": 9.0506,
+            "width": 3.1045,
+            "height": 1.804899999999999
+          }
+        },
+        {
+          "content": "! 新規加入できません",
+          "role": null,
+          "length": 11,
+          "paragraph_index": 39,
+          "coordinates": {
+            "left": 0.628,
+            "top": 6.8565,
+            "right": 5.2891,
+            "bottom": 11.0009,
+            "width": 4.6611,
+            "height": 4.1444
+          }
+        },
+        {
+          "content": "別居の親介護",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 40,
+          "coordinates": {
+            "left": 0.8773,
+            "top": 7.9245,
+            "right": 7.4892,
+            "bottom": 9.4327,
+            "width": 6.6119,
+            "height": 1.5082000000000004
+          }
+        },
+        {
+          "content": "別居の親の介護補償",
+          "role": null,
+          "length": 9,
+          "paragraph_index": 41,
+          "coordinates": {
+            "left": 1.7259,
+            "top": 7.2457,
+            "right": 4.8332,
+            "bottom": 9.4264,
+            "width": 3.1072999999999995,
+            "height": 2.180699999999999
+          }
+        },
+        {
+          "content": "本人所得",
+          "role": null,
+          "length": 4,
+          "paragraph_index": 42,
+          "coordinates": {
+            "left": 3.4989,
+            "top": 8.5616,
+            "right": 7.3762,
+            "bottom": 9.3769,
+            "width": 3.8773,
+            "height": 0.8152999999999988
+          }
+        },
+        {
+          "content": "ご本人さまの所得の補償",
+          "role": null,
+          "length": 11,
+          "paragraph_index": 43,
+          "coordinates": {
+            "left": 2.0856,
+            "top": 7.2457,
+            "right": 5.5843,
+            "bottom": 9.3933,
+            "width": 3.4987,
+            "height": 2.1475999999999997
+          }
+        },
+        {
+          "content": "! 総合医療保障プランのご継続について",
+          "role": null,
+          "length": 19,
+          "paragraph_index": 44,
+          "coordinates": {
+            "left": 0.628,
+            "top": 1.0186,
+            "right": 4.5555,
+            "bottom": 11.0009,
+            "width": 3.9275,
+            "height": 9.9823
+          }
+        },
+        {
+          "content": "総合医療保障プランの保険料は、保険始期時点(2025年12月1日)の満年令により決定し、2026年1月以 降、毎月原則22日に生協登録口座より引落しいたします。(一部職域は27日)",
+          "role": null,
+          "length": 90,
+          "paragraph_index": 45,
+          "coordinates": {
+            "left": 0.66,
+            "top": 1.0186,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 7.3285,
+            "height": 10.4405
+          }
+        },
+        {
+          "content": "継続停止や変更等のご連絡がない限り、前年同様の補償内容で(商品改定·制度改定がある場合には改定後 の内容で)継続し、更新時点(毎年12月1日)の満年令に応じた保険料が適用されますのでご了承願います。",
+          "role": null,
+          "length": 99,
+          "paragraph_index": 46,
+          "coordinates": {
+            "left": 0.8062,
+            "top": 7.2457,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 7.1823,
+            "height": 4.213399999999999
+          }
+        },
+        {
+          "content": "! 総合医療保障プランの保険料は介護医療保険料控除の対象となるものがあります。 詳細はP39·別冊P32をご覧ください。",
+          "role": null,
+          "length": 60,
+          "paragraph_index": 47,
+          "coordinates": {
+            "left": 0.628,
+            "top": 1.0186,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 7.3605,
+            "height": 10.4405
+          }
+        },
+        {
+          "content": "必ずご確認ください i",
+          "role": null,
+          "length": 11,
+          "paragraph_index": 48,
+          "coordinates": {
+            "left": 6.9635,
+            "top": 0.6606,
+            "right": 7.7191,
+            "bottom": 1.192,
+            "width": 0.7556000000000003,
+            "height": 0.5314
+          }
+        },
+        {
+          "content": "2025年度商品改定 P3 プロの目線でみるメリット P7 インフォメーション P11",
+          "role": null,
+          "length": 43,
+          "paragraph_index": 49,
+          "coordinates": {
+            "left": 6.6331,
+            "top": 1.4236,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 1.3554000000000004,
+            "height": 10.035499999999999
+          }
+        },
+        {
+          "content": "詳しい補償内容はこちら √",
+          "role": null,
+          "length": 13,
+          "paragraph_index": 50,
+          "coordinates": {
+            "left": 2.0856,
+            "top": 2.5103,
+            "right": 8.0317,
+            "bottom": 7.494,
+            "width": 5.946100000000001,
+            "height": 4.9837
+          }
+        }
+      ]
+    },
+    {
+      "section_number": 8,
+      "title": "基本セット",
+      "content_length": 25,
+      "word_count": 5,
+      "paragraph_count": 4,
+      "coordinates": {
+        "left": 0.8134,
+        "top": 2.607,
+        "right": 7.8221,
+        "bottom": 4.285,
+        "width": 7.0087,
+        "height": 1.678
+      },
+      "paragraphs": [
+        {
+          "content": "基本セット",
+          "role": "ParagraphRole.SECTION_HEADING",
+          "length": 5,
+          "paragraph_index": 51,
+          "coordinates": {
+            "left": 0.8134,
+            "top": 2.607,
+            "right": 7.3702,
+            "bottom": 3.5522,
+            "width": 6.5568,
+            "height": 0.9451999999999998
+          }
+        },
+        {
+          "content": "ファミリー",
+          "role": null,
+          "length": 5,
+          "paragraph_index": 52,
+          "coordinates": {
+            "left": 1.0356,
+            "top": 3.7147,
+            "right": 7.4037,
+            "bottom": 3.9097,
+            "width": 6.3681,
+            "height": 0.19499999999999984
+          }
+        },
+        {
+          "content": "P13",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 53,
+          "coordinates": {
+            "left": 7.6189,
+            "top": 3.805,
+            "right": 7.8209,
+            "bottom": 3.9138,
+            "width": 0.20199999999999996,
+            "height": 0.10880000000000001
+          }
+        },
+        {
+          "content": "パーソナル P15",
+          "role": null,
+          "length": 9,
+          "paragraph_index": 54,
+          "coordinates": {
+            "left": 0.9979,
+            "top": 3.9917,
+            "right": 7.8221,
+            "bottom": 4.285,
+            "width": 6.824199999999999,
+            "height": 0.29330000000000034
+          }
+        }
+      ]
+    },
+    {
+      "section_number": 9,
+      "title": "追加オプション",
+      "content_length": 100,
+      "word_count": 17,
+      "paragraph_count": 17,
+      "coordinates": {
+        "left": 1.0759,
+        "top": 4.6539,
+        "right": 7.9885,
+        "bottom": 11.4591,
+        "width": 6.9126,
+        "height": 6.805199999999999
+      },
+      "paragraphs": [
+        {
+          "content": "追加オプション",
+          "role": "ParagraphRole.SECTION_HEADING",
+          "length": 7,
+          "paragraph_index": 55,
+          "coordinates": {
+            "left": 1.1022,
+            "top": 4.6539,
+            "right": 7.6476,
+            "bottom": 5.1273,
+            "width": 6.5454,
+            "height": 0.4733999999999998
+          }
+        },
+        {
+          "content": "医療ワイドかんぺき",
+          "role": null,
+          "length": 9,
+          "paragraph_index": 56,
+          "coordinates": {
+            "left": 1.0787,
+            "top": 5.0358,
+            "right": 7.5028,
+            "bottom": 7.3392,
+            "width": 6.424099999999999,
+            "height": 2.3034
+          }
+        },
+        {
+          "content": "P17、21",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 57,
+          "coordinates": {
+            "left": 7.6206,
+            "top": 5.0498,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.36790000000000056,
+            "height": 6.409299999999999
+          }
+        },
+        {
+          "content": "五大疾病",
+          "role": null,
+          "length": 4,
+          "paragraph_index": 58,
+          "coordinates": {
+            "left": 1.2081,
+            "top": 5.2482,
+            "right": 7.3697,
+            "bottom": 6.8019,
+            "width": 6.1616,
+            "height": 1.5537
+          }
+        },
+        {
+          "content": "P19、22",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 59,
+          "coordinates": {
+            "left": 7.6218,
+            "top": 5.2542,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.3666999999999998,
+            "height": 6.204899999999999
+          }
+        },
+        {
+          "content": "抗ガン剤治療",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 60,
+          "coordinates": {
+            "left": 1.0759,
+            "top": 5.4486,
+            "right": 7.4862,
+            "bottom": 7.3164,
+            "width": 6.4103,
+            "height": 1.8678
+          }
+        },
+        {
+          "content": "P19.22",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 61,
+          "coordinates": {
+            "left": 7.6225,
+            "top": 5.4594,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.36600000000000055,
+            "height": 5.9997
+          }
+        },
+        {
+          "content": "介護費用",
+          "role": null,
+          "length": 4,
+          "paragraph_index": 62,
+          "coordinates": {
+            "left": 3.813,
+            "top": 5.3762,
+            "right": 7.3713,
+            "bottom": 5.7867,
+            "width": 3.5582999999999996,
+            "height": 0.41049999999999986
+          }
+        },
+        {
+          "content": "P23",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 63,
+          "coordinates": {
+            "left": 7.6232,
+            "top": 5.6745,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.3653000000000004,
+            "height": 5.784599999999999
+          }
+        },
+        {
+          "content": "医療ワイド",
+          "role": null,
+          "length": 5,
+          "paragraph_index": 64,
+          "coordinates": {
+            "left": 3.7741,
+            "top": 5.8719,
+            "right": 7.4175,
+            "bottom": 7.3392,
+            "width": 3.6434000000000006,
+            "height": 1.4672999999999998
+          }
+        },
+        {
+          "content": "P25",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 65,
+          "coordinates": {
+            "left": 7.6262,
+            "top": 5.8861,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.3623000000000003,
+            "height": 5.5729999999999995
+          }
+        },
+        {
+          "content": "携行品",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 66,
+          "coordinates": {
+            "left": 3.8741,
+            "top": 5.7204,
+            "right": 7.3179,
+            "bottom": 6.2088,
+            "width": 3.4438,
+            "height": 0.4884000000000004
+          }
+        },
+        {
+          "content": "P26",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 67,
+          "coordinates": {
+            "left": 7.6231,
+            "top": 6.0963,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.36540000000000017,
+            "height": 5.362799999999999
+          }
+        },
+        {
+          "content": "ホールインワン",
+          "role": null,
+          "length": 7,
+          "paragraph_index": 68,
+          "coordinates": {
+            "left": 3.6964,
+            "top": 6.069,
+            "right": 7.4929,
+            "bottom": 6.4138,
+            "width": 3.7964999999999995,
+            "height": 0.3448000000000002
+          }
+        },
+        {
+          "content": "P26",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 69,
+          "coordinates": {
+            "left": 7.6231,
+            "top": 6.0963,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.36540000000000017,
+            "height": 5.362799999999999
+          }
+        },
+        {
+          "content": "大家さん賠償",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 70,
+          "coordinates": {
+            "left": 3.7046,
+            "top": 6.4345,
+            "right": 7.4703,
+            "bottom": 6.6241,
+            "width": 3.7657,
+            "height": 0.18960000000000043
+          }
+        },
+        {
+          "content": "P26",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 71,
+          "coordinates": {
+            "left": 7.6231,
+            "top": 6.0963,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.36540000000000017,
+            "height": 5.362799999999999
+          }
+        }
+      ]
+    },
+    {
+      "section_number": 10,
+      "title": "単品コース",
+      "content_length": 58,
+      "word_count": 13,
+      "paragraph_count": 13,
+      "coordinates": {
+        "left": 0.8224,
+        "top": 7.1558,
+        "right": 7.9885,
+        "bottom": 11.4591,
+        "width": 7.1661,
+        "height": 4.303299999999999
+      },
+      "paragraphs": [
+        {
+          "content": "単品コース",
+          "role": "ParagraphRole.SECTION_HEADING",
+          "length": 5,
+          "paragraph_index": 72,
+          "coordinates": {
+            "left": 0.8224,
+            "top": 7.1558,
+            "right": 7.4157,
+            "bottom": 8.2393,
+            "width": 6.5933,
+            "height": 1.0835
+          }
+        },
+        {
+          "content": "長期休業",
+          "role": null,
+          "length": 4,
+          "paragraph_index": 73,
+          "coordinates": {
+            "left": 0.9947,
+            "top": 7.4997,
+            "right": 7.3779,
+            "bottom": 8.6175,
+            "width": 6.3832,
+            "height": 1.1178
+          }
+        },
+        {
+          "content": "P27",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 74,
+          "coordinates": {
+            "left": 7.6265,
+            "top": 7.5112,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.3620000000000001,
+            "height": 3.9478999999999997
+          }
+        },
+        {
+          "content": "キッズ",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 75,
+          "coordinates": {
+            "left": 1.0734,
+            "top": 7.7118,
+            "right": 7.3139,
+            "bottom": 9.0381,
+            "width": 6.240500000000001,
+            "height": 1.3262999999999998
+          }
+        },
+        {
+          "content": "P28",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 76,
+          "coordinates": {
+            "left": 7.6233,
+            "top": 7.7283,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.36519999999999975,
+            "height": 3.7307999999999995
+          }
+        },
+        {
+          "content": "別居の親介護",
+          "role": null,
+          "length": 6,
+          "paragraph_index": 77,
+          "coordinates": {
+            "left": 0.8773,
+            "top": 7.9245,
+            "right": 7.4892,
+            "bottom": 9.4327,
+            "width": 6.6119,
+            "height": 1.5082000000000004
+          }
+        },
+        {
+          "content": "P29",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 78,
+          "coordinates": {
+            "left": 7.6254,
+            "top": 7.9395,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.3631000000000002,
+            "height": 3.5195999999999996
+          }
+        },
+        {
+          "content": "傷害",
+          "role": null,
+          "length": 2,
+          "paragraph_index": 79,
+          "coordinates": {
+            "left": 3.5052,
+            "top": 8.1417,
+            "right": 7.266,
+            "bottom": 8.5295,
+            "width": 3.7608,
+            "height": 0.38780000000000037
+          }
+        },
+        {
+          "content": "P30",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 80,
+          "coordinates": {
+            "left": 7.6242,
+            "top": 8.1568,
+            "right": 7.8225,
+            "bottom": 8.6709,
+            "width": 0.1982999999999997,
+            "height": 0.5140999999999991
+          }
+        },
+        {
+          "content": "家族傷害",
+          "role": null,
+          "length": 4,
+          "paragraph_index": 81,
+          "coordinates": {
+            "left": 3.4031,
+            "top": 8.1417,
+            "right": 7.378,
+            "bottom": 8.7787,
+            "width": 3.9749000000000003,
+            "height": 0.6370000000000005
+          }
+        },
+        {
+          "content": "P30",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 82,
+          "coordinates": {
+            "left": 7.6242,
+            "top": 8.1568,
+            "right": 7.8225,
+            "bottom": 8.6709,
+            "width": 0.1982999999999997,
+            "height": 0.5140999999999991
+          }
+        },
+        {
+          "content": "本人所得",
+          "role": null,
+          "length": 4,
+          "paragraph_index": 83,
+          "coordinates": {
+            "left": 3.4989,
+            "top": 8.5616,
+            "right": 7.3762,
+            "bottom": 9.3769,
+            "width": 3.8773,
+            "height": 0.8152999999999988
+          }
+        },
+        {
+          "content": "P30",
+          "role": null,
+          "length": 3,
+          "paragraph_index": 84,
+          "coordinates": {
+            "left": 7.6242,
+            "top": 8.1568,
+            "right": 7.8225,
+            "bottom": 8.6709,
+            "width": 0.1982999999999997,
+            "height": 0.5140999999999991
+          }
+        }
+      ]
+    },
+    {
+      "section_number": 11,
+      "title": "契約概要 P31~",
+      "content_length": 81,
+      "word_count": 10,
+      "paragraph_count": 6,
+      "coordinates": {
+        "left": 2.7721,
+        "top": 4.9376,
+        "right": 8.1059,
+        "bottom": 11.4591,
+        "width": 5.3338,
+        "height": 6.5215
+      },
+      "paragraphs": [
+        {
+          "content": "契約概要 P31~",
+          "role": "ParagraphRole.SECTION_HEADING",
+          "length": 9,
+          "paragraph_index": 85,
+          "coordinates": {
+            "left": 6.725,
+            "top": 9.1437,
+            "right": 7.9215,
+            "bottom": 9.2991,
+            "width": 1.1965000000000003,
+            "height": 0.15539999999999843
+          }
+        },
+        {
+          "content": "○【ご参考】優々セット",
+          "role": null,
+          "length": 11,
+          "paragraph_index": 86,
+          "coordinates": {
+            "left": 6.7567,
+            "top": 9.4897,
+            "right": 7.814,
+            "bottom": 9.6248,
+            "width": 1.0572999999999997,
+            "height": 0.13510000000000133
+          }
+        },
+        {
+          "content": "○ご加入にあたってのご注意",
+          "role": null,
+          "length": 13,
+          "paragraph_index": 87,
+          "coordinates": {
+            "left": 6.7584,
+            "top": 9.6392,
+            "right": 8.1059,
+            "bottom": 9.7708,
+            "width": 1.3475000000000001,
+            "height": 0.13159999999999883
+          }
+        },
+        {
+          "content": "○健康状況告知書ご記入の ご案内",
+          "role": null,
+          "length": 16,
+          "paragraph_index": 88,
+          "coordinates": {
+            "left": 6.7632,
+            "top": 9.7836,
+            "right": 8.0939,
+            "bottom": 10.0475,
+            "width": 1.3306999999999993,
+            "height": 0.2638999999999996
+          }
+        },
+        {
+          "content": "○2021年度以降の主な 商品改定について OQ&A",
+          "role": null,
+          "length": 26,
+          "paragraph_index": 89,
+          "coordinates": {
+            "left": 2.7721,
+            "top": 4.9376,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 5.2164,
+            "height": 6.5215
+          }
+        },
+        {
+          "content": "2",
+          "role": "ParagraphRole.PAGE_NUMBER",
+          "length": 1,
+          "paragraph_index": 90,
+          "coordinates": {
+            "left": 7.9103,
+            "top": 11.3568,
+            "right": 7.9885,
+            "bottom": 11.4591,
+            "width": 0.07819999999999983,
+            "height": 0.10229999999999961
+          }
+        }
+      ]
+    }
+  ]
+}
