@@ -230,6 +230,7 @@ class EnhancedOutputHandlerV34:
             )
             if side_by_side_path:
                 saved_files["side_by_side_pdf"] = str(side_by_side_path)
+                logger.info(f"並列比較PDF出力完了: {side_by_side_path}")
             
             # 注釈付きPDF
             annotated_files = self._create_annotated_pdfs(
@@ -237,7 +238,14 @@ class EnhancedOutputHandlerV34:
             )
             saved_files.update(annotated_files)
             
+            # 注釈付きPDFのパスも個別に表示
+            if "document1_annotated" in annotated_files:
+                logger.info(f"文書1注釈付きPDF出力完了: {annotated_files['document1_annotated']}")
+            if "document2_annotated" in annotated_files:
+                logger.info(f"文書2注釈付きPDF出力完了: {annotated_files['document2_annotated']}")
+            
             logger.info("PDF生成完了")
+            logger.info(f"生成されたPDFファイル数: {len(saved_files)}")
             
         except Exception as e:
             logger.error(f"PDF生成エラー: {e}")
@@ -265,10 +273,10 @@ class EnhancedOutputHandlerV34:
                     'semantic_similarity': diff.get('semantic_similarity', ''),
                     'original_text': self._truncate_text(diff.get('original_text', ''), 100),
                     'modified_text': self._truncate_text(diff.get('modified_text', ''), 100),
-                    'original_x': diff.get('original_coordinates', {}).get('left', '') if diff.get('original_coordinates') else '',
-                    'original_y': diff.get('original_coordinates', {}).get('top', '') if diff.get('original_coordinates') else '',
-                    'modified_x': diff.get('modified_coordinates', {}).get('left', '') if diff.get('modified_coordinates') else '',
-                    'modified_y': diff.get('modified_coordinates', {}).get('top', '') if diff.get('modified_coordinates') else '',
+                    'original_x': self._get_coordinate_value(diff.get('original_coordinates'), 'left'),
+                    'original_y': self._get_coordinate_value(diff.get('original_coordinates'), 'top'),
+                    'modified_x': self._get_coordinate_value(diff.get('modified_coordinates'), 'left'),
+                    'modified_y': self._get_coordinate_value(diff.get('modified_coordinates'), 'top'),
                     'section_title': diff.get('structural_info', {}).get('section_title', ''),
                     'paragraph_role': diff.get('structural_info', {}).get('paragraph_role', ''),
                     'explanation': self._truncate_text(diff.get('explanation', ''), 200)
@@ -727,38 +735,115 @@ class EnhancedOutputHandlerV34:
             logger.error(f"分析レポート生成エラー: {e}")
             return None
     
+    def _normalize_coordinates(self, coordinates: Dict[str, Any]) -> Optional[Dict[str, float]]:
+        """座標データを正規化してleft, top, right, bottomを返す
+        
+        Args:
+            coordinates: 座標データ（新旧両方の形式に対応）
+            
+        Returns:
+            正規化された座標辞書 または None
+        """
+        if not coordinates:
+            return None
+        
+        coord_type = coordinates.get('type', 'legacy')
+        
+        # 新しいポリゴン形式の場合
+        if coord_type in ['polygon', 'morpheme_polygon', 'combined_polygon']:
+            # boundsが存在する場合（優先）
+            if 'bounds' in coordinates:
+                bounds = coordinates['bounds']
+                try:
+                    return {
+                        'left': float(bounds.get('left', 0)),
+                        'top': float(bounds.get('top', 0)),
+                        'right': float(bounds.get('right', 0)),
+                        'bottom': float(bounds.get('bottom', 0))
+                    }
+                except (ValueError, TypeError):
+                    logger.debug("bounds座標の数値変換に失敗")
+            
+            # raw_coordinatesからboundsを計算
+            elif 'raw_coordinates' in coordinates:
+                raw_coords = coordinates['raw_coordinates']
+                if len(raw_coords) >= 4:
+                    try:
+                        # ポリゴンの境界ボックスを計算
+                        x_coords = [raw_coords[i] for i in range(0, len(raw_coords), 2)]
+                        y_coords = [raw_coords[i] for i in range(1, len(raw_coords), 2)]
+                        
+                        return {
+                            'left': min(x_coords),
+                            'top': min(y_coords),
+                            'right': max(x_coords),
+                            'bottom': max(y_coords)
+                        }
+                    except (ValueError, TypeError, IndexError):
+                        logger.debug("raw_coordinates座標の計算に失敗")
+        
+        # 古い形式の場合（後方互換性）
+        try:
+            left = float(coordinates.get('left', 0))
+            top = float(coordinates.get('top', 0))
+            right = coordinates.get('right')
+            bottom = coordinates.get('bottom')
+            
+            # right, bottomがない場合はwidth, heightから計算
+            if right is None and 'width' in coordinates and coordinates['width'] is not None:
+                right = left + float(coordinates['width'])
+            if bottom is None and 'height' in coordinates and coordinates['height'] is not None:
+                bottom = top + float(coordinates['height'])
+                
+            if right is not None and bottom is not None:
+                return {
+                    'left': left,
+                    'top': top,
+                    'right': float(right),
+                    'bottom': float(bottom)
+                }
+        except (ValueError, TypeError):
+            logger.debug("古い形式座標の処理に失敗")
+        
+        logger.debug(f"座標正規化失敗: type={coord_type}, keys={coordinates.keys()}")
+        return None
+    
+    def _get_coordinate_value(self, coordinates: Dict[str, Any], coord_key: str) -> str:
+        """座標辞書から指定の座標値を安全に取得
+        
+        Args:
+            coordinates: 座標データ
+            coord_key: 取得したい座標キー（'left', 'top', 'right', 'bottom'）
+            
+        Returns:
+            座標値の文字列、取得できない場合は空文字
+        """
+        if not coordinates:
+            return ''
+        
+        normalized = self._normalize_coordinates(coordinates)
+        if not normalized:
+            return ''
+        
+        return str(normalized.get(coord_key, ''))
+    
     def _validate_coordinates(self, coordinates: Dict[str, Any]) -> bool:
-        """座標情報の有効性をチェック（拡張版）"""
+        """座標情報の有効性をチェック（新形式対応版）"""
         if not coordinates:
             logger.debug("座標が空です")
             return False
         
-        required_keys = ['left', 'top']
-        for key in required_keys:
-            if key not in coordinates or coordinates[key] is None:
-                logger.debug(f"必須座標 {key} がありません")
-                return False
+        # 座標を正規化
+        normalized = self._normalize_coordinates(coordinates)
+        if not normalized:
+            logger.debug("座標の正規化に失敗しました")
+            return False
         
-        # 座標値の数値チェックと計算
         try:
-            left = float(coordinates.get('left', 0))
-            top = float(coordinates.get('top', 0))
-            
-            # right, bottomの計算（優先順位：直接指定 > width/heightから計算）
-            right = coordinates.get('right')
-            if right is None and 'width' in coordinates and coordinates['width'] is not None:
-                right = left + float(coordinates['width'])
-            
-            bottom = coordinates.get('bottom')
-            if bottom is None and 'height' in coordinates and coordinates['height'] is not None:
-                bottom = top + float(coordinates['height'])
-            
-            if right is None or bottom is None:
-                logger.debug("right または bottom が計算できません")
-                return False
-                
-            right = float(right)
-            bottom = float(bottom)
+            left = normalized['left']
+            top = normalized['top']
+            right = normalized['right']
+            bottom = normalized['bottom']
             
             # 基本的な座標チェック
             if left < 0 or top < 0:
@@ -770,9 +855,8 @@ class EnhancedOutputHandlerV34:
                 return False
             
             # Document Intelligence座標の妥当性チェック（インチ単位）
-            # 一般的なPDFサイズ：A4(8.27x11.69), Letter(8.5x11) を考慮
-            max_width_inches = 20.0  # A3より大きなサイズも許容
-            max_height_inches = 30.0  # 長い文書も許容
+            max_width_inches = 20.0
+            max_height_inches = 30.0
             
             if right > max_width_inches or bottom > max_height_inches:
                 logger.debug(f"座標が想定範囲を超えています: right={right}, bottom={bottom}")
@@ -781,31 +865,23 @@ class EnhancedOutputHandlerV34:
             logger.debug(f"座標検証成功: left={left}, top={top}, right={right}, bottom={bottom}")
             return True
             
-        except (ValueError, TypeError) as e:
-            logger.debug(f"座標値の型変換エラー: {e}")
+        except (ValueError, TypeError, KeyError) as e:
+            logger.debug(f"座標値の処理エラー: {e}")
             return False
     
     def _create_valid_rect(self, coordinates: Dict[str, Any], page) -> Optional[fitz.Rect]:
-        """有効なfitz.Rectを作成（改良版）"""
+        """有効なfitz.Rectを作成（新形式対応版）"""
         try:
-            # Document Intelligence座標を取得
-            left = float(coordinates.get('left', 0))
-            top = float(coordinates.get('top', 0))
-            right = coordinates.get('right')
-            bottom = coordinates.get('bottom')
-            
-            # right, bottomがない場合はwidth, heightから計算
-            if right is None and 'width' in coordinates and coordinates['width'] is not None:
-                right = left + float(coordinates['width'])
-            if bottom is None and 'height' in coordinates and coordinates['height'] is not None:
-                bottom = top + float(coordinates['height'])
-            
-            if right is None or bottom is None:
-                logger.debug("rightまたはbottomが計算できません")
+            # 座標を正規化
+            normalized = self._normalize_coordinates(coordinates)
+            if not normalized:
+                logger.debug("座標の正規化に失敗しました")
                 return None
-                
-            right = float(right)
-            bottom = float(bottom)
+            
+            left = normalized['left']
+            top = normalized['top']
+            right = normalized['right']
+            bottom = normalized['bottom']
             
             # PDFページサイズを取得
             page_width = page.rect.width  # ポイント単位

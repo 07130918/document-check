@@ -60,11 +60,14 @@ class StructuredAzureService:
         
         # 構造化分析の実行
         structured_result = self._extract_structured_information(result)
+
+        # 単語データの取得
+        word_data = result.pages
         
         logger.info(f"構造化分析完了: {structured_result['summary']['total_sections']}セクション, "
                    f"{structured_result['summary']['total_paragraphs']}段落")
         
-        return structured_result
+        return structured_result, word_data
     
     def _extract_structured_information(self, result) -> Dict[str, Any]:
         """Document Intelligence結果から構造化情報を抽出

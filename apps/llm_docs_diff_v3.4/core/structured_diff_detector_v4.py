@@ -78,6 +78,22 @@ class RichParagraphMatch:
         return f"Match[{self.index1}↔{self.index2}]: '{self.content1[:30]}...' → '{self.content2[:30]}...' ({self.similarity:.3f})"
 
 
+@dataclass
+class UnmatchedSection:
+    """マッチしなかったセクション情報"""
+    index: int
+    document: str  # 'doc1' or 'doc2'
+    title: str
+    paragraph_count: int
+    contents: List[str]  # 段落の内容リスト
+    section_type: str  # 'deleted' or 'added'
+    
+    def __repr__(self):
+        content_preview = ' | '.join(content[:20] + '...' if len(content) > 20 else content 
+                                   for content in self.contents[:3])
+        return f"UnmatchedSection[{self.document}:{self.index}]: '{self.title}' ({self.paragraph_count}段落) - {content_preview}"
+
+
 class MatchResult:
     """段落マッチング結果を格納するクラス（tuple互換性あり）"""
     
@@ -101,7 +117,7 @@ class StructuredDiffDetectorV4:
     """構造化データ用差分検出器"""
     
     def __init__(self, 
-                 similarity_threshold: float = 0.8,
+                 similarity_threshold: float = 0.6,
                  exact_match_bonus: float = 0.2,
                  section_weight: float = 0.3):
         """
@@ -118,10 +134,13 @@ class StructuredDiffDetectorV4:
         self.debug_section_matches: List[RichSectionMatch] = []
         self.debug_paragraph_diffs: List[RichParagraphDiff] = []  
         self.debug_paragraph_matches: List[RichParagraphMatch] = []
+        self.debug_unmatched_sections: List[UnmatchedSection] = []
     
     def detect_easy_differences(self, 
                       doc1_analysis: Dict[str, Any], 
-                      doc2_analysis: Dict[str, Any]) -> List[DiffResult]:
+                      doc2_analysis: Dict[str, Any],
+                      doc1_word_data,
+                      doc2_word_data) -> List[DiffResult]:
         """para_contents_listを使用した簡易差分検出
         
         Args:
@@ -181,12 +200,27 @@ class StructuredDiffDetectorV4:
             for paragraph_match in paragraph_matches:
                 para1 = paragraphs1[paragraph_match.index1]
                 para2 = paragraphs2[paragraph_match.index2]
+                para1_page = para1["page"]
+                para2_page = para2["page"]
+
+                for item in doc1_word_data:
+                    if item["pageNumber"] == para1_page:
+                        para1_word_data = item["words"]
+                        break
+
+
+                for item in doc2_word_data:
+                    if item["pageNumber"] == para2_page:
+                        para2_word_data = item["words"]
+                        break
+                
                 
                 logger.debug(f"  段落マッチ詳細: {paragraph_match}")
                 
+                
                 if paragraph_match.content1 != paragraph_match.content2:
                     # 詳細な文字列差分を抽出
-                    text_differences = self._extract_text_differences(para1, para2)
+                    text_differences = self._extract_text_differences(para1, para2, para1_word_data, para2_word_data)
                     
                     # 各差分箇所に対してDiffResultを作成
                     for diff_detail in text_differences:
@@ -220,7 +254,11 @@ class StructuredDiffDetectorV4:
                             page=para1.get('page', section1.get('page', 2)),
                             original_bbox=original_bbox,
                             modified_bbox=modified_bbox,
-                            semantic_similarity=paragraph_match.similarity
+                            semantic_similarity=paragraph_match.similarity,
+                            original_paragraph=diff_detail.get('original_paragraph'),
+                            modified_paragraph=diff_detail.get('modified_paragraph'),
+                            original_section=section1,
+                            modified_section=section2
                         )
                         
                         results.append(result)
@@ -236,7 +274,11 @@ class StructuredDiffDetectorV4:
                         page=para.get('page', section1.get('page', 2)),
                         original_bbox=para,
                         modified_bbox=None,
-                        semantic_similarity=0.0
+                        semantic_similarity=0.0,
+                        original_paragraph=para,
+                        modified_paragraph=None,
+                        original_section=section1,
+                        modified_section=None
                     )
                     results.append(result)
             
@@ -247,7 +289,11 @@ class StructuredDiffDetectorV4:
                         page=para.get('page', section2.get('page', 2)),
                         original_bbox=None,
                         modified_bbox=para,
-                        semantic_similarity=0.0
+                        semantic_similarity=0.0,
+                        original_paragraph=None,
+                        modified_paragraph=para,
+                        original_section=None,
+                        modified_section=section2
                     )
                     results.append(result)
             
@@ -255,8 +301,13 @@ class StructuredDiffDetectorV4:
             matched_section_indices2.add(section_match.index2)
         
         # 3. マッチしなかったセクション全体の処理（セクション削除/追加）
+        unmatched_count1 = 0
         for sec_idx, section in enumerate(doc1_sections):
             if sec_idx not in matched_section_indices1:
+                if unmatched_count1 == 0:
+                    logger.info("マッチしなかった文書1のセクション:")
+                unmatched_count1 += 1
+                
                 # セクション全体の削除
                 for para in section.get('paragraphs', []):
                     result = DiffResult(
@@ -264,13 +315,28 @@ class StructuredDiffDetectorV4:
                         page=para.get('page', section.get('page', 2)),
                         original_bbox=para,
                         modified_bbox=None,
-                        semantic_similarity=0.0
+                        semantic_similarity=0.0,
+                        original_paragraph=para,
+                        modified_paragraph=None,
+                        original_section=section,
+                        modified_section=None
                     )
                     results.append(result)
-                logger.debug(f"セクション削除: '{section.get('title', '')}'")
+                    
+                section_title = section.get('title', '(タイトルなし)')
+                para_count = section.get('paragraph_count', len(section.get('paragraphs', [])))
+                logger.info(f"  削除セクション[{sec_idx+1}]: '{section_title}' ({para_count}段落)")
         
+        if unmatched_count1 == 0:
+            logger.info("文書1: 全セクションがマッチしました")
+        
+        unmatched_count2 = 0
         for sec_idx, section in enumerate(doc2_sections):
             if sec_idx not in matched_section_indices2:
+                if unmatched_count2 == 0:
+                    logger.info("マッチしなかった文書2のセクション:")
+                unmatched_count2 += 1
+                
                 # セクション全体の追加
                 for para in section.get('paragraphs', []):
                     result = DiffResult(
@@ -278,10 +344,20 @@ class StructuredDiffDetectorV4:
                         page=para.get('page', section.get('page', 2)),
                         original_bbox=None,
                         modified_bbox=para,
-                        semantic_similarity=0.0
+                        semantic_similarity=0.0,
+                        original_paragraph=None,
+                        modified_paragraph=para,
+                        original_section=None,
+                        modified_section=section
                     )
                     results.append(result)
-                logger.debug(f"セクション追加: '{section.get('title', '')}'")
+                    
+                section_title = section.get('title', '(タイトルなし)')
+                para_count = section.get('paragraph_count', len(section.get('paragraphs', [])))
+                logger.info(f"  追加セクション[{sec_idx+1}]: '{section_title}' ({para_count}段落)")
+        
+        if unmatched_count2 == 0:
+            logger.info("文書2: 全セクションがマッチしました")
         
         logger.info(f"簡易差分検出完了: {len(results)}件")
         return self._sort_results(results)
@@ -438,9 +514,12 @@ class StructuredDiffDetectorV4:
         # 全組み合わせでセクション内容の類似度を計算
         for i, section1 in enumerate(doc1_sections):
             for j, section2 in enumerate(doc2_sections):
-                # para_contents_listを取得
-                contents1 = section1.get('para_contents_list', [])
-                contents2 = section2.get('para_contents_list', [])
+                # paragraphsからcontentを抽出してリスト化
+                paragraphs1 = section1.get('paragraphs', [])
+                paragraphs2 = section2.get('paragraphs', [])
+                
+                contents1 = [para.get('content', '') for para in paragraphs1]
+                contents2 = [para.get('content', '') for para in paragraphs2]
                 
                 # 空のコンテンツリストはスキップ
                 if not contents1 or not contents2:
@@ -473,13 +552,19 @@ class StructuredDiffDetectorV4:
         
         for i, j, sim, section1, section2 in matches:
             if i not in used_i and j not in used_j:
+                # paragraphsからcontentを抽出（マッチング処理と同じ方式）
+                paragraphs1 = section1.get('paragraphs', [])
+                paragraphs2 = section2.get('paragraphs', [])
+                match_contents1 = [para.get('content', '') for para in paragraphs1]
+                match_contents2 = [para.get('content', '') for para in paragraphs2]
+                
                 # RichSectionMatchオブジェクトを作成
                 rich_match = RichSectionMatch(
                     index1=i, index2=j, similarity=sim,
                     title1=section1.get('title', ''),
                     title2=section2.get('title', ''),
-                    contents1=section1.get('para_contents_list', []),
-                    contents2=section2.get('para_contents_list', []),
+                    contents1=match_contents1,
+                    contents2=match_contents2,
                     paragraph_count1=section1.get('paragraph_count', 0),
                     paragraph_count2=section2.get('paragraph_count', 0)
                 )
@@ -487,8 +572,52 @@ class StructuredDiffDetectorV4:
                 used_i.add(i)
                 used_j.add(j)
         
+        # マッチしなかったセクションを収集
+        unmatched_sections = []
+        
+        # 文書1のアンマッチセクション
+        for i, section1 in enumerate(doc1_sections):
+            if i not in used_i:
+                paragraphs1 = section1.get('paragraphs', [])
+                contents1 = [para.get('content', '') for para in paragraphs1]
+                unmatched_section = UnmatchedSection(
+                    index=i,
+                    document='doc1',
+                    title=section1.get('title', '(タイトルなし)'),
+                    paragraph_count=len(paragraphs1),
+                    contents=contents1,
+                    section_type='deleted'
+                )
+                unmatched_sections.append(unmatched_section)
+        
+        # 文書2のアンマッチセクション
+        for j, section2 in enumerate(doc2_sections):
+            if j not in used_j:
+                paragraphs2 = section2.get('paragraphs', [])
+                contents2 = [para.get('content', '') for para in paragraphs2]
+                unmatched_section = UnmatchedSection(
+                    index=j,
+                    document='doc2',
+                    title=section2.get('title', '(タイトルなし)'),
+                    paragraph_count=len(paragraphs2),
+                    contents=contents2,
+                    section_type='added'
+                )
+                unmatched_sections.append(unmatched_section)
+        
+        # ログ出力
+        logger.info(f"セクションマッチング完了: マッチ={len(final_matches)}件, アンマッチ={len(unmatched_sections)}件")
+        
+        if unmatched_sections:
+            logger.info("マッチしなかったセクション:")
+            for unmatched in unmatched_sections:
+                logger.info(f"  {unmatched}")
+        else:
+            logger.info("全セクションがマッチしました")
+        
         # デバッガー用に保存
         self.debug_section_matches = final_matches
+        self.debug_unmatched_sections = unmatched_sections
         return final_matches
 
     def _match_paragraphs_in_section(self, section1: Dict[str, Any], 
@@ -625,17 +754,216 @@ class StructuredDiffDetectorV4:
         
         return similarity
 
-    def _extract_text_differences(self, para1: Dict[str, Any], para2: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """段落間の詳細な文字列差分を抽出
+    def _tokenize_with_mecab(self, text: str) -> List[Dict[str, Any]]:
+        """MeCabを使用して形態素分割（位置情報付き）
+        
+        Args:
+            text: 分割対象のテキスト
+            
+        Returns:
+            形態素情報のリスト
+            [
+                {
+                    'surface': '194年',      # 表層形
+                    'features': ['名詞', '一般', ...],  # 品詞情報  
+                    'start_pos': 0,          # 元文字列での開始位置
+                    'end_pos': 4,            # 元文字列での終了位置
+                    'length': 4
+                },
+                ...
+            ]
+        """
+        try:
+            import MeCab
+        except ImportError:
+            logger.warning("MeCabがインストールされていません。文字レベル分割にフォールバック")
+            return self._fallback_tokenize(text)
+        
+        try:
+            # 詳細情報付きでMeCab実行
+            tagger = MeCab.Tagger('-F%m,%f[0],%f[1],%f[2],%f[3],%f[4],%f[5],%f[6]')
+            result = tagger.parseToNode(text)
+            
+            morphemes = []
+            current_pos = 0
+            
+            while result:
+                if result.surface:  # 表層形が存在する場合のみ
+                    features = result.feature.split(',')
+                    start_pos = current_pos
+                    end_pos = current_pos + len(result.surface)
+                    
+                    morphemes.append({
+                        'surface': result.surface,
+                        'features': features,
+                        'start_pos': start_pos,
+                        'end_pos': end_pos,
+                        'length': len(result.surface),
+                        'pos': features[0] if len(features) > 0 else '',  # 品詞
+                        'pos_detail': features[1] if len(features) > 1 else ''  # 品詞詳細
+                    })
+                    
+                    current_pos = end_pos
+                
+                result = result.next
+            
+            return morphemes
+            
+        except Exception as e:
+            logger.warning(f"MeCab実行エラー: {e}、フォールバック使用")
+            return self._fallback_tokenize(text)
+    
+    def _fallback_tokenize(self, text: str) -> List[Dict[str, Any]]:
+        """MeCab利用不可時のフォールバック形態素分割"""
+        import re
+        
+        # 正規表現パターンで意味単位分割
+        patterns = [
+            (r'\d+年度?', '数詞_年'),
+            (r'\d+億円', '数詞_金額'),
+            (r'P\d+', '記号_P番号'),
+            (r'[ぁ-ん]+', 'ひらがな'),
+            (r'[ァ-ン]+', 'カタカナ'),
+            (r'[一-龯]+', '漢字'),
+            (r'[A-Za-z]+', '英語'),
+            (r'\d+', '数字'),
+            (r'[、。！？]', '句読点'),
+            (r'[^\w\s]', '記号')
+        ]
+        
+        morphemes = []
+        current_pos = 0
+        remaining_text = text
+        
+        while remaining_text and current_pos < len(text):
+            matched = False
+            
+            for pattern, pos_type in patterns:
+                match = re.match(pattern, remaining_text)
+                if match:
+                    surface = match.group(0)
+                    start_pos = current_pos
+                    end_pos = current_pos + len(surface)
+                    
+                    morphemes.append({
+                        'surface': surface,
+                        'features': [pos_type],
+                        'start_pos': start_pos,
+                        'end_pos': end_pos,
+                        'length': len(surface),
+                        'pos': pos_type,
+                        'pos_detail': ''
+                    })
+                    
+                    current_pos = end_pos
+                    remaining_text = remaining_text[len(surface):]
+                    matched = True
+                    break
+            
+            if not matched:
+                # どのパターンにもマッチしない場合、1文字進める
+                if remaining_text:
+                    surface = remaining_text[0]
+                    morphemes.append({
+                        'surface': surface,
+                        'features': ['その他'],
+                        'start_pos': current_pos,
+                        'end_pos': current_pos + 1,
+                        'length': 1,
+                        'pos': 'その他',
+                        'pos_detail': ''
+                    })
+                    current_pos += 1
+                    remaining_text = remaining_text[1:]
+        
+        return morphemes
+    
+    def _map_morphemes_to_words_data(self, morphemes: List[Dict], 
+                                    paragraph_content: str, words_data: List[Dict]) -> Dict[int, Tuple[int, int]]:
+        """廃止予定：旧式の形態素インデックスマッピング
+        
+        注意：このメソッドは文字位置ベースの不正確なマッピングを行うため、
+        新しい _find_and_get_morpheme_coordinates メソッドの使用を推奨
+        """
+        logger.warning("廃止予定の _map_morphemes_to_words_data が呼ばれました。新しいメソッドの使用を推奨します。")
+        
+        # 段落範囲を特定
+        paragraph_range = self._find_paragraph_range_in_words_data(paragraph_content, words_data)
+        if paragraph_range[0] is None:
+            logger.debug(f"段落範囲特定失敗、形態素マッピング不可")
+            return {}
+        
+        morpheme_map = {}
+        para_start_idx = paragraph_range[0]
+        
+        for morph_idx, morpheme in enumerate(morphemes):
+            char_start = morpheme['start_pos']
+            char_end = morpheme['end_pos']
+            
+            # 文字位置をwords_dataインデックスに変換
+            word_start_idx = para_start_idx + char_start
+            word_end_idx = para_start_idx + char_end
+            
+            # 範囲チェック
+            if word_end_idx <= len(words_data):
+                morpheme_map[morph_idx] = (word_start_idx, word_end_idx)
+                # logger.debug(f"形態素マッピング: '{morpheme['surface']}' → words_data[{word_start_idx}:{word_end_idx}]")
+            else:
+                logger.warning(f"形態素範囲超過: '{morpheme['surface']}' → [{word_start_idx}:{word_end_idx}] > {len(words_data)}")
+        
+        return morpheme_map
+    
+    def _get_morpheme_range_coordinates(self, morphemes: List[Dict], 
+                                       morpheme_map: Dict[int, Tuple[int, int]], 
+                                       words_data: List[Dict]) -> Dict:
+        """廃止予定：旧式の形態素範囲統合座標取得
+        
+        注意：このメソッドは旧式のmorpheme_mapに依存するため、
+        新しい _find_and_get_morpheme_coordinates メソッドの使用を推奨
+        """
+        logger.warning("廃止予定の _get_morpheme_range_coordinates が呼ばれました。新しいメソッドの使用を推奨します。")
+        
+        if not morphemes or not morpheme_map:
+            return None
+        
+        all_polygons = []
+        
+        # 全形態素の座標を収集
+        for i, morpheme in enumerate(morphemes):
+            if i in morpheme_map:
+                word_start, word_end = morpheme_map[i]
+                # この形態素に対応するwords_dataから座標を取得
+                morpheme_coords = self._extract_coordinates_from_words_range(
+                    words_data, word_start, word_end
+                )
+                if morpheme_coords:
+                    all_polygons.append(morpheme_coords)
+        
+        # 複数形態素の座標を結合
+        if all_polygons:
+            combined_polygon = self._combine_polygons(all_polygons)
+            return {
+                'type': 'morpheme_polygon',
+                'raw_coordinates': combined_polygon,
+                'morpheme_count': len(morphemes),
+                'morpheme_surfaces': [m['surface'] for m in morphemes]
+            }
+        
+        return None
+
+    def _extract_text_differences(self, para1: Dict[str, Any], para2: Dict[str, Any], 
+                                 para1_words_data: List[Dict], para2_words_data: List[Dict]) -> List[Dict[str, Any]]:
+        """最適化版：差分検出→該当形態素のみwords_dataマッピング
         
         Args:
             para1: 文書1の段落
             para2: 文書2の段落
+            para1_words_data: 文書1の文字レベルデータ
+            para2_words_data: 文書2の文字レベルデータ
             
         Returns:
-            差分箇所のリスト（content, coordinates含む）
+            形態素レベル差分箇所のリスト
         """
-        import difflib
         
         content1 = para1.get('content', '')
         content2 = para2.get('content', '')
@@ -643,41 +971,549 @@ class StructuredDiffDetectorV4:
         if content1 == content2:
             return []
         
-        differences = []
+        # 1. 形態素分割（words_dataマッピングなし）
+        morphemes1 = self._tokenize_with_mecab(content1)
+        morphemes2 = self._tokenize_with_mecab(content2)
         
-        # 文字レベルの差分を取得
-        matcher = difflib.SequenceMatcher(None, content1, content2)
+        # 2. 形態素レベルでの差分検出（座標なし）
+        differences = self._detect_morpheme_differences_only(morphemes1, morphemes2)
+        
+        # 3. 差分のある形態素のみwords_dataで検索・座標取得
+        enriched_differences = []
+        
+        for diff in differences:
+            # 差分のある形態素情報を取得
+            original_morphemes = diff.get('original_morphemes', [])
+            modified_morphemes = diff.get('modified_morphemes', [])
+            
+            # 該当する形態素のみwords_dataで検索・座標取得
+            original_coords = None
+            if original_morphemes:
+                original_coords = self._find_and_get_morpheme_coordinates(
+                    original_morphemes, content1, para1_words_data
+                )
+            
+            modified_coords = None  
+            if modified_morphemes:
+                modified_coords = self._find_and_get_morpheme_coordinates(
+                    modified_morphemes, content2, para2_words_data
+                )
+            
+            # 座標情報を付加した差分データを作成
+            enriched_diff = {
+                **diff,  # 既存の差分情報
+                'original_coordinates': original_coords,
+                'modified_coordinates': modified_coords,
+                'original_paragraph': para1,
+                'modified_paragraph': para2
+            }
+            enriched_differences.append(enriched_diff)
+            
+            logger.debug(f"形態素差分検出: '{diff['original_content']}' → '{diff['modified_content']}' ({diff['change_type']})")
+        
+        return enriched_differences
+    
+    def _create_words_data_string_and_mapping(self, words_data: List[Dict]) -> Tuple[str, List[int]]:
+        """廃止予定：words_dataを文字列化し、位置マッピングを作成
+        
+        注意：このメソッドは旧式の文字位置ベースアプローチで使用されていましたが、
+        新しい文言マッチング方式では不要です。下位互換性のため残していますが使用は推奨されません。
+        """
+        logger.warning("廃止予定の _create_words_data_string_and_mapping が呼ばれました。")
+        
+        words_string = ""
+        char_to_word_index = []  # 文字位置 → words_dataインデックス
+        
+        for word_idx, word_data in enumerate(words_data):
+            content = word_data.get('content', '')
+            for char in content:
+                words_string += char
+                char_to_word_index.append(word_idx)
+        
+        logger.debug(f"words_data文字列化完了: {len(words_string)}文字, {len(words_data)}要素")
+        return words_string, char_to_word_index
+    
+    def _verify_full_paragraph_match(self, paragraph_content: str, words_string: str, start_pos: int) -> float:
+        """廃止予定：指定位置から段落全体のマッチング率を計算
+        
+        注意：このメソッドは旧式の文字位置ベースアプローチで使用されていましたが、
+        新しい文言マッチング方式では不要です。下位互換性のため残していますが使用は推奨されません。
+        """
+        logger.warning("廃止予定の _verify_full_paragraph_match が呼ばれました。")
+        
+        para_length = len(paragraph_content)
+        end_pos = start_pos + para_length
+        
+        if end_pos > len(words_string):
+            return 0.0
+        
+        # 該当範囲の文字列を抽出
+        target_string = words_string[start_pos:end_pos]
+        
+        # difflib で類似度計算
+        import difflib
+        similarity = difflib.SequenceMatcher(None, paragraph_content, target_string).ratio()
+        
+        return similarity
+
+    def _find_paragraph_range_in_words_data(self, paragraph_content: str, words_data: List[Dict]) -> Tuple[Optional[int], Optional[int]]:
+        """文言マッチングベースでの段落範囲特定
+        
+        Args:
+            paragraph_content: 段落の全テキスト
+            words_data: 文字単位のデータリスト
+            
+        Returns:
+            (start_idx, end_idx): 段落に対応するwords_dataの範囲、見つからない場合は(None, None)
+        """
+        if not paragraph_content or not words_data:
+            return None, None
+        
+        # 1. 完全一致検索（正規化後）
+        result = self._find_exact_text_match(paragraph_content, words_data)
+        if result:
+            logger.debug(f"段落範囲特定成功(完全一致): '{paragraph_content[:20]}...' → words_data[{result[0]}:{result[1]}]")
+            return result
+        
+        # 2. 部分一致検索（段落の先頭・末尾で一致）
+        result = self._find_partial_text_match(paragraph_content, words_data)
+        if result:
+            logger.debug(f"段落範囲特定成功(部分一致): '{paragraph_content[:20]}...' → words_data[{result[0]}:{result[1]}]")
+            return result
+        
+        # 3. fuzzy一致検索（最低7割一致）
+        result = self._find_fuzzy_text_match(paragraph_content, words_data, min_ratio=0.7)
+        if result:
+            logger.debug(f"段落範囲特定成功(fuzzy一致): '{paragraph_content[:20]}...' → words_data[{result[0]}:{result[1]}]")
+            return result
+        
+        logger.warning(f"段落範囲特定完全失敗: '{paragraph_content[:30]}...'")
+        return None, None
+
+    def _find_exact_text_match(self, target_text: str, words_data: List[Dict]) -> Optional[Tuple[int, int]]:
+        """完全一致検索"""
+        normalized_target = self._normalize_text(target_text)
+        
+        for start_idx in range(len(words_data)):
+            accumulated_text = ""
+            
+            for end_idx in range(start_idx, min(start_idx + len(normalized_target) * 2, len(words_data))):
+                accumulated_text += words_data[end_idx].get('content', '')
+                normalized_accumulated = self._normalize_text(accumulated_text)
+                
+                if normalized_accumulated == normalized_target:
+                    return (start_idx, end_idx + 1)
+                elif len(normalized_accumulated) > len(normalized_target) * 1.5:
+                    break  # 明らかに長すぎる場合は打ち切り
+        
+        return None
+
+    def _find_partial_text_match(self, target_text: str, words_data: List[Dict]) -> Optional[Tuple[int, int]]:
+        """部分一致検索（先頭・末尾基準）"""
+        normalized_target = self._normalize_text(target_text)
+        
+        # 先頭20文字と末尾20文字で検索
+        target_head = normalized_target[:20]
+        target_tail = normalized_target[-20:] if len(normalized_target) > 20 else normalized_target
+        
+        for start_idx in range(len(words_data)):
+            for end_idx in range(start_idx + 10, min(start_idx + 200, len(words_data) + 1)):
+                
+                candidate_text = self._extract_text_from_words_range(words_data, start_idx, end_idx)
+                normalized_candidate = self._normalize_text(candidate_text)
+                
+                # 先頭と末尾が一致するかチェック
+                if (normalized_candidate.startswith(target_head) and 
+                    normalized_candidate.endswith(target_tail)):
+                    
+                    # 長さも近似している場合のみ採用
+                    length_ratio = len(normalized_candidate) / len(normalized_target)
+                    if 0.8 <= length_ratio <= 1.2:
+                        return (start_idx, end_idx)
+        
+        return None
+
+    def _find_fuzzy_text_match(self, target_text: str, words_data: List[Dict], min_ratio: float = 0.7) -> Optional[Tuple[int, int]]:
+        """fuzzy一致検索"""
+        import difflib
+        
+        normalized_target = self._normalize_text(target_text)
+        best_match = None
+        best_ratio = min_ratio
+        
+        # 効率化：大まかな長さで範囲を絞る
+        target_length = len(normalized_target)
+        search_window = max(50, target_length // 5)
+        
+        for start_idx in range(0, len(words_data), search_window // 2):  # オーバーラップ付きスキップ
+            for window_size in [target_length // 2, target_length, target_length * 2]:
+                end_idx = min(start_idx + window_size, len(words_data))
+                
+                candidate_text = self._extract_text_from_words_range(words_data, start_idx, end_idx)
+                normalized_candidate = self._normalize_text(candidate_text)
+                
+                similarity = difflib.SequenceMatcher(None, normalized_target, normalized_candidate).ratio()
+                
+                if similarity > best_ratio:
+                    best_ratio = similarity
+                    best_match = (start_idx, end_idx)
+        
+        return best_match
+
+    def _extract_text_from_words_range(self, words_data: List[Dict], start_idx: int, end_idx: int) -> str:
+        """words_dataの指定範囲からテキストを抽出"""
+        return ''.join(word.get('content', '') for word in words_data[start_idx:end_idx])
+
+    def _normalize_text(self, text: str) -> str:
+        """テキスト正規化（比較用）"""
+        import re
+        # 空白・改行削除、全角半角統一など
+        normalized = re.sub(r'\s+', '', text)  # 全空白削除
+        normalized = normalized.replace('　', '')  # 全角スペース削除
+        return normalized.lower()
+
+    def _is_numeric(self, text: str) -> bool:
+        """テキストが数値かどうかを判定"""
+        import re
+        # 数字のみ、または数字と記号/文字の組み合わせで数字が含まれているかチェック
+        return bool(re.search(r'\d+', text))
+    
+    def _extract_numeric_part(self, text: str) -> str:
+        """テキストから数値部分を抽出"""
+        import re
+        numbers = re.findall(r'\d+', text)
+        return ''.join(numbers) if numbers else ""
+    
+    def _numeric_partial_match(self, target_text: str, content_text: str) -> bool:
+        """数値部分での部分マッチング判定"""
+        if not self._is_numeric(target_text) or not self._is_numeric(content_text):
+            return False
+        
+        target_numeric = self._extract_numeric_part(target_text)
+        content_numeric = self._extract_numeric_part(content_text)
+        
+        # 数値部分が完全一致すればマッチとする
+        return target_numeric == content_numeric and len(target_numeric) > 0
+
+    def _find_morpheme_with_difflib(self, morpheme_text: str, words_data: List[Dict],
+                                    para_start_idx: int, para_end_idx: int) -> Optional[Tuple[int, int]]:
+        """difflibを使用して形態素位置を特定"""
+        from difflib import SequenceMatcher
+        
+        # 段落範囲のcontentを抽出
+        paragraph_contents = [words_data[i].get('content', '') for i in range(para_start_idx, para_end_idx)]
+        paragraph_text = ''.join(paragraph_contents)
+        
+        # 1. 完全一致での検索
+        matcher = SequenceMatcher(None, paragraph_text, morpheme_text)
+        match = matcher.find_longest_match(0, len(paragraph_text), 0, len(morpheme_text))
+        
+        if match.size == len(morpheme_text):
+            # 完全一致の場合、文字位置からwords_dataインデックスに変換
+            char_start = match.a
+            char_end = match.a + match.size
+            return self._convert_char_range_to_words_range(char_start, char_end, paragraph_contents, para_start_idx)
+        
+        # 2. 数値部分マッチング
+        if self._is_numeric(morpheme_text):
+            target_numeric = self._extract_numeric_part(morpheme_text)
+            if target_numeric:
+                # 段落内で数値パターンを検索
+                import re
+                for match_obj in re.finditer(r'\d+', paragraph_text):
+                    if match_obj.group() == target_numeric:
+                        char_start = match_obj.start()
+                        char_end = match_obj.end()
+                        return self._convert_char_range_to_words_range(char_start, char_end, paragraph_contents, para_start_idx)
+        
+        # 3. 正規化後の検索
+        normalized_paragraph = self._normalize_text(paragraph_text)
+        normalized_target = self._normalize_text(morpheme_text)
+        
+        matcher = SequenceMatcher(None, normalized_paragraph, normalized_target)
+        match = matcher.find_longest_match(0, len(normalized_paragraph), 0, len(normalized_target))
+        
+        if match.size == len(normalized_target):
+            # 正規化前の文字位置を推定（近似）
+            char_start = match.a
+            char_end = match.a + match.size
+            return self._convert_char_range_to_words_range(char_start, char_end, paragraph_contents, para_start_idx)
+        
+        return None
+    
+    def _convert_char_range_to_words_range(self, char_start: int, char_end: int, 
+                                           paragraph_contents: List[str], para_start_idx: int) -> Tuple[int, int]:
+        """文字範囲をwords_data範囲に変換"""
+        current_char_pos = 0
+        words_start_idx = None
+        words_end_idx = None
+        
+        for i, content in enumerate(paragraph_contents):
+            content_start = current_char_pos
+            content_end = current_char_pos + len(content)
+            
+            # 開始インデックスの特定
+            if words_start_idx is None and char_start >= content_start and char_start < content_end:
+                words_start_idx = para_start_idx + i
+            
+            # 終了インデックスの特定
+            if char_end > content_start and char_end <= content_end:
+                words_end_idx = para_start_idx + i + 1
+                break
+            
+            current_char_pos = content_end
+        
+        # 開始は見つかったが終了が見つからない場合
+        if words_start_idx is not None and words_end_idx is None:
+            words_end_idx = words_start_idx + 1
+        
+        # 両方見つからない場合は最も近い位置を推定
+        if words_start_idx is None:
+            words_start_idx = para_start_idx + min(char_start // max(1, len(''.join(paragraph_contents)) // len(paragraph_contents)), len(paragraph_contents) - 1)
+            words_end_idx = words_start_idx + 1
+        
+        return (words_start_idx, words_end_idx)
+
+    def _find_and_get_morpheme_coordinates(self, target_morphemes: List[Dict], 
+                                          paragraph_content: str, words_data: List[Dict]) -> Optional[Dict]:
+        """差分のある形態素のみwords_dataで検索して座標取得
+        
+        Args:
+            target_morphemes: 対象形態素リスト
+            paragraph_content: 段落内容
+            words_data: words_dataリスト
+            
+        Returns:
+            座標情報辞書、見つからない場合はNone
+        """
+        if not target_morphemes:
+            return None
+        
+        # 1. 段落範囲特定
+        paragraph_range = self._find_paragraph_range_in_words_data(paragraph_content, words_data)
+        if not paragraph_range or paragraph_range[0] is None:
+            return None
+        
+        # 2. 対象形態素の文言を結合
+        target_text = ''.join(m['surface'] for m in target_morphemes)
+        
+        # 3. words_data内で該当範囲を検索
+        word_range = self._find_morpheme_range_in_paragraph(
+            target_text, words_data, paragraph_range[0], paragraph_range[1]
+        )
+        
+        if word_range:
+            # 4. 座標情報を取得
+            coordinates = self._extract_coordinates_from_words_range(
+                words_data, word_range[0], word_range[1]
+            )
+            
+            return {
+                'type': 'morpheme_polygon',
+                'raw_coordinates': coordinates,
+                'morpheme_count': len(target_morphemes),
+                'morpheme_surfaces': [m['surface'] for m in target_morphemes],
+                'words_data_range': word_range,  # デバッグ用
+                'words_data_content': [words_data[i].get('content', '') for i in range(word_range[0], word_range[1])]  # 実際の文言
+            }
+        
+        return None
+
+    def _find_morpheme_range_in_paragraph(self, morpheme_text: str, words_data: List[Dict],
+                                        para_start_idx: int, para_end_idx: int) -> Optional[Tuple[int, int]]:
+        """段落範囲内で特定の形態素範囲を検索
+        
+        Args:
+            morpheme_text: 検索対象の形態素文言
+            words_data: words_dataリスト  
+            para_start_idx: 段落開始インデックス
+            para_end_idx: 段落終了インデックス
+            
+        Returns:
+            (start_idx, end_idx): 形態素に対応するwords_dataの範囲、見つからない場合はNone
+        """
+        
+        # 新しいdifflibベースの検索を最初に実行
+        result = self._find_morpheme_with_difflib(morpheme_text, words_data, para_start_idx, para_end_idx)
+        if result:
+            logger.debug(f"形態素範囲検索成功(difflib): '{morpheme_text}' → words_data[{result[0]}:{result[1]}]")
+            return result
+        
+        # 従来の方法もフォールバックとして保持
+        
+        # 1. 完全一致検索（単一words_data要素）
+        for i in range(para_start_idx, para_end_idx):
+            if words_data[i].get('content', '') == morpheme_text:
+                logger.debug(f"形態素範囲検索成功(完全一致): '{morpheme_text}' → words_data[{i}:{i+1}]")
+                return (i, i + 1)
+        
+        # 2. 数値部分マッチング検索（単一要素）
+        if self._is_numeric(morpheme_text):
+            for i in range(para_start_idx, para_end_idx):
+                content = words_data[i].get('content', '')
+                if self._numeric_partial_match(morpheme_text, content):
+                    logger.debug(f"形態素範囲検索成功(数値部分一致): '{morpheme_text}' → '{content}' words_data[{i}:{i+1}]")
+                    return (i, i + 1)
+        
+        # 3. 複数要素にまたがる場合の検索（制限を緩和）
+        for start_idx in range(para_start_idx, para_end_idx):
+            accumulated_text = ""
+            
+            for end_idx in range(start_idx, min(start_idx + 15, para_end_idx)):  # 最大15要素まで拡張
+                accumulated_text += words_data[end_idx].get('content', '')
+                
+                if accumulated_text == morpheme_text:
+                    logger.debug(f"形態素範囲検索成功(複数要素): '{morpheme_text}' → words_data[{start_idx}:{end_idx+1}]")
+                    return (start_idx, end_idx + 1)
+                elif len(accumulated_text) > len(morpheme_text) * 2:  # 終了条件を緩和
+                    break
+        
+        # 4. 正規化一致検索（制限を緩和）
+        normalized_target = self._normalize_text(morpheme_text)
+        
+        for start_idx in range(para_start_idx, para_end_idx):
+            accumulated_text = ""
+            
+            for end_idx in range(start_idx, min(start_idx + 15, para_end_idx)):
+                accumulated_text += words_data[end_idx].get('content', '')
+                normalized_accumulated = self._normalize_text(accumulated_text)
+                
+                if normalized_accumulated == normalized_target:
+                    logger.debug(f"形態素範囲検索成功(正規化一致): '{morpheme_text}' → words_data[{start_idx}:{end_idx+1}]")
+                    return (start_idx, end_idx + 1)
+                elif len(normalized_accumulated) > len(normalized_target) * 3:  # 終了条件を大幅緩和
+                    break
+        
+        logger.warning(f"形態素範囲検索失敗: '{morpheme_text}' in paragraph range [{para_start_idx}:{para_end_idx}]")
+        return None
+
+    def _detect_morpheme_differences_only(self, morphemes1: List[Dict], morphemes2: List[Dict]) -> List[Dict]:
+        """形態素レベル差分検出（座標情報なし）
+        
+        Args:
+            morphemes1: 文書1の形態素リスト
+            morphemes2: 文書2の形態素リスト
+            
+        Returns:
+            座標情報なしの差分リスト
+        """
+        import difflib
+        
+        morpheme_surfaces1 = [m['surface'] for m in morphemes1]
+        morpheme_surfaces2 = [m['surface'] for m in morphemes2]
+        
+        matcher = difflib.SequenceMatcher(None, morpheme_surfaces1, morpheme_surfaces2)
+        differences = []
         
         for tag, i1, i2, j1, j2 in matcher.get_opcodes():
             if tag in ['replace', 'delete', 'insert']:
-                # 変更された部分の文字列を取得
-                original_text = content1[i1:i2] if tag in ['replace', 'delete'] else ''
-                modified_text = content2[j1:j2] if tag in ['replace', 'insert'] else ''
                 
-                # 座標を推定（文字位置に基づく）
-                original_coords = self._estimate_text_coordinates(
-                    para1, original_text, i1, i2
-                ) if original_text else None
+                original_morphemes = morphemes1[i1:i2] if tag in ['replace', 'delete'] else []
+                modified_morphemes = morphemes2[j1:j2] if tag in ['replace', 'insert'] else []
                 
-                modified_coords = self._estimate_text_coordinates(
-                    para2, modified_text, j1, j2
-                ) if modified_text else None
+                original_text = ''.join(m['surface'] for m in original_morphemes)
+                modified_text = ''.join(m['surface'] for m in modified_morphemes)
                 
-                differences.append({
-                    'change_type': self._determine_change_type(tag),
-                    'original_content': original_text,
-                    'modified_content': modified_text,
-                    'original_coordinates': original_coords,
-                    'modified_coordinates': modified_coords,
-                    'original_paragraph': para1,
-                    'modified_paragraph': para2
-                })
+                if original_text != modified_text:  # 実際に差分がある場合のみ
+                    differences.append({
+                        'change_type': self._determine_change_type(tag),
+                        'original_content': original_text,
+                        'modified_content': modified_text,
+                        'original_morphemes': original_morphemes,  # 形態素オブジェクト保持
+                        'modified_morphemes': modified_morphemes,  # 形態素オブジェクト保持
+                        'original_pos_info': [{'surface': m['surface'], 'pos': m['pos']} for m in original_morphemes],
+                        'modified_pos_info': [{'surface': m['surface'], 'pos': m['pos']} for m in modified_morphemes],
+                        'morpheme_level': True,  # 形態素レベル差分フラグ
+                        # coordinates は後で付加
+                    })
         
         return differences
     
+    def _combine_polygons(self, polygons: List[List[float]]) -> List[float]:
+        """複数のポリゴンを結合して単一の外接矩形を作成
+        
+        Args:
+            polygons: ポリゴン座標のリスト（各要素は8要素のリスト: [x1,y1,x2,y2,x3,y3,x4,y4]）
+            
+        Returns:
+            combined_polygon: 結合されたポリゴン座標（外接矩形）
+        """
+        if not polygons:
+            return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        
+        # 全ポリゴンの最小・最大座標を計算
+        all_x_coords = []
+        all_y_coords = []
+        
+        for polygon in polygons:
+            if len(polygon) >= 8:  # 4点分の座標（x,y * 4）
+                # x座標を抽出（偶数インデックス）
+                x_coords = [polygon[i] for i in range(0, 8, 2)]
+                # y座標を抽出（奇数インデックス）  
+                y_coords = [polygon[i] for i in range(1, 8, 2)]
+                
+                all_x_coords.extend(x_coords)
+                all_y_coords.extend(y_coords)
+        
+        if not all_x_coords or not all_y_coords:
+            return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        
+        # 外接矩形の座標を計算
+        min_x = min(all_x_coords)
+        max_x = max(all_x_coords)
+        min_y = min(all_y_coords)
+        max_y = max(all_y_coords)
+        
+        # 外接矩形のポリゴン座標を作成（左上→右上→右下→左下）
+        combined_polygon = [
+            min_x, min_y,  # 左上
+            max_x, min_y,  # 右上
+            max_x, max_y,  # 右下
+            min_x, max_y   # 左下
+        ]
+        
+        return combined_polygon
+    
+    def _extract_coordinates_from_words_range(self, words_data: List[Dict[str, Any]], 
+                                            start_idx: int, end_idx: int) -> Optional[List[float]]:
+        """words_dataの指定範囲から統合座標を作成
+        
+        Args:
+            words_data: 文字単位のデータリスト
+            start_idx: 開始インデックス
+            end_idx: 終了インデックス（排他的）
+            
+        Returns:
+            coordinates: 統合されたポリゴン座標、取得できない場合はNone
+        """
+        if not words_data or start_idx is None or end_idx is None:
+            return None
+        
+        if start_idx < 0 or end_idx > len(words_data) or start_idx >= end_idx:
+            logger.warning(f"不正なインデックス範囲: [{start_idx}:{end_idx}], データ長: {len(words_data)}")
+            return None
+        
+        # 指定範囲のwords_dataからポリゴン座標を抽出
+        polygons = []
+        for i in range(start_idx, end_idx):
+            word_data = words_data[i]
+            polygon = word_data.get('polygon')
+            if polygon and len(polygon) >= 8:
+                polygons.append(polygon)
+            else:
+                logger.debug(f"words_data[{i}]にポリゴン座標がありません: {word_data}")
+        
+        if not polygons:
+            logger.warning(f"指定範囲[{start_idx}:{end_idx}]にポリゴン座標が見つかりません")
+            return None
+        
+        # ポリゴンを結合して統合座標を作成
+        combined_polygon = self._combine_polygons(polygons)
+        return combined_polygon
+
     def _estimate_text_coordinates(self, paragraph: Dict[str, Any], 
                                   text: str, start_pos: int, end_pos: int) -> Optional[Dict[str, Any]]:
-        """段落内のテキスト位置から座標を推定
+        """段落内のテキスト位置から座標を推定（フォールバック用）
         
         Args:
             paragraph: 段落データ

@@ -24,7 +24,7 @@ from handlers.enhanced_output_handler_v3_4 import EnhancedOutputHandlerV34
 
 # ログ設定
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.FileHandler('v3_4_debug_log.txt', encoding='utf-8'),
@@ -82,10 +82,10 @@ class LLMDocsDiffV4:
         # 1. Document Intelligence構造化分析
         logger.info("ステップ1: Document Intelligence構造化分析")
         
-        doc1_analysis = self.azure_service.analyze_document_structured(doc1_path, pages)
+        doc1_analysis, doc1_word_data = self.azure_service.analyze_document_structured(doc1_path, pages)
         doc1_analysis['source_file'] = doc1_path
         
-        doc2_analysis = self.azure_service.analyze_document_structured(doc2_path, pages)
+        doc2_analysis, doc2_word_data = self.azure_service.analyze_document_structured(doc2_path, pages)
         doc2_analysis['source_file'] = doc2_path
         
         # 2. 分割文字結合前処理
@@ -97,10 +97,20 @@ class LLMDocsDiffV4:
         logger.info(f"結合処理結果: 文書1={len(combined_doc1_analysis.get('sections', []))}セクション, "
                    f"文書2={len(combined_doc2_analysis.get('sections', []))}セクション")
         
+        # 2.5. 文言正規化処理
+        logger.info("ステップ2.5: 文言正規化処理")
+        
+        combined_doc1_analysis = self._normalize_document_text(combined_doc1_analysis)
+        combined_doc2_analysis = self._normalize_document_text(combined_doc2_analysis)
+        doc1_word_data = self._normalize_word_data(doc1_word_data)
+        doc2_word_data = self._normalize_word_data(doc2_word_data)
+        
+        logger.info("文言正規化処理完了")
+        
         # 3. 構造化差分検出
         logger.info("ステップ3: 構造化差分検出")
         
-        differences = self.diff_detector.detect_easy_differences(combined_doc1_analysis, combined_doc2_analysis)
+        differences = self.diff_detector.detect_easy_differences(combined_doc1_analysis, combined_doc2_analysis, doc1_word_data, doc2_word_data)
         
         # 差分結果をCSVで保存
         self._save_differences_csv(differences, output_tag)
@@ -131,8 +141,8 @@ class LLMDocsDiffV4:
                     "semantic_similarity": diff.semantic_similarity,
                     "original_text": diff.original_bbox.get('content', '') if diff.original_bbox else '',
                     "modified_text": diff.modified_bbox.get('content', '') if diff.modified_bbox else '',
-                    "original_coordinates": self._bbox_to_coords(diff.original_bbox) if diff.original_bbox else None,
-                    "modified_coordinates": self._bbox_to_coords(diff.modified_bbox) if diff.modified_bbox else None,
+                    "original_coordinates": diff.original_bbox.get('coordinates') if diff.original_bbox else None,
+                    "modified_coordinates": diff.modified_bbox.get('coordinates') if diff.modified_bbox else None,
                     "structural_info": getattr(diff, 'structural_info', {})
                 }
                 for diff in differences
@@ -166,6 +176,99 @@ class LLMDocsDiffV4:
                    f"削除: {analysis_result['summary']['deletions']}")
         
         return analysis_result
+    
+    def _normalize_document_text(self, doc_analysis: Dict[str, Any]) -> Dict[str, Any]:
+        """文書分析結果のテキストを正規化
+        
+        Args:
+            doc_analysis: 文書分析結果
+            
+        Returns:
+            正規化後の文書分析結果
+        """
+        import re
+        
+        def normalize_text(text: str) -> str:
+            """テキストを正規化"""
+            if not text:
+                return text
+            
+            # 空白の統一
+            text = re.sub(r'\s+', ' ', text)  # 複数空白を1つに
+            text = text.strip()
+            
+            # 記号の統一
+            text = text.replace('·', '・')    # 中点の統一
+            text = text.replace('−', '-')     # マイナス記号の統一
+            text = text.replace('～', '〜')   # 波線の統一
+            
+            # 全角半角の統一（数字・英字）
+            text = text.translate(str.maketrans('０１２３４５６７８９', '0123456789'))
+            text = text.translate(str.maketrans('ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+            text = text.translate(str.maketrans('ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ', 'abcdefghijklmnopqrstuvwxyz'))
+            
+            return text
+        
+        # ディープコピーして元データを保持
+        import copy
+        normalized_analysis = copy.deepcopy(doc_analysis)
+        
+        # セクション内の段落テキストを正規化
+        for section in normalized_analysis.get('sections', []):
+            for paragraph in section.get('paragraphs', []):
+                if 'content' in paragraph:
+                    paragraph['content'] = normalize_text(paragraph['content'])
+            
+            # para_contents_listも正規化
+            if 'para_contents_list' in section:
+                section['para_contents_list'] = [
+                    normalize_text(content) for content in section['para_contents_list']
+                ]
+        
+        logger.debug("文書テキスト正規化完了")
+        return normalized_analysis
+    
+    def _normalize_word_data(self, word_data: List[Dict]) -> List[Dict]:
+        """words_dataのテキストを正規化
+        
+        Args:
+            word_data: 文字レベルのデータリスト
+            
+        Returns:
+            正規化後のwords_data
+        """
+        import re
+        import copy
+        
+        def normalize_text(text: str) -> str:
+            """テキストを正規化"""
+            if not text:
+                return text
+            
+            # 記号の統一
+            text = text.replace('·', '・')
+            text = text.replace('−', '-')
+            text = text.replace('～', '〜')
+            
+            # 全角半角の統一
+            text = text.translate(str.maketrans('０１２３４５６７８９', '0123456789'))
+            text = text.translate(str.maketrans('ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+            text = text.translate(str.maketrans('ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ', 'abcdefghijklmnopqrstuvwxyz'))
+            
+            return text
+        
+        # ディープコピーして元データを保持
+        normalized_word_data = copy.deepcopy(word_data)
+        
+        # 各ページのwords内のcontentを正規化
+        for page_data in normalized_word_data:
+            if 'words' in page_data:
+                for word in page_data['words']:
+                    if 'content' in word:
+                        word['content'] = normalize_text(word['content'])
+        
+        logger.debug("words_data正規化完了")
+        return normalized_word_data
     
     def _bbox_to_coords(self, bbox_data: Dict[str, Any]) -> Dict[str, Any]:
         """bbox形式を座標形式に変換"""
@@ -233,10 +336,10 @@ class LLMDocsDiffV4:
                     'semantic_similarity': diff['semantic_similarity'],
                     'original_text': diff['original_text'][:100] + ('...' if len(diff['original_text']) > 100 else ''),
                     'modified_text': diff['modified_text'][:100] + ('...' if len(diff['modified_text']) > 100 else ''),
-                    'original_x': diff['original_coordinates']['left'] if diff['original_coordinates'] else '',
-                    'original_y': diff['original_coordinates']['top'] if diff['original_coordinates'] else '',
-                    'modified_x': diff['modified_coordinates']['left'] if diff['modified_coordinates'] else '',
-                    'modified_y': diff['modified_coordinates']['top'] if diff['modified_coordinates'] else '',
+                    'original_x': diff['original_coordinates']['raw_coordinates'][0] if diff['original_coordinates'] and diff['original_coordinates'].get('raw_coordinates') else '',
+                    'original_y': diff['original_coordinates']['raw_coordinates'][1] if diff['original_coordinates'] and diff['original_coordinates'].get('raw_coordinates') else '',
+                    'modified_x': diff['modified_coordinates']['raw_coordinates'][0] if diff['modified_coordinates'] and diff['modified_coordinates'].get('raw_coordinates') else '',
+                    'modified_y': diff['modified_coordinates']['raw_coordinates'][1] if diff['modified_coordinates'] and diff['modified_coordinates'].get('raw_coordinates') else '',
                     'section_title': diff['structural_info'].get('section_title', ''),
                     'paragraph_role': diff['structural_info'].get('paragraph_role', '')
                 })
@@ -262,45 +365,54 @@ class LLMDocsDiffV4:
             fieldnames = [
                 'change_type', 'page', 'semantic_similarity',
                 'original_content', 'modified_content',
-                'original_left', 'original_top', 'original_right', 'original_bottom',
-                'modified_left', 'modified_top', 'modified_right', 'modified_bottom',
-                'paragraph_index_1', 'paragraph_index_2', 'role', 'importance'
+                'original_x', 'original_y', 'modified_x', 'modified_y',
+                'paragraph_index_1', 'paragraph_index_2', 'role', 'importance',
+                'original_section_title', 'modified_section_title',
+                'original_para_content', 'modified_para_content'
             ]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             
             for i, diff in enumerate(differences):
-                # 安全な座標データ取得
-                original_coords = None
-                if diff.original_bbox and isinstance(diff.original_bbox, dict):
-                    coords = diff.original_bbox.get('coordinates')
-                    if coords and isinstance(coords, dict):
-                        original_coords = coords
+                # 新しい座標形式に対応した座標取得
+                def get_coord_value(coords_dict, key):
+                    if not coords_dict:
+                        return ''
+                    if 'raw_coordinates' in coords_dict and coords_dict.get('raw_coordinates'):
+                        raw_coords = coords_dict['raw_coordinates']
+                        if len(raw_coords) >= 8:
+                            x_coords = [raw_coords[i] for i in range(0, 8, 2)]
+                            y_coords = [raw_coords[i] for i in range(1, 8, 2)]
+                            bounds = {
+                                'left': min(x_coords), 'top': min(y_coords),
+                                'right': max(x_coords), 'bottom': max(y_coords)
+                            }
+                            return f"{bounds.get(key, 0):.4f}"
+                    elif 'bounds' in coords_dict:
+                        return f"{coords_dict['bounds'].get(key, 0):.4f}"
+                    return f"{coords_dict.get(key, 0):.4f}"
                 
-                modified_coords = None  
-                if diff.modified_bbox and isinstance(diff.modified_bbox, dict):
-                    coords = diff.modified_bbox.get('coordinates')
-                    if coords and isinstance(coords, dict):
-                        modified_coords = coords
+                original_coords = diff.original_bbox.get('coordinates') if diff.original_bbox else None
+                modified_coords = diff.modified_bbox.get('coordinates') if diff.modified_bbox else None
                 
                 writer.writerow({
-                    'change_type': str(diff.change_type),
+                    'change_type': str(diff.change_type)[11:],
                     'page': diff.page,
                     'semantic_similarity': f"{diff.semantic_similarity:.3f}",
                     'original_content': diff.original_bbox.get('content', '') if diff.original_bbox else '',
                     'modified_content': diff.modified_bbox.get('content', '') if diff.modified_bbox else '',
-                    'original_left': f"{original_coords.get('left', 0):.4f}" if original_coords else '',
-                    'original_top': f"{original_coords.get('top', 0):.4f}" if original_coords else '',
-                    'original_right': f"{original_coords.get('right', 0):.4f}" if original_coords else '',
-                    'original_bottom': f"{original_coords.get('bottom', 0):.4f}" if original_coords else '',
-                    'modified_left': f"{modified_coords.get('left', 0):.4f}" if modified_coords else '',
-                    'modified_top': f"{modified_coords.get('top', 0):.4f}" if modified_coords else '',
-                    'modified_right': f"{modified_coords.get('right', 0):.4f}" if modified_coords else '',
-                    'modified_bottom': f"{modified_coords.get('bottom', 0):.4f}" if modified_coords else '',
+                    'original_x': get_coord_value(original_coords, 'left'),
+                    'original_y': get_coord_value(original_coords, 'top'),
+                    'modified_x': get_coord_value(modified_coords, 'left'),
+                    'modified_y': get_coord_value(modified_coords, 'top'),
                     'paragraph_index_1': diff.original_bbox.get('paragraph_index', '') if diff.original_bbox else '',
                     'paragraph_index_2': diff.modified_bbox.get('paragraph_index', '') if diff.modified_bbox else '',
                     'role': diff.original_bbox.get('role', '') if diff.original_bbox else (diff.modified_bbox.get('role', '') if diff.modified_bbox else ''),
-                    'importance': diff.original_bbox.get('importance', '') if diff.original_bbox else (diff.modified_bbox.get('importance', '') if diff.modified_bbox else '')
+                    'importance': diff.original_bbox.get('importance', '') if diff.original_bbox else (diff.modified_bbox.get('importance', '') if diff.modified_bbox else ''),
+                    'original_section_title': diff.original_section.get('title', '') if diff.original_section else '',
+                    'modified_section_title': diff.modified_section.get('title', '') if diff.modified_section else '',
+                    'original_para_content': diff.original_paragraph.get('content', '')[:200] if diff.original_paragraph else '',
+                    'modified_para_content': diff.modified_paragraph.get('content', '')[:200] if diff.modified_paragraph else ''
                 })
         
         logger.info(f"差分詳細CSV保存: {csv_path}")
@@ -313,8 +425,8 @@ def main():
     print("Document Intelligenceのセクション階層と座標情報を活用")
     
     # テスト用のファイルパス
-    doc1_path = "/home/dev/prj-ms-document-check.worktree/worktree1/data/data2/sougou/サンプル②2024 .pdf"
-    doc2_path = "/home/dev/prj-ms-document-check.worktree/worktree1/data/data2/sougou/サンプル②2025.pdf"
+    doc1_path = "/home/dev/prj-ms-document-check.worktree/worktree1/data/data3/sougou/1-2Pサンプル②2024.pdf"
+    doc2_path = "/home/dev/prj-ms-document-check.worktree/worktree1/data/data3/sougou/1-2Pサンプル②2025.pdf"
     
     # システムの初期化
     system = LLMDocsDiffV4()

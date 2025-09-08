@@ -1330,21 +1330,21 @@ class MergeSplitCharacterPreProcessor:
         # 各セクション内で段落の結合処理
         for section_idx, section in enumerate(sections):
             section_title = section.get('title', "")
-            if section_title == "追加オプション" or "医療ワイドかんぺき" in section_title:
-                paragraphs = section.get('paragraphs', [])
-                self.logger.debug(f"結合処理実行: セクション{section_idx+1}『{section.get('title', '')}』: {len(paragraphs)}段落")
-                
-                # セクション内での段落結合処理
-                merged_paragraphs = self._merge_paragraphs_in_section(paragraphs, section_idx)
-                section['paragraphs'] = merged_paragraphs
-                
-                # セクション統計を更新
-                section['paragraph_count'] = len(merged_paragraphs)
-                section['content_length'] = sum(len(p.get('content', '')) for p in merged_paragraphs)
-                section['word_count'] = sum(len(p.get('content', '').split()) for p in merged_paragraphs)
-                
-                self.logger.info(f"セクション{section_idx+1}結合完了: {len(paragraphs)}段落 → {len(merged_paragraphs)}段落")
+            # if section_title == "追加オプション" or "医療ワイドかんぺき" in section_title:
+            paragraphs = section.get('paragraphs', [])
+            self.logger.debug(f"結合処理実行: セクション{section_idx+1}『{section.get('title', '')}』: {len(paragraphs)}段落")
             
+            # セクション内での段落結合処理
+            merged_paragraphs = self._merge_paragraphs_in_section(paragraphs, section_idx)
+            section['paragraphs'] = merged_paragraphs
+            
+            # セクション統計を更新
+            section['paragraph_count'] = len(merged_paragraphs)
+            section['content_length'] = sum(len(p.get('content', '')) for p in merged_paragraphs)
+            section['word_count'] = sum(len(p.get('content', '').split()) for p in merged_paragraphs)
+            
+            self.logger.info(f"セクション{section_idx+1}結合完了: {len(paragraphs)}段落 → {len(merged_paragraphs)}段落")
+        
 
         return processed_analysis
 
