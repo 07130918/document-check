@@ -252,6 +252,8 @@ class StructuredDiffDetectorV4:
                         result = DiffResult(
                             change_type=diff_detail['change_type'],
                             page=para1.get('page', section1.get('page', 2)),
+                            page_doc1=para1.get('page', section1.get('page', 2)),
+                            page_doc2=para2.get('page', section2.get('page', 2)),
                             original_bbox=original_bbox,
                             modified_bbox=modified_bbox,
                             semantic_similarity=paragraph_match.similarity,
@@ -272,6 +274,8 @@ class StructuredDiffDetectorV4:
                     result = DiffResult(
                         change_type=ChangeType.DELETION,
                         page=para.get('page', section1.get('page', 2)),
+                        page_doc1=para.get('page', section1.get('page', 2)),
+                        page_doc2=None,
                         original_bbox=para,
                         modified_bbox=None,
                         semantic_similarity=0.0,
@@ -287,6 +291,8 @@ class StructuredDiffDetectorV4:
                     result = DiffResult(
                         change_type=ChangeType.ADDITION,
                         page=para.get('page', section2.get('page', 2)),
+                        page_doc1=None,
+                        page_doc2=para.get('page', section2.get('page', 2)),
                         original_bbox=None,
                         modified_bbox=para,
                         semantic_similarity=0.0,
@@ -313,6 +319,8 @@ class StructuredDiffDetectorV4:
                     result = DiffResult(
                         change_type=ChangeType.DELETION,
                         page=para.get('page', section.get('page', 2)),
+                        page_doc1=para.get('page', section.get('page', 2)),
+                        page_doc2=None,
                         original_bbox=para,
                         modified_bbox=None,
                         semantic_similarity=0.0,
@@ -342,6 +350,8 @@ class StructuredDiffDetectorV4:
                     result = DiffResult(
                         change_type=ChangeType.ADDITION,
                         page=para.get('page', section.get('page', 2)),
+                        page_doc1=None,
+                        page_doc2=para.get('page', section.get('page', 2)),
                         original_bbox=None,
                         modified_bbox=para,
                         semantic_similarity=0.0,
@@ -459,6 +469,8 @@ class StructuredDiffDetectorV4:
                         result = DiffResult(
                             change_type=diff_detail['change_type'],
                             page=para1.get('page', section1.get('page', 2)),
+                            page_doc1=para1.get('page', section1.get('page', 2)),
+                            page_doc2=para2.get('page', section2.get('page', 2)),
                             original_bbox=original_bbox,
                             modified_bbox=modified_bbox,
                             semantic_similarity=paragraph_match.similarity
@@ -475,6 +487,8 @@ class StructuredDiffDetectorV4:
                     result = DiffResult(
                         change_type=ChangeType.DELETION,
                         page=para.get('page', section1.get('page', 2)),
+                        page_doc1=para.get('page', section1.get('page', 2)),
+                        page_doc2=None,
                         original_bbox=para,
                         modified_bbox=None,
                         semantic_similarity=0.0
@@ -486,6 +500,8 @@ class StructuredDiffDetectorV4:
                     result = DiffResult(
                         change_type=ChangeType.ADDITION,
                         page=para.get('page', section2.get('page', 2)),
+                        page_doc1=None,
+                        page_doc2=para.get('page', section2.get('page', 2)),
                         original_bbox=None,
                         modified_bbox=para,
                         semantic_similarity=0.0
@@ -532,12 +548,20 @@ class StructuredDiffDetectorV4:
                 if not text1 or not text2:
                     continue
                 
-                # 完全一致の場合は高スコア
-                if text1 == text2:
+                # 数値を除去したテキストで類似度を計算
+                text1_without_numbers = self._remove_numbers_from_text(text1)
+                text2_without_numbers = self._remove_numbers_from_text(text2)
+                
+                # 完全一致の場合は高スコア（数値除去後で判定）
+                if text1_without_numbers == text2_without_numbers and text1_without_numbers.strip():
                     similarity = 1.0 + self.exact_match_bonus
                 else:
-                    # difflib使用のセクション内容類似度計算
-                    similarity = difflib.SequenceMatcher(None, text1, text2).ratio()
+                    # 数値除去後のテキストで類似度計算
+                    if text1_without_numbers.strip() and text2_without_numbers.strip():
+                        similarity = difflib.SequenceMatcher(None, text1_without_numbers, text2_without_numbers).ratio()
+                    else:
+                        # 数値のみの場合は元のテキストで比較
+                        similarity = difflib.SequenceMatcher(None, text1, text2).ratio()
                 
                 if similarity >= self.similarity_threshold:
                     matches.append((i, j, similarity, section1, section2))
@@ -1696,6 +1720,8 @@ class StructuredDiffDetectorV4:
                 result = DiffResult(
                     change_type=ChangeType.ADDITION,
                     page=para.get('page', section.get('page', 2)),
+                    page_doc1=None,
+                    page_doc2=para.get('page', section.get('page', 2)),
                     original_bbox=None,
                     modified_bbox=para,
                     semantic_similarity=0.0
@@ -1711,6 +1737,8 @@ class StructuredDiffDetectorV4:
                 result = DiffResult(
                     change_type=ChangeType.DELETION,
                     page=para.get('page', section.get('page', 2)),
+                    page_doc1=para.get('page', section.get('page', 2)),
+                    page_doc2=None,
                     original_bbox=para,
                     modified_bbox=None,
                     semantic_similarity=0.0
@@ -1775,6 +1803,8 @@ class StructuredDiffDetectorV4:
             result = DiffResult(
                 change_type=ChangeType.ADDITION,
                 page=item.get('page', 2),
+                page_doc1=None,
+                page_doc2=item.get('page', 2),
                 original_bbox=None,
                 modified_bbox=item,
                 semantic_similarity=0.0
@@ -1789,6 +1819,8 @@ class StructuredDiffDetectorV4:
             result = DiffResult(
                 change_type=ChangeType.DELETION,
                 page=item.get('page', 2),
+                page_doc1=item.get('page', 2),
+                page_doc2=None,
                 original_bbox=item,
                 modified_bbox=None,
                 semantic_similarity=0.0
@@ -1812,3 +1844,18 @@ class StructuredDiffDetectorV4:
         
         results.sort(key=sort_key)
         return results
+
+    def _remove_numbers_from_text(self, text):
+        """テキストから数値を除去"""
+        import re
+        
+        if not text:
+            return text
+        
+        # 全ての数字を「NUM」に置換（単語境界を考慮）
+        cleaned_text = re.sub(r'\d+', 'NUM', text)
+        
+        # 連続する空白を単一の空白に変換
+        cleaned_text = re.sub(r'\s+', ' ', cleaned_text)
+        
+        return cleaned_text.strip()
