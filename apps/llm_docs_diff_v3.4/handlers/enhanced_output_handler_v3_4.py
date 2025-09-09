@@ -595,12 +595,27 @@ class EnhancedOutputHandlerV34:
                     
                     # 座標の事前検証
                     if not coordinates or not self._validate_coordinates(coordinates):
-                        logger.debug(f"差分{i+1}: 座標が無効 - スキップ")
+                        # 仕様に基づくスキップの場合は適切なログメッセージを出力
+                        if (is_doc1 and change_type == 'ChangeType.ADDITION') or (not is_doc1 and change_type == 'ChangeType.DELETION'):
+                            logger.debug(f"差分{i+1}: {change_type}のため座標処理をスキップ")
+                        else:
+                            logger.debug(f"差分{i+1}: 座標が無効 - スキップ")
                         annotations_skipped += 1
                         continue
                     
-                    # ページ番号の検証
-                    page_num = diff.get('page', 1) - 1  # 0-indexed
+                    # ページ番号を適切に取得
+                    if is_doc1:
+                        page_num = diff.get('page_doc1', diff.get('page', 1))
+                    else:
+                        page_num = diff.get('page_doc2', diff.get('page', 1))
+                    
+                    # ページ番号がNoneの場合はスキップ（削除/追加の場合）
+                    if page_num is None:
+                        logger.debug(f"差分{i+1}: ページ番号が存在しない - スキップ")
+                        annotations_skipped += 1
+                        continue
+                    
+                    page_num = page_num - 1  # 0-indexed
                     if not (0 <= page_num < len(doc)):
                         logger.debug(f"差分{i+1}: 無効なページ番号 {page_num+1} - スキップ")
                         annotations_skipped += 1
