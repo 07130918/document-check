@@ -181,13 +181,13 @@ class TableDebugHandler:
         logger.info(f"Saved table diffs debug info to {output_path}")
     
     def _save_table_samples(self, tables1: List[Dict], tables2: List[Dict]):
-        """表のサンプルをCSV形式で保存（最初の5個）"""
+        """表のサンプルをCSV形式で保存"""
         # 文書1の表サンプル
-        for i, table in enumerate(tables1[:5]):
+        for i, table in enumerate(tables1):
             self._save_single_table_csv(table, f"table1_{i+1}.csv")
         
         # 文書2の表サンプル
-        for i, table in enumerate(tables2[:5]):
+        for i, table in enumerate(tables2):
             self._save_single_table_csv(table, f"table2_{i+1}.csv")
     
     def _save_single_table_csv(self, table: Dict, filename: str):
@@ -215,7 +215,29 @@ class TableDebugHandler:
                         escaped_row.append(cell)
                 f.write(','.join(escaped_row) + '\n')
         
-        logger.info(f"Saved table sample to {output_path}")
+        # 詳細な表構造をJSONで保存（kind情報を含む）
+        json_path = self.tables_dir / filename.replace('.csv', '_structure.json')
+        table_structure = {
+            "size": f"{table['row_count']}x{table['column_count']}",
+            "page": table['page'] + 1,
+            "cells": []
+        }
+        
+        for cell in table['cells']:
+            cell_info = {
+                "row": cell['row'],
+                "column": cell['column'],
+                "text": cell['text'],
+                "kind": cell.get('kind', 'content'),  # セルの種類
+                "row_span": cell.get('row_span', 1),
+                "column_span": cell.get('column_span', 1)
+            }
+            table_structure["cells"].append(cell_info)
+        
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(table_structure, f, ensure_ascii=False, indent=2)
+        
+        logger.info(f"Saved table sample to {output_path} and structure to {json_path}")
     
     def _get_header_row(self, table: Dict) -> List[str]:
         """表の最初の行（ヘッダー）を取得"""

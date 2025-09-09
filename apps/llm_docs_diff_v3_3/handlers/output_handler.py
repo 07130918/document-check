@@ -556,39 +556,85 @@ class OutputHandler:
             table_diffs = result.metadata.get("table_diffs", [])
             tables1 = result.metadata.get("tables1", [])
             tables2 = result.metadata.get("tables2", [])
+            table_matches = result.metadata.get("table_matches", [])
             
             # 表をインデックスでアクセスできるように辞書化
             tables1_dict = {i: t for i, t in enumerate(tables1)} if isinstance(tables1, list) else {}
             tables2_dict = {i: t for i, t in enumerate(tables2)} if isinstance(tables2, list) else {}
             
+            # マッチング情報を辞書化（双方向）
+            match_dict1to2 = {}  # table1_index -> (table2_index, match_number)
+            match_dict2to1 = {}  # table2_index -> (table1_index, match_number)
+            for idx, match in enumerate(table_matches):
+                if isinstance(match, dict):
+                    t1_idx = match.get('table1_index')
+                    t2_idx = match.get('table2_index')
+                    if t1_idx is not None and t2_idx is not None:
+                        match_dict1to2[t1_idx] = (t2_idx, idx + 1)  # 1から始まる番号
+                        match_dict2to1[t2_idx] = (t1_idx, idx + 1)
+            
+            # まず、マッチした表に番号を表示（背景なしのオレンジ色の番号のみ）
+            for table1_idx, (table2_idx, match_num) in match_dict1to2.items():
+                if table1_idx in tables1_dict:
+                    table1 = tables1_dict[table1_idx]
+                    if table1.get('bbox'):
+                        # 相手側の表情報を取得
+                        table2 = tables2_dict.get(table2_idx, {})
+                        table2_page = table2.get('page', 0) + 1  # 1-indexed
+                        bbox_points = [coord * 72 for coord in table1['bbox']]
+                        highlights1.append({
+                            'bbox': bbox_points,
+                            'page': table1['page'],
+                            'color': 'orange',
+                            'text': f'M{match_num} (p{table2_page})',  # マッチング番号と相手側ページ
+                            'number_only': True  # 番号のみ表示（枠線なし）
+                        })
+                        logger.info(f"Added match number {match_num} for table1_idx={table1_idx} (matches table2_idx={table2_idx}) on page {table1['page']} with bbox {bbox_points}")
+            
+            for table2_idx, (table1_idx, match_num) in match_dict2to1.items():
+                if table2_idx in tables2_dict:
+                    table2 = tables2_dict[table2_idx]
+                    if table2.get('bbox'):
+                        # 相手側の表情報を取得
+                        table1 = tables1_dict.get(table1_idx, {})
+                        table1_page = table1.get('page', 0) + 1  # 1-indexed
+                        bbox_points = [coord * 72 for coord in table2['bbox']]
+                        highlights2.append({
+                            'bbox': bbox_points,
+                            'page': table2['page'],
+                            'color': 'orange',
+                            'text': f'M{match_num} (p{table1_page})',  # マッチング番号と相手側ページ
+                            'number_only': True  # 番号のみ表示（枠線なし）
+                        })
+            
+            # マッチしなかった表を青色でハイライト
+            for idx, table in enumerate(tables1):
+                if idx not in match_dict1to2 and table.get('bbox'):
+                    bbox_points = [coord * 72 for coord in table['bbox']]
+                    highlights1.append({
+                        'bbox': bbox_points,
+                        'page': table['page'],
+                        'color': 'blue'
+                    })
+                    logger.info(f"Added blue highlight for unmatched table {idx} on page {table['page']} with bbox {bbox_points}")
+            
+            for idx, table in enumerate(tables2):
+                if idx not in match_dict2to1 and table.get('bbox'):
+                    bbox_points = [coord * 72 for coord in table['bbox']]
+                    highlights2.append({
+                        'bbox': bbox_points,
+                        'page': table['page'],
+                        'color': 'blue'
+                    })
+            
             for table_diff in table_diffs:
                 if table_diff['change_type'] == 'deletion':
-                    # 削除された表を赤でハイライト
-                    table_idx = table_diff.get('table_index1')
-                    if table_idx is not None and table_idx in tables1_dict:
-                        table = tables1_dict[table_idx]
-                        if table.get('bbox'):
-                            # bboxをインチからポイントに変換（1インチ = 72ポイント）
-                            bbox_points = [coord * 72 for coord in table['bbox']]
-                            highlights1.append({
-                                'bbox': bbox_points,
-                                'page': table['page'],
-                                'color': 'red'
-                            })
+                    # 削除された表は青色でハイライト済み（マッチしなかった表として）
+                    pass
                 
                 elif table_diff['change_type'] == 'addition':
-                    # 追加された表を緑でハイライト
-                    table_idx = table_diff.get('table_index2')
-                    if table_idx is not None and table_idx in tables2_dict:
-                        table = tables2_dict[table_idx]
-                        if table.get('bbox'):
-                            # bboxをインチからポイントに変換（1インチ = 72ポイント）
-                            bbox_points = [coord * 72 for coord in table['bbox']]
-                            highlights2.append({
-                                'bbox': bbox_points,
-                                'page': table['page'],
-                                'color': 'red'
-                            })
+                    # 追加された表は青色でハイライト済み（マッチしなかった表として）
+                    pass
                 
                 elif table_diff['change_type'] == 'modification':
                     # 変更された表の個別セルをハイライト
@@ -606,18 +652,31 @@ class OutputHandler:
                         # セルのbboxを使ってハイライト
                         for cell_change in cell_changes:
                             if cell_change['change_type'] in ['modified', 'deleted']:
-                                # 該当するセルを探す
-                                for cell in table1.get('cells', []):
-                                    if (cell.get('row') == cell_change['row'] and 
-                                        cell.get('column') == cell_change['column'] and
-                                        cell.get('bbox')):
-                                        # bboxをインチからポイントに変換（1インチ = 72ポイント）
-                                        bbox_points = [coord * 72 for coord in cell['bbox']]
-                                        highlights1.append({
-                                            'bbox': bbox_points,
-                                            'page': page1,
-                                            'color': 'red'
-                                        })
+                                # text_diffsが存在する場合は、セル内の差分箇所をハイライト
+                                if 'text_diffs' in cell_change and cell_change['text_diffs']:
+                                    for diff_region in cell_change['text_diffs']:
+                                        if diff_region['type'] in ['replace', 'delete'] and diff_region.get('bbox1'):
+                                            bbox1 = diff_region['bbox1']
+                                            if bbox1 and len(bbox1) >= 4:
+                                                # インチをポイントに変換
+                                                bbox_points = [coord * 72 for coord in bbox1]
+                                                highlights1.append({
+                                                    'bbox': bbox_points,
+                                                    'page': page1,
+                                                    'color': 'red'  # 差分箇所は赤色
+                                                })
+                                else:
+                                    # text_diffsがない場合は従来通りセル全体をオレンジ色でハイライト
+                                    for cell in table1.get('cells', []):
+                                        if (cell.get('row') == cell_change['row'] and 
+                                            cell.get('column') == cell_change['column'] and
+                                            cell.get('bbox')):
+                                            bbox_points = [coord * 72 for coord in cell['bbox']]
+                                            highlights1.append({
+                                                'bbox': bbox_points,
+                                                'page': page1,
+                                                'color': 'orange'
+                                            })
                     
                     # 文書2の変更されたセルをハイライト
                     if table_idx2 is not None and table_idx2 in tables2_dict:
@@ -627,20 +686,33 @@ class OutputHandler:
                         # セルのbboxを使ってハイライト
                         for cell_change in cell_changes:
                             if cell_change['change_type'] in ['modified', 'added']:
-                                # 該当するセルを探す
-                                # row2が存在する場合はそれを使用、なければrowを使用
-                                target_row = cell_change.get('row2', cell_change.get('row'))
-                                for cell in table2.get('cells', []):
-                                    if (cell.get('row') == target_row and 
-                                        cell.get('column') == cell_change['column'] and
-                                        cell.get('bbox')):
-                                        # bboxをインチからポイントに変換（1インチ = 72ポイント）
-                                        bbox_points = [coord * 72 for coord in cell['bbox']]
-                                        highlights2.append({
-                                            'bbox': bbox_points,
-                                            'page': page2,
-                                            'color': 'red'
-                                        })
+                                # text_diffsが存在する場合は、セル内の差分箇所をハイライト
+                                if 'text_diffs' in cell_change and cell_change['text_diffs']:
+                                    for diff_region in cell_change['text_diffs']:
+                                        if diff_region['type'] in ['replace', 'insert'] and diff_region.get('bbox2'):
+                                            bbox2 = diff_region['bbox2']
+                                            if bbox2 and len(bbox2) >= 4:
+                                                # インチをポイントに変換
+                                                bbox_points = [coord * 72 for coord in bbox2]
+                                                highlights2.append({
+                                                    'bbox': bbox_points,
+                                                    'page': page2,
+                                                    'color': 'red'  # 差分箇所は赤色
+                                                })
+                                else:
+                                    # text_diffsがない場合は従来通りセル全体をオレンジ色でハイライト
+                                    target_row = cell_change.get('row2', cell_change.get('row'))
+                                    target_col = cell_change.get('column2', cell_change.get('column'))
+                                    for cell in table2.get('cells', []):
+                                        if (cell.get('row') == target_row and 
+                                            cell.get('column') == target_col and
+                                            cell.get('bbox')):
+                                            bbox_points = [coord * 72 for coord in cell['bbox']]
+                                            highlights2.append({
+                                                'bbox': bbox_points,
+                                                'page': page2,
+                                                'color': 'orange'
+                                            })
         
         # 差分をハイライトに変換
         for diff in result.diff_results:
@@ -651,35 +723,40 @@ class OutputHandler:
                     page=diff.original_bbox["page"],
                     color="red"
                 ).to_dict())
-            
+                
             elif diff.change_type == ChangeType.ADDITION and diff.modified_bbox:
-                # 追加: 文書2で緑
+                # 追加: 文書2で赤
                 highlights2.append(Highlight(
                     bbox=diff.modified_bbox["bbox"],
                     page=diff.modified_bbox["page"],
-                    color="green"
+                    color="red"
                 ).to_dict())
-            
+                
             elif diff.change_type == ChangeType.MODIFICATION:
-                # 修正: 両方で黄色
+                # 修正: 両方で赤
                 if diff.original_bbox:
                     highlights1.append(Highlight(
                         bbox=diff.original_bbox["bbox"],
                         page=diff.original_bbox["page"],
-                        color="yellow"
+                        color="red"
                     ).to_dict())
                 
                 if diff.modified_bbox:
                     highlights2.append(Highlight(
                         bbox=diff.modified_bbox["bbox"],
                         page=diff.modified_bbox["page"],
-                        color="yellow"
+                        color="red"
                     ).to_dict())
         
         # PDFを生成
         highlighted_pdfs = {}
         
         logger.info(f"Creating highlighted PDFs: doc1={len(highlights1)} highlights, doc2={len(highlights2)} highlights")
+        
+        # デバッグ用に表のハイライト情報を表示
+        table_highlights1 = [h for h in highlights1 if 'text' in h or h.get('color') == 'blue']
+        table_highlights2 = [h for h in highlights2 if 'text' in h or h.get('color') == 'blue']
+        logger.info(f"Table highlights: doc1={len(table_highlights1)}, doc2={len(table_highlights2)}")
         
         if highlights1:
             highlighted_pdfs["doc1"] = self.pdf_processor.create_highlighted_pdf(
@@ -1189,12 +1266,21 @@ class OutputHandler:
                         # 新しいページでの座標に変換（そのまま使用）
                         new_rect = fitz.Rect(annot_rect)
                         
-                        # ハイライトアノテーションを新しいページに追加
+                        # アノテーションを新しいページに追加
                         if annot.type[0] == 8:  # ハイライトタイプ
                             new_annot = new_page.add_highlight_annot(new_rect)
                             # 色をコピー
                             new_annot.set_colors(stroke=annot.colors["stroke"])
                             new_annot.set_opacity(annot.opacity)
+                            new_annot.update()
+                        elif annot.type[0] == 4:  # Squareタイプ（表のハイライト）
+                            new_annot = new_page.add_rect_annot(new_rect)
+                            # 色と枠線の設定をコピー
+                            if hasattr(annot, 'colors') and annot.colors:
+                                new_annot.set_colors(stroke=annot.colors.get("stroke"))
+                            # 枠線の太さをコピー
+                            if hasattr(annot, 'border_width'):
+                                new_annot.set_border(width=annot.border_width)
                             new_annot.update()
                 
                 # 右側に文書2のページを配置（アノテーション付き）
@@ -1222,12 +1308,21 @@ class OutputHandler:
                             annot_rect.y1
                         )
                         
-                        # ハイライトアノテーションを新しいページに追加
+                        # アノテーションを新しいページに追加
                         if annot.type[0] == 8:  # ハイライトタイプ
                             new_annot = new_page.add_highlight_annot(new_rect)
                             # 色をコピー
                             new_annot.set_colors(stroke=annot.colors["stroke"])
                             new_annot.set_opacity(annot.opacity)
+                            new_annot.update()
+                        elif annot.type[0] == 4:  # Squareタイプ（表のハイライト）
+                            new_annot = new_page.add_rect_annot(new_rect)
+                            # 色と枠線の設定をコピー
+                            if hasattr(annot, 'colors') and annot.colors:
+                                new_annot.set_colors(stroke=annot.colors.get("stroke"))
+                            # 枠線の太さをコピー
+                            if hasattr(annot, 'border_width'):
+                                new_annot.set_border(width=annot.border_width)
                             new_annot.update()
                 
                 # ページ番号とラベルを追加

@@ -21,6 +21,17 @@ class TableMatch:
     header_matches: List[Dict[str, Any]]
     structure_similarity: float
     position_distance: float
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """辞書形式に変換（JSON化可能）"""
+        return {
+            "table1_index": self.table1_index,
+            "table2_index": self.table2_index,
+            "similarity_score": self.similarity_score,
+            "header_matches": len(self.header_matches) if isinstance(self.header_matches, list) else self.header_matches,
+            "structure_similarity": self.structure_similarity,
+            "position_distance": self.position_distance
+        }
 
 
 class TableMatcher:
@@ -95,7 +106,7 @@ class TableMatcher:
                 
                 # より厳格な条件：構造類似度が高く、かつヘッダーマッチが2個以上
                 header_match_count = len(header_matches) if isinstance(header_matches, list) else 0
-                if structure_similarity > 0.7 and header_match_count >= 2:  # 閾値を上げ、最小マッチ数を設定
+                if structure_similarity > 0.6 and header_match_count >= 2:  # 閾値を少し下げる
                     similar_tables.append({
                         'index': j,
                         'table': t2,
@@ -104,6 +115,12 @@ class TableMatcher:
                         'header_matches': header_match_count,
                         'structure_similarity': structure_similarity
                     })
+                
+                # デバッグ: 表23の場合の詳細を表示
+                if i == 23 and j in [22, 27]:
+                    logger.info(f"表23 vs 表{j}: ヘッダー類似度={header_similarity:.3f}, "
+                              f"サイズ類似度={size_similarity:.3f}, 行見出し類似度={row_header_similarity:.3f}, "
+                              f"構造類似度={structure_similarity:.3f}, ヘッダーマッチ数={header_match_count}")
             
             if similar_tables:
                 # 類似度の高い順にソート
@@ -113,6 +130,12 @@ class TableMatcher:
                     'source_index': i,
                     'candidates': similar_tables
                 })
+                
+                # デバッグ: 表23の候補を表示
+                if i == 23:
+                    logger.info(f"表23の候補数: {len(similar_tables)}")
+                    for cand in similar_tables:
+                        logger.info(f"  候補表{cand['index']}: 類似度={cand['similarity']:.3f}")
         
         return groups
     
@@ -254,23 +277,51 @@ class TableMatcher:
         row_diff = abs(table1['row_count'] - table2['row_count'])
         col_diff = abs(table1['column_count'] - table2['column_count'])
         
-        # 差が大きいほど類似度が下がる
-        row_similarity = 1.0 / (1.0 + row_diff * 0.2)
-        col_similarity = 1.0 / (1.0 + col_diff * 0.3)  # 列の違いを重視
+        # 差が大きいほど類似度が下がる（より厳格に）
+        row_similarity = 1.0 / (1.0 + row_diff * 0.3)  # 行の違いをより重視
+        col_similarity = 1.0 / (1.0 + col_diff * 0.4)  # 列の違いも重視
+        
+        # 行数が2倍以上違う場合は追加ペナルティ
+        row_ratio = max(table1['row_count'], table2['row_count']) / max(min(table1['row_count'], table2['row_count']), 1)
+        if row_ratio > 2:
+            row_similarity *= 0.5
         
         return (row_similarity + col_similarity) / 2
     
     def _find_best_match_by_position(self, source_table: Dict, source_index: int, 
                                     candidates: List[Dict]) -> Optional[TableMatch]:
-        """位置に基づいて最適なマッチを見つける"""
+        """構造類似度と位置を総合的に考慮して最適なマッチを見つける"""
         best_match = None
-        min_distance = float('inf')
+        best_score = float('-inf')
+        
+        # デバッグ: 表23の場合
+        if source_index == 23:
+            logger.info(f"表23の位置ベースマッチング開始")
         
         for candidate in candidates:
             distance = self._calculate_position_distance(source_table, candidate['table'])
             
-            if distance < min_distance:
-                min_distance = distance
+            # 構造類似度を主要因、位置を副要因として総合スコアを計算
+            # 構造類似度: 0.0〜1.0
+            # 距離ペナルティ: 距離を正規化（100で割る）
+            structure_weight = 0.9  # 構造をさらに重視
+            position_weight = 0.1   # 位置の影響を小さくする
+            
+            # 距離を0〜1の範囲に正規化（距離が大きいほど0に近づく）
+            normalized_distance = 1.0 / (1.0 + distance / 100.0)
+            
+            # 総合スコア
+            total_score = (candidate['similarity'] * structure_weight + 
+                          normalized_distance * position_weight)
+            
+            # デバッグ: 表23の場合の詳細
+            if source_index == 23:
+                logger.info(f"  候補表{candidate['index']}: 構造類似度={candidate['similarity']:.3f}, "
+                          f"距離={distance:.1f}, 正規化距離={normalized_distance:.3f}, "
+                          f"総合スコア={total_score:.3f}")
+            
+            if total_score > best_score:
+                best_score = total_score
                 best_match = TableMatch(
                     table1_index=source_index,
                     table2_index=candidate['index'],
@@ -280,6 +331,10 @@ class TableMatcher:
                     position_distance=distance
                 )
         
+        # デバッグ: 表23の最終選択
+        if source_index == 23 and best_match:
+            logger.info(f"表23の最終マッチ: 表{best_match.table2_index} (スコア={best_score:.3f})")
+        
         return best_match
     
     def _calculate_position_distance(self, table1: Dict, table2: Dict) -> float:
@@ -287,17 +342,28 @@ class TableMatcher:
         # ページ番号の差
         page_diff = abs(table1['page'] - table2['page'])
         
-        if page_diff > 1:
-            # 2ページ以上離れている場合は大きなペナルティ
-            return float('inf')
+        # ページのズレに比例したペナルティ（指数関数的ではなく線形）
+        # 1ページのズレごとに100のペナルティ
+        base_penalty = page_diff * 100.0
         
-        # ページが異なる場合は追加ペナルティ
-        if page_diff == 1:
-            return 1000.0  # ページ高さ相当のペナルティ
+        # 同じページの場合、バウンディングボックスの中心点の距離も考慮
+        if page_diff == 0 and table1.get('bbox') and table2.get('bbox'):
+            bbox1 = table1['bbox']
+            bbox2 = table2['bbox']
+            
+            # 中心点を計算
+            center1_x = bbox1[0] + bbox1[2] / 2
+            center1_y = bbox1[1] + bbox1[3] / 2
+            center2_x = bbox2[0] + bbox2[2] / 2
+            center2_y = bbox2[1] + bbox2[3] / 2
+            
+            # ユークリッド距離
+            spatial_distance = ((center1_x - center2_x) ** 2 + (center1_y - center2_y) ** 2) ** 0.5
+            
+            # インチ単位の距離をポイント換算（1インチ = 72ポイント）
+            return base_penalty + spatial_distance * 72
         
-        # 同じページの場合、バウンディングボックスの中心点の距離を計算
-        # （今回の実装では簡略化のため、ページ差のみを考慮）
-        return 0.0
+        return base_penalty
     
     def _calculate_row_header_similarity(self, table1: Dict, table2: Dict) -> float:
         """1列目（行見出し）の類似度を計算
@@ -340,5 +406,13 @@ class TableMatcher:
                     break
         
         # 類似度スコア
-        score = match_count / max(len(texts1), len(texts2))
+        # サイズの差が大きい場合はペナルティを与える
+        size_diff = abs(len(texts1) - len(texts2))
+        size_penalty = 1.0 / (1.0 + size_diff * 0.2)  # サイズ差が大きいほどペナルティ
+        
+        # カバレッジベースのスコア（小さい方の表に対するカバレッジ）
+        coverage_score = match_count / min(len(texts1), len(texts2)) if min(len(texts1), len(texts2)) > 0 else 0
+        
+        # 最終スコア = カバレッジ × サイズペナルティ
+        score = coverage_score * size_penalty
         return score

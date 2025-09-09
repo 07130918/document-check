@@ -1,105 +1,137 @@
-# LLM Document Difference Detection v3
+# LLM Document Difference Detection v3.3
 
 ## 概要
 
-v3は、Azure OCRの読み取り順序を活用した高精度な差分検出を実現するバージョンです。内容ベースの差分検出を提供します。
+v3.3は、テーブル認識機能を強化した高精度な文書差分検出システムです。Azure Document Intelligenceの高度な機能を活用し、複雑なレイアウトやテーブルを含む文書の差分を正確に検出します。
 
 ## 主な特徴
 
-### 1. 高度な内容ベース差分検出 (ContentBasedDiffDetector)
-- **重み配分**: テキスト内容90%、位置10%
-- **類似度計算**:
-  - 包含関係の検出（例：「継続できます」→「♡ 継続できます」）
-  - 数字パターンの認識（例：「令和5年」→「令和6年」）
-  - 編集距離ベースの類似度計算
+### 1. テーブル対応差分検出 (TableAwareDiffDetector)
+- **テーブル構造の認識**: Azure Document Intelligenceによる正確なテーブル抽出
+- **セル単位の差分検出**: テーブル内の個々のセルレベルでの変更を検出
+- **ヘッダーベースのマッチング**: テーブルヘッダーの完全一致による確実な対応付け
+- **テキストとテーブルの統合処理**: 通常テキストとテーブルをシームレスに処理
 
-### 2. 読み取り順序の活用
-- Azure OCRが提供する`readingOrder`を使用して要素を正しい順序で並べ替え
-- 文書の論理的な流れに沿った差分検出が可能
+### 2. 高精度なテーブルマッチング
+- **ヘッダー完全一致方式**: テーブルのヘッダー行が完全に一致する場合のみマッチング
+- **位置情報の活用**: ページ番号と物理的位置を考慮した賢いマッチング
+- **構造認識**: 行数・列数によるテーブル構造の検証
 
-### 3. 精密なマッチングアルゴリズム
-- 貪欲法による最適なペアリング
-- 1対1のマッチングを保証（重複なし）
-- 類似度閾値（80%）による柔軟な判定
+### 3. デバッグとビジュアライゼーション
+- **テーブルハイライト機能**: PDF内のテーブルを視覚的にハイライト表示
+- **詳細なデバッグ情報**: テーブル検出結果をJSON/CSVで出力
+- **差分の可視化**: 変更・追加・削除されたコンテンツを色分けして表示
 
 ## アーキテクチャ
 
 ```
-llm_docs_diff_v3/
+llm_docs_diff_v3_3/
+├── config/
+│   └── settings.py              # システム設定
 ├── core/
-│   ├── document_loader.py    # 文書読み込み
-│   ├── diff_detector_v3.py   # 差分検出（ContentBasedDiffDetector）
-│   └── llm_analyzer.py      # LLM解析
+│   ├── table_aware_diff_detector.py  # テーブル対応差分検出
+│   ├── table_matcher.py         # テーブルマッチングロジック
+│   ├── table_debug_handler.py   # テーブルデバッグ機能
+│   ├── cell_text_analyzer.py    # セル内テキスト解析
+│   ├── document_analyzer.py     # 文書構造解析
+│   ├── azure_text_processing.py # Azure OCR処理
+│   ├── reading_order_v2.py      # 読み取り順序処理
+│   ├── text_grouping.py         # テキストグループ化
+│   └── text_preprocessing.py    # テキスト前処理
 ├── models/
-│   └── bbox_models.py       # データモデル
+│   ├── bbox_models.py           # バウンディングボックスモデル
+│   └── table_models.py          # テーブルデータモデル
+├── services/
+│   ├── azure_service.py         # Azure Document Intelligence連携
+│   ├── llm_service.py           # LLM解析サービス
+│   ├── pdf_converter.py         # PDF変換処理
+│   └── simple_pdf_generator_v3.py # PDF生成
 ├── handlers/
-│   └── output_handler.py    # 出力処理
+│   └── output_handler.py        # 出力処理
 ├── utils/
-│   └── bbox_utils.py        # ユーティリティ
-└── test_llm_diff_v3_with_llm.py  # メインスクリプト
+│   ├── pdf_utils.py             # PDFユーティリティ
+│   └── page_splitter.py         # ページ分割処理
+└── test_llm_diff_v3.py         # メインスクリプト
 ```
 
 ## 処理フロー
 
-1. **文書読み込み**: DocumentLoaderがPDFを読み込み、Azure OCRで解析
-2. **読み取り順序での並べ替え**: readingOrderに基づいて要素を整列
-3. **差分検出**: ContentBasedDiffDetectorが内容ベースで差分を検出
-4. **LLM解析**: 差分の意味的な重要度を評価
-5. **出力生成**: PDFとMarkdownレポートを生成
+1. **文書読み込み**: PDFファイルを読み込み
+2. **Azure OCR処理**:
+   - レイアウト解析（テキスト、段落、テーブル）
+   - テーブル構造の抽出
+   - 読み取り順序の取得
+3. **テーブルマッチング**: 両文書間でテーブルを対応付け
+4. **差分検出**:
+   - テキスト差分の検出
+   - テーブル内セル差分の検出
+5. **LLM解析**: 差分の意味的重要度を評価
+6. **出力生成**:
+   - ハイライト付きPDF
+   - 詳細レポート（Markdown/JSON）
+   - デバッグ情報
 
 ## 使用方法
 
 ```bash
 # 基本的な使用方法
-poetry run python apps/llm_docs_diff_v3/test_llm_diff_v3.py --dataset dantai
+poetry run python apps/llm_docs_diff_v3_3/test_llm_diff_v3.py
 
-# 利用可能なデータセット
---dataset dantai    # 団体保険
---dataset sample1   # サンプル1
---dataset sample2   # サンプル2
---dataset sample3   # サンプル3
---dataset sample4   # サンプル4
---dataset sample5   # サンプル5
+# 特定のサンプルを処理
+poetry run python apps/llm_docs_diff_v3_3/test_llm_diff_v3.py --sample sample2
+
+# テーブルハイライトを有効化
+poetry run python apps/llm_docs_diff_v3_3/test_llm_diff_v3.py --highlight-tables
+
+# デバッグ情報を詳細に出力
+poetry run python apps/llm_docs_diff_v3_3/test_llm_diff_v3.py --debug
 ```
 
-## ContentBasedDiffDetectorの仕組み
+## 設定オプション
 
-### 1. テキストグループ化
-同一テキストをグループ化して効率的に処理：
-```python
-doc1_by_text = self._group_by_text(doc1_items)
-doc2_by_text = self._group_by_text(doc2_items)
+`config/settings.py`で以下の設定が可能:
+
+- **USE_HIGH_RESOLUTION_OCR**: 高解像度OCRの使用（デフォルト: True）
+- **MAX_PAGES**: 処理する最大ページ数
+- **AZURE_API_VERSION**: Azure APIバージョン
+- **LLM_MODEL**: 使用するLLMモデル
+
+## 出力ファイル
+
+```
+output/llm_diff_test_v3-3/[sample_name]/
+├── PDFs/
+│   ├── [doc1]_compared.pdf      # 差分ハイライト付きPDF（文書1）
+│   ├── [doc2]_compared.pdf      # 差分ハイライト付きPDF（文書2）
+│   └── side_by_side_comparison.pdf  # 並列比較PDF
+├── reports/
+│   ├── execution_report.json    # 実行レポート
+│   └── execution_report.md      # Markdownレポート
+├── debug/
+│   ├── table_detection.json     # テーブル検出結果
+│   ├── table_matching.json      # テーブルマッチング結果
+│   └── tables/                  # 各テーブルの詳細情報
+└── comparison_differences.csv   # 差分一覧
 ```
 
-### 2. 完全一致の処理
-完全に一致するテキストは差分なしとして処理済みにマーク
+## テーブルマッチングアルゴリズム
 
-### 3. 類似度マトリクスの計算
-残りのアイテムについて、テキスト類似度（90%）と位置類似度（10%）を組み合わせた総合類似度を計算
+### マッチング条件
+1. テーブルヘッダーが完全に一致
+2. 同じページまたは近隣ページに存在
+3. 列数が一致
 
-### 4. 最適マッチング
-類似度の高い順にペアを作成し、1対1のマッチングを実現
+### 優先順位
+1. 同じページのテーブル
+2. ±1ページ以内のテーブル
+3. それ以外（ヘッダー一致のみ）
 
-### 5. 差分の分類
-- マッチしたペア → MODIFICATION（変更）
-- マッチしなかった文書1のアイテム → DELETION（削除）
-- マッチしなかった文書2のアイテム → ADDITION（追加）
+## 既知の問題と制限事項
 
-## テキスト類似度計算の詳細
+1. **テーブル分割問題**: Azure Document Intelligenceが大きなテーブルを複数の小さなテーブルとして検出することがある
+2. **複雑なレイアウト**: ネストされたテーブルや複雑な構造は正確に検出できない場合がある
 
-### 類似度スコアの算出方法
-1. **完全一致**: スコア 1.0
-2. **包含関係**: 80%以上が共通ならスコア 0.95、それ以外は 0.9
-3. **数字パターン**: 構造が同じで数字だけ違う場合はスコア 0.85
-4. **編集距離ベース**: difflibによる基本的な類似度計算
+## 今後の改善予定
 
-## v2からの改善点
-
-1. **位置依存の大幅削減**: 位置の重みを10%に削減
-2. **読み取り順序の活用**: Azure OCRの読み取り順序を使用
-3. **シンプルな実装**: 実用的な差分検出に集中
-
-## 制限事項
-
-- Azure OCRの処理は最初の3ページまでに制限（設定により変更可能）
-- 大きなPDFファイルではメモリ使用量が増加する可能性あり
+1. テーブル結合ロジックの実装（分割されたテーブルの自動結合）
+2. より高度なテーブル構造認識

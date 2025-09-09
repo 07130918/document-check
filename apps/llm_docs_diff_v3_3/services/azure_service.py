@@ -9,6 +9,7 @@ from azure.core.credentials import AzureKeyCredential
 
 from ..config.settings import settings
 from ..models.bbox_models import BBoxTextData
+from ..core.table_merger import TableMerger
 
 logger = logging.getLogger(__name__)
 
@@ -149,15 +150,42 @@ class AzureDocumentService:
                 logger.info(f"Limiting PDF to {max_pages} pages for table extraction")
                 pdf_bytes = pdf_processor.limit_pdf_pages(pdf_bytes, max_pages)
             
+            # 表抽出のオプションを追加
+            # features: テーブル抽出機能を明示的に有効化
+            features = []
+            
+            # 高解像度OCRを有効化（テーブル内の小さな文字の認識精度向上）
+            if settings.USE_HIGH_RESOLUTION_OCR:
+                features.append("ocr.highResolution")
+                logger.info("Table extraction: High Resolution OCR enabled")
+            
+            # テーブル抽出を明示的に有効化
+            # 注：tablesフィーチャーは、featuresパラメータではなくモデル自体に含まれている
+            
             poller = self.client.begin_analyze_document(
                 "prebuilt-layout",
                 body=pdf_bytes,
-                content_type="application/pdf"
+                content_type="application/pdf",
+                features=features if features else None,  # 高解像度OCRオプション
+                locale="ja"  # 日本語文書として明示的に指定
             )
             result: AnalyzeResult = poller.result()
             
             tables = []
+            logger.info(f"Azure detected {len(result.tables)} tables in the document")
+            
             for table_idx, table in enumerate(result.tables):
+                logger.info(f"Processing table {table_idx}: {table.row_count}x{table.column_count}")
+                
+                # テーブルのセル内容をデバッグ出力
+                if table_idx < 5:  # 最初の5つのテーブルのみ詳細ログ
+                    logger.debug(f"Table {table_idx} cells:")
+                    for cell in table.cells[:10]:  # 最初の10セルのみ
+                        logger.debug(f"  Cell[{cell.row_index}][{cell.column_index}]: '{cell.content}' "
+                                   f"(kind: {getattr(cell, 'kind', 'unknown')}, "
+                                   f"row_span: {cell.row_span or 1}, "
+                                   f"col_span: {cell.column_span or 1})")
+                
                 # バウンディングボックス情報を取得
                 bounding_region = table.bounding_regions[0] if table.bounding_regions else None
                 bbox = None
@@ -168,12 +196,12 @@ class AzureDocumentService:
                     if isinstance(points, list) and len(points) >= 8:
                         x_coords = [points[i] for i in range(0, len(points), 2)]
                         y_coords = [points[i] for i in range(1, len(points), 2)]
-                        # インチからポイントに変換（1インチ = 72ポイント）
+                        # bboxをインチ単位で保存（ハンドラーで変換）
                         bbox = [
-                            min(x_coords) * 72,  # x
-                            min(y_coords) * 72,  # y
-                            (max(x_coords) - min(x_coords)) * 72,  # width
-                            (max(y_coords) - min(y_coords)) * 72   # height
+                            min(x_coords),  # x
+                            min(y_coords),  # y
+                            (max(x_coords) - min(x_coords)),  # width
+                            (max(y_coords) - min(y_coords))   # height
                         ]
                         logger.debug(f"  Calculated bbox: {bbox}")
                     else:
@@ -196,12 +224,12 @@ class AzureDocumentService:
                             if len(points) >= 8:
                                 x_coords = [points[i] for i in range(0, len(points), 2)]
                                 y_coords = [points[i] for i in range(1, len(points), 2)]
-                                # インチからポイントに変換（1インチ = 72ポイント）
+                                # bboxをインチ単位で保存（ハンドラーで変換）
                                 cell_bbox = [
-                                    min(x_coords) * 72,
-                                    min(y_coords) * 72,
-                                    (max(x_coords) - min(x_coords)) * 72,
-                                    (max(y_coords) - min(y_coords)) * 72
+                                    min(x_coords),
+                                    min(y_coords),
+                                    (max(x_coords) - min(x_coords)),
+                                    (max(y_coords) - min(y_coords))
                                 ]
                     
                     cell_info = {
@@ -210,14 +238,41 @@ class AzureDocumentService:
                         "text": cell.content,
                         "row_span": cell.row_span or 1,
                         "column_span": cell.column_span or 1,
-                        "bbox": cell_bbox  # セルのバウンディングボックス
+                        "bbox": cell_bbox,  # セルのバウンディングボックス
+                        "kind": getattr(cell, 'kind', 'content')  # セルの種類（columnHeader, content等）
                     }
                     table_info["cells"].append(cell_info)
                 
                 tables.append(table_info)
             
-            logger.info(f"Extracted {len(tables)} tables")
-            return tables
+            logger.info(f"Extracted {len(tables)} tables before merging")
+            
+            # 表の結合処理を実行（設定により有効/無効を切り替え可能）
+            if getattr(settings, 'ENABLE_TABLE_MERGING', True):
+                merger = TableMerger(
+                    vertical_distance_threshold=getattr(settings, 'TABLE_MERGE_VERTICAL_THRESHOLD', 0.05),
+                    horizontal_overlap_threshold=getattr(settings, 'TABLE_MERGE_HORIZONTAL_THRESHOLD', 0.8),
+                    column_match_threshold=getattr(settings, 'TABLE_MERGE_COLUMN_THRESHOLD', 0.7)
+                )
+                
+                # 表を結合
+                merged_tables = merger.merge_tables(tables)
+                logger.info(f"After merging: {len(merged_tables)} tables")
+                
+                # デバッグ情報を出力
+                merge_count = len(tables) - len(merged_tables)
+                if merge_count > 0:
+                    logger.info(f"Merged {merge_count} table pairs")
+                    for table in merged_tables:
+                        if table.get('is_merged'):
+                            logger.debug(f"Merged table on page {table['page']}: "
+                                       f"{table['merge_info']['original_table_count']} tables combined, "
+                                       f"final size: {table['row_count']}x{table['column_count']}")
+                
+                return merged_tables
+            else:
+                logger.info("Table merging is disabled")
+                return tables
             
         except Exception as e:
             logger.error(f"Table extraction failed: {e}")
@@ -236,23 +291,28 @@ class AzureDocumentService:
             return {}
         
         try:
+            # prebuilt-documentモデルは廃止されたため、prebuilt-layoutを使用
             poller = self.client.begin_analyze_document(
-                "prebuilt-document",
+                "prebuilt-layout",
                 body=pdf_bytes,
-                content_type="application/pdf"
+                content_type="application/pdf",
+                features=["keyValuePairs"] if hasattr(self.client, 'api_version') else None
             )
             result: AnalyzeResult = poller.result()
             
             key_values = {}
-            for kv_pair in result.key_value_pairs:
-                if kv_pair.key and kv_pair.value:
-                    key = kv_pair.key.content
-                    value = kv_pair.value.content
-                    key_values[key] = value
+            # key_value_pairsが存在する場合のみ処理
+            if hasattr(result, 'key_value_pairs') and result.key_value_pairs:
+                for kv_pair in result.key_value_pairs:
+                    if kv_pair.key and kv_pair.value:
+                        key = kv_pair.key.content
+                        value = kv_pair.value.content
+                        key_values[key] = value
             
             logger.info(f"Extracted {len(key_values)} key-value pairs")
             return key_values
             
         except Exception as e:
             logger.error(f"Key-value extraction failed: {e}")
+            logger.debug(f"Error details: {type(e).__name__}: {e}")
             return {}

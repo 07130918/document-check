@@ -76,7 +76,7 @@ class TableAwareDiffDetector:
         # デバッグ: 各表の詳細を表示
         if tables1:
             print(f"\n文書1の表:")
-            for i, table in enumerate(tables1[:5]):  # 最初の5個まで
+            for i, table in enumerate(tables1):  # すべての表を表示
                 print(f"  表{i+1}: ページ{table['page']+1}, {table['row_count']}行×{table['column_count']}列")
                 # 最初の行（ヘッダー）を表示
                 header_cells = [cell for cell in table['cells'] if cell['row'] == 0]
@@ -87,7 +87,7 @@ class TableAwareDiffDetector:
         
         if tables2:
             print(f"\n文書2の表:")
-            for i, table in enumerate(tables2[:5]):  # 最初の5個まで
+            for i, table in enumerate(tables2):  # すべての表を表示
                 print(f"  表{i+1}: ページ{table['page']+1}, {table['row_count']}行×{table['column_count']}列")
                 # 最初の行（ヘッダー）を表示
                 header_cells = [cell for cell in table['cells'] if cell['row'] == 0]
@@ -133,6 +133,7 @@ class TableAwareDiffDetector:
         # 表情報を保存（PDFハイライト用）
         self.tables1 = tables1
         self.tables2 = tables2
+        self.table_matches = matches
         
         return text_diffs, table_diffs
     
@@ -163,6 +164,11 @@ class TableAwareDiffDetector:
     
     def _get_table_bounding_box(self, table: Dict) -> List[float]:
         """表全体のバウンディングボックスを計算"""
+        # すでに表のbboxが存在する場合はそれを使用
+        if table.get('bbox'):
+            return table['bbox']
+        
+        # bboxがない場合はセルから計算
         if not table.get('cells'):
             return [0, 0, 0, 0]
         
@@ -179,8 +185,11 @@ class TableAwareDiffDetector:
                 max_x = max(max_x, bbox[0] + bbox[2])
                 max_y = max(max_y, bbox[1] + bbox[3])
         
-        # 少しマージンを追加
-        margin = 5
+        if min_x == float('inf'):
+            return [0, 0, 0, 0]
+        
+        # 少しマージンを追加（インチ単位）
+        margin = 5 / 72  # 5ポイントをインチに変換
         return [
             max(0, min_x - margin),
             max(0, min_y - margin),
@@ -201,7 +210,12 @@ class TableAwareDiffDetector:
         for region in table_regions:
             if region['page'] == text_page:
                 table_bbox = region['bbox']
-                if self._is_bbox_inside(text_bbox, table_bbox):
+                if not table_bbox:
+                    continue
+                # 表のbboxがインチ単位の場合、ポイント単位に変換
+                # テキストのbboxはすでにポイント単位と仮定
+                table_bbox_points = [coord * 72 for coord in table_bbox]
+                if self._is_bbox_inside(text_bbox, table_bbox_points):
                     return True
         
         return False
@@ -274,13 +288,13 @@ class TableAwareDiffDetector:
         
         if unmatched1:
             print(f"\nマッチしなかった文書1の表: {len(unmatched1)}個")
-            for i in unmatched1[:3]:  # 最初の3件
+            for i in unmatched1:  # すべて表示
                 table = tables1[i]
                 print(f"  表{i+1}: ページ{table['page']+1}, {table['row_count']}行×{table['column_count']}列")
         
         if unmatched2:
             print(f"\nマッチしなかった文書2の表: {len(unmatched2)}個")
-            for i in unmatched2[:3]:  # 最初の3件
+            for i in unmatched2:  # すべて表示
                 table = tables2[i]
                 print(f"  表{i+1}: ページ{table['page']+1}, {table['row_count']}行×{table['column_count']}列")
         

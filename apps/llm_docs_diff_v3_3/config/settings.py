@@ -54,6 +54,12 @@ class Settings:
     CACHE_TTL_SECONDS: int = 3600  # 1時間
     CACHE_DIR: Path = OUTPUT_DIR / "cache"
     
+    # 表結合設定
+    ENABLE_TABLE_MERGING: bool = os.getenv("ENABLE_TABLE_MERGING", "True").lower() == "true"
+    TABLE_MERGE_VERTICAL_THRESHOLD: float = float(os.getenv("TABLE_MERGE_VERTICAL_THRESHOLD", "0.05"))  # ページ高さの5%
+    TABLE_MERGE_HORIZONTAL_THRESHOLD: float = float(os.getenv("TABLE_MERGE_HORIZONTAL_THRESHOLD", "0.8"))  # 80%の重なり
+    TABLE_MERGE_COLUMN_THRESHOLD: float = float(os.getenv("TABLE_MERGE_COLUMN_THRESHOLD", "0.7"))  # 70%の列一致
+    
     # デバッグ設定
     DEBUG: bool = os.getenv("DEBUG", "True").lower() == "true"
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")

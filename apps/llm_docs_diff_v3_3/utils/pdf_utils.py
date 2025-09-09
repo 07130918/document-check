@@ -264,3 +264,97 @@ class PDFProcessor:
             logger.error(f"Failed to limit PDF pages: {e}")
             # エラーの場合は元のPDFを返す
             return pdf_bytes
+    
+    def create_highlighted_pdf(self, pdf_bytes: bytes, highlights: List[dict]) -> bytes:
+        """ハイライト付きPDFを作成
+        
+        Args:
+            pdf_bytes: 元のPDFのバイトデータ
+            highlights: ハイライト情報のリスト
+                       各要素は {'bbox': [x, y, width, height], 'page': int, 'color': str, 'text': str(optional)}
+            
+        Returns:
+            ハイライト付きPDFのバイトデータ
+        """
+        try:
+            pdf_document = fitz.open(stream=pdf_bytes, filetype="pdf")
+            
+            # カラー定義
+            color_map = {
+                'red': (1, 0, 0),
+                'green': (0, 1, 0),
+                'yellow': (1, 1, 0),
+                'blue': (0, 0, 1),
+                'orange': (1, 0.5, 0),
+                'purple': (0.5, 0, 0.5)
+            }
+            
+            for highlight in highlights:
+                page_num = highlight['page']
+                if page_num >= len(pdf_document):
+                    continue
+                    
+                page = pdf_document[page_num]
+                bbox = highlight['bbox']
+                color = color_map.get(highlight['color'], (1, 0, 0))
+                
+                # バウンディングボックスをfitz.Rect形式に変換
+                rect = fitz.Rect(bbox[0], bbox[1], bbox[0] + bbox[2], bbox[1] + bbox[3])
+                
+                # 番号のみの表示かどうか判定
+                if highlight.get('number_only') and 'text' in highlight and highlight['text']:
+                    # 番号のみ表示（枠線なし、背景なし）
+                    # テキストの位置を計算（矩形の左上）
+                    text_point = fitz.Point(bbox[0] + 5, bbox[1] + 20)
+                    
+                    # オレンジ色のテキストを描画（より大きく）
+                    page.insert_text(
+                        text_point,
+                        highlight['text'],
+                        fontsize=24,  # 大きいフォント
+                        color=color,  # オレンジ色
+                        fontname="helv"
+                    )
+                else:
+                    # 通常のハイライト追加
+                    annot = page.add_rect_annot(rect)
+                    annot.set_colors(stroke=color, fill=None)
+                    # 表のハイライトは太い線にする
+                    if color == (0, 0, 1):  # 青色（マッチしない表）
+                        annot.set_border(width=4)
+                    else:
+                        annot.set_border(width=2)
+                    annot.update()
+                    
+                    # テキストがある場合は番号を表示（通常のマッチング番号など）
+                    if 'text' in highlight and highlight['text'] and not highlight.get('number_only'):
+                        # テキストの位置を計算（矩形の左上）
+                        text_point = fitz.Point(bbox[0] + 5, bbox[1] + 15)
+                        
+                        # 背景付きテキストを描画
+                        # 背景の矩形（より大きく、見やすく）
+                        text_rect = fitz.Rect(bbox[0] - 2, bbox[1] - 2, bbox[0] + 35, bbox[1] + 25)
+                        page.draw_rect(text_rect, color=(1, 1, 0), fill=(1, 1, 0))  # 黄色背景
+                        # 黒い枠線を追加
+                        page.draw_rect(text_rect, color=(0, 0, 0), fill=None, width=1)
+                        
+                        # テキストを描画（より大きく）
+                        page.insert_text(
+                            text_point,
+                            highlight['text'],
+                            fontsize=16,  # より大きいフォント
+                            color=(0, 0, 0),  # 黒文字
+                            fontname="helv"
+                        )
+            
+            # バイトデータに変換
+            output_buffer = io.BytesIO()
+            pdf_document.save(output_buffer)
+            pdf_document.close()
+            
+            return output_buffer.getvalue()
+            
+        except Exception as e:
+            logger.error(f"Failed to create highlighted PDF: {e}")
+            # エラーの場合は元のPDFを返す
+            return pdf_bytes

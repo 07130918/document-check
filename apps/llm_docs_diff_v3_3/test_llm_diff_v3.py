@@ -248,6 +248,7 @@ def main():
     # 表情報を保存するための変数
     tables1 = []
     tables2 = []
+    table_matches = []
     
     if args.use_table_detection:
         # 表構造を考慮した差分検出
@@ -263,6 +264,19 @@ def main():
         if hasattr(table_aware_detector, 'tables1'):
             tables1 = table_aware_detector.tables1
             tables2 = table_aware_detector.tables2
+            
+        # マッチング情報も取得
+        table_matches = []
+        if hasattr(table_aware_detector, 'table_matches'):
+            # TableMatchオブジェクトを辞書に変換
+            table_matches = [
+                {
+                    'table1_index': match.table1_index,
+                    'table2_index': match.table2_index,
+                    'similarity_score': match.similarity_score
+                }
+                for match in table_aware_detector.table_matches
+            ]
             
             # 表情報をJSONとして保存
             import json
@@ -338,11 +352,13 @@ def main():
             # 完全一致したアイテムを追加
             "matched_items": [] if args.use_table_detection else diff_detector.matched_items,
             # 表の差分情報
-            "table_diffs": [td.to_dict() for td in table_diffs] if args.use_table_detection else [],
+            "table_diffs": [td.to_dict() if hasattr(td, 'to_dict') else td for td in table_diffs] if args.use_table_detection else [],
             "table_detection_used": args.use_table_detection,
             # 表情報（PDFハイライト用）
-            "tables1": tables1,
-            "tables2": tables2
+            "tables1": tables1 if args.use_table_detection else [],
+            "tables2": tables2 if args.use_table_detection else [],
+            # 表のマッチング情報
+            "table_matches": [m.to_dict() if hasattr(m, 'to_dict') else m for m in table_matches] if args.use_table_detection else []
         }
     )
     
