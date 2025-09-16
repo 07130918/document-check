@@ -25,14 +25,14 @@ from core.text_preprocessing import StructuredTextPreprocessorV4
 from core.structured_diff_detector_v4 import StructuredDiffDetectorV4
 from handlers.output_handler import OutputHandler
 from handlers.enhanced_output_handler_v3_4 import EnhancedOutputHandlerV34
-# from performance_tracker import PerformanceTracker, get_global_tracker
+from performance_tracker import PerformanceTracker, get_global_tracker
 
 # ログ設定
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('v3_4_log.txt', encoding='utf-8'),
+        logging.FileHandler('v3_4_debug_log.txt', encoding='utf-8'),
         logging.StreamHandler()
     ]
 )
@@ -62,8 +62,7 @@ class LLMDocsDiffV4:
         self.max_workers = max_workers  # Noneの場合は自動設定
         
         # パフォーマンストラッカーを追加
-        # self.tracker = PerformanceTracker()
-        self.tracker = None
+        self.tracker = PerformanceTracker()
         
         # 分割文字結合前処理器を追加
         from core.text_preprocessing import MergeSplitCharacterPreProcessor
@@ -104,8 +103,7 @@ class LLMDocsDiffV4:
         # 1. Document Intelligence構造化分析
         logger.info("ステップ1: Document Intelligence構造化分析")
         
-        # with self.tracker.measure("1_document_intelligence_分析"):
-        if True:
+        with self.tracker.measure("1_document_intelligence_分析"):
             if pages is None:
                 # 全ページ処理
                 logger.info("全ページ処理モード")
@@ -121,11 +119,9 @@ class LLMDocsDiffV4:
             else:
                 # 従来の逐次処理：指定ページのみ
                 logger.info(f"指定ページ逐次処理: {pages}")
-                # with self.tracker.measure("1.1_文書1_指定ページ分析"):
-                if True:
+                with self.tracker.measure("1.1_文書1_指定ページ分析"):
                     doc1_analysis, doc1_word_data = self.azure_service.analyze_document_structured(doc1_path, pages)
-                # with self.tracker.measure("1.2_文書2_指定ページ分析"):
-                if True:
+                with self.tracker.measure("1.2_文書2_指定ページ分析"):
                     doc2_analysis, doc2_word_data = self.azure_service.analyze_document_structured(doc2_path, pages)
         
         doc1_analysis['source_file'] = doc1_path
@@ -134,13 +130,10 @@ class LLMDocsDiffV4:
         # 2. 分割文字結合前処理
         logger.info("ステップ2: 分割文字結合前処理")
         
-        # with self.tracker.measure("2_分割文字結合前処理"):
-        if True:
-            # with self.tracker.measure("2.1_文書1_分割文字結合"):
-            if True:
+        with self.tracker.measure("2_分割文字結合前処理"):
+            with self.tracker.measure("2.1_文書1_分割文字結合"):
                 combined_doc1_analysis = self.merge_processor.process_document_analysis(doc1_analysis)
-            # with self.tracker.measure("2.2_文書2_分割文字結合"):
-            if True:
+            with self.tracker.measure("2.2_文書2_分割文字結合"):
                 combined_doc2_analysis = self.merge_processor.process_document_analysis(doc2_analysis)
         
         logger.info(f"結合処理結果: 文書1={len(combined_doc1_analysis.get('sections', []))}セクション, "
@@ -149,19 +142,14 @@ class LLMDocsDiffV4:
         # 2.5. 文言正規化処理
         logger.info("ステップ2.5: 文言正規化処理")
         
-        # with self.tracker.measure("2.5_文言正規化処理"):
-        if True:
-            # with self.tracker.measure("2.5.1_文書1_テキスト正規化"):
-            if True:
+        with self.tracker.measure("2.5_文言正規化処理"):
+            with self.tracker.measure("2.5.1_文書1_テキスト正規化"):
                 combined_doc1_analysis = self._normalize_document_text(combined_doc1_analysis)
-            # with self.tracker.measure("2.5.2_文書2_テキスト正規化"):
-            if True:
+            with self.tracker.measure("2.5.2_文書2_テキスト正規化"):
                 combined_doc2_analysis = self._normalize_document_text(combined_doc2_analysis)
-            # with self.tracker.measure("2.5.3_文書1_ワードデータ正規化"):
-            if True:
+            with self.tracker.measure("2.5.3_文書1_ワードデータ正規化"):
                 doc1_word_data = self._normalize_word_data(doc1_word_data)
-            # with self.tracker.measure("2.5.4_文書2_ワードデータ正規化"):
-            if True:
+            with self.tracker.measure("2.5.4_文書2_ワードデータ正規化"):
                 doc2_word_data = self._normalize_word_data(doc2_word_data)
         
         logger.info("文言正規化処理完了")
@@ -169,21 +157,18 @@ class LLMDocsDiffV4:
         # 2.7. ページマッチング処理
         logger.info("ステップ2.7: ページマッチング処理")
         
-        # with self.tracker.measure("2.7_ページマッチング処理"):
-        if True:
+        with self.tracker.measure("2.7_ページマッチング処理"):
             page_matches = self._match_pages_by_content(combined_doc1_analysis, combined_doc2_analysis)
             logger.info(f"ページマッチング結果: {len(page_matches)}件のマッチ")
         
         # 3. 構造化差分検出（ページマッチング結果を使用）
         logger.info("ステップ3: 構造化差分検出（ページマッチベース）")
         
-        # with self.tracker.measure("3_構造化差分検出"):
-        if True:
+        with self.tracker.measure("3_構造化差分検出"):
             differences = self._detect_differences_by_page_matches(page_matches, combined_doc1_analysis, combined_doc2_analysis, doc1_word_data, doc2_word_data)
         
         # 差分結果をCSVで保存
-        # with self.tracker.measure("3.1_差分CSV保存"):
-        if True:
+        with self.tracker.measure("3.1_差分CSV保存"):
             self._save_differences_csv(differences, output_tag)
 
         # ここでマッチセクションごとにその中のパラフラフを文言と位置の類似度に基づいて判定を行う
@@ -191,8 +176,7 @@ class LLMDocsDiffV4:
         # 4. 結果の整理と出力
         logger.info("ステップ4: 結果の整理と出力")
         
-        # with self.tracker.measure("4_結果整理"):
-        if True:
+        with self.tracker.measure("4_結果整理"):
             analysis_result = {
             "version": "v3.4",
             "analysis_type": "structured_document_intelligence",
@@ -231,16 +215,14 @@ class LLMDocsDiffV4:
         }
         
         # 結果をファイルに保存（従来の基本出力）
-        # with self.tracker.measure("4.1_基本結果保存"):
-        if True:
+        with self.tracker.measure("4.1_基本結果保存"):
             self._save_results(analysis_result, output_tag)
         
         # 拡張出力を生成（有効な場合）
         if self.enhanced_output_handler:
             try:
                 logger.info("拡張出力を生成します")
-                # with self.tracker.measure("4.2_拡張出力生成"):
-                if True:
+                with self.tracker.measure("4.2_拡張出力生成"):
                     enhanced_files = self.enhanced_output_handler.generate_enhanced_output(
                         analysis_result, output_tag, doc1_path, doc2_path
                     )
@@ -255,17 +237,17 @@ class LLMDocsDiffV4:
                    f"削除: {analysis_result['summary']['deletions']}")
         
         # パフォーマンスサマリーを出力
-        # self.tracker.print_summary()
-
+        self.tracker.print_summary()
+        
         # パフォーマンスレポートを保存
-        # performance_report_path = Settings.OUTPUT_DIR / f"performance_report_{output_tag}.json"
-        # self.tracker.save_to_file(performance_report_path)
-
+        performance_report_path = Settings.OUTPUT_DIR / f"performance_report_{output_tag}.json"
+        self.tracker.save_to_file(performance_report_path)
+        
         # ボトルネックを特定
-        # bottlenecks = self.tracker.get_bottlenecks(top_n=5)
-        # logger.info("\n=== 処理時間ボトルネック TOP5 ===")
-        # for i, bottleneck in enumerate(bottlenecks, 1):
-        #     logger.info(f"{i}. {bottleneck['operation']}: {bottleneck['total_seconds']:.3f}秒 (平均: {bottleneck['average_seconds']:.3f}秒)")
+        bottlenecks = self.tracker.get_bottlenecks(top_n=5)
+        logger.info("\n=== 処理時間ボトルネック TOP5 ===")
+        for i, bottleneck in enumerate(bottlenecks, 1):
+            logger.info(f"{i}. {bottleneck['operation']}: {bottleneck['total_seconds']:.3f}秒 (平均: {bottleneck['average_seconds']:.3f}秒)")
         
         return analysis_result
 
@@ -290,8 +272,7 @@ class LLMDocsDiffV4:
         logger.info(f"バッチサイズ: {self.batch_size}, 並列処理: {use_parallel}")
 
         # PDFのページ数を取得
-        # with self.tracker.measure("1.1_ページ数取得"):
-        if True:
+        with self.tracker.measure("1.1_ページ数取得"):
             pdf1 = fitz.open(doc1_path)
             doc1_pages = len(pdf1)
             pdf1.close()
@@ -371,8 +352,7 @@ class LLMDocsDiffV4:
         doc2_results = []
         total_api_time = 0
 
-        # with self.tracker.measure("1.2_API呼び出し"):
-        if True:
+        with self.tracker.measure("1.2_API呼び出し"):
             start_parallel = time.time()
 
             if use_parallel and len(tasks) > 1:
@@ -420,8 +400,7 @@ class LLMDocsDiffV4:
                 logger.info(f"処理完了: {elapsed:.2f}秒")
 
         # ページ番号順にソート
-        # with self.tracker.measure("1.3_結果整理"):
-        if True:
+        with self.tracker.measure("1.3_結果整理"):
             doc1_results.sort(key=lambda x: x[0])  # start_pageでソート
             doc2_results.sort(key=lambda x: x[0])  # start_pageでソート
 
@@ -833,8 +812,7 @@ class LLMDocsDiffV4:
             doc2_page_contents[page_num] = content
         
         # 全組み合わせでページ内容の類似度を計算
-        # with self.tracker.measure("ページ類似度計算"):
-        if True:
+        with self.tracker.measure("ページ類似度計算"):
             matches = []
             for page1, content1 in doc1_page_contents.items():
                 for page2, content2 in doc2_page_contents.items():
@@ -1105,7 +1083,7 @@ def main():
     parser = argparse.ArgumentParser(description='LLM文書差分検出システム v3.4')
     parser.add_argument('--batch-size', type=int, default=1,
                        help='1回のAPI呼び出しで処理するページ数（デフォルト: 1）')
-    parser.add_argument('--workers', type=int, default=None,
+    parser.add_argument('--workers', type=int, default=60,
                        help='並列実行のワーカー数（デフォルト: 自動設定）')
     parser.add_argument('--pages', type=str, default=None,
                        help='分析対象ページ（例: "1-10" または "1,3,5"）')

@@ -203,15 +203,18 @@ class StructuredDiffDetectorV4:
                 para1_page = para1["page"]
                 para2_page = para2["page"]
 
+                # 変数を初期化
+                para1_word_data = []
+                para2_word_data = []
+
                 for item in doc1_word_data:
-                    if item["pageNumber"] == para1_page:
-                        para1_word_data = item["words"]
+                    if item.get("page_number") == para1_page:
+                        para1_word_data = item.get("words", [])
                         break
 
-
                 for item in doc2_word_data:
-                    if item["pageNumber"] == para2_page:
-                        para2_word_data = item["words"]
+                    if item.get("page_number") == para2_page:
+                        para2_word_data = item.get("words", [])
                         break
                 
                 
@@ -804,8 +807,14 @@ class StructuredDiffDetectorV4:
             return self._fallback_tokenize(text)
         
         try:
-            # 詳細情報付きでMeCab実行
-            tagger = MeCab.Tagger('-F%m,%f[0],%f[1],%f[2],%f[3],%f[4],%f[5],%f[6]')
+            # 詳細情報付きでMeCab実行（環境変数から設定ファイルパスを取得）
+            import os
+            mecabrc_path = os.environ.get('MECABRC')
+            if mecabrc_path and os.path.exists(mecabrc_path):
+                tagger = MeCab.Tagger(f'-r {mecabrc_path} -F%m,%f[0],%f[1],%f[2],%f[3],%f[4],%f[5],%f[6]')
+            else:
+                # 環境変数が設定されていない場合はデフォルト設定を使用
+                tagger = MeCab.Tagger('-F%m,%f[0],%f[1],%f[2],%f[3],%f[4],%f[5],%f[6]')
             result = tagger.parseToNode(text)
             
             morphemes = []
