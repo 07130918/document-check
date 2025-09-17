@@ -421,6 +421,191 @@ class LLMDocsDiffV4:
 
         return doc1_merged, doc1_merged_word, doc2_merged, doc2_merged_word
 
+    def _analyze_documents_parallel_with_pages(self, doc1_path: str, doc2_path: str, pages: str, use_parallel: bool = True) -> Tuple[Dict[str, Any], Any, Dict[str, Any], Any]:
+        """指定ページで2つの文書を同時に高並列で分析
+
+        Args:
+            doc1_path: 文書1のパス
+            doc2_path: 文書2のパス
+            pages: 分析対象ページ（例: "1-10" または "1,3,5"）
+            use_parallel: 並列処理を使用するか
+
+        Returns:
+            (doc1_analysis, doc1_word_data, doc2_analysis, doc2_word_data)
+        """
+        import time
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        import fitz  # PyMuPDF
+        import math
+
+        logger.info(f"指定ページ並列分析開始: {doc1_path}, {doc2_path}, ページ: {pages}")
+        logger.info(f"バッチサイズ: {self.batch_size}, 並列処理: {use_parallel}")
+
+        # ページ範囲を解析
+        page_list = self._parse_page_range(pages)
+        if not page_list:
+            raise ValueError(f"無効なページ範囲: {pages}")
+
+        # タスク数の計算（バッチサイズを考慮）
+        doc1_tasks = math.ceil(len(page_list) / self.batch_size)
+        doc2_tasks = math.ceil(len(page_list) / self.batch_size)
+        total_tasks = doc1_tasks + doc2_tasks
+
+        # ワーカー数の決定
+        if self.max_workers:
+            max_workers = self.max_workers
+        else:
+            max_workers = total_tasks
+
+        logger.info(f"対象ページ数: {len(page_list)}, タスク数: 文書1={doc1_tasks}, 文書2={doc2_tasks}, 合計={total_tasks}")
+        logger.info(f"ワーカー数: {max_workers}")
+
+        # 分析タスクの定義
+        def analyze_page_batch(doc_path, page_batch, doc_id, task_id):
+            """ページバッチ単位で分析"""
+            start_time = time.time()
+            try:
+                # ページ範囲を文字列に変換
+                if len(page_batch) == 1:
+                    page_str = str(page_batch[0])
+                else:
+                    page_str = f"{page_batch[0]}-{page_batch[-1]}"
+
+                logger.debug(f"タスク{task_id}: 文書{doc_id} ページ{page_str}を処理開始")
+                analysis, word_data = self.azure_service.analyze_document_structured(doc_path, page_str)
+
+                # ページ範囲情報を追加
+                analysis['page_range'] = (page_batch[0], page_batch[-1])
+                analysis['pages_in_batch'] = len(page_batch)
+
+                elapsed = time.time() - start_time
+                logger.info(f"タスク{task_id}完了: 文書{doc_id} ページ{page_str} ({elapsed:.2f}秒)")
+                return (doc_id, page_batch[0], page_batch[-1], analysis, word_data, elapsed)
+            except Exception as e:
+                elapsed = time.time() - start_time
+                logger.error(f"タスク{task_id}エラー: 文書{doc_id} ページ{page_batch[0]}-{page_batch[-1]} ({elapsed:.2f}秒): {e}")
+                empty_analysis = {
+                    'sections': [],
+                    'page_range': (page_batch[0], page_batch[-1]),
+                    'pages_in_batch': len(page_batch),
+                    'summary': {'total_sections': 0, 'total_paragraphs': 0}
+                }
+                return (doc_id, page_batch[0], page_batch[-1], empty_analysis, [], elapsed)
+
+        # バッチタスクの生成
+        tasks = []
+        task_id = 0
+
+        # 文書1のタスク生成
+        for i in range(0, len(page_list), self.batch_size):
+            page_batch = page_list[i:i + self.batch_size]
+            tasks.append((doc1_path, page_batch, 1, task_id))
+            task_id += 1
+
+        # 文書2のタスク生成
+        for i in range(0, len(page_list), self.batch_size):
+            page_batch = page_list[i:i + self.batch_size]
+            tasks.append((doc2_path, page_batch, 2, task_id))
+            task_id += 1
+
+        # 実行
+        doc1_results = []
+        doc2_results = []
+        total_api_time = 0
+
+        with self.tracker.measure("1.2_指定ページAPI呼び出し"):
+            start_parallel = time.time()
+
+            if use_parallel and len(tasks) > 1:
+                # 並列実行
+                with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                    futures = []
+                    for task in tasks:
+                        future = executor.submit(analyze_page_batch, *task)
+                        futures.append(future)
+
+                    logger.info(f"{len(futures)}タスクを{max_workers}ワーカーで並列実行開始")
+
+                    # 結果を収集
+                    completed = 0
+                    for future in as_completed(futures):
+                        doc_id, start_page, end_page, analysis, word_data, api_time = future.result()
+                        total_api_time += api_time
+
+                        if doc_id == 1:
+                            doc1_results.append((start_page, end_page, analysis, word_data))
+                        else:
+                            doc2_results.append((start_page, end_page, analysis, word_data))
+
+                        completed += 1
+                        elapsed = time.time() - start_parallel
+                        if completed % 5 == 0 or completed == len(futures):
+                            logger.info(f"進捗: {completed}/{len(futures)}タスク完了 ({elapsed:.1f}秒経過)")
+            else:
+                # 逐次実行
+                logger.info(f"{len(tasks)}タスクを逐次実行")
+                for task in tasks:
+                    doc_id, start_page, end_page, analysis, word_data, api_time = analyze_page_batch(*task)
+                    total_api_time += api_time
+
+                    if doc_id == 1:
+                        doc1_results.append((start_page, end_page, analysis, word_data))
+                    else:
+                        doc2_results.append((start_page, end_page, analysis, word_data))
+
+            elapsed = time.time() - start_parallel
+            if use_parallel and len(tasks) > 1:
+                logger.info(f"並列処理完了: {elapsed:.2f}秒 (API合計: {total_api_time:.2f}秒)")
+                logger.info(f"並列化効率: {total_api_time/elapsed:.2f}x")
+            else:
+                logger.info(f"処理完了: {elapsed:.2f}秒")
+
+        # ページ番号順にソート
+        with self.tracker.measure("1.3_指定ページ結果整理"):
+            doc1_results.sort(key=lambda x: x[0])  # start_pageでソート
+            doc2_results.sort(key=lambda x: x[0])  # start_pageでソート
+
+            # 分析結果とワードデータを分離
+            doc1_analyses = [item[2] for item in doc1_results]  # analysis
+            doc1_word_data = [item[3] for item in doc1_results]  # word_data
+            doc2_analyses = [item[2] for item in doc2_results]  # analysis
+            doc2_word_data = [item[3] for item in doc2_results]  # word_data
+
+            # 統合
+            doc1_merged = self._merge_page_analyses(doc1_analyses)
+            doc1_merged_word = self._merge_word_data(doc1_word_data)
+            doc2_merged = self._merge_page_analyses(doc2_analyses)
+            doc2_merged_word = self._merge_word_data(doc2_word_data)
+
+            logger.info(f"文書1: {len(doc1_merged.get('sections', []))}セクション")
+            logger.info(f"文書2: {len(doc2_merged.get('sections', []))}セクション")
+
+        return doc1_merged, doc1_merged_word, doc2_merged, doc2_merged_word
+
+    def _parse_page_range(self, pages: str) -> List[int]:
+        """ページ範囲文字列を解析してページ番号のリストを返す
+
+        Args:
+            pages: ページ範囲（例: "1-10", "1,3,5", "1-5,8,10-12"）
+
+        Returns:
+            ページ番号のリスト
+        """
+        page_list = []
+
+        for part in pages.split(','):
+            part = part.strip()
+            if '-' in part:
+                # 範囲指定（例: "1-10"）
+                start, end = map(int, part.split('-'))
+                page_list.extend(range(start, end + 1))
+            else:
+                # 単一ページ（例: "5"）
+                page_list.append(int(part))
+
+        # 重複除去と昇順ソート
+        return sorted(list(set(page_list)))
+
     def _analyze_document_by_pages(self, doc_path: str) -> Tuple[Dict[str, Any], Any]:
         """ページごとにDocument Intelligence分析を実行
         
@@ -1075,17 +1260,17 @@ def main():
     print("Document Intelligenceのセクション階層と座標情報を活用")
     
     # テスト用のファイルパス
-    doc1_path = "/home/taiyo/documents/AICE/document-check/ms/data/dantaihoken/2023.pdf"
-    doc2_path = "/home/taiyo/documents/AICE/document-check/ms/data/dantaihoken/2024.pdf"
+    doc1_path = "ms/data/sample2/サンプル②2024.pdf"
+    doc2_path = "ms/data/sample2/サンプル②2025.pdf"
 
     # コマンドライン引数の設定
     import argparse
     parser = argparse.ArgumentParser(description='LLM文書差分検出システム v3.4')
-    parser.add_argument('--batch-size', type=int, default=1,
+    parser.add_argument('--batch-size', type=int, default=2,
                        help='1回のAPI呼び出しで処理するページ数（デフォルト: 1）')
-    parser.add_argument('--workers', type=int, default=60,
+    parser.add_argument('--workers', type=int, default=10,
                        help='並列実行のワーカー数（デフォルト: 自動設定）')
-    parser.add_argument('--pages', type=str, default=None,
+    parser.add_argument('--pages', type=str, default="1-20",
                        help='分析対象ページ（例: "1-10" または "1,3,5"）')
     parser.add_argument('--parallel', default=True,
                        help='並列処理を有効化（2つの文書を同時処理）')
@@ -1113,7 +1298,7 @@ def main():
             doc1_path=doc1_path,
             doc2_path=doc2_path,
             pages=args.pages,  # 指定ページまたは全ページ
-            output_tag=f"batch{args.batch_size}_pages{args.pages or 'all'}",
+            output_tag=f"batch{args.batch_size}_workers{args.workers}_pages{args.pages or 'all'}",
             use_parallel=args.parallel
         )
         

@@ -1097,8 +1097,8 @@ def main():
     print("Document Intelligenceのセクション階層と座標情報を活用")
     
     # テスト用のファイルパス
-    doc1_path = "/home/taiyo/documents/AICE/document-check/ms/data/dantaihoken/2023.pdf"
-    doc2_path = "/home/taiyo/documents/AICE/document-check/ms/data/dantaihoken/2024.pdf"
+    doc1_path = "ms/data/dantaihoken/2023.pdf"
+    doc2_path = "ms/data/dantaihoken/2024.pdf"
 
     # コマンドライン引数の設定
     import argparse
