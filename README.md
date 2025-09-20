@@ -1,51 +1,44 @@
-# PDF差分検出システム - ベースライン実装
+# PDF差分検出API - FastAPI統合版
 
-A/Bテスト用のベースライン実装とテスト基盤を提供するPDF差分検出システムです。
+Azure Document IntelligenceとLLMを活用した高精度PDF差分検出システムのAPI実装です。
 
 ## 🚀 クイックスタート
 
 ### 必要な環境
-- Python 3.13+
+- Docker & Docker Compose
+- Python 3.13+ (ローカル開発時)
 - uv (Python パッケージマネージャー)
 
-### インストール
+### 環境変数の設定
+.envをslackでもらう
+
+### Docker環境での起動
 
 ```bash
-# appsディレクトリに移動
-cd apps
+# コンテナのビルドと起動
+make up
 
-# 依存関係のインストール（uv使用）
-uv sync
-```
-
-### APIサーバーの起動
-
-```bash
-# 開発用サーバーの起動
-cd apps
-uv run uvicorn api.main:app --reload --port 8000
+# または直接docker-composeを使用
+docker compose up -d
 ```
 
 APIは `http://localhost:8000` で利用可能になります。
 
-### 差分検出スクリプトの実行
-
-```bash
-# デフォルトのサンプルPDFで実行（apps/sample配下のPDFを使用）
-cd apps
-uv run llm_docs_diff_v3.4/test_llm_diff_v3_4.py
-
-# カスタムPDFファイルを指定して実行
-uv run llm_docs_diff_v3.4/test_llm_diff_v3_4.py file1.pdf file2.pdf
-```
-
-### APIエンドポイント
-- `GET /` - ウェルカムメッセージ
-- `GET /api/hello` - "Hello API"を返却
+## 📡 API仕様
 
 ### APIドキュメント
 サーバー起動後、以下のURLでアクセス可能:
 - 対話型APIドキュメント: `http://localhost:8000/docs`
+- ReDoc形式: `http://localhost:8000/redoc`
+
+## 🧪 テスト
+
+### APIテストスクリプト
+
+```bash
+# PDF差分検出APIの動作確認
+./test_pdf_diff_api.sh
+```
 
 ## 🧪 A/Bテストデータセット
 
@@ -63,42 +56,52 @@ uv run llm_docs_diff_v3.4/test_llm_diff_v3_4.py file1.pdf file2.pdf
 ## 🛠 開発コマンド
 
 ```bash
-# 開発用コンテナ起動
-make dev
+# Dockerコンテナ起動
+make up
 
-# コードフォーマット
-make format
+# コンテナ停止
+make down
 
-# テスト実行
-make test
-
-# 全30ケーステスト
-make full-test
+# コンテナログ確認
+make logs
 
 # クリーンアップ
 make clean
 ```
 
-## 📊 ベースライン性能
-
-現在のprj-meiji-document-checkベースライン：
-- **処理時間**: ~0.002秒/ケース
-- **メモリ使用量**: 最小限
-- **技術基盤**: SequenceMatcher + レーベンシュタイン距離
-
 ## 🔬 技術仕様
 
+### アーキテクチャ
+- **APIフレームワーク**: FastAPI
+- **PDF処理**: Azure Document Intelligence + PyMuPDF
+- **差分検出**: LLMベース文書比較アルゴリズム
+- **認証**: APIキーベースミドルウェア
+- **実行方式**: インプロセス実行（高速化）
+
+### 主要コンポーネント
+- **PDF差分プロセッサ**: `pdf_diff_processor.py`
+  - バッチ処理対応
+  - 拡張出力ハンドラー統合
+  - ZIPレスポンス生成
+- **拡張出力ハンドラー**: `enhanced_output_handler_v3_4.py`
+  - 注釈付きPDF生成
+  - 差分ハイライト表示
+  - JSON結果出力
+
 ### 依存関係
-- **Python**: 3.11+
-- **PyMuPDF**: PDF解析
-- **python-Levenshtein**: 高速文字列類似度
-- **MeCab**: 日本語形態素解析（Phase 2以降）
-- **scipy**: 統計的有意性検定
+- **Python**: 3.13+
+- **FastAPI**: REST APIフレームワーク
+- **PyMuPDF**: PDF解析・注釈
+- **Azure Document Intelligence**: 文書解析AI
+- **OpenAI GPT**: 差分判定・要約生成
+- **MeCab**: 日本語形態素解析
+- **uv**: Pythonパッケージ管理
 
 ### Docker環境
-- **ベースイメージ**: python:3.11-slim
+- **ベースイメージ**: python:3.13-slim
 - **MeCab**: UTF-8対応IPA辞書
-- **Poetry**: 依存関係管理
+- **ホットリロード**: 開発環境対応
+- **ボリューム**: 仮想環境キャッシュ
 
 ## 🗺 ロードマップ
 
