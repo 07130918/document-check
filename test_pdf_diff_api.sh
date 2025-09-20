@@ -32,9 +32,6 @@ if [ -f "apps/.env" ]; then
     export $(grep -E '^API_KEY=' apps/.env | xargs)
 fi
 
-# API_KEYが設定されていない場合はデフォルト値を使用
-API_KEY="${API_KEY:-sk-dev-885b3e15}"
-
 printf "${BLUE}===== PDF差分検出API動作確認テスト =====${NC}\n"
 printf "\n"
 
