@@ -1,64 +1,24 @@
-version: '3.8'
-
 services:
-  pdf-diff-system:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pdf-diff-baseline
+    container_name: api
+    ports:
+      - "8000:8000"
     volumes:
-      # ソースコードマウント（開発用）
-      - .:/app
-      # 結果保存用
-      - ./results:/app/results
-      - ./data:/app/data
+      - ./apps:/app
+      - venv-cache:/app/.venv
     environment:
-      # MeCab設定
-      - MECAB_CHARSET=utf8
-      - MECAB_DICDIR=/var/lib/mecab/dic/ipadic
-      - MECABRC=/etc/mecabrc
-      # Python設定
+      - AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT=${AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT}
+      - AZURE_DOCUMENT_INTELLIGENCE_KEY=${AZURE_DOCUMENT_INTELLIGENCE_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
       - PYTHONPATH=/app
       - PYTHONUNBUFFERED=1
-    working_dir: /app
-    command: python run_baseline_test.py
-    
-  # 開発用サービス（対話的実行）
-  pdf-diff-dev:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: pdf-diff-dev
-    volumes:
-      - .:/app
-      - ./results:/app/results
-      - ./data:/app/data
-    environment:
-      - MECAB_CHARSET=utf8
-      - MECAB_DICDIR=/var/lib/mecab/dic/ipadic
-      - PYTHONPATH=/app
-      - PYTHONUNBUFFERED=1
-    working_dir: /app
     stdin_open: true
     tty: true
-    command: /bin/bash
-    
-  # テスト実行サービス
-  pdf-diff-test:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: pdf-diff-test
-    volumes:
-      - .:/app
-      - ./test-results:/app/test-results
-    environment:
-      - MECAB_CHARSET=utf8
-      - PYTHONPATH=/app
-      - PYTHONUNBUFFERED=1
-    working_dir: /app
-    command: poetry run pytest --cov-report=html:test-results/coverage
-    
+    command: ["uv", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
 volumes:
-  poetry_cache:
+  venv-cache:
     driver: local

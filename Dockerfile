@@ -1,5 +1,4 @@
-# PDF差分検出システム - ベースライン実装用Docker環境
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 # システム依存関係のインストール
 RUN apt-get update && apt-get install -y \
@@ -18,39 +17,22 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Poetry インストール
-ENV POETRY_HOME="/opt/poetry"
-ENV POETRY_BIN="/opt/poetry/bin"
-ENV PATH="$POETRY_BIN:$PATH"
-RUN curl -sSL https://install.python-poetry.org | python3 -
+# uvのインストール
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-# Poetry設定
-ENV POETRY_CACHE_DIR=/opt/poetry_cache
-ENV POETRY_VENV_IN_PROJECT=1
-ENV POETRY_NO_INTERACTION=1
-
-# 作業ディレクトリ設定
 WORKDIR /app
 
-# プロジェクトファイルコピー
-COPY pyproject.toml poetry.lock* README.md ./
+ENV VIRTUAL_ENV=/app/.venv
+ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONPATH=/app:$PYTHONPATH
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
 
-# 依存関係インストール（まず依存関係のみ）
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-root --with dev,test --extras "full" \
-    && rm -rf $POETRY_CACHE_DIR
+COPY apps/pyproject.toml apps/uv.lock* /app/
+RUN uv venv /app/.venv && \
+    uv sync --frozen --no-install-project
 
-# MeCab辞書設定
-ENV MECAB_CHARSET=utf8
+COPY apps/ /app/
 
-# アプリケーションコード追加
-COPY . .
-
-# プロジェクト自体をインストール（開発モード）
-RUN poetry install --only-root
-
-# ポート公開（将来のWebAPI用）
 EXPOSE 8000
-
-# デフォルトコマンド
-CMD ["python", "run_baseline_test.py"]
+CMD ["uv", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,0 +1,104 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+apps/.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Documentation
+*.md
+docs/
+LICENSE
+
+# Logs
+*.log
+logs/
+
+# Test results
+test-results/
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+
+# Cache
+.cache/
+apps/__pycache__/
+apps/**/__pycache__/
+
+# Output files (keep structure but not content)
+apps/output/*
+!apps/output/.gitkeep
+apps/llm_docs_diff_v3.4/output/*
+!apps/llm_docs_diff_v3.4/output/.gitkeep
+
+# Large files
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+
+# Secrets
+*.pem
+*.key
+secrets/
+credentials/
+
+# Previous projects
+prj-meiji-document-check/
+baseline/
+evaluation/
+data/
+results/
+ms/
+
+# Node modules (if any)
+node_modules/
+
+# Claude
+.claude/
+usage_tracking*.json
+
+# UV cache (will be created in container)
+.uv/
+apps/.uv/
