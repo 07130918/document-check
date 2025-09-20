@@ -4,53 +4,48 @@ A/Bテスト用のベースライン実装とテスト基盤を提供するPDF�
 
 ## 🚀 クイックスタート
 
-### Docker環境での実行（推奨）
+### 必要な環境
+- Python 3.13+
+- uv (Python パッケージマネージャー)
+
+### インストール
 
 ```bash
-# 1. Docker imageビルド
-make build
+# appsディレクトリに移動
+cd apps
 
-# 2. ベースラインテスト実行
-make run
-
-# 3. 結果確認
-cat results/baseline_report.md
+# 依存関係のインストール（uv使用）
+uv sync
 ```
 
-### ローカル環境での実行
+### APIサーバーの起動
 
 ```bash
-# 1. 依存関係インストール
-make install
-
-# 2. MeCab動作確認
-make test-mecab
-
-# 3. ベースラインテスト実行
-python run_baseline_test.py
+# 開発用サーバーの起動
+cd apps
+uv run uvicorn api.main:app --reload --port 8000
 ```
 
-## 📁 プロジェクト構成
+APIは `http://localhost:8000` で利用可能になります。
 
+### 差分検出スクリプトの実行
+
+```bash
+# デフォルトのサンプルPDFで実行（apps/sample配下のPDFを使用）
+cd apps
+uv run llm_docs_diff_v3.4/test_llm_diff_v3_4.py
+
+# カスタムPDFファイルを指定して実行
+uv run llm_docs_diff_v3.4/test_llm_diff_v3_4.py file1.pdf file2.pdf
 ```
-├── baseline/                    # prj-meiji-document-checkベースライン
-│   ├── text_normalizer.py      # テキスト正規化（128種類変換ルール）
-│   ├── sequence_matcher_detector.py  # SequenceMatcherベース差分検出
-│   └── __init__.py
-├── evaluation/                  # A/Bテスト評価基盤
-│   ├── comparison_evaluator.py # 統計的有意性検定フレームワーク
-│   ├── test_data_generator.py  # 30ケーステストデータ生成
-│   └── __init__.py
-├── data/
-│   └── test_dataset.json      # テストデータセット（30ケース）
-├── results/
-│   ├── baseline_performance.json  # ベースライン性能結果
-│   └── baseline_report.md         # 性能レポート
-├── pyproject.toml              # Poetry依存関係管理
-├── Dockerfile                  # Docker環境定義
-├── docker-compose.yml          # サービス定義
-└── Makefile                    # 実行コマンド集約
-```
+
+### APIエンドポイント
+- `GET /` - ウェルカムメッセージ
+- `GET /api/hello` - "Hello API"を返却
+
+### APIドキュメント
+サーバー起動後、以下のURLでアクセス可能:
+- 対話型APIドキュメント: `http://localhost:8000/docs`
 
 ## 🧪 A/Bテストデータセット
 
