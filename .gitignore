@@ -1,5 +1,7 @@
 # Python
 __pycache__/
+**/__pycache__/
+**/apps/__pycache__/**
 *.py[cod]
 *$py.class
 *.so
@@ -30,17 +32,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
-# PyCharm
-.idea/
-
-# VS Code
-.vscode/
-*.code-workspace
-
-# Jupyter Notebook
-.ipynb_checkpoints
-*.ipynb_checkpoints/
 
 # pytest
 .pytest_cache/
@@ -114,19 +105,6 @@ data
 .env.test
 .env.production
 
-# Node.js (if using any JS tools)
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Poetry
-poetry.lock
-
-# Claude
-.claude/
-usage_tracking*.json
-
 # MeCab
 mecabrc
 
@@ -149,8 +127,7 @@ mecabrc
 secrets/
 credentials/
 
-# previous project
-prj-meiji-document-check
+apps/llm_docs_diff_v3.4/output
 
-# data
-ms/
+#cc
+.claude/settings.local.json
