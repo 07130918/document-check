@@ -4,7 +4,6 @@ LLM文書差分検出システム v3.4 テストスクリプト
 Document Intelligenceのセクション階層と座標情報を活用した高度な差分検出
 """
 
-import os
 import sys
 import logging
 from pathlib import Path
@@ -12,11 +11,14 @@ from typing import Dict, List, Any, Optional, Tuple
 import json
 from datetime import datetime
 
+from pdf_diff_processor import PDFDiffProcessor
+
 # プロジェクトルートをPATHに追加
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
 # 環境変数ファイルを読み込み
 from dotenv import load_dotenv
+
 load_dotenv()
 
 from config.settings import Settings
@@ -30,11 +32,11 @@ from handlers.enhanced_output_handler_v3_4 import EnhancedOutputHandlerV34
 # ログ設定
 logging.basicConfig(
     level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler('v3_4_log.txt', encoding='utf-8'),
-        logging.StreamHandler()
-    ]
+        logging.FileHandler("v3_4_log.txt", encoding="utf-8"),
+        logging.StreamHandler(),
+    ],
 )
 
 logger = logging.getLogger(__name__)
@@ -43,7 +45,12 @@ logger = logging.getLogger(__name__)
 class LLMDocsDiffV4:
     """LLM文書差分検出システム v3.4 メインクラス"""
 
-    def __init__(self, use_enhanced_output: bool = True, batch_size: int = 1, max_workers: int = None):
+    def __init__(
+        self,
+        use_enhanced_output: bool = True,
+        batch_size: int = 1,
+        max_workers: int = None,
+    ):
         """初期化
 
         Args:
@@ -55,7 +62,9 @@ class LLMDocsDiffV4:
         self.preprocessor = StructuredTextPreprocessorV4()
         self.diff_detector = StructuredDiffDetectorV4()
         self.output_handler = OutputHandler()
-        self.enhanced_output_handler = EnhancedOutputHandlerV34() if use_enhanced_output else None
+        self.enhanced_output_handler = (
+            EnhancedOutputHandlerV34() if use_enhanced_output else None
+        )
 
         # バッチサイズとワーカー数の設定
         self.batch_size = max(1, batch_size)  # 最小値は1
@@ -67,6 +76,7 @@ class LLMDocsDiffV4:
 
         # 分割文字結合前処理器を追加
         from core.text_preprocessing import MergeSplitCharacterPreProcessor
+
         self.merge_processor = MergeSplitCharacterPreProcessor()
 
         # 出力ディレクトリの作成
@@ -78,12 +88,14 @@ class LLMDocsDiffV4:
         if self.batch_size > 1:
             logger.info(f"バッチ処理モード: バッチサイズ={self.batch_size}")
 
-    def analyze_documents(self,
-                         doc1_path: str,
-                         doc2_path: str,
-                         pages: Optional[str] = None,
-                         output_tag: str = "default",
-                         use_parallel: bool = False) -> Dict[str, Any]:
+    def analyze_documents(
+        self,
+        doc1_path: str,
+        doc2_path: str,
+        pages: Optional[str] = None,
+        output_tag: str = "default",
+        use_parallel: bool = False,
+    ) -> Dict[str, Any]:
         """2つの文書の差分分析を実行
 
         Args:
@@ -109,27 +121,35 @@ class LLMDocsDiffV4:
             if pages is None:
                 # 全ページ処理
                 logger.info("全ページ処理モード")
-                doc1_analysis, doc1_word_data, doc2_analysis, doc2_word_data = self._analyze_documents_parallel(
-                    doc1_path, doc2_path, use_parallel=use_parallel
+                doc1_analysis, doc1_word_data, doc2_analysis, doc2_word_data = (
+                    self._analyze_documents_parallel(
+                        doc1_path, doc2_path, use_parallel=use_parallel
+                    )
                 )
             elif use_parallel:
                 # 指定ページでも並列処理を適用
                 logger.info(f"指定ページ並列処理: {pages}")
-                doc1_analysis, doc1_word_data, doc2_analysis, doc2_word_data = self._analyze_documents_parallel_with_pages(
-                    doc1_path, doc2_path, pages, use_parallel=use_parallel
+                doc1_analysis, doc1_word_data, doc2_analysis, doc2_word_data = (
+                    self._analyze_documents_parallel_with_pages(
+                        doc1_path, doc2_path, pages, use_parallel=use_parallel
+                    )
                 )
             else:
                 # 従来の逐次処理：指定ページのみ
                 logger.info(f"指定ページ逐次処理: {pages}")
                 # with self.tracker.measure("1.1_文書1_指定ページ分析"):
                 if True:
-                    doc1_analysis, doc1_word_data = self.azure_service.analyze_document_structured(doc1_path, pages)
+                    doc1_analysis, doc1_word_data = (
+                        self.azure_service.analyze_document_structured(doc1_path, pages)
+                    )
                 # with self.tracker.measure("1.2_文書2_指定ページ分析"):
                 if True:
-                    doc2_analysis, doc2_word_data = self.azure_service.analyze_document_structured(doc2_path, pages)
+                    doc2_analysis, doc2_word_data = (
+                        self.azure_service.analyze_document_structured(doc2_path, pages)
+                    )
 
-        doc1_analysis['source_file'] = doc1_path
-        doc2_analysis['source_file'] = doc2_path
+        doc1_analysis["source_file"] = doc1_path
+        doc2_analysis["source_file"] = doc2_path
 
         # 2. 分割文字結合前処理
         logger.info("ステップ2: 分割文字結合前処理")
@@ -138,13 +158,19 @@ class LLMDocsDiffV4:
         if True:
             # with self.tracker.measure("2.1_文書1_分割文字結合"):
             if True:
-                combined_doc1_analysis = self.merge_processor.process_document_analysis(doc1_analysis)
+                combined_doc1_analysis = self.merge_processor.process_document_analysis(
+                    doc1_analysis
+                )
             # with self.tracker.measure("2.2_文書2_分割文字結合"):
             if True:
-                combined_doc2_analysis = self.merge_processor.process_document_analysis(doc2_analysis)
+                combined_doc2_analysis = self.merge_processor.process_document_analysis(
+                    doc2_analysis
+                )
 
-        logger.info(f"結合処理結果: 文書1={len(combined_doc1_analysis.get('sections', []))}セクション, "
-                   f"文書2={len(combined_doc2_analysis.get('sections', []))}セクション")
+        logger.info(
+            f"結合処理結果: 文書1={len(combined_doc1_analysis.get('sections', []))}セクション, "
+            f"文書2={len(combined_doc2_analysis.get('sections', []))}セクション"
+        )
 
         # 2.5. 文言正規化処理
         logger.info("ステップ2.5: 文言正規化処理")
@@ -153,10 +179,14 @@ class LLMDocsDiffV4:
         if True:
             # with self.tracker.measure("2.5.1_文書1_テキスト正規化"):
             if True:
-                combined_doc1_analysis = self._normalize_document_text(combined_doc1_analysis)
+                combined_doc1_analysis = self._normalize_document_text(
+                    combined_doc1_analysis
+                )
             # with self.tracker.measure("2.5.2_文書2_テキスト正規化"):
             if True:
-                combined_doc2_analysis = self._normalize_document_text(combined_doc2_analysis)
+                combined_doc2_analysis = self._normalize_document_text(
+                    combined_doc2_analysis
+                )
             # with self.tracker.measure("2.5.3_文書1_ワードデータ正規化"):
             if True:
                 doc1_word_data = self._normalize_word_data(doc1_word_data)
@@ -171,7 +201,9 @@ class LLMDocsDiffV4:
 
         # with self.tracker.measure("2.7_ページマッチング処理"):
         if True:
-            page_matches = self._match_pages_by_content(combined_doc1_analysis, combined_doc2_analysis)
+            page_matches = self._match_pages_by_content(
+                combined_doc1_analysis, combined_doc2_analysis
+            )
             logger.info(f"ページマッチング結果: {len(page_matches)}件のマッチ")
 
         # 3. 構造化差分検出（ページマッチング結果を使用）
@@ -179,7 +211,13 @@ class LLMDocsDiffV4:
 
         # with self.tracker.measure("3_構造化差分検出"):
         if True:
-            differences = self._detect_differences_by_page_matches(page_matches, combined_doc1_analysis, combined_doc2_analysis, doc1_word_data, doc2_word_data)
+            differences = self._detect_differences_by_page_matches(
+                page_matches,
+                combined_doc1_analysis,
+                combined_doc2_analysis,
+                doc1_word_data,
+                doc2_word_data,
+            )
 
         # 差分結果をCSVで保存
         # with self.tracker.measure("3.1_差分CSV保存"):
@@ -194,41 +232,54 @@ class LLMDocsDiffV4:
         # with self.tracker.measure("4_結果整理"):
         if True:
             analysis_result = {
-            "version": "v3.4",
-            "analysis_type": "structured_document_intelligence",
-            "timestamp": datetime.now().isoformat(),
-            "input_files": {
-                "document1": doc1_path,
-                "document2": doc2_path,
-                "pages": pages
-            },
-            "document_analysis": {
-                "document1": combined_doc1_analysis,
-                "document2": combined_doc2_analysis
-            },
-
-            "differences": [
-                {
-                    "change_type": str(diff.change_type),
-                    "page": diff.page,
-                    "page_doc1": diff.page_doc1,
-                    "page_doc2": diff.page_doc2,
-                    "semantic_similarity": diff.semantic_similarity,
-                    "original_text": diff.original_bbox.get('content', '') if diff.original_bbox else '',
-                    "modified_text": diff.modified_bbox.get('content', '') if diff.modified_bbox else '',
-                    "original_coordinates": diff.original_bbox.get('coordinates') if diff.original_bbox else None,
-                    "modified_coordinates": diff.modified_bbox.get('coordinates') if diff.modified_bbox else None,
-                    "structural_info": getattr(diff, 'structural_info', {})
-                }
-                for diff in differences
-            ],
-            "summary": {
-                "total_differences": len(differences),
-                "modifications": len([d for d in differences if d.change_type.name == 'MODIFICATION']),
-                "additions": len([d for d in differences if d.change_type.name == 'ADDITION']),
-                "deletions": len([d for d in differences if d.change_type.name == 'DELETION'])
+                "version": "v3.4",
+                "analysis_type": "structured_document_intelligence",
+                "timestamp": datetime.now().isoformat(),
+                "input_files": {
+                    "document1": doc1_path,
+                    "document2": doc2_path,
+                    "pages": pages,
+                },
+                "document_analysis": {
+                    "document1": combined_doc1_analysis,
+                    "document2": combined_doc2_analysis,
+                },
+                "differences": [
+                    {
+                        "change_type": str(diff.change_type),
+                        "page": diff.page,
+                        "page_doc1": diff.page_doc1,
+                        "page_doc2": diff.page_doc2,
+                        "semantic_similarity": diff.semantic_similarity,
+                        "original_text": diff.original_bbox.get("content", "")
+                        if diff.original_bbox
+                        else "",
+                        "modified_text": diff.modified_bbox.get("content", "")
+                        if diff.modified_bbox
+                        else "",
+                        "original_coordinates": diff.original_bbox.get("coordinates")
+                        if diff.original_bbox
+                        else None,
+                        "modified_coordinates": diff.modified_bbox.get("coordinates")
+                        if diff.modified_bbox
+                        else None,
+                        "structural_info": getattr(diff, "structural_info", {}),
+                    }
+                    for diff in differences
+                ],
+                "summary": {
+                    "total_differences": len(differences),
+                    "modifications": len(
+                        [d for d in differences if d.change_type.name == "MODIFICATION"]
+                    ),
+                    "additions": len(
+                        [d for d in differences if d.change_type.name == "ADDITION"]
+                    ),
+                    "deletions": len(
+                        [d for d in differences if d.change_type.name == "DELETION"]
+                    ),
+                },
             }
-        }
 
         # 結果をファイルに保存（従来の基本出力）
         # with self.tracker.measure("4.1_基本結果保存"):
@@ -241,18 +292,24 @@ class LLMDocsDiffV4:
                 logger.info("拡張出力を生成します")
                 # with self.tracker.measure("4.2_拡張出力生成"):
                 if True:
-                    enhanced_files = self.enhanced_output_handler.generate_enhanced_output(
-                        analysis_result, output_tag, doc1_path, doc2_path
+                    enhanced_files = (
+                        self.enhanced_output_handler.generate_enhanced_output(
+                            analysis_result, output_tag, doc1_path, doc2_path
+                        )
                     )
                 logger.info(f"拡張出力完了: {len(enhanced_files)}個のファイルを生成")
                 analysis_result["enhanced_output_files"] = enhanced_files
             except Exception as e:
-                logger.error(f"拡張出力生成中にエラーが発生しましたが、処理を継続します: {e}")
+                logger.error(
+                    f"拡張出力生成中にエラーが発生しましたが、処理を継続します: {e}"
+                )
 
         logger.info(f"差分分析完了: {len(differences)}個の差分を検出")
-        logger.info(f"変更: {analysis_result['summary']['modifications']}, "
-                   f"追加: {analysis_result['summary']['additions']}, "
-                   f"削除: {analysis_result['summary']['deletions']}")
+        logger.info(
+            f"変更: {analysis_result['summary']['modifications']}, "
+            f"追加: {analysis_result['summary']['additions']}, "
+            f"削除: {analysis_result['summary']['deletions']}"
+        )
 
         # パフォーマンスサマリーを出力
         # self.tracker.print_summary()
@@ -269,7 +326,9 @@ class LLMDocsDiffV4:
 
         return analysis_result
 
-    def _analyze_documents_parallel(self, doc1_path: str, doc2_path: str, use_parallel: bool = True) -> Tuple[Dict[str, Any], Any, Dict[str, Any], Any]:
+    def _analyze_documents_parallel(
+        self, doc1_path: str, doc2_path: str, use_parallel: bool = True
+    ) -> Tuple[Dict[str, Any], Any, Dict[str, Any], Any]:
         """2つの文書を同時に高並列で分析
 
         Args:
@@ -301,7 +360,9 @@ class LLMDocsDiffV4:
             pdf2.close()
 
             total_pages = doc1_pages + doc2_pages
-            logger.info(f"総ページ数: 文書1={doc1_pages}, 文書2={doc2_pages}, 合計={total_pages}")
+            logger.info(
+                f"総ページ数: 文書1={doc1_pages}, 文書2={doc2_pages}, 合計={total_pages}"
+            )
 
         # タスク数の計算（バッチサイズを考慮）
         doc1_tasks = math.ceil(doc1_pages / self.batch_size)
@@ -315,7 +376,9 @@ class LLMDocsDiffV4:
             # 自動設定: タスク数に基づいて決定（制限なし）
             max_workers = total_tasks
 
-        logger.info(f"タスク数: 文書1={doc1_tasks}, 文書2={doc2_tasks}, 合計={total_tasks}")
+        logger.info(
+            f"タスク数: 文書1={doc1_tasks}, 文書2={doc2_tasks}, 合計={total_tasks}"
+        )
         logger.info(f"ワーカー数: {max_workers}")
 
         # 分析タスクの定義
@@ -329,24 +392,32 @@ class LLMDocsDiffV4:
                 else:
                     page_str = f"{start_page}-{end_page}"
 
-                logger.debug(f"タスク{task_id}: 文書{doc_id} ページ{page_str}を処理開始")
-                analysis, word_data = self.azure_service.analyze_document_structured(doc_path, page_str)
+                logger.debug(
+                    f"タスク{task_id}: 文書{doc_id} ページ{page_str}を処理開始"
+                )
+                analysis, word_data = self.azure_service.analyze_document_structured(
+                    doc_path, page_str
+                )
 
                 # ページ番号情報を追加
-                analysis['page_range'] = (start_page, end_page)
-                analysis['pages_in_batch'] = end_page - start_page + 1
+                analysis["page_range"] = (start_page, end_page)
+                analysis["pages_in_batch"] = end_page - start_page + 1
 
                 elapsed = time.time() - start_time
-                logger.info(f"タスク{task_id}完了: 文書{doc_id} ページ{page_str} ({elapsed:.2f}秒)")
+                logger.info(
+                    f"タスク{task_id}完了: 文書{doc_id} ページ{page_str} ({elapsed:.2f}秒)"
+                )
                 return (doc_id, start_page, end_page, analysis, word_data, elapsed)
             except Exception as e:
                 elapsed = time.time() - start_time
-                logger.error(f"タスク{task_id}エラー: 文書{doc_id} ページ{start_page}-{end_page} ({elapsed:.2f}秒): {e}")
+                logger.error(
+                    f"タスク{task_id}エラー: 文書{doc_id} ページ{start_page}-{end_page} ({elapsed:.2f}秒): {e}"
+                )
                 empty_analysis = {
-                    'sections': [],
-                    'page_range': (start_page, end_page),
-                    'pages_in_batch': end_page - start_page + 1,
-                    'summary': {'total_sections': 0, 'total_paragraphs': 0}
+                    "sections": [],
+                    "page_range": (start_page, end_page),
+                    "pages_in_batch": end_page - start_page + 1,
+                    "summary": {"total_sections": 0, "total_paragraphs": 0},
                 }
                 return (doc_id, start_page, end_page, empty_analysis, [], elapsed)
 
@@ -383,28 +454,40 @@ class LLMDocsDiffV4:
                         future = executor.submit(analyze_batch, *task)
                         futures.append(future)
 
-                    logger.info(f"{len(futures)}タスクを{max_workers}ワーカーで並列実行開始")
+                    logger.info(
+                        f"{len(futures)}タスクを{max_workers}ワーカーで並列実行開始"
+                    )
 
                     # 結果を収集
                     completed = 0
                     for future in as_completed(futures):
-                        doc_id, start_page, end_page, analysis, word_data, api_time = future.result()
+                        doc_id, start_page, end_page, analysis, word_data, api_time = (
+                            future.result()
+                        )
                         total_api_time += api_time
 
                         if doc_id == 1:
-                            doc1_results.append((start_page, end_page, analysis, word_data))
+                            doc1_results.append(
+                                (start_page, end_page, analysis, word_data)
+                            )
                         else:
-                            doc2_results.append((start_page, end_page, analysis, word_data))
+                            doc2_results.append(
+                                (start_page, end_page, analysis, word_data)
+                            )
 
                         completed += 1
                         elapsed = time.time() - start_parallel
                         if completed % 5 == 0 or completed == len(futures):
-                            logger.info(f"進捗: {completed}/{len(futures)}タスク完了 ({elapsed:.1f}秒経過)")
+                            logger.info(
+                                f"進捗: {completed}/{len(futures)}タスク完了 ({elapsed:.1f}秒経過)"
+                            )
             else:
                 # 逐次実行
                 logger.info(f"{len(tasks)}タスクを逐次実行")
                 for task in tasks:
-                    doc_id, start_page, end_page, analysis, word_data, api_time = analyze_batch(*task)
+                    doc_id, start_page, end_page, analysis, word_data, api_time = (
+                        analyze_batch(*task)
+                    )
                     total_api_time += api_time
 
                     if doc_id == 1:
@@ -414,8 +497,10 @@ class LLMDocsDiffV4:
 
             elapsed = time.time() - start_parallel
             if use_parallel and len(tasks) > 1:
-                logger.info(f"並列処理完了: {elapsed:.2f}秒 (API合計: {total_api_time:.2f}秒)")
-                logger.info(f"並列化効率: {total_api_time/elapsed:.2f}x")
+                logger.info(
+                    f"並列処理完了: {elapsed:.2f}秒 (API合計: {total_api_time:.2f}秒)"
+                )
+                logger.info(f"並列化効率: {total_api_time / elapsed:.2f}x")
             else:
                 logger.info(f"処理完了: {elapsed:.2f}秒")
 
@@ -475,23 +560,29 @@ class LLMDocsDiffV4:
                 try:
                     # ページごとにDocument Intelligence分析を実行
                     page_str = str(page_num)
-                    analysis, word_data = self.azure_service.analyze_document_structured(doc_path, page_str)
+                    analysis, word_data = (
+                        self.azure_service.analyze_document_structured(
+                            doc_path, page_str
+                        )
+                    )
 
                     # ページ情報を追加
-                    analysis['page_number'] = page_num
+                    analysis["page_number"] = page_num
                     page_analyses.append(analysis)
                     page_word_data.append(word_data)
 
-                    logger.info(f"ページ {page_num} 分析完了: "
-                               f"{len(analysis.get('sections', []))}セクション")
+                    logger.info(
+                        f"ページ {page_num} 分析完了: "
+                        f"{len(analysis.get('sections', []))}セクション"
+                    )
 
                 except Exception as e:
                     logger.error(f"ページ {page_num} の分析中にエラー: {e}")
                     # エラーが発生したページは空の結果を追加
                     empty_analysis = {
-                        'sections': [],
-                        'page_number': page_num,
-                        'summary': {'total_sections': 0, 'total_paragraphs': 0}
+                        "sections": [],
+                        "page_number": page_num,
+                        "summary": {"total_sections": 0, "total_paragraphs": 0},
                     }
                     page_analyses.append(empty_analysis)
                     page_word_data.append([])  # 空のワードデータ
@@ -501,18 +592,31 @@ class LLMDocsDiffV4:
 
             for batch_start in range(1, page_count + 1, batch_size):
                 batch_end = min(batch_start + batch_size - 1, page_count)
-                pages_range = f"{batch_start}-{batch_end}" if batch_start != batch_end else str(batch_start)
+                pages_range = (
+                    f"{batch_start}-{batch_end}"
+                    if batch_start != batch_end
+                    else str(batch_start)
+                )
 
-                logger.info(f"バッチ処理: ページ {pages_range} ({batch_end - batch_start + 1}ページ)")
+                logger.info(
+                    f"バッチ処理: ページ {pages_range} ({batch_end - batch_start + 1}ページ)"
+                )
 
                 try:
-                    batch_analysis, batch_word_data = self.azure_service.analyze_document_structured(doc_path, pages_range)
+                    batch_analysis, batch_word_data = (
+                        self.azure_service.analyze_document_structured(
+                            doc_path, pages_range
+                        )
+                    )
 
                     # バッチ結果をページごとに分割
                     self._split_batch_results(
-                        batch_analysis, batch_word_data,
-                        batch_start, batch_end,
-                        page_analyses, page_word_data
+                        batch_analysis,
+                        batch_word_data,
+                        batch_start,
+                        batch_end,
+                        page_analyses,
+                        page_word_data,
                     )
 
                     logger.info(f"バッチ {pages_range} 分析完了")
@@ -522,9 +626,9 @@ class LLMDocsDiffV4:
                     # エラー時はバッチ内の全ページを空として追加
                     for page_num in range(batch_start, batch_end + 1):
                         empty_analysis = {
-                            'sections': [],
-                            'page_number': page_num,
-                            'summary': {'total_sections': 0, 'total_paragraphs': 0}
+                            "sections": [],
+                            "page_number": page_num,
+                            "summary": {"total_sections": 0, "total_paragraphs": 0},
                         }
                         page_analyses.append(empty_analysis)
                         page_word_data.append([])
@@ -549,6 +653,7 @@ class LLMDocsDiffV4:
         """
         try:
             from utils.pdf_utils import PDFProcessor
+
             pdf_processor = PDFProcessor()
             return pdf_processor.get_page_count_from_path(pdf_path)
         except Exception as e:
@@ -572,35 +677,46 @@ class LLMDocsDiffV4:
                 return text
 
             # 空白の統一
-            text = re.sub(r'\s+', ' ', text)  # 複数空白を1つに
+            text = re.sub(r"\s+", " ", text)  # 複数空白を1つに
             text = text.strip()
 
             # 記号の統一
-            text = text.replace('·', '・')    # 中点の統一
-            text = text.replace('−', '-')     # マイナス記号の統一
-            text = text.replace('～', '〜')   # 波線の統一
+            text = text.replace("·", "・")  # 中点の統一
+            text = text.replace("−", "-")  # マイナス記号の統一
+            text = text.replace("～", "〜")  # 波線の統一
 
             # 全角半角の統一（数字・英字）
-            text = text.translate(str.maketrans('０１２３４５６７８９', '0123456789'))
-            text = text.translate(str.maketrans('ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
-            text = text.translate(str.maketrans('ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ', 'abcdefghijklmnopqrstuvwxyz'))
+            text = text.translate(str.maketrans("０１２３４５６７８９", "0123456789"))
+            text = text.translate(
+                str.maketrans(
+                    "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ",
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                )
+            )
+            text = text.translate(
+                str.maketrans(
+                    "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ",
+                    "abcdefghijklmnopqrstuvwxyz",
+                )
+            )
 
             return text
 
         # ディープコピーして元データを保持
         import copy
+
         normalized_analysis = copy.deepcopy(doc_analysis)
 
         # セクション内の段落テキストを正規化
-        for section in normalized_analysis.get('sections', []):
-            for paragraph in section.get('paragraphs', []):
-                if 'content' in paragraph:
-                    paragraph['content'] = normalize_text(paragraph['content'])
+        for section in normalized_analysis.get("sections", []):
+            for paragraph in section.get("paragraphs", []):
+                if "content" in paragraph:
+                    paragraph["content"] = normalize_text(paragraph["content"])
 
             # para_contents_listも正規化
-            if 'para_contents_list' in section:
-                section['para_contents_list'] = [
-                    normalize_text(content) for content in section['para_contents_list']
+            if "para_contents_list" in section:
+                section["para_contents_list"] = [
+                    normalize_text(content) for content in section["para_contents_list"]
                 ]
 
         logger.debug("文書テキスト正規化完了")
@@ -624,14 +740,24 @@ class LLMDocsDiffV4:
                 return text
 
             # 記号の統一
-            text = text.replace('·', '・')
-            text = text.replace('−', '-')
-            text = text.replace('～', '〜')
+            text = text.replace("·", "・")
+            text = text.replace("−", "-")
+            text = text.replace("～", "〜")
 
             # 全角半角の統一
-            text = text.translate(str.maketrans('０１２３４５６７８９', '0123456789'))
-            text = text.translate(str.maketrans('ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
-            text = text.translate(str.maketrans('ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ', 'abcdefghijklmnopqrstuvwxyz'))
+            text = text.translate(str.maketrans("０１２３４５６７８９", "0123456789"))
+            text = text.translate(
+                str.maketrans(
+                    "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ",
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                )
+            )
+            text = text.translate(
+                str.maketrans(
+                    "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ",
+                    "abcdefghijklmnopqrstuvwxyz",
+                )
+            )
 
             return text
 
@@ -640,10 +766,10 @@ class LLMDocsDiffV4:
 
         # 各ページのwords内のcontentを正規化
         for page_data in normalized_word_data:
-            if 'words' in page_data:
-                for word in page_data['words']:
-                    if 'content' in word:
-                        word['content'] = normalize_text(word['content'])
+            if "words" in page_data:
+                for word in page_data["words"]:
+                    if "content" in word:
+                        word["content"] = normalize_text(word["content"])
 
         logger.debug("words_data正規化完了")
         return normalized_word_data
@@ -654,22 +780,26 @@ class LLMDocsDiffV4:
             return None
 
         # 元の座標情報がある場合はそれを優先
-        if 'coordinates' in bbox_data and bbox_data['coordinates']:
-            coords = bbox_data['coordinates']
+        if "coordinates" in bbox_data and bbox_data["coordinates"]:
+            coords = bbox_data["coordinates"]
             return {
-                "left": coords.get('left', 0),
-                "top": coords.get('top', 0),
-                "right": coords.get('right', coords.get('left', 0) + coords.get('width', 0)),
-                "bottom": coords.get('bottom', coords.get('top', 0) + coords.get('height', 0)),
-                "width": coords.get('width', 0),
-                "height": coords.get('height', 0)
+                "left": coords.get("left", 0),
+                "top": coords.get("top", 0),
+                "right": coords.get(
+                    "right", coords.get("left", 0) + coords.get("width", 0)
+                ),
+                "bottom": coords.get(
+                    "bottom", coords.get("top", 0) + coords.get("height", 0)
+                ),
+                "width": coords.get("width", 0),
+                "height": coords.get("height", 0),
             }
 
         # fallback: x, y, width, heightから座標を計算
-        x = bbox_data.get('x', 0)
-        y = bbox_data.get('y', 0)
-        width = bbox_data.get('width', 0)
-        height = bbox_data.get('height', 0)
+        x = bbox_data.get("x", 0)
+        y = bbox_data.get("y", 0)
+        width = bbox_data.get("width", 0)
+        height = bbox_data.get("height", 0)
 
         return {
             "left": x,
@@ -677,9 +807,8 @@ class LLMDocsDiffV4:
             "right": x + width,
             "bottom": y + height,
             "width": width,
-            "height": height
+            "height": height,
         }
-
 
     def _save_results(self, analysis_result: Dict[str, Any], output_tag: str):
         """分析結果をファイルに保存"""
@@ -689,40 +818,70 @@ class LLMDocsDiffV4:
         json_filename = f"llm_diff_v3_4_{output_tag}_{timestamp}.json"
         json_path = Settings.OUTPUT_DIR / json_filename
 
-        with open(json_path, 'w', encoding='utf-8') as f:
+        with open(json_path, "w", encoding="utf-8") as f:
             json.dump(analysis_result, f, ensure_ascii=False, indent=2)
 
         # CSV形式で差分リストを保存
         import csv
+
         csv_filename = f"llm_diff_v3_4_{output_tag}_{timestamp}.csv"
         csv_path = Settings.OUTPUT_DIR / csv_filename
 
-        with open(csv_path, 'w', newline='', encoding='utf-8') as csvfile:
+        with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
             fieldnames = [
-                'change_type', 'page', 'page_doc1', 'page_doc2', 'semantic_similarity',
-                'original_text', 'modified_text',
-                'original_x', 'original_y', 'modified_x', 'modified_y',
-                'section_title', 'paragraph_role'
+                "change_type",
+                "page",
+                "page_doc1",
+                "page_doc2",
+                "semantic_similarity",
+                "original_text",
+                "modified_text",
+                "original_x",
+                "original_y",
+                "modified_x",
+                "modified_y",
+                "section_title",
+                "paragraph_role",
             ]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
 
-            for diff in analysis_result['differences']:
-                writer.writerow({
-                    'change_type': diff['change_type'],
-                    'page': diff['page'],
-                    'page_doc1': diff['page_doc1'],
-                    'page_doc2': diff['page_doc2'],
-                    'semantic_similarity': diff['semantic_similarity'],
-                    'original_text': diff['original_text'][:100] + ('...' if len(diff['original_text']) > 100 else ''),
-                    'modified_text': diff['modified_text'][:100] + ('...' if len(diff['modified_text']) > 100 else ''),
-                    'original_x': diff['original_coordinates']['raw_coordinates'][0] if diff['original_coordinates'] and diff['original_coordinates'].get('raw_coordinates') else '',
-                    'original_y': diff['original_coordinates']['raw_coordinates'][1] if diff['original_coordinates'] and diff['original_coordinates'].get('raw_coordinates') else '',
-                    'modified_x': diff['modified_coordinates']['raw_coordinates'][0] if diff['modified_coordinates'] and diff['modified_coordinates'].get('raw_coordinates') else '',
-                    'modified_y': diff['modified_coordinates']['raw_coordinates'][1] if diff['modified_coordinates'] and diff['modified_coordinates'].get('raw_coordinates') else '',
-                    'section_title': diff['structural_info'].get('section_title', ''),
-                    'paragraph_role': diff['structural_info'].get('paragraph_role', '')
-                })
+            for diff in analysis_result["differences"]:
+                writer.writerow(
+                    {
+                        "change_type": diff["change_type"],
+                        "page": diff["page"],
+                        "page_doc1": diff["page_doc1"],
+                        "page_doc2": diff["page_doc2"],
+                        "semantic_similarity": diff["semantic_similarity"],
+                        "original_text": diff["original_text"][:100]
+                        + ("..." if len(diff["original_text"]) > 100 else ""),
+                        "modified_text": diff["modified_text"][:100]
+                        + ("..." if len(diff["modified_text"]) > 100 else ""),
+                        "original_x": diff["original_coordinates"]["raw_coordinates"][0]
+                        if diff["original_coordinates"]
+                        and diff["original_coordinates"].get("raw_coordinates")
+                        else "",
+                        "original_y": diff["original_coordinates"]["raw_coordinates"][1]
+                        if diff["original_coordinates"]
+                        and diff["original_coordinates"].get("raw_coordinates")
+                        else "",
+                        "modified_x": diff["modified_coordinates"]["raw_coordinates"][0]
+                        if diff["modified_coordinates"]
+                        and diff["modified_coordinates"].get("raw_coordinates")
+                        else "",
+                        "modified_y": diff["modified_coordinates"]["raw_coordinates"][1]
+                        if diff["modified_coordinates"]
+                        and diff["modified_coordinates"].get("raw_coordinates")
+                        else "",
+                        "section_title": diff["structural_info"].get(
+                            "section_title", ""
+                        ),
+                        "paragraph_role": diff["structural_info"].get(
+                            "paragraph_role", ""
+                        ),
+                    }
+                )
 
         logger.info(f"結果保存完了:")
         logger.info(f"  JSON: {json_path}")
@@ -741,14 +900,27 @@ class LLMDocsDiffV4:
 
         import csv
 
-        with open(csv_path, 'w', newline='', encoding='utf-8') as csvfile:
+        with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
             fieldnames = [
-                'change_type', 'page', 'page_doc1', 'page_doc2', 'semantic_similarity',
-                'original_content', 'modified_content',
-                'original_x', 'original_y', 'modified_x', 'modified_y',
-                'paragraph_index_1', 'paragraph_index_2', 'role', 'importance',
-                'original_section_title', 'modified_section_title',
-                'original_para_content', 'modified_para_content'
+                "change_type",
+                "page",
+                "page_doc1",
+                "page_doc2",
+                "semantic_similarity",
+                "original_content",
+                "modified_content",
+                "original_x",
+                "original_y",
+                "modified_x",
+                "modified_y",
+                "paragraph_index_1",
+                "paragraph_index_2",
+                "role",
+                "importance",
+                "original_section_title",
+                "modified_section_title",
+                "original_para_content",
+                "modified_para_content",
             ]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
@@ -757,45 +929,95 @@ class LLMDocsDiffV4:
                 # 新しい座標形式に対応した座標取得
                 def get_coord_value(coords_dict, key):
                     if not coords_dict:
-                        return ''
-                    if 'raw_coordinates' in coords_dict and coords_dict.get('raw_coordinates'):
-                        raw_coords = coords_dict['raw_coordinates']
+                        return ""
+                    if "raw_coordinates" in coords_dict and coords_dict.get(
+                        "raw_coordinates"
+                    ):
+                        raw_coords = coords_dict["raw_coordinates"]
                         if len(raw_coords) >= 8:
                             x_coords = [raw_coords[i] for i in range(0, 8, 2)]
                             y_coords = [raw_coords[i] for i in range(1, 8, 2)]
                             bounds = {
-                                'left': min(x_coords), 'top': min(y_coords),
-                                'right': max(x_coords), 'bottom': max(y_coords)
+                                "left": min(x_coords),
+                                "top": min(y_coords),
+                                "right": max(x_coords),
+                                "bottom": max(y_coords),
                             }
                             return f"{bounds.get(key, 0):.4f}"
-                    elif 'bounds' in coords_dict:
+                    elif "bounds" in coords_dict:
                         return f"{coords_dict['bounds'].get(key, 0):.4f}"
                     return f"{coords_dict.get(key, 0):.4f}"
 
-                original_coords = diff.original_bbox.get('coordinates') if diff.original_bbox else None
-                modified_coords = diff.modified_bbox.get('coordinates') if diff.modified_bbox else None
+                original_coords = (
+                    diff.original_bbox.get("coordinates")
+                    if diff.original_bbox
+                    else None
+                )
+                modified_coords = (
+                    diff.modified_bbox.get("coordinates")
+                    if diff.modified_bbox
+                    else None
+                )
 
-                writer.writerow({
-                    'change_type': str(diff.change_type)[11:],
-                    'page': diff.page,
-                    'page_doc1': diff.page_doc1,
-                    'page_doc2': diff.page_doc2,
-                    'semantic_similarity': f"{diff.semantic_similarity:.3f}",
-                    'original_content': diff.original_bbox.get('content', '') if diff.original_bbox else '',
-                    'modified_content': diff.modified_bbox.get('content', '') if diff.modified_bbox else '',
-                    'original_x': get_coord_value(original_coords, 'left'),
-                    'original_y': get_coord_value(original_coords, 'top'),
-                    'modified_x': get_coord_value(modified_coords, 'left'),
-                    'modified_y': get_coord_value(modified_coords, 'top'),
-                    'paragraph_index_1': diff.original_bbox.get('paragraph_index', '') if diff.original_bbox else '',
-                    'paragraph_index_2': diff.modified_bbox.get('paragraph_index', '') if diff.modified_bbox else '',
-                    'role': diff.original_bbox.get('role', '') if diff.original_bbox else (diff.modified_bbox.get('role', '') if diff.modified_bbox else ''),
-                    'importance': diff.original_bbox.get('importance', '') if diff.original_bbox else (diff.modified_bbox.get('importance', '') if diff.modified_bbox else ''),
-                    'original_section_title': diff.original_section.get('title', '') if diff.original_section else '',
-                    'modified_section_title': diff.modified_section.get('title', '') if diff.modified_section else '',
-                    'original_para_content': diff.original_paragraph.get('content', '')[:200] if diff.original_paragraph else '',
-                    'modified_para_content': diff.modified_paragraph.get('content', '')[:200] if diff.modified_paragraph else ''
-                })
+                writer.writerow(
+                    {
+                        "change_type": str(diff.change_type)[11:],
+                        "page": diff.page,
+                        "page_doc1": diff.page_doc1,
+                        "page_doc2": diff.page_doc2,
+                        "semantic_similarity": f"{diff.semantic_similarity:.3f}",
+                        "original_content": diff.original_bbox.get("content", "")
+                        if diff.original_bbox
+                        else "",
+                        "modified_content": diff.modified_bbox.get("content", "")
+                        if diff.modified_bbox
+                        else "",
+                        "original_x": get_coord_value(original_coords, "left"),
+                        "original_y": get_coord_value(original_coords, "top"),
+                        "modified_x": get_coord_value(modified_coords, "left"),
+                        "modified_y": get_coord_value(modified_coords, "top"),
+                        "paragraph_index_1": diff.original_bbox.get(
+                            "paragraph_index", ""
+                        )
+                        if diff.original_bbox
+                        else "",
+                        "paragraph_index_2": diff.modified_bbox.get(
+                            "paragraph_index", ""
+                        )
+                        if diff.modified_bbox
+                        else "",
+                        "role": diff.original_bbox.get("role", "")
+                        if diff.original_bbox
+                        else (
+                            diff.modified_bbox.get("role", "")
+                            if diff.modified_bbox
+                            else ""
+                        ),
+                        "importance": diff.original_bbox.get("importance", "")
+                        if diff.original_bbox
+                        else (
+                            diff.modified_bbox.get("importance", "")
+                            if diff.modified_bbox
+                            else ""
+                        ),
+                        "original_section_title": diff.original_section.get("title", "")
+                        if diff.original_section
+                        else "",
+                        "modified_section_title": diff.modified_section.get("title", "")
+                        if diff.modified_section
+                        else "",
+                        "original_para_content": diff.original_paragraph.get(
+                            "content", ""
+                        )[:200]
+                        if diff.original_paragraph
+                        else "",
+                        "modified_para_content": diff.modified_paragraph.get(
+                            "content", ""
+                        )[:200]
+                        if diff.modified_paragraph
+                        else "",
+                    }
+                )
 
         logger.info(f"差分詳細CSV保存: {csv_path}")
         return csv_path
@@ -810,14 +1032,16 @@ class LLMDocsDiffV4:
         Returns:
             List[dict]: ページマッチング結果
         """
-        doc1_sections = doc1_analysis.get('sections', [])
-        doc2_sections = doc2_analysis.get('sections', [])
+        doc1_sections = doc1_analysis.get("sections", [])
+        doc2_sections = doc2_analysis.get("sections", [])
 
         # ページごとにセクションをグループ化
         doc1_pages = self._group_sections_by_page(doc1_sections)
         doc2_pages = self._group_sections_by_page(doc2_sections)
 
-        logger.info(f"ページグループ化結果: 文書1={len(doc1_pages)}ページ, 文書2={len(doc2_pages)}ページ")
+        logger.info(
+            f"ページグループ化結果: 文書1={len(doc1_pages)}ページ, 文書2={len(doc2_pages)}ページ"
+        )
 
         page_matches = []
 
@@ -855,17 +1079,19 @@ class LLMDocsDiffV4:
         for page1, page2, similarity in matches:
             if page1 not in used_pages1 and page2 not in used_pages2:
                 page_match = {
-                    'doc1_page': page1,
-                    'doc2_page': page2,
-                    'similarity': similarity,
-                    'doc1_sections': doc1_pages[page1],
-                    'doc2_sections': doc2_pages[page2]
+                    "doc1_page": page1,
+                    "doc2_page": page2,
+                    "similarity": similarity,
+                    "doc1_sections": doc1_pages[page1],
+                    "doc2_sections": doc2_pages[page2],
                 }
                 page_matches.append(page_match)
                 used_pages1.add(page1)
                 used_pages2.add(page2)
 
-                logger.info(f"ページマッチ: {page1} ↔ {page2} (類似度: {similarity:.3f})")
+                logger.info(
+                    f"ページマッチ: {page1} ↔ {page2} (類似度: {similarity:.3f})"
+                )
 
         # マッチしなかったページをログ出力
         unmatched_pages1 = set(doc1_pages.keys()) - used_pages1
@@ -882,7 +1108,7 @@ class LLMDocsDiffV4:
         """セクションをページ番号でグループ化"""
         pages = {}
         for section in sections:
-            page_num = section.get('page', 1)
+            page_num = section.get("page", 1)
             if page_num not in pages:
                 pages[page_num] = []
             pages[page_num].append(section)
@@ -892,31 +1118,35 @@ class LLMDocsDiffV4:
         """ページ内の全セクションから内容を抽出"""
         all_content = []
         for section in sections:
-            paragraphs = section.get('paragraphs', [])
+            paragraphs = section.get("paragraphs", [])
             for para in paragraphs:
-                content = para.get('content', '').strip()
+                content = para.get("content", "").strip()
                 if content:
                     all_content.append(content)
-        return ' '.join(all_content)
+        return " ".join(all_content)
 
-    def _detect_differences_by_page_matches(self, page_matches, doc1_analysis, doc2_analysis, doc1_word_data, doc2_word_data):
+    def _detect_differences_by_page_matches(
+        self, page_matches, doc1_analysis, doc2_analysis, doc1_word_data, doc2_word_data
+    ):
         """ページマッチング結果を使用して差分検出"""
         all_differences = []
 
         for page_match in page_matches:
-            doc1_page_sections = page_match['doc1_sections']
-            doc2_page_sections = page_match['doc2_sections']
+            doc1_page_sections = page_match["doc1_sections"]
+            doc2_page_sections = page_match["doc2_sections"]
 
-            logger.info(f"ページ{page_match['doc1_page']}↔{page_match['doc2_page']}の差分検出開始")
+            logger.info(
+                f"ページ{page_match['doc1_page']}↔{page_match['doc2_page']}の差分検出開始"
+            )
 
             # ページ内セクションのみを含む一時的な解析結果を作成
             temp_doc1_analysis = {
-                'sections': doc1_page_sections,
-                'source_file': doc1_analysis.get('source_file', '')
+                "sections": doc1_page_sections,
+                "source_file": doc1_analysis.get("source_file", ""),
             }
             temp_doc2_analysis = {
-                'sections': doc2_page_sections,
-                'source_file': doc2_analysis.get('source_file', '')
+                "sections": doc2_page_sections,
+                "source_file": doc2_analysis.get("source_file", ""),
             }
 
             # このページペアでの差分検出
@@ -924,7 +1154,9 @@ class LLMDocsDiffV4:
                 temp_doc1_analysis, temp_doc2_analysis, doc1_word_data, doc2_word_data
             )
 
-            logger.info(f"ページ{page_match['doc1_page']}↔{page_match['doc2_page']}: {len(page_differences)}件の差分")
+            logger.info(
+                f"ページ{page_match['doc1_page']}↔{page_match['doc2_page']}: {len(page_differences)}件の差分"
+            )
             all_differences.extend(page_differences)
 
         # マッチしなかったページの処理も追加可能
@@ -942,7 +1174,9 @@ class LLMDocsDiffV4:
 
         # 数値除去後のテキストが空でない場合は、数値を除外した類似度を使用
         if text1_without_numbers.strip() and text2_without_numbers.strip():
-            return difflib.SequenceMatcher(None, text1_without_numbers, text2_without_numbers).ratio()
+            return difflib.SequenceMatcher(
+                None, text1_without_numbers, text2_without_numbers
+            ).ratio()
         else:
             # 数値のみのテキストの場合は、元のテキストで比較
             return difflib.SequenceMatcher(None, text1, text2).ratio()
@@ -955,16 +1189,22 @@ class LLMDocsDiffV4:
             return text
 
         # 全ての数字を「NUM」に置換
-        cleaned_text = re.sub(r'\d+', 'NUM', text)
+        cleaned_text = re.sub(r"\d+", "NUM", text)
 
         # 連続する空白を単一の空白に変換
-        cleaned_text = re.sub(r'\s+', ' ', cleaned_text)
+        cleaned_text = re.sub(r"\s+", " ", cleaned_text)
 
         return cleaned_text.strip()
 
-    def _split_batch_results(self, batch_analysis, batch_word_data,
-                            batch_start, batch_end,
-                            page_analyses, page_word_data):
+    def _split_batch_results(
+        self,
+        batch_analysis,
+        batch_word_data,
+        batch_start,
+        batch_end,
+        page_analyses,
+        page_word_data,
+    ):
         """バッチ分析結果をページごとに分割
 
         Args:
@@ -977,8 +1217,8 @@ class LLMDocsDiffV4:
         """
         # バッチ内のセクションをページごとにグループ化
         sections_by_page = {}
-        for section in batch_analysis.get('sections', []):
-            page_num = section.get('page', batch_start)  # ページ番号を取得
+        for section in batch_analysis.get("sections", []):
+            page_num = section.get("page", batch_start)  # ページ番号を取得
             if page_num not in sections_by_page:
                 sections_by_page[page_num] = []
             sections_by_page[page_num].append(section)
@@ -987,28 +1227,28 @@ class LLMDocsDiffV4:
         words_by_page = {}
         if isinstance(batch_word_data, list):
             for page_data in batch_word_data:
-                if isinstance(page_data, dict) and 'page' in page_data:
-                    page_num = page_data['page']
+                if isinstance(page_data, dict) and "page" in page_data:
+                    page_num = page_data["page"]
                     words_by_page[page_num] = page_data
 
         # 各ページの結果を作成
         for page_num in range(batch_start, batch_end + 1):
             # ページごとの分析結果
             page_analysis = {
-                'sections': sections_by_page.get(page_num, []),
-                'page_number': page_num,
-                'summary': {
-                    'total_sections': len(sections_by_page.get(page_num, [])),
-                    'total_paragraphs': sum(
-                        len(s.get('paragraphs', []))
+                "sections": sections_by_page.get(page_num, []),
+                "page_number": page_num,
+                "summary": {
+                    "total_sections": len(sections_by_page.get(page_num, [])),
+                    "total_paragraphs": sum(
+                        len(s.get("paragraphs", []))
                         for s in sections_by_page.get(page_num, [])
-                    )
-                }
+                    ),
+                },
             }
 
             # バッチ分析の他の属性を継承
             for key in batch_analysis:
-                if key not in ['sections', 'page_number', 'summary']:
+                if key not in ["sections", "page_number", "summary"]:
                     page_analysis[key] = batch_analysis[key]
 
             page_analyses.append(page_analysis)
@@ -1017,7 +1257,9 @@ class LLMDocsDiffV4:
             page_word = words_by_page.get(page_num, [])
             page_word_data.append(page_word)
 
-    def _merge_page_analyses(self, page_analyses: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def _merge_page_analyses(
+        self, page_analyses: List[Dict[str, Any]]
+    ) -> Dict[str, Any]:
         """複数ページの分析結果を統合
 
         Args:
@@ -1028,8 +1270,8 @@ class LLMDocsDiffV4:
         """
         if not page_analyses:
             return {
-                'sections': [],
-                'summary': {'total_sections': 0, 'total_paragraphs': 0}
+                "sections": [],
+                "summary": {"total_sections": 0, "total_paragraphs": 0},
             }
 
         # 全セクションを統合
@@ -1037,32 +1279,34 @@ class LLMDocsDiffV4:
         total_paragraphs = 0
 
         for page_analysis in page_analyses:
-            sections = page_analysis.get('sections', [])
+            sections = page_analysis.get("sections", [])
             for section in sections:
                 # セクションにページ番号を追加
-                section['source_page'] = page_analysis.get('page_number', 1)
+                section["source_page"] = page_analysis.get("page_number", 1)
                 all_sections.append(section)
 
                 # パラグラフ数をカウント
-                total_paragraphs += len(section.get('paragraphs', []))
+                total_paragraphs += len(section.get("paragraphs", []))
 
         # 統合された結果を作成
         merged_result = {
-            'sections': all_sections,
-            'summary': {
-                'total_sections': len(all_sections),
-                'total_paragraphs': total_paragraphs
-            }
+            "sections": all_sections,
+            "summary": {
+                "total_sections": len(all_sections),
+                "total_paragraphs": total_paragraphs,
+            },
         }
 
         # 最初のページの他の情報を継承
         if page_analyses:
             first_page = page_analyses[0]
             for key, value in first_page.items():
-                if key not in ['sections', 'summary', 'page_number']:
+                if key not in ["sections", "summary", "page_number"]:
                     merged_result[key] = value
 
-        logger.info(f"ページ分析統合完了: {len(all_sections)}セクション, {total_paragraphs}パラグラフ")
+        logger.info(
+            f"ページ分析統合完了: {len(all_sections)}セクション, {total_paragraphs}パラグラフ"
+        )
         return merged_result
 
     def _merge_word_data(self, page_word_data: List[Any]) -> List[Any]:
@@ -1091,117 +1335,45 @@ class LLMDocsDiffV4:
         return merged_words
 
 
-def main():
-    """メイン処理"""
-    print("=== LLM文書差分検出システム v3.4 ===")
-    print("Document Intelligenceのセクション階層と座標情報を活用")
+def process_pdf_bytes_api(
+    pdf1_bytes: bytes,
+    pdf2_bytes: bytes,
+    filename1: str = "document1.pdf",
+    filename2: str = "document2.pdf",
+    pages: Optional[str] = None,
+) -> bytes:
+    """
+    API用のPDF差分検出処理関数
 
-    # コマンドライン引数の設定
-    import argparse
-    parser = argparse.ArgumentParser(description='LLM文書差分検出システム v3.4')
-    parser.add_argument('doc1', type=str, nargs='?',
-                       help='比較する最初のPDFファイルのパス')
-    parser.add_argument('doc2', type=str, nargs='?',
-                       help='比較する2番目のPDFファイルのパス')
-    parser.add_argument('--batch-size', type=int, default=1,
-                       help='1回のAPI呼び出しで処理するページ数（デフォルト: 1）')
-    parser.add_argument('--workers', type=int, default=None,
-                       help='並列実行のワーカー数（デフォルト: 自動設定）')
-    parser.add_argument('--pages', type=str, default=None,
-                       help='分析対象ページ（例: "1-10" または "1,3,5"）')
-    parser.add_argument('--parallel', default=True,
-                       help='並列処理を有効化（2つの文書を同時処理）')
-    args = parser.parse_args()
+    Args:
+        pdf1_bytes: 比較する最初のPDFのバイナリデータ
+        pdf2_bytes: 比較する2番目のPDFのバイナリデータ
+        filename1: 最初のPDFのファイル名（ログ用）
+        filename2: 2番目のPDFのファイル名（ログ用）
+        pages: 処理対象ページ（例: "1-5", "1,3,5", None=全ページ）
 
-    # ファイルパスの設定（引数が指定されていない場合はapps/sample配下のPDFを使用）
-    if args.doc1 and args.doc2:
-        doc1_path = args.doc1
-        doc2_path = args.doc2
-    else:
-        # apps/sample配下のPDFファイルを使用
-        import os
-        # apps ディレクトリのパスを取得（現在のスクリプトは apps/llm_docs_diff_v3.4/ にある）
-        apps_dir = os.path.dirname(os.path.dirname(__file__))
-        sample_dir = os.path.join(apps_dir, 'sample')
+    Returns:
+        bytes: 差分結果を含むZIPファイルのバイナリデータ
 
-        # sample-1.pdf と sample-2.pdf を使用
-        doc1_path = os.path.join(sample_dir, 'sample-1.pdf')
-        doc2_path = os.path.join(sample_dir, 'sample-2.pdf')
+    Raises:
+        Exception: If PDF processing or difference detection fails
+    """
+    logger.info("API用PDF差分検出処理開始")
+    # プロセッサを初期化
+    processor = PDFDiffProcessor(use_enhanced_output=True, batch_size=1)
+    # PDF差分検出を実行
+    analysis_result = processor.process_pdf_bytes(
+        pdf1_bytes=pdf1_bytes,
+        pdf2_bytes=pdf2_bytes,
+        filename1=filename1,
+        filename2=filename2,
+        pages=pages,
+    )
 
-        # サンプルPDFが存在しない場合はエラーメッセージを表示
-        if not os.path.exists(doc1_path) or not os.path.exists(doc2_path):
-            # apps/sample ディレクトリが存在しない場合は作成
-            os.makedirs(sample_dir, exist_ok=True)
+    # ZIPレスポンスを作成
+    zip_data = processor.create_zip_response(
+        analysis_result=analysis_result, filename1=filename1, filename2=filename2
+    )
 
-            # sample_data ディレクトリにサンプルを作成
-            fallback_dir = os.path.join(os.path.dirname(__file__), 'sample_data')
-            os.makedirs(fallback_dir, exist_ok=True)
-            fallback_doc1 = os.path.join(fallback_dir, 'sample1.pdf')
-            fallback_doc2 = os.path.join(fallback_dir, 'sample2.pdf')
-
-            print(f"\nエラー: apps/sample配下にPDFファイルが見つかりませんでした。")
-            print(f"期待されるファイル:")
-            print(f"  - {doc1_path}")
-            print(f"  - {doc2_path}")
-            print(f"\n代替としてサンプルPDFファイルを作成しました:")
-            print(f"  - {fallback_doc1}")
-            print(f"  - {fallback_doc2}")
-
-            # 代替ファイルを使用
-            doc1_path = fallback_doc1
-            doc2_path = fallback_doc2
-        else:
-            print(f"\nデフォルトPDFファイルを使用:")
-            print(f"  - {doc1_path}")
-            print(f"  - {doc2_path}")
-
-    # 処理モードの情報を表示
-    print(f"\n=== 処理設定 ===")
-    print(f"バッチサイズ: {args.batch_size}ページ/API呼び出し")
-    if args.workers:
-        print(f"ワーカー数: {args.workers}")
-    else:
-        print(f"ワーカー数: 自動設定")
-    print(f"並列処理: {'有効' if args.parallel else '無効'}")
-
-    if args.batch_size > 1:
-        estimated_reduction = (1 - 1/args.batch_size) * 100
-        print(f"予想API呼び出し削減率: 約{estimated_reduction:.0f}%")
-
-    # システムの初期化
-    system = LLMDocsDiffV4(batch_size=args.batch_size, max_workers=args.workers)
-
-    try:
-        # ページを分析
-        result = system.analyze_documents(
-            doc1_path=doc1_path,
-            doc2_path=doc2_path,
-            pages=args.pages,  # 指定ページまたは全ページ
-            output_tag=f"batch{args.batch_size}_pages{args.pages or 'all'}",
-            use_parallel=args.parallel
-        )
-
-        print(f"\n=== 分析結果サマリー ===")
-        print(f"総差分数: {result['summary']['total_differences']}")
-        print(f"変更: {result['summary']['modifications']}")
-        print(f"追加: {result['summary']['additions']}")
-        print(f"削除: {result['summary']['deletions']}")
-
-        # 主要な変更を表示
-        print(f"\n=== 主要な変更（上位5件） ===")
-        for i, diff in enumerate(result['differences'][:5]):
-            print(f"{i+1}. {diff['change_type']}")
-            print(f"   類似度: {diff['semantic_similarity']:.3f}")
-            if diff['original_text']:
-                print(f"   元: {diff['original_text'][:80]}...")
-            if diff['modified_text']:
-                print(f"   新: {diff['modified_text'][:80]}...")
-            print()
-
-    except Exception as e:
-        logger.error(f"エラーが発生しました: {e}")
-        raise
-
-
-if __name__ == "__main__":
-    main()
+    logger.info("API用PDF差分検出処理完了")
+    return zip_data
