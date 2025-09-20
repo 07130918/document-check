@@ -27,6 +27,14 @@ BASE_URL="${API_URL:-http://localhost:8000}"
 SAMPLE_DIR="apps/sample"
 OUTPUT_DIR="test_output_$(date +%Y%m%d_%H%M%S)"
 
+# .envファイルからAPI_KEYを読み込み
+if [ -f "apps/.env" ]; then
+    export $(grep -E '^API_KEY=' apps/.env | xargs)
+fi
+
+# API_KEYが設定されていない場合はデフォルト値を使用
+API_KEY="${API_KEY:-sk-dev-885b3e15}"
+
 printf "${BLUE}===== PDF差分検出API動作確認テスト =====${NC}\n"
 printf "\n"
 
@@ -76,6 +84,7 @@ ZIP_FILE="${OUTPUT_DIR}/diff_result.zip"
 printf "  ${BLUE}APIリクエスト送信中...${NC}\n"
 HTTP_STATUS=$(curl -s -o "${ZIP_FILE}" -w "%{http_code}" \
   -X POST \
+  -H "x-api-key: ${API_KEY}" \
   -F "document1=@${SAMPLE_DIR}/sample-1.pdf" \
   -F "document2=@${SAMPLE_DIR}/sample-2.pdf" \
   "${BASE_URL}/api/diff" 2>/dev/null)

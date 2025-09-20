@@ -2,12 +2,14 @@
 
 from fastapi import FastAPI
 from api.routers import diff, health
+from api.middleware.auth import APIKeyAuthMiddleware
 
 app = FastAPI(
     title="Document Check API",
     description="API for document checking service",
     version="1.0.0",
 )
+app.add_middleware(APIKeyAuthMiddleware)
 app.include_router(diff.router, prefix="/api", tags=["diff"])
 app.include_router(health.router, prefix="/api", tags=["health"])
 
