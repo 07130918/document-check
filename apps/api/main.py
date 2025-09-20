@@ -1,4 +1,5 @@
 """FastAPI application entry point."""
+
 from fastapi import FastAPI
 from api.routers import hello
 
@@ -6,7 +7,7 @@ from api.routers import hello
 app = FastAPI(
     title="Document Check API",
     description="API for document checking service",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 # ルーターの追加
@@ -17,7 +18,7 @@ app.include_router(hello.router, prefix="/api", tags=["hello"])
 async def root():
     """
     Root endpoint.
-    
+
     Returns:
         dict: A welcome message.
     """
