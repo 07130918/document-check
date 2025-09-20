@@ -1,4 +1,4 @@
-"""API Key authentication middleware for FastAPI."""
+"""FastAPI用のAPIキー認証ミドルウェア。"""
 
 import os
 from typing import List
@@ -9,46 +9,39 @@ from starlette.middleware.base import BaseHTTPMiddleware
 
 
 class APIKeyAuthMiddleware(BaseHTTPMiddleware):
-    """API Key authentication middleware.
-    
-    Validates requests using x-api-key header.
-    Excludes certain paths from authentication.
+    """APIキー認証ミドルウェア。
+
+    x-api-keyヘッダーを使用してリクエストを検証する。
+    特定のパスを認証から除外する。
     """
 
     def __init__(self, app, excluded_paths: List[str] = None):
-        """Initialize middleware.
+        """ミドルウェアを初期化する。
 
         Args:
-            app: FastAPI application instance
-            excluded_paths: List of paths to exclude from authentication
+            app: FastAPIアプリケーションインスタンス
+            excluded_paths: 認証から除外するパスのリスト
         """
         super().__init__(app)
-        self.api_key = os.getenv("API_KEY", "sk-dev-885b3e15")
+        self.api_key = os.getenv("API_KEY")
         self.excluded_paths = excluded_paths or ["/", "/api/health"]
 
     async def dispatch(self, request: Request, call_next):
-        """Process request and validate API key.
+        """リクエストを処理しAPIキーを検証する。
 
         Args:
-            request: FastAPI request object
-            call_next: Next middleware in chain
+            request: FastAPIリクエストオブジェクト
+            call_next: チェーン内の次のミドルウェア
 
         Returns:
-            Response: Either error response or result from next middleware
+            Response: エラーレスポンスまたは次のミドルウェアからの結果
         """
         # 除外パスの場合は認証をスキップ
         if request.url.path in self.excluded_paths:
             return await call_next(request)
 
-        # APIキーヘッダーの取得
         api_key = request.headers.get("x-api-key")
-
-        # APIキーの検証
         if not api_key or api_key != self.api_key:
-            return JSONResponse(
-                status_code=401,
-                content={"detail": "Invalid API key"}
-            )
+            return JSONResponse(status_code=401, content={"detail": "Invalid API key"})
 
-        # 認証成功時は次の処理へ
         return await call_next(request)
