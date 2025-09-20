@@ -1139,7 +1139,6 @@ def main():
             fallback_doc1 = os.path.join(fallback_dir, 'sample1.pdf')
             fallback_doc2 = os.path.join(fallback_dir, 'sample2.pdf')
 
-            create_sample_pdfs(fallback_doc1, fallback_doc2)
             print(f"\nエラー: apps/sample配下にPDFファイルが見つかりませんでした。")
             print(f"期待されるファイル:")
             print(f"  - {doc1_path}")

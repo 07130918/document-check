@@ -9,6 +9,7 @@ help:
 	@echo "  down    - サービスを停止"
 	@echo "  logs    - ログを表示"
 	@echo "  clean   - コンテナとボリュームを削除"
+	@echo "  health-check - ヘルスチェック"
 
 build:
 	docker compose build
@@ -31,3 +32,6 @@ logs:
 clean:
 	docker compose down -v
 	rm -rf apps/__pycache__ apps/**/__pycache__ apps/**/**/__pycache__
+
+health-check:
+	curl http://localhost:8000/api/health
